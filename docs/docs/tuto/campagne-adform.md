@@ -13,7 +13,7 @@ Quand on fait une campagne de com, on veut tracker où les utilisateurs arrivent
 
 ## Comment ça marche ?
 
-Le [`MarketingService`](https://github.com/DNUM-SocialGouv/1j1s-front/blob/main/src/client/services/marketing/marketing.service.ts)
+Le [`MarketingService`](https://github.com/DGEFP-1j1S/1j1s-front/blob/main/src/client/services/marketing/marketing.service.ts)
 initialise le service, le configure et l'ajoute au gestionnaire de cookies à l'instanciation dans le conteneur d'injection.
 Ce service est commun à toutes les campagnes de com'.
 
@@ -21,7 +21,7 @@ Ce service expose une méthode `trackPage` doit être appelé sur chaque page tr
 
 Pour permettre d'activer/désactiver les campagnes indépendament les unes des autres, le choix a été fait de créer un feature flipping par campagne.
 
-E.g. [pour la campagne apprentissage](https://github.com/DNUM-SocialGouv/1j1s-front/blob/b27b2a8249540c4b710d857de9e66c08bcaeee2f/src/pages/choisir-apprentissage/index.page.tsx#L25C2-L25C2) : 
+E.g. [pour la campagne apprentissage](https://github.com/DGEFP-1j1S/1j1s-front/blob/b27b2a8249540c4b710d857de9e66c08bcaeee2f/src/pages/choisir-apprentissage/index.page.tsx#L25C2-L25C2) : 
 ```tsx
 // src/pages/choisir-apprentissage/index.page.tsx
 

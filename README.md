@@ -12,12 +12,12 @@ Bienvenue sur le dépôt front d'1jeune1solution. Celui-ci regroupe l'ensemble d
 
 ## Liens utiles
 
-- [Github](https://github.com/orgs/DNUM-SocialGouv/repositories)
+- [Github](https://github.com/orgs/DGEFP-1j1S/repositories)
 - [Admin scalingo](https://1j1s-cms.osc-fr1.scalingo.io/admin)
-- [Backlog technique](https://github.com/DNUM-SocialGouv/1j1s-front/projects/1)
+- [Backlog technique](https://github.com/DGEFP-1j1S/1j1s-front/projects/1)
 - [Backlog fonctionnel](https://jira.sg.social.gouv.fr/secure/RapidBoard.jspa?rapidView=255&projectKey=UNJ1S)
 - [Monitoring sentry](https://sentry2.fabrique.social.gouv.fr/organizations/incubateur/)
-- [Documentation docusaurus](https://dnum-socialgouv.github.io/1j1s-front/docs/architecture/)
+- [Documentation docusaurus](https://dgefp-1j1s.github.io/1j1s-front/docs/architecture/)
 
 ## Conventions de code
 

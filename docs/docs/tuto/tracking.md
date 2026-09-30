@@ -19,8 +19,8 @@ Le tracking (ou analytics) est décomposé en 2 catégories de tags :
 * événements = interactions utilisateurs sur des call to actions
 
 Les fonctions correspondantes se trouvent dans
-l'[`AnalyticsService`](https://github.com/DNUM-SocialGouv/1j1s-front/blob/main/src/client/services/analytics/analytics.service.ts) et sont exposées aux composants depuis le
-hook [`useAnalytics`](https://github.com/DNUM-SocialGouv/1j1s-front/blob/main/src/client/hooks/useAnalytics.ts) qui s'occupe par défaut d'envoyer les analytics d'une page selon
+l'[`AnalyticsService`](https://github.com/DGEFP-1j1S/1j1s-front/blob/main/src/client/services/analytics/analytics.service.ts) et sont exposées aux composants depuis le
+hook [`useAnalytics`](https://github.com/DGEFP-1j1S/1j1s-front/blob/main/src/client/hooks/useAnalytics.ts) qui s'occupe par défaut d'envoyer les analytics d'une page selon
 une configuration qui lui est envoyée. D'ailleurs, la configuration à envoyer de chaque page se trouve dans le dossier
 de la page en question, dans un fichier de la forme `*.analytics.ts`.
 
