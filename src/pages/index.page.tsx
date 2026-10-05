@@ -16,6 +16,8 @@ import { Link } from '~/client/components/ui/Link/Link';
 import SeeMoreItemList from '~/client/components/ui/SeeMore/SeeMoreItemList';
 import { Carte } from '~/client/dsfr';
 import useAnalytics from '~/client/hooks/useAnalytics';
+import { useDependency } from "~/client/context/dependenciesContainer.context";
+import { EvenementAnalyticsService } from "~/client/services/analytics/analytics.service";
 import { Actualite } from '~/server/actualites/domain/actualite';
 import { isFailure } from '~/server/errors/either';
 import { dependencies } from '~/server/start';
@@ -39,6 +41,7 @@ interface AccueilPageProps {
 
 export default function Accueil(accueilProps: AccueilPageProps) {
 	useAnalytics(analytics);
+	const evenementAnalyticsService = useDependency<EvenementAnalyticsService>("evenementAnalyticsService");
 
 	const isJobEteCardVisible = process.env.NEXT_PUBLIC_JOB_ETE_FEATURE === '1';
 	const isFormationsInitalesVisible = process.env.NEXT_PUBLIC_FORMATIONS_INITIALES_FEATURE === '1';
@@ -268,7 +271,7 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 								<h2 className="text--blue">Employeurs : Trouvez vos futurs apprentis sur 1jeune1solution</h2>
 								<p>Déposez gratuitement vos offres en apprentissage et gagnez en visibilité auprès des jeunes en recherche d’une opportunité</p>
 								<div className="fr-grid-row fr-grid-row--center">
-									<Link className="fr-btn " href="https://labonnealternance.apprentissage.beta.gouv.fr/1jeune1solution?utm_source=1j1s&utm_medium=website&utm_campaign=landinglba1j1s">Déposer une offre</Link>
+									<Link className="fr-btn " onClick={() => evenementAnalyticsService.envoyerEvenement({ action: "clic", categorie: "accueil", nom: "deposer_une_offre_lba" })} href="https://labonnealternance.apprentissage.beta.gouv.fr/1jeune1solution?utm_source=1j1s&utm_medium=website&utm_campaign=landinglba1j1s">Déposer une offre</Link>
 								</div>
 							</div>
 						</div>
@@ -318,7 +321,7 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 								<h2 className="text--blue">Trouvez votre alternance</h2>
 								<p>Avec la bonne alternance, accédez à 38 000 offres d’apprentissage et trouvez celle qui vous correspond. Déjà 6 000 offres déposées et 4 000 candidatures pour vous aider à passer à l’action.</p>
 								<div className="fr-grid-row fr-grid-row--center">
-									<Link className="fr-btn" href="https://labonnealternance.apprentissage.beta.gouv.fr/1jeune1solution?utm_source=1j1s&utm_medium=website&utm_campaign=landinglba1j1s">Consulter les offres</Link>
+									<Link className="fr-btn" onClick={() => evenementAnalyticsService.envoyerEvenement({ action: "clic", categorie: "accueil", nom: "consulter_les_offres_lba" })} href="https://labonnealternance.apprentissage.beta.gouv.fr/1jeune1solution?utm_source=1j1s&utm_medium=website&utm_campaign=landinglba1j1s">Consulter les offres</Link>
 								</div>
 							</div>
 							<div className={`${styles.bgConsultation} fr-col-12 fr-col-lg-6 fr-hidden fr-unhidden-lg`}>

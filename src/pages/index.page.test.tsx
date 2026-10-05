@@ -7,8 +7,8 @@ import React from 'react';
 import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { mockScrollIntoView, mockSmallScreen } from '~/client/components/window.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
-import { ManualAnalyticsService } from '~/client/services/analytics/analytics.service';
-import { aManualAnalyticsService } from '~/client/services/analytics/analytics.service.fixture';
+import { EvenementAnalyticsService, ManualAnalyticsService } from '~/client/services/analytics/analytics.service';
+import { aManualAnalyticsService, anEvenementAnalyticsService } from '~/client/services/analytics/analytics.service.fixture';
 import Accueil, { getStaticProps } from '~/pages/index.page';
 import { Actualite } from '~/server/actualites/domain/actualite';
 import { anActualiteList, anActualiteLongList } from '~/server/actualites/domain/actualite.fixture';
@@ -18,6 +18,7 @@ import { dependencies } from '~/server/start';
 
 describe('Page d’accueil', () => {
 	let analyticsService: ManualAnalyticsService;
+	let evenementAnalyticsService: EvenementAnalyticsService;
 	beforeAll(() => {
 		mockScrollIntoView();
 	});
@@ -25,11 +26,12 @@ describe('Page d’accueil', () => {
 		mockSmallScreen();
 		mockUseRouter({ asPath: '/' });
 		analyticsService = aManualAnalyticsService();
+		evenementAnalyticsService = anEvenementAnalyticsService();
 	});
 
 	it('doit rendre du HTML respectant la specification', () => {
 		const { container } = render(
-			<DependenciesProvider analyticsService={analyticsService}>
+			<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
 				<Accueil actualites={anActualiteList()} />
 			</DependenciesProvider>);
 
@@ -38,7 +40,7 @@ describe('Page d’accueil', () => {
 
 	it('n’a pas de défaut d’accessibilité', async () => {
 		const { container } = render(
-			<DependenciesProvider analyticsService={analyticsService}>
+			<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
 				<Accueil actualites={anActualiteList()} />
 			</DependenciesProvider>,
 		);
@@ -51,7 +53,7 @@ describe('Page d’accueil', () => {
 			it("quand le feature flip est activé, n'affiche pas la section actualites", () => {
 				process.env.NEXT_PUBLIC_OLD_ESPACE_JEUNE_FEATURE = "1";
 				render(
-					<DependenciesProvider analyticsService={analyticsService}>
+					<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
 						<Accueil actualites={anActualiteList()} />
 					</DependenciesProvider>,
 				);
@@ -61,7 +63,7 @@ describe('Page d’accueil', () => {
 			it('quand le feature flip est désactivé, n’affiche pas la redirection espace jeune', () => {
 				process.env.NEXT_PUBLIC_OLD_ESPACE_JEUNE_FEATURE = '0';
 				render(
-					<DependenciesProvider analyticsService={analyticsService}>
+					<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
 						<Accueil actualites={[]} />
 					</DependenciesProvider>,
 				);
@@ -81,7 +83,7 @@ describe('Page d’accueil', () => {
 
 					// When
 					render(
-						<DependenciesProvider analyticsService={analyticsService}>
+						<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
 							<Accueil actualites={aucuneActualiteOldAccueil} />
 						</DependenciesProvider>,
 					);
@@ -120,7 +122,7 @@ describe('Page d’accueil', () => {
 
 						// When
 						render(
-							<DependenciesProvider analyticsService={analyticsService}>
+							<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
 								<Accueil actualites={anActualiteList()} />
 							</DependenciesProvider>,
 						);
@@ -135,7 +137,7 @@ describe('Page d’accueil', () => {
 
 						// When
 						render(
-							<DependenciesProvider analyticsService={analyticsService}>
+							<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
 								<Accueil actualites={anActualiteList()} />
 							</DependenciesProvider>,
 						);
@@ -151,7 +153,7 @@ describe('Page d’accueil', () => {
 
 						// When
 						render(
-							<DependenciesProvider analyticsService={analyticsService}>
+							<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
 								<Accueil actualites={actualiteListServer} />
 							</DependenciesProvider>,
 						);
@@ -188,7 +190,7 @@ describe('Page d’accueil', () => {
 			it('contient une carte de redirection vers les stages d’études', () => {
 				// WHEN
 				render(
-					<DependenciesProvider analyticsService={analyticsService}>
+					<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
 						<Accueil actualites={anActualiteList()} />
 					</DependenciesProvider>,
 				);
@@ -204,7 +206,7 @@ describe('Page d’accueil', () => {
 					it('je ne vois pas la carte de redirection vers les jobs d’été', () => {
 						process.env.NEXT_PUBLIC_JOB_ETE_FEATURE = '0';
 						render(
-							<DependenciesProvider analyticsService={analyticsService}>
+							<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
 								<Accueil actualites={anActualiteList()} />
 							</DependenciesProvider>,
 						);
@@ -217,7 +219,7 @@ describe('Page d’accueil', () => {
 						const user = userEvent.setup();
 
 						render(
-							<DependenciesProvider analyticsService={analyticsService}>
+							<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
 								<Accueil actualites={anActualiteList()} />
 							</DependenciesProvider>,
 						);
@@ -239,7 +241,7 @@ describe('Page d’accueil', () => {
 
 						// WHEN
 						render(
-							<DependenciesProvider analyticsService={analyticsService}>
+							<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
 								<Accueil actualites={anActualiteList()} />
 							</DependenciesProvider>,
 						);
@@ -258,7 +260,7 @@ describe('Page d’accueil', () => {
 
 						// WHEN
 						render(
-							<DependenciesProvider analyticsService={analyticsService}>
+							<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
 								<Accueil actualites={anActualiteList()} />
 							</DependenciesProvider>,
 						);
@@ -277,7 +279,7 @@ describe('Page d’accueil', () => {
 					it('je ne vois pas la carte de redirection vers les formations initiales', () => {
 						process.env.NEXT_PUBLIC_FORMATIONS_INITIALES_FEATURE = '0';
 						render(
-							<DependenciesProvider analyticsService={analyticsService}>
+							<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
 								<Accueil actualites={anActualiteList()} />
 							</DependenciesProvider>,
 						);
@@ -289,7 +291,7 @@ describe('Page d’accueil', () => {
 						process.env.NEXT_PUBLIC_FORMATIONS_INITIALES_FEATURE = '1';
 
 						render(
-							<DependenciesProvider analyticsService={analyticsService}>
+							<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
 								<Accueil actualites={anActualiteList()} />
 							</DependenciesProvider>,
 						);
@@ -308,13 +310,47 @@ describe('Page d’accueil', () => {
 					it('je ne vois pas la carte de redirection vers les aides au permis de conduire', () => {
 						process.env.NEXT_PUBLIC_1JEUNE1PERMIS_FEATURE = '0';
 						render(
-							<DependenciesProvider analyticsService={analyticsService}>
+							<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
 								<Accueil actualites={anActualiteList()} />
 							</DependenciesProvider>,
 						);
 						expect(screen.queryByText('Aides au permis de conduire')).not.toBeInTheDocument();
 					});
 				});
+			});
+		});
+
+		describe("Boutons La bonne alternance", () => {
+			it("envoie un événement analytics au clic sur Déposer une offre", async () => {
+				// GIVEN
+				const user = userEvent.setup();
+				render(
+					<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
+						<Accueil actualites={anActualiteList()} />
+					</DependenciesProvider>,
+				);
+
+				// WHEN
+				await user.click(screen.getByRole("link", { name: /Déposer une offre/ }));
+
+				// THEN
+				expect(evenementAnalyticsService.envoyerEvenement).toHaveBeenCalledWith({ action: "clic", categorie: "accueil", nom: "deposer_une_offre_lba" });
+			});
+
+			it("envoie un événement analytics au clic sur Consulter les offres", async () => {
+				// GIVEN
+				const user = userEvent.setup();
+				render(
+					<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
+						<Accueil actualites={anActualiteList()} />
+					</DependenciesProvider>,
+				);
+
+				// WHEN
+				await user.click(screen.getByRole("link", { name: /Consulter les offres/ }));
+
+				// THEN
+				expect(evenementAnalyticsService.envoyerEvenement).toHaveBeenCalledWith({ action: "clic", categorie: "accueil", nom: "consulter_les_offres_lba" });
 			});
 		});
 	});

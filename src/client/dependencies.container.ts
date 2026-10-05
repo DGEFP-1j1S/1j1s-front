@@ -1,12 +1,13 @@
 import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
 import { CompositionClient, SearchClient } from 'algoliasearch-helper/types/algoliasearch';
 
-import { ManualAnalyticsService } from '~/client/services/analytics/analytics.service';
+import { EvenementAnalyticsService, ManualAnalyticsService } from '~/client/services/analytics/analytics.service';
 import { EulerianAnalyticsService } from '~/client/services/analytics/eulerian/eulerian.analytics.service';
 import { MatomoAnalyticsService } from '~/client/services/analytics/matomo/matomo.analytics.service';
 import {
 	MatomoTagManagerAnalyticsService,
 } from '~/client/services/analytics/matomoTagManager/matomoTagManager.analytics.service';
+import { NullEvenementAnalyticsService } from "~/client/services/analytics/null/null.evenementAnalytics.service";
 import { BffHttpClientService } from '~/client/services/bff.httpClient.service';
 import { CookiesService } from '~/client/services/cookies/cookies.service';
 import { NullCookiesService } from '~/client/services/cookies/null/null.cookies.service';
@@ -74,6 +75,7 @@ export type Dependency = Dependencies[keyof Dependencies];
 export type Dependencies = {
 	cookiesService: CookiesService
 	analyticsService: ManualAnalyticsService
+	evenementAnalyticsService: EvenementAnalyticsService
 	demandeDeContactService: DemandeDeContactService
 	formationInitialeService: FormationInitialeInterface
 	localisationService: LocalisationService
@@ -128,9 +130,9 @@ export default function dependenciesContainer(sessionId?: string): Dependencies 
 		? new LinkedinMarketingService(cookiesService)
 		: new NullMarketingService();
 
-	if (process.env.NEXT_PUBLIC_ANALYTICS_MATOMO_FEATURE === '1') {
-		new MatomoAnalyticsService(cookiesService);
-	}
+	const evenementAnalyticsService: EvenementAnalyticsService = process.env.NEXT_PUBLIC_ANALYTICS_MATOMO_FEATURE === "1"
+		? new MatomoAnalyticsService(cookiesService)
+		: new NullEvenementAnalyticsService();
 
 	if (process.env.NEXT_PUBLIC_ANALYTICS_MATOMO_TAG_MANAGER_FEATURE === '1') {
 		new MatomoTagManagerAnalyticsService(cookiesService);
@@ -177,6 +179,7 @@ export default function dependenciesContainer(sessionId?: string): Dependencies 
 		dateService,
 		demandeDeContactService,
 		emploiEuropeService,
+		evenementAnalyticsService,
 		formationInitialeService,
 		linkedinService,
 		localStorageService,
