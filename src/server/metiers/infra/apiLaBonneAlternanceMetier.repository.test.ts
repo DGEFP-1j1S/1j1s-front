@@ -22,6 +22,7 @@ describe('ApiLaBonneAlternanceMétierRepository', () => {
 				const response = await repository.getMetierList('tran');
 
 				expect(httpClientService.get).toHaveBeenCalledTimes(1);
+				expect(httpClientService.get).toHaveBeenCalledWith('/rome?title=tran');
 				expect(response.instance).toEqual('success');
 				expect((response as Success<Array<MetierAlternance>>).result).toEqual(expected);
 			});

@@ -14,8 +14,8 @@ import {
 describe('récupérer les métiers correspondant à la recherche', () => {
 	it('retourne les métiers recherchés', async () => {
 		const recherche = 'boulang';
-		nock('https://labonnealternance-recette.apprentissage.beta.gouv.fr/api/v1/').get(
-			`/metiers?title=${recherche}`,
+		nock('https://labonnealternance-recette.apprentissage.beta.gouv.fr/api/').get(
+			`/rome?title=${recherche}`,
 		).reply(200, aMetierLaBonneAlternanceApiResponse());
 
 		await testApiHandler<MetierAlternance[] | ErrorHttpResponse>({
