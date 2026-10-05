@@ -55,10 +55,7 @@
     "sharp": "^0.35.4"
   },
   "devDependencies": {
-    "@eslint/compat": "^2.0.2",
-    "@eslint/js": "^9.39.2",
     "@next/bundle-analyzer": "^15.5.26",
-    "@socialgouv/eslint-config-recommended": "^1.131.0",
     "@storybook/addon-docs": "^10.2.10",
     "@storybook/addon-links": "^10.2.10",
     "@storybook/nextjs": "^10.2.10",
@@ -74,17 +71,13 @@
     "@types/react-autosuggest": "^10.1.11",
     "@types/react-dom": "^18.3.7",
     "@types/uuid": "^10.0.0",
-    "@typescript-eslint/eslint-plugin": "^8.56.0",
     "@vitejs/plugin-react-swc": "^4.2.3",
+    "@vitest/eslint-plugin": "^1.6.27",
     "cypress": "^16.1.0",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.1.6",
-    "eslint-plugin-cypress": "^6.4.4",
-    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-storybook": "^10.2.10",
     "eslint-plugin-testing-library": "^7.16.0",
-    "eslint-plugin-vitest": "^0.5.4",
-    "globals": "^17.3.0",
     "html-validate": "^11.16.0",
     "jest-axe": "^11.0.0",
     "jsdom": "^25.0.1",
@@ -98,8 +91,8 @@
     "vitest": "^5.0.1"
   },
   "overrides": {
-    "@socialgouv/eslint-config-recommended": {
-      "eslint": "^9.39.2"
+    "eslint-config-next": {
+      "eslint-import-resolver-typescript": "^4.4.5"
     },
     "postcss": "^8.5.28",
     "webpack": "5.101.2"
