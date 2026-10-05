@@ -17,6 +17,7 @@ const mockedLogger = {
 pinoMock.mockImplementation(() => mockedLogger as unknown as pino.Logger<string>);
 
 // FIXME (GAFI 07-07-2025): Leak réseau, pino-sentry n'est pas mock-é
+// eslint-disable-next-line vitest/no-disabled-tests
 describe.skip('PinoLoggerService', () => {
 	describe('error', () => {
 		it('appelle le logger error avec le message passé en paramètre', () => {
