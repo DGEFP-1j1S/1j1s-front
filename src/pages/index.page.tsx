@@ -22,7 +22,6 @@ import { Actualite } from '~/server/actualites/domain/actualite';
 import { isFailure } from '~/server/errors/either';
 import { dependencies } from '~/server/start';
 import { LBA_CANDIDAT_URL } from '~/shared/lbaLandingUrls';
-import BannieresCampagnes from '~/client/components/features/BannieresCampagnes'
 
 import analytics from './index.analytics';
 import styles from './index.module.scss';
@@ -278,7 +277,6 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 					</div>
 				</section>
 				
-				<BannieresCampagnes />
 				{!isOldEspaceJeuneActif && actualitesCardListContent.length > 0
 					&& (
 						<section className={styles.section}>
