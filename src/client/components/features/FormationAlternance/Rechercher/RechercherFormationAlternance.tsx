@@ -21,7 +21,7 @@ import { useFormationQuery } from '~/client/hooks/useFormationQuery';
 import empty from '~/client/utils/empty';
 import { formatRechercherSolutionDocumentTitle } from '~/client/utils/formatRechercherSolutionDocumentTitle.util';
 import { Erreur } from '~/server/errors/erreur.types';
-import { RésultatRechercheFormation } from '~/server/formations/domain/formation';
+import { ResultatRechercheFormation } from '~/server/formations/domain/formation';
 import { transformObjectToQueryString } from '~/server/services/utils/urlParams.util';
 import {Banner} from "~/client/components/ui/Hero/Hero";
 
@@ -29,7 +29,7 @@ const PREFIX_TITRE_PAGE = 'Rechercher une formation en apprentissage';
 
 type RechercherFormationProps = {
 	erreurRecherche?: never
-	resultats: Array<RésultatRechercheFormation>
+	resultats: Array<ResultatRechercheFormation>
 } | {
 	erreurRecherche: Erreur
 	resultats?: never
@@ -109,7 +109,7 @@ function BannièreFormation() {
 }
 
 interface ListeRésultatProps {
-	résultatList: RésultatRechercheFormation[]
+	résultatList: ResultatRechercheFormation[]
 	queryParams: string
 }
 
@@ -134,6 +134,6 @@ function ListeFormation({ résultatList, queryParams }: ListeRésultatProps) {
 }
 
 // TODO (BRUJ 05/08/2024): Le lien devrait être construit côté serveur
-function getLienOffre(formation: RésultatRechercheFormation, queryParams: string) {
+function getLienOffre(formation: ResultatRechercheFormation, queryParams: string) {
 	return `/formations/apprentissage/${encodeURIComponent(formation.id)}?${queryParams}&codeCertification=${formation.codeCertification}`;
 }

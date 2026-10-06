@@ -1,68 +1,83 @@
-import { Formation, RésultatRechercheFormation } from '~/server/formations/domain/formation';
+import { Formation, ResultatRechercheFormation } from '~/server/formations/domain/formation';
 import { mapNiveauFormation } from '~/server/formations/domain/formation.mapper';
-import {
-	ID_FORMATION_SEPARATOR,
-} from '~/server/formations/infra/repositories/apiLaBonneAlternanceFormation.repository';
 
 import {
-	ApiLaBonneAlternanceFormationRechercheResponse,
-	ApiLaBonneAlternanceFormationRechercheResponseFormation,
-	ApiLaBonneAlternanceFormationResponse,
+	ApiAlternanceFormationRechercheResponse,
+	ApiAlternanceFormationResponse, ApiAlternanceLieuFormation,
 } from './apiLaBonneAlternanceFormation';
 
-export const mapRésultatRechercheFormation = (response: ApiLaBonneAlternanceFormationRechercheResponse): Array<RésultatRechercheFormation> => {
-	return response.results.map((formation) => ({
-		adresse: formation.place?.fullAddress,
-		codeCertification: formation.cfd,
-		codePostal: formation.place?.zipCode,
-		id: mapIdFormation(formation),
-		latitude: formation.place?.latitude,
-		longitude: formation.place?.longitude,
-		nomEntreprise: formation.company?.name,
-		tags: [formation.place?.city, mapNiveauFormation(formation.diplomaLevel)],
-		titre: formation.title,
-	}));
+export const mapResultatRechercheFormation = (response: ApiAlternanceFormationRechercheResponse): Array<ResultatRechercheFormation> => {
+	return response.data.map((formation) => {
+		const [longitude, latitude] = formation.lieu.geolocalisation.coordinates;
+		return {
+			adresse: mapAdresseFormation(formation.lieu),
+			codeCertification: formation.certification.valeur.identifiant.cfd ?? undefined,
+			codePostal: formation.lieu.adresse.code_postal ?? undefined,
+			id: formation.identifiant.cle_ministere_educatif,
+			latitude,
+			longitude,
+			nomEntreprise: mapNomOrganismeFormateur(formation),
+			tags: [formation.lieu.adresse.commune.nom, mapNiveauFormation(mapNiveauDiplomeEuropeen(formation))],
+			titre: mapTitre(formation),
+		};
+	});
 };
 
-function mapIdFormation(
-	response: ApiLaBonneAlternanceFormationRechercheResponseFormation,
-): RésultatRechercheFormation['id'] {
-	return `${response.idRco}${ID_FORMATION_SEPARATOR}${response.cleMinistereEducatif ? response.cleMinistereEducatif : ''}`;
-}
-
-export function getCleMinistereEducatif(id: string): string {
-	const idArray = id.split(ID_FORMATION_SEPARATOR);
-	return idArray[1];
-}
-
-export const mapFormation = (response: ApiLaBonneAlternanceFormationResponse): Formation | undefined => {
-	if (response.results.length === 0) return;
-
-	const apiFormationResult = response.results[0];
+export const mapFormation = (formation: ApiAlternanceFormationResponse): Formation => {
+	const [longitude, latitude] = formation.lieu.geolocalisation.coordinates;
 	return {
 		adresse: {
-			adresseComplete: apiFormationResult.place?.fullAddress,
-			codePostal: apiFormationResult.place?.zipCode,
-			latitude: apiFormationResult.place?.latitude,
-			longitude: apiFormationResult.place?.longitude,
+			adresseComplete: mapAdresseFormation(formation.lieu),
+			codePostal: formation.lieu.adresse.code_postal ?? undefined,
+			latitude,
+			longitude,
 		},
-		description: apiFormationResult.training?.description,
-		dureeIndicative: undefined, // NOTE (SULI 17-10-2023): LBA doit calculer cette donnée et nous la fournir dans un champ qu'ils nous préciseront
-		nomEntreprise: apiFormationResult.company?.name,
-		objectif: apiFormationResult.training?.objectif,
-		tags: [apiFormationResult.place?.city || ''],
-		titre: apiFormationResult.title,
+		description: formation.contenu_educatif.contenu,
+		dureeIndicative: mapDureeIndicative(formation.modalite.duree_indicative),
+		nomEntreprise: mapNomOrganismeFormateur(formation),
+		objectif: formation.contenu_educatif.objectif,
+		tags: [formation.lieu.adresse.commune.nom],
+		titre: mapTitre(formation),
 	};
 };
 
-export const mapRésultatRechercheFormationToFormation = (résultatRechercheFormation: RésultatRechercheFormation): Formation => ({
+export const mapResultatRechercheFormationToFormation = (resultatRechercheFormation: ResultatRechercheFormation): Formation => ({
 	adresse: {
-		adresseComplete: résultatRechercheFormation.adresse,
-		codePostal: résultatRechercheFormation.codePostal,
-		latitude: résultatRechercheFormation.latitude,
-		longitude: résultatRechercheFormation.longitude,
+		adresseComplete: resultatRechercheFormation.adresse,
+		codePostal: resultatRechercheFormation.codePostal,
+		latitude: resultatRechercheFormation.latitude,
+		longitude: resultatRechercheFormation.longitude,
 	},
-	nomEntreprise: résultatRechercheFormation.nomEntreprise,
-	tags: [résultatRechercheFormation.tags[0] || ''],
-	titre: résultatRechercheFormation.titre,
+	nomEntreprise: resultatRechercheFormation.nomEntreprise,
+	tags: [resultatRechercheFormation.tags[0] || ''],
+	titre: resultatRechercheFormation.titre,
 });
+
+// NOTE (JUFE 05-10-2026): les intitulés RNCP des diplômes nationaux sont suffixés « (fiche nationale) », qui n’a pas de sens pour l’usager.
+const SUFFIXE_FICHE_NATIONALE = / \(fiche nationale\)$/;
+
+function mapTitre(formation: ApiAlternanceFormationResponse): string {
+	const intitule = formation.certification.valeur.intitule;
+	if (intitule.rncp) return intitule.rncp.replace(SUFFIXE_FICHE_NATIONALE, '');
+	return intitule.cfd?.long ?? '';
+}
+
+function mapNomOrganismeFormateur(formation: ApiAlternanceFormationResponse): string | undefined {
+	const organisme = formation.formateur.organisme;
+	if (!organisme) return undefined;
+	return organisme.etablissement.enseigne ?? organisme.unite_legale.raison_sociale;
+}
+
+function mapNiveauDiplomeEuropeen(formation: ApiAlternanceFormationResponse): string | undefined {
+	const niveau = formation.certification.valeur.intitule.niveau;
+	return niveau.cfd?.europeen ?? niveau.rncp?.europeen ?? undefined;
+}
+
+function mapDureeIndicative(dureeEnAnnees: number): string {
+	return dureeEnAnnees > 1 ? `${dureeEnAnnees} ans` : `${dureeEnAnnees} an`;
+}
+
+function mapAdresseFormation(lieuFormation: ApiAlternanceLieuFormation): string | undefined{
+	if (!lieuFormation.adresse.label) return undefined
+	return `${lieuFormation.adresse.label ?? ''} - ${lieuFormation.adresse.code_postal ?? ''} ${lieuFormation.adresse.commune.nom ?? ''}`
+}

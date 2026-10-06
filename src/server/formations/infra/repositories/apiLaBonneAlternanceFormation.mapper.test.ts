@@ -1,115 +1,164 @@
-import { NiveauRequisLibelle, RésultatRechercheFormation } from '~/server/formations/domain/formation';
+import { NiveauRequisLibelle, ResultatRechercheFormation } from '~/server/formations/domain/formation';
 import { aFormation } from '~/server/formations/domain/formation.fixture';
 import {
-	ApiLaBonneAlternanceFormationRechercheResponse,
-} from '~/server/formations/infra/repositories/apiLaBonneAlternanceFormation';
-import {
-	anApiLaBonneAlternanceFormationResponse,
+	anApiAlternanceFormation,
+	anApiAlternanceFormationDetailResponse,
+	anApiAlternanceResultatRechercheFormationResponse,
 } from '~/server/formations/infra/repositories/apiLaBonneAlternanceFormation.fixture';
 import {
 	mapFormation,
-	mapRésultatRechercheFormation,
+	mapResultatRechercheFormation,
 } from '~/server/formations/infra/repositories/apiLaBonneAlternanceFormation.mapper';
 
 describe('mapRésultatRechercheFormation', () => {
 	it('converti une response en liste de formation', () => {
-		const input: ApiLaBonneAlternanceFormationRechercheResponse = {
-			results: [{
-				cfd: '123',
-				company: {
-					name: 'ECOLE DE TRAVAIL ORT',
+		const input = anApiAlternanceResultatRechercheFormationResponse([
+			anApiAlternanceFormation({
+				certification: {
+					valeur: {
+						identifiant: { cfd: '123' },
+						intitule: {
+							cfd: { long: 'Monteur / Monteuse en chauffage (H/F)' },
+							niveau: { cfd: { europeen: '3' }, rncp: null },
+							rncp: null,
+						},
+					},
 				},
-				diplomaLevel: '3 (CAP...)',
-				idRco: '123',
-				place: { fullAddress: '1 rue de la République', zipCode: '75001' },
-				title: 'Monteur / Monteuse en chauffage (H/F)',
-			},
-			{
-				company: { name: 'ECOLE DE TRAVAIL ORTY' },
-				diplomaLevel: '7 (Master, titre ingénieur...)',
-				idRco: '456',
-				place: { city: 'PARIS 5' },
-				title: 'Monteur / Monteuse en plomberie (H/F)',
-			}],
-		};
+				identifiant: { cle_ministere_educatif: '085120P01213002197060001130021970600011-46314#L01' },
+				lieu: {
+					adresse: {
+						code_postal: '75001',
+						commune: { nom: 'PARIS 1' },
+						label: '1 rue de la République',
+					},
+					geolocalisation: { coordinates: [2.35, 48.85] },
+				},
+			}),
+			anApiAlternanceFormation({
+				certification: {
+					valeur: {
+						identifiant: { cfd: null },
+						intitule: {
+							cfd: null,
+							niveau: { cfd: null, rncp: { europeen: '7' } },
+							rncp: 'Monteur / Monteuse en plomberie (H/F)',
+						},
+					},
+				},
+				formateur: {
+					organisme: {
+						etablissement: { enseigne: null },
+						unite_legale: { raison_sociale: 'ECOLE DE TRAVAIL ORTY' },
+					},
+				},
+				identifiant: { cle_ministere_educatif: '085120P01213002197060001130021970600011-46315#L01' },
+				lieu: {
+					adresse: {
+						code_postal: null,
+						commune: { nom: 'PARIS 5' },
+						label: null,
+					},
+					geolocalisation: { coordinates: [2.35, 48.85] },
+				},
+			}),
+		]);
 
-		const expected: RésultatRechercheFormation[] = [
+		const expected: ResultatRechercheFormation[] = [
 			{
-				adresse: '1 rue de la République',
+				adresse: '1 rue de la République - 75001 PARIS 1',
 				codeCertification: '123',
 				codePostal: '75001',
-				id: '123__',
-				nomEntreprise: 'ECOLE DE TRAVAIL ORT',
-				tags: [undefined, NiveauRequisLibelle['NIVEAU_3']],
+				id: '085120P01213002197060001130021970600011-46314#L01',
+				latitude: 48.85,
+				longitude: 2.35,
+				nomEntreprise: 'La Bonne Alternance',
+				tags: ['PARIS 1', NiveauRequisLibelle['NIVEAU_3']],
 				titre: 'Monteur / Monteuse en chauffage (H/F)',
 			},
 			{
 				adresse: undefined,
+				codeCertification: undefined,
 				codePostal: undefined,
-				id: '456__',
+				id: '085120P01213002197060001130021970600011-46315#L01',
+				latitude: 48.85,
+				longitude: 2.35,
 				nomEntreprise: 'ECOLE DE TRAVAIL ORTY',
 				tags: ['PARIS 5', NiveauRequisLibelle['NIVEAU_7_8']],
 				titre: 'Monteur / Monteuse en plomberie (H/F)',
 			},
 		];
 
-		const result = mapRésultatRechercheFormation(input);
+		const result = mapResultatRechercheFormation(input);
 
 		expect(result).toEqual(expected);
 	});
 });
 
-describe('mapFormation', () => {
-	describe('quand il y a un résultat', () => {
-		it('convertit une response en formation description', () => {
-			const apiResponse = anApiLaBonneAlternanceFormationResponse([{
-				cleMinistereEducatif: '085120P01213002197060001130021970600011-46314#L01',
-				company: {
-					name: 'La Bonne Alternance',
+describe('titre de la formation', () => {
+	function unIntituleDeCertification(intitule: { cfd: { long: string } | null, rncp: string | null }) {
+		return anApiAlternanceFormationDetailResponse({
+			certification: {
+				valeur: {
+					identifiant: { cfd: '999' },
+					intitule: { ...intitule, niveau: { cfd: { europeen: '6' }, rncp: null } },
 				},
-				id: '085120P01213002197060001130021970600011-46314#L01',
-				place: {
-					city: 'Paris',
-					fullAddress: '1 rue de la République 75001 Paris',
-					zipCode: '75001',
-				},
-				title: 'Développeur web',
-				training: {
-					description: 'Description de la formation',
-					objectif: 'Objectifs de la formation',
-				},
-			}],
-			);
+			},
+		});
+	}
 
-			const expectedFormation = aFormation({
-				adresse: {
-					adresseComplete: '1 rue de la République 75001 Paris',
-					codePostal: '75001',
-				},
-				description: 'Description de la formation',
-				dureeIndicative: undefined,
-				nomEntreprise: 'La Bonne Alternance',
-				objectif: 'Objectifs de la formation',
-				tags: ['Paris'],
-				titre: 'Développeur web',
-			});
+	it('préfère l’intitulé RNCP à celui du CFD, en capitales et sans accents', () => {
+		const formation = unIntituleDeCertification({
+			cfd: { long: 'ECONOMIE APPLIQUEE (MASTER)' },
+			rncp: 'Économie appliquée',
+		});
+
+		expect(mapFormation(formation).titre).toEqual('Économie appliquée');
+	});
+
+	it('retire le suffixe « (fiche nationale) » de l’intitulé RNCP', () => {
+		const formation = unIntituleDeCertification({
+			cfd: { long: 'ECONOMIE APPLIQUEE (MASTER)' },
+			rncp: 'Économie appliquée (fiche nationale)',
+		});
+
+		expect(mapFormation(formation).titre).toEqual('Économie appliquée');
+	});
+
+	it('conserve les autres parenthèses, qui sont signifiantes', () => {
+		const formation = unIntituleDeCertification({
+			cfd: null,
+			rncp: 'Technicien de maintenance (CTM)',
+		});
+
+		expect(mapFormation(formation).titre).toEqual('Technicien de maintenance (CTM)');
+	});
+
+	it('se replie sur l’intitulé CFD quand le RNCP est absent', () => {
+		const formation = unIntituleDeCertification({
+			cfd: { long: 'ECONOMIE APPLIQUEE (MASTER)' },
+			rncp: null,
+		});
+
+		expect(mapFormation(formation).titre).toEqual('ECONOMIE APPLIQUEE (MASTER)');
+	});
+});
+
+describe('mapFormation', () => {
+	it('convertit une response en formation description', () => {
+		const apiResponse = anApiAlternanceFormationDetailResponse();
+
+		const result = mapFormation(apiResponse);
+
+		expect(result).toEqual(aFormation({ dureeIndicative: '1 an' }));
+	});
+
+	describe('quand la durée indicative est supérieure à un an', () => {
+		it('l’exprime au pluriel', () => {
+			const apiResponse = anApiAlternanceFormationDetailResponse({ modalite: { duree_indicative: 3 } });
 
 			const result = mapFormation(apiResponse);
 
-			expect(result).toEqual(expectedFormation);
-		});
-	});
-
-	describe('quand il n’y a pas de résultat dans la réponse de l’API', () => {
-		it('retourne undefined', () => {
-			// GIVEN
-			const apiResponseWithEmptyResult = anApiLaBonneAlternanceFormationResponse([]);
-
-			// WHEN
-			const result = mapFormation(apiResponseWithEmptyResult);
-
-			// THEN
-			expect(result).toBe(undefined);
+			expect(result.dureeIndicative).toEqual('3 ans');
 		});
 	});
 });
