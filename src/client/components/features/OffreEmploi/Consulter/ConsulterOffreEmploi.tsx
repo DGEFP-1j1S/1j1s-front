@@ -22,7 +22,7 @@ export function ConsulterOffreEmploi({ offreEmploi }: ConsulterOffreEmploiProps)
 				<TagList list={offreEmploi.étiquetteList} aria-label="Caractéristiques de l‘offre d‘emploi" />
 				<div className={commonStyles.buttonAsLinkWrapper}>
 					<div className={commonStyles.buttonAsLink}>
-						<Link href={offreEmploi.urlOffreOrigine} appearance="asPrimaryButton">Je postule sur France Travail<Link.Icon /></Link>
+						<Link className='fr-btn fr-btn--lg' href={offreEmploi.urlOffreOrigine}>Je postule sur France Travail</Link>
 					</div>
 				</div>
 			</header>

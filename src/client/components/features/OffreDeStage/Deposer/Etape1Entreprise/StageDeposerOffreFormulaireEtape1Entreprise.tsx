@@ -85,7 +85,7 @@ export default function StageDeposerOffreFormulaireEtape1Entreprise() {
 					onChange={(event) => event.currentTarget}
 					defaultValue={informationsEntreprise?.descriptionEmployeur}
 					required
-					rows={10}
+					rows={4}
 					maxLength={500} />
 				<Champ.Error />
 			</Champ>
