@@ -6,7 +6,7 @@ import { withValidation } from '~/pages/api/middlewares/validation/validation.mi
 import { queryToArray } from '~/pages/api/utils/queryToArray.util';
 import { ErrorHttpResponse } from '~/pages/api/utils/response/response.type';
 import { handleResponse } from '~/pages/api/utils/response/response.util';
-import { FormationFiltre, RésultatRechercheFormation } from '~/server/formations/domain/formation';
+import { FormationFiltre, ResultatRechercheFormation } from '~/server/formations/domain/formation';
 import { dependencies } from '~/server/start';
 
 export const formationRechercheQuerySchema = Joi.object({
@@ -18,7 +18,7 @@ export const formationRechercheQuerySchema = Joi.object({
 	niveauEtudes: Joi.string().optional().valid('3', '4', '5', '6', '7'),
 });
 
-export async function rechercherFormationHandler(req: NextApiRequest, res: NextApiResponse<Array<RésultatRechercheFormation> | ErrorHttpResponse>) {
+export async function rechercherFormationHandler(req: NextApiRequest, res: NextApiResponse<Array<ResultatRechercheFormation> | ErrorHttpResponse>) {
 	const résultatsRechercheFormation = await dependencies.formationDependencies.rechercherFormation.handle(formationFiltreMapper(req));
 	return handleResponse(résultatsRechercheFormation, res);
 }

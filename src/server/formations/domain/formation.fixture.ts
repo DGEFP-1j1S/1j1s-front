@@ -1,21 +1,23 @@
-import { Formation, NiveauRequisLibelle, RésultatRechercheFormation } from '~/server/formations/domain/formation';
+import { Formation, NiveauRequisLibelle, ResultatRechercheFormation } from '~/server/formations/domain/formation';
 
-export const aRésultatRechercheFormationList = (): Array<RésultatRechercheFormation> => [
+export const aResultatRechercheFormationList = (): Array<ResultatRechercheFormation> => [
 	aResultatRechercheFormation(),
 	{
 		codeCertification: '888',
-		id: '456__',
+		id: 'cleMinistereEducatif-456789',
+		latitude: 1,
+		longitude: 2,
 		nomEntreprise: 'La Bonne Alternance',
 		tags: ['Paris', 'Autre'],
 		titre: 'Développeur web',
 	},
 ];
 
-export const aResultatRechercheFormation = (override?: Partial<RésultatRechercheFormation>):  RésultatRechercheFormation => ({
-	adresse: '1 rue de la République',
+export const aResultatRechercheFormation = (override?: Partial<ResultatRechercheFormation>):  ResultatRechercheFormation => ({
+	adresse: '1 rue de la République - 75001 Paris',
 	codeCertification: '999',
 	codePostal: '75001',
-	id: '123__cleMinistereEducatif-123456',
+	id: 'cleMinistereEducatif-123456',
 	latitude: 1,
 	longitude: 2,
 	nomEntreprise: 'La Bonne Alternance',
@@ -26,7 +28,7 @@ export const aResultatRechercheFormation = (override?: Partial<RésultatRecherch
 
 export const aFormation = (overrides?: Partial<Formation>): Formation => ({
 	adresse: {
-		adresseComplete: '1 rue de la République 75001 Paris',
+		adresseComplete: '1 rue de la République - 75001 Paris',
 		codePostal: '75001',
 		latitude: 1,
 		longitude: 2,

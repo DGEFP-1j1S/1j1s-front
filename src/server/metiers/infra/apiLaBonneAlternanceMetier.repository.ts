@@ -11,7 +11,7 @@ export class ApiLaBonneAlternanceMétierRepository implements MétierRepository 
 
 	async getMetierList(recherche: string): Promise<Either<Array<MetierAlternance>>> {
 		try {
-			const response = await this.httpClientService.get<MetierLaBonneAlternanceApiResponse>(`/v1/metiers?title=${recherche}`);
+			const response = await this.httpClientService.get<MetierLaBonneAlternanceApiResponse>(`/rome?title=${recherche}`);
 			return createSuccess(mapMetier(response.data));
 		} catch (error) {
 			return this.errorManagementService.handleFailureError(error, {
