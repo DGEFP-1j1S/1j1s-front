@@ -32,9 +32,10 @@ import { BffLocalisationService } from '~/client/services/localisation/bff.local
 import { LocalisationService } from '~/client/services/localisation/localisation.service';
 import { LoggerService } from '~/client/services/logger.service';
 import { AdformMarketingService } from '~/client/services/marketing/adform/adform.marketing.service';
-import { LinkedinMarketingService } from '~/client/services/marketing/linkedin/linkedin.marketing.service';
-import { MarketingService } from '~/client/services/marketing/marketing.service';
-import { NullMarketingService } from '~/client/services/marketing/null/null.marketing.service';
+import { FloodlightMarketingService } from "~/client/services/marketing/floodlight/floodlight.marketing.service";
+import { GoldenBeesMarketingService } from "~/client/services/marketing/goldenbees/goldenbees.marketing.service";
+import { SeedtagMarketingService } from "~/client/services/marketing/seedtag/seedtag.marketing.service";
+import { StackAdaptMarketingService } from "~/client/services/marketing/stackadapt/stackadapt.marketing.service";
 import { BffAlternanceMetierService } from '~/client/services/metiers/bff.alternance.metier.service';
 import { MetierService } from '~/client/services/metiers/metier.service';
 import { BffMissionEngagementService } from '~/client/services/missionEngagement/bff.missionEngagement.service';
@@ -86,8 +87,6 @@ export type Dependencies = {
 	stageService: StageService
 	youtubeService: VideoService
 	établissementAccompagnementService: EtablissementAccompagnementService
-	marketingService: MarketingService
-	linkedinService: MarketingService
 	dateService: DateService
 	emploiEuropeService: EmploiEuropeService
 	stage3eEt2deService: Stage3eEt2deService
@@ -123,12 +122,13 @@ export default function dependenciesContainer(sessionId?: string): Dependencies 
 	const emploiEuropeService = new BffEmploiEuropeService(httpClientService);
 	const stageService = new BffStageService(httpClientService);
 	const cookiesService = getCookieService();
-	const marketingService = process.env.NEXT_PUBLIC_CAMPAGNE_ADFORM_FEATURE === '1'
-		? new AdformMarketingService(cookiesService)
-		: new NullMarketingService();
-	const linkedinService = process.env.NEXT_PUBLIC_CAMPAGNE_ADFORM_FEATURE === '1'
-		? new LinkedinMarketingService(cookiesService)
-		: new NullMarketingService();
+	if (process.env.NEXT_PUBLIC_CAMPAGNE_2026_10_FEATURE === "1") {
+		new AdformMarketingService(cookiesService);
+		new SeedtagMarketingService(cookiesService);
+		new FloodlightMarketingService(cookiesService);
+		new StackAdaptMarketingService(cookiesService);
+		new GoldenBeesMarketingService(cookiesService);
+	}
 
 	const evenementAnalyticsService: EvenementAnalyticsService = process.env.NEXT_PUBLIC_ANALYTICS_MATOMO_FEATURE === "1"
 		? new MatomoAnalyticsService(cookiesService)
@@ -181,10 +181,8 @@ export default function dependenciesContainer(sessionId?: string): Dependencies 
 		emploiEuropeService,
 		evenementAnalyticsService,
 		formationInitialeService,
-		linkedinService,
 		localStorageService,
 		localisationService,
-		marketingService,
 		metierLbaService,
 		metierStage3eEt2deService,
 		missionEngagementService,
