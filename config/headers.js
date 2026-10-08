@@ -1,5 +1,5 @@
 const STRAPI_MEDIA_HOST = new URL(process.env.STRAPI_MEDIA_URL).hostname;
-const TRUSTED_SOURCES = '*.fabrique.social.gouv.fr *.meilisearch.io/multi-search *.meilisearch.com/multi-search 1j1s-front.osc-fr1.scalingo.io *.1jeune1solution.gouv.fr';
+const TRUSTED_SOURCES = '*.fabrique.social.gouv.fr *.meilisearch.io/multi-search *.meilisearch.com/multi-search *.meilisearch.io/indexes/ *.meilisearch.com/indexes/ 1j1s-front.osc-fr1.scalingo.io *.1jeune1solution.gouv.fr';
 const ANALYTICS_SOURCES = `${process.env.NEXT_PUBLIC_ANALYTICS_DOMAIN} ${process.env.NEXT_PUBLIC_ANALYTICS_MATOMO_HOST}`;
 const MARKETING_SCRIPT_SOURCES = "https://www.googletagmanager.com https://tags.srv.stackadapt.com https://*.goldenbees.fr";
 const MARKETING_IMG_SOURCES = "https://*.doubleclick.net https://www.googletagmanager.com https://*.adform.net https://tags.srv.stackadapt.com https://*.goldenbees.fr";
