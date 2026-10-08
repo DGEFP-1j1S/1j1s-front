@@ -110,7 +110,7 @@ describe('1jeune1permis', () => {
 	});
 	
 	
-	it('redimensionne l\'iframe 1jeune1permis via la taille communiquée par l\'API postMessage avec une marge de 40 pixels', async () => {
+	it('redimensionne l\'iframe 1jeune1permis via la taille communiquée par l\'API postMessage', async () => {
 		// Given
 		render(
 			<DependenciesProvider analyticsService={aManualAnalyticsService()}>
@@ -129,7 +129,68 @@ describe('1jeune1permis', () => {
 		);
 
 		// Then
-		expect(iframe).toHaveAttribute('style', '--1jeune1permis-iframe-height: 2040px;');
+		expect(iframe).toHaveAttribute('style', '--1jeune1permis-iframe-height: 2000px;');
+	});
+
+	it('ne redimensionne pas l\'iframe 1jeune1permis quand la taille communiquée n\'est que l\'écho de sa hauteur actuelle', async () => {
+		// Given
+		render(
+			<DependenciesProvider analyticsService={aManualAnalyticsService()}>
+				<UnJeuneUnPermis />
+			</DependenciesProvider>);
+		const iframe = screen.getByTitle('Informations sur le dispositif 1 jeune 1 permis');
+		const envoyerHauteur = (height: number) => fireEvent(window, new MessageEvent('message',
+			{ data: JSON.stringify({ height, type: 'resize-iframe' }),
+				origin: DOMAINE_1JEUNE_1PERMIS }),
+		);
+		envoyerHauteur(2000);
+
+		// When
+		envoyerHauteur(2050);
+		envoyerHauteur(2050);
+
+		// Then
+		expect(iframe).toHaveAttribute('style', '--1jeune1permis-iframe-height: 2000px;');
+	});
+
+	it('redimensionne l\'iframe 1jeune1permis quand son contenu grandit réellement', async () => {
+		// Given
+		render(
+			<DependenciesProvider analyticsService={aManualAnalyticsService()}>
+				<UnJeuneUnPermis />
+			</DependenciesProvider>);
+		const iframe = screen.getByTitle('Informations sur le dispositif 1 jeune 1 permis');
+		const envoyerHauteur = (height: number) => fireEvent(window, new MessageEvent('message',
+			{ data: JSON.stringify({ height, type: 'resize-iframe' }),
+				origin: DOMAINE_1JEUNE_1PERMIS }),
+		);
+		envoyerHauteur(2000);
+
+		// When
+		envoyerHauteur(3000);
+
+		// Then
+		expect(iframe).toHaveAttribute('style', '--1jeune1permis-iframe-height: 3000px;');
+	});
+
+	it('redimensionne l\'iframe 1jeune1permis quand son contenu rétrécit', async () => {
+		// Given
+		render(
+			<DependenciesProvider analyticsService={aManualAnalyticsService()}>
+				<UnJeuneUnPermis />
+			</DependenciesProvider>);
+		const iframe = screen.getByTitle('Informations sur le dispositif 1 jeune 1 permis');
+		const envoyerHauteur = (height: number) => fireEvent(window, new MessageEvent('message',
+			{ data: JSON.stringify({ height, type: 'resize-iframe' }),
+				origin: DOMAINE_1JEUNE_1PERMIS }),
+		);
+		envoyerHauteur(2000);
+
+		// When
+		envoyerHauteur(1000);
+
+		// Then
+		expect(iframe).toHaveAttribute('style', '--1jeune1permis-iframe-height: 1000px;');
 	});
 
 	it('ne redimensionne pas l\'iframe 1jeune1permis via si la donnée transmise n\'est pas un evenement de type resize-iframe', async () => {
