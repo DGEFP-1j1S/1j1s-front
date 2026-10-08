@@ -20,8 +20,9 @@ export async function getStaticProps(): Promise<GetServerSidePropsResult<Record<
 		props: {},
 	};
 }
-const DISTANT_PIXEL_MARGIN = 50;
 const SIZE_REQUEST_INTERVAL_IN_MS = 500;
+const EXCESS_TOLERANCE_IN_PIXELS = 2;
+const MAX_HEIGHT_IN_PIXELS = 4000;
 interface MessageEventData { type: string; height: number }
 
 function heightFromMessage(event: MessageEvent<string>): number | undefined {
@@ -40,13 +41,15 @@ function heightFromMessage(event: MessageEvent<string>): number | undefined {
 	return data.height;
 }
 
-/* NOTE (JUFE - 2026-10-07): le contenu distant est dans un conteneur en `min-height: 100vh`, donc la hauteur qu'il mesure
-*  ne descend jamais sous celle de l'iframe : il nous renvoie alors notre propre hauteur augmentée de sa marge.
-*  Appliquer cette hauteur ferait grandir l'iframe à l'infini, à chaque aller-retour. */
-function isEchoOfCurrentHeight(receivedHeight: number, currentHeight: number | undefined) {
-	if (currentHeight === undefined) return false;
+/* NOTE (JUFE - 2026-10-07): le contenu distant est dans un conteneur en `min-height: 100vh` et il communique
+*  `document.body.offsetHeight + 50`. La hauteur reçue vaut donc `max(hauteur du contenu, hauteur de l'iframe) + une
+*  constante`, constante qui dépend de leur mise en page (142px mesurés en desktop, 224px en mobile).
+*  Tant que l'iframe est plus haute que son contenu, la hauteur reçue n'est que l'écho de la nôtre : l'appliquer fait
+*  grandir l'iframe à l'infini, un cran par aller-retour. */
+function isEchoOfRenderedHeight(excess: number, previousExcess: number | undefined) {
+	if (previousExcess === undefined) return false;
 
-	return receivedHeight > currentHeight && receivedHeight <= currentHeight + DISTANT_PIXEL_MARGIN;
+	return excess <= previousExcess + EXCESS_TOLERANCE_IN_PIXELS;
 }
 
 export default function UnJeuneUnPermis() {
@@ -54,14 +57,21 @@ export default function UnJeuneUnPermis() {
 	useAnalytics(analyticsPageConfig);
 	const [iframeHeight, setIframeHeight] = useState<number | undefined>(undefined);
 	const iRef = useRef<HTMLIFrameElement>(null);
+	const previousExcess = useRef<number | undefined>(undefined);
 
 	useEffect(() => {
 		const onMessage = (event: MessageEvent<string>) => {
 			const receivedHeight = heightFromMessage(event);
 
-			if (receivedHeight === undefined) return;
+			if (receivedHeight === undefined || iRef.current === null) return;
 
-			setIframeHeight((currentHeight) => isEchoOfCurrentHeight(receivedHeight, currentHeight) ? currentHeight : receivedHeight);
+			const excess = receivedHeight - iRef.current.offsetHeight;
+			const isEcho = isEchoOfRenderedHeight(excess, previousExcess.current);
+			previousExcess.current = excess;
+
+			if (isEcho) return;
+
+			setIframeHeight(Math.min(receivedHeight, MAX_HEIGHT_IN_PIXELS));
 		};
 
 		window.addEventListener(

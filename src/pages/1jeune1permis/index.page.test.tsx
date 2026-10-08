@@ -110,87 +110,95 @@ describe('1jeune1permis', () => {
 	});
 	
 	
-	it('redimensionne l\'iframe 1jeune1permis via la taille communiquée par l\'API postMessage', async () => {
-		// Given
-		render(
-			<DependenciesProvider analyticsService={aManualAnalyticsService()}>
-				<UnJeuneUnPermis />
-			</DependenciesProvider>);
+	describe('redimensionnement de l\'iframe', () => {
+		function simulerHauteurRendue(iframe: HTMLElement, hauteur: number) {
+			Object.defineProperty(iframe, 'offsetHeight', { configurable: true, value: hauteur });
+		}
 
-		// When
-		const iframe = screen.getByTitle('Informations sur le dispositif 1 jeune 1 permis');
-		const data = JSON.stringify({
-			height: 2000,
-			type: 'resize-iframe',
+		function envoyerHauteur(hauteur: number) {
+			fireEvent(window, new MessageEvent('message',
+				{ data: JSON.stringify({ height: hauteur, type: 'resize-iframe' }),
+					origin: DOMAINE_1JEUNE_1PERMIS }),
+			);
+		}
+
+		function afficherLaPage() {
+			render(
+				<DependenciesProvider analyticsService={aManualAnalyticsService()}>
+					<UnJeuneUnPermis />
+				</DependenciesProvider>);
+			const iframe = screen.getByTitle('Informations sur le dispositif 1 jeune 1 permis');
+			simulerHauteurRendue(iframe, HAUTEUR_PAR_DEFAUT);
+			return iframe;
+		}
+
+		const HAUTEUR_PAR_DEFAUT = 1600;
+		// Écart constant entre la hauteur communiquée par France Travail et la hauteur rendue de l'iframe, mesuré en recette
+		const ECART_DISTANT = 142;
+
+		it('redimensionne l\'iframe 1jeune1permis via la taille communiquée par l\'API postMessage', async () => {
+			// Given
+			const iframe = afficherLaPage();
+
+			// When
+			envoyerHauteur(2000);
+
+			// Then
+			expect(iframe).toHaveAttribute('style', '--1jeune1permis-iframe-height: 2000px;');
 		});
-		fireEvent(window, new MessageEvent('message',
-			{ data,
-				origin: DOMAINE_1JEUNE_1PERMIS }),
-		);
 
-		// Then
-		expect(iframe).toHaveAttribute('style', '--1jeune1permis-iframe-height: 2000px;');
-	});
+		it('ne redimensionne pas l\'iframe 1jeune1permis quand la taille communiquée n\'est que l\'écho de sa hauteur rendue', async () => {
+			// Given
+			const iframe = afficherLaPage();
+			envoyerHauteur(HAUTEUR_PAR_DEFAUT + ECART_DISTANT);
+			simulerHauteurRendue(iframe, HAUTEUR_PAR_DEFAUT + ECART_DISTANT);
 
-	it('ne redimensionne pas l\'iframe 1jeune1permis quand la taille communiquée n\'est que l\'écho de sa hauteur actuelle', async () => {
-		// Given
-		render(
-			<DependenciesProvider analyticsService={aManualAnalyticsService()}>
-				<UnJeuneUnPermis />
-			</DependenciesProvider>);
-		const iframe = screen.getByTitle('Informations sur le dispositif 1 jeune 1 permis');
-		const envoyerHauteur = (height: number) => fireEvent(window, new MessageEvent('message',
-			{ data: JSON.stringify({ height, type: 'resize-iframe' }),
-				origin: DOMAINE_1JEUNE_1PERMIS }),
-		);
-		envoyerHauteur(2000);
+			// When
+			envoyerHauteur(HAUTEUR_PAR_DEFAUT + 2 * ECART_DISTANT);
+			envoyerHauteur(HAUTEUR_PAR_DEFAUT + 2 * ECART_DISTANT);
 
-		// When
-		envoyerHauteur(2050);
-		envoyerHauteur(2050);
+			// Then
+			expect(iframe).toHaveAttribute('style', `--1jeune1permis-iframe-height: ${HAUTEUR_PAR_DEFAUT + ECART_DISTANT}px;`);
+		});
 
-		// Then
-		expect(iframe).toHaveAttribute('style', '--1jeune1permis-iframe-height: 2000px;');
-	});
+		it('redimensionne l\'iframe 1jeune1permis quand son contenu grandit réellement', async () => {
+			// Given
+			const iframe = afficherLaPage();
+			envoyerHauteur(HAUTEUR_PAR_DEFAUT + ECART_DISTANT);
+			simulerHauteurRendue(iframe, HAUTEUR_PAR_DEFAUT + ECART_DISTANT);
+			envoyerHauteur(HAUTEUR_PAR_DEFAUT + 2 * ECART_DISTANT);
 
-	it('redimensionne l\'iframe 1jeune1permis quand son contenu grandit réellement', async () => {
-		// Given
-		render(
-			<DependenciesProvider analyticsService={aManualAnalyticsService()}>
-				<UnJeuneUnPermis />
-			</DependenciesProvider>);
-		const iframe = screen.getByTitle('Informations sur le dispositif 1 jeune 1 permis');
-		const envoyerHauteur = (height: number) => fireEvent(window, new MessageEvent('message',
-			{ data: JSON.stringify({ height, type: 'resize-iframe' }),
-				origin: DOMAINE_1JEUNE_1PERMIS }),
-		);
-		envoyerHauteur(2000);
+			// When
+			envoyerHauteur(3000);
 
-		// When
-		envoyerHauteur(3000);
+			// Then
+			expect(iframe).toHaveAttribute('style', '--1jeune1permis-iframe-height: 3000px;');
+		});
 
-		// Then
-		expect(iframe).toHaveAttribute('style', '--1jeune1permis-iframe-height: 3000px;');
-	});
+		it('ne fait pas de cran de trop quand le contenu est plus haut que la hauteur par défaut', async () => {
+			// Given
+			const HAUTEUR_DU_CONTENU = 2479;
+			const iframe = afficherLaPage();
+			envoyerHauteur(HAUTEUR_DU_CONTENU + ECART_DISTANT);
+			simulerHauteurRendue(iframe, HAUTEUR_DU_CONTENU + ECART_DISTANT);
 
-	it('redimensionne l\'iframe 1jeune1permis quand son contenu rétrécit', async () => {
-		// Given
-		render(
-			<DependenciesProvider analyticsService={aManualAnalyticsService()}>
-				<UnJeuneUnPermis />
-			</DependenciesProvider>);
-		const iframe = screen.getByTitle('Informations sur le dispositif 1 jeune 1 permis');
-		const envoyerHauteur = (height: number) => fireEvent(window, new MessageEvent('message',
-			{ data: JSON.stringify({ height, type: 'resize-iframe' }),
-				origin: DOMAINE_1JEUNE_1PERMIS }),
-		);
-		envoyerHauteur(2000);
+			// When
+			envoyerHauteur(HAUTEUR_DU_CONTENU + 2 * ECART_DISTANT);
 
-		// When
-		envoyerHauteur(1000);
+			// Then
+			expect(iframe).toHaveAttribute('style', `--1jeune1permis-iframe-height: ${HAUTEUR_DU_CONTENU + ECART_DISTANT}px;`);
+		});
 
-		// Then
-		expect(iframe).toHaveAttribute('style', '--1jeune1permis-iframe-height: 1000px;');
+		it('ne redimensionne pas l\'iframe 1jeune1permis au delà d\'une hauteur maximale', async () => {
+			// Given
+			const iframe = afficherLaPage();
+
+			// When
+			envoyerHauteur(999999);
+
+			// Then
+			expect(iframe).toHaveAttribute('style', '--1jeune1permis-iframe-height: 4000px;');
+		});
 	});
 
 	it('ne redimensionne pas l\'iframe 1jeune1permis via si la donnée transmise n\'est pas un evenement de type resize-iframe', async () => {
