@@ -17,6 +17,7 @@ export type TarteAuCitron = {
   }
 	state: Record<TarteAuCitronServiceName, boolean>,
 	triggerJobsAfterAjaxCall: () => void,
+	addScript: (url: string, id?: string, callback?: () => void) => void,
 }
 
 export class TarteAuCitronCookiesService implements CookiesService {
