@@ -8,7 +8,7 @@ import { handleResponse } from '~/pages/api/utils/response/response.util';
 import { Age, DemandeDeContactAccompagnement } from '~/server/demande-de-contact/domain/demandeDeContact';
 import {
 	ContactEtablissementAccompagnement,
-	TypeÉtablissement,
+	TypeEtablissement,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 import { dependencies } from '~/server/start';
 import { emailRegex } from '~/shared/emailRegex';
@@ -24,7 +24,7 @@ export const demandeContactAccompagnementBodySchema = Joi.object({
 	établissement: Joi.object({
 		email: Joi.string().pattern(new RegExp(emailRegex)).required(),
 		nom: Joi.string().required(),
-		type: Joi.string().valid(TypeÉtablissement.MISSION_LOCALE).required(), // TODO (SULI 04-03-2024):  enlever la validation sur le type étant donné c'est 100% du mission locale
+		type: Joi.string().valid(TypeEtablissement.MISSION_LOCALE).required(), // TODO (SULI 04-03-2024):  enlever la validation sur le type étant donné c'est 100% du mission locale
 	}).required(),
 });
 
@@ -52,7 +52,7 @@ function mapDemandeContactAccompagnement(body: Record<string, unknown>): Demande
 		établissement: {
 			email: (body.établissement as ContactEtablissementAccompagnement).email as string,
 			nom: (body.établissement as ContactEtablissementAccompagnement).nom as string,
-			type: (body.établissement as ContactEtablissementAccompagnement).type as TypeÉtablissement,
+			type: (body.établissement as ContactEtablissementAccompagnement).type as TypeEtablissement,
 		},
 	};
 }

@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import {
 	RésultatRechercherAccompagnementTagsList,
 } from '~/client/components/features/Accompagnement/Rechercher/Resultat/ResultatRechercherAccompagnementTagsList';
-import { TypeÉtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
+import { TypeEtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 import {
 	anEtablissementAccompagnement,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement.fixture';
@@ -35,14 +35,14 @@ describe('<RésultatRechercherAccompagnementTagsList/>', () => {
 			render(<RésultatRechercherAccompagnementTagsList
 				etablissement={anEtablissementAccompagnement({
 					email: 'example@example.com',
-					type: TypeÉtablissement.MISSION_LOCALE,
+					type: TypeEtablissement.MISSION_LOCALE,
 				})} />);
 			expect(screen.queryByRole('listitem', { name: 'email de l‘établissement' })).not.toBeInTheDocument();
 		});
 
 		it('lorsque l‘établissement n‘est pas mission locale et que l‘email n‘est pas présent, je ne vois pas d‘email', () => {
 			render(<RésultatRechercherAccompagnementTagsList
-				etablissement={anEtablissementAccompagnement({ email: undefined, type: TypeÉtablissement.INFO_JEUNE })} />);
+				etablissement={anEtablissementAccompagnement({ email: undefined, type: TypeEtablissement.INFO_JEUNE })} />);
 			expect(screen.queryByRole('listitem', { name: 'email de l‘établissement' })).not.toBeInTheDocument();
 		});
 
@@ -52,7 +52,7 @@ describe('<RésultatRechercherAccompagnementTagsList/>', () => {
 			render(<RésultatRechercherAccompagnementTagsList
 				etablissement={anEtablissementAccompagnement({
 					email: 'example@example.com',
-					type: TypeÉtablissement.INFO_JEUNE,
+					type: TypeEtablissement.INFO_JEUNE,
 				})} />);
 			expect(screen.getByRole('listitem', { name: 'email de l‘établissement' })).toHaveTextContent(etablissementEmail);
 			expect(screen.getByRole('link', { name: `${etablissementEmail} - nouvelle fenêtre` })).toHaveAttribute('href', `mailto:${etablissementEmail}`);

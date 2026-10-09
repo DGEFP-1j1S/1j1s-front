@@ -7,13 +7,13 @@ import { SelectSimple } from '~/client/components/ui/Form/Select/SelectSimple';
 import { useAccompagnementQuery } from '~/client/hooks/useAccompagnementQuery';
 import { mapToCommune } from '~/client/hooks/useCommuneQuery';
 import { getFormAsQuery } from '~/client/utils/form.util';
-import { TypeÉtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
+import { TypeEtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 import { Button } from "~/client/dsfr";
 
 const typeAccompagnementListe = [
-	{libellé: 'Agences France Travail', valeur: TypeÉtablissement.FRANCE_TRAVAIL},
-	{libellé: 'Missions locales', valeur: TypeÉtablissement.MISSION_LOCALE},
-	{libellé: 'Info jeunes', valeur: TypeÉtablissement.INFO_JEUNE},
+	{libellé: 'Agences France Travail', valeur: TypeEtablissement.FRANCE_TRAVAIL},
+	{libellé: 'Missions locales', valeur: TypeEtablissement.MISSION_LOCALE},
+	{libellé: 'Info jeunes', valeur: TypeEtablissement.INFO_JEUNE},
 ];
 
 export function FormulaireRechercheAccompagnement() {

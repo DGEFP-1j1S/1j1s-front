@@ -5,7 +5,7 @@ import {
 	EtablissementAccompagnementHoraireHeure as Heure,
 	isTypeEtablissement,
 	JourSemaine,
-	TypeÉtablissement,
+	TypeEtablissement,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 import {
 	ResultatRechercheEtablissementPublicResponseAdresseParsed as AdresseParsed,
@@ -43,9 +43,9 @@ export function mapEtablissementPublicAccompagnement(resultatRechercheEtablissem
 	return etablissementsAccompagnement;
 }
 
-function mapTypeEtablissement(pivotLocal: Array<PivotLocal>): TypeÉtablissement | undefined {
+function mapTypeEtablissement(pivotLocal: Array<PivotLocal>): TypeEtablissement | undefined {
 	const pivotLocalWithValidEtablissementType = pivotLocal.find((pivotLocal) => isTypeEtablissement(pivotLocal.type_service_local));
-	return pivotLocalWithValidEtablissementType?.type_service_local as TypeÉtablissement;
+	return pivotLocalWithValidEtablissementType?.type_service_local as TypeEtablissement;
 }
 
 function mapAdresse(adresseList: Array<AdresseParsed>): Adresse | undefined {
