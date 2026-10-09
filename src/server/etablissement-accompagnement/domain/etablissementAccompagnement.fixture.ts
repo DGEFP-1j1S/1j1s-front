@@ -3,7 +3,7 @@ import {
 	EtablissementAccompagnement,
 	EtablissementAccompagnementAdresse,
 	JourSemaine,
-	TypeÉtablissement,
+	TypeEtablissement,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 
 export function anEtablissementAccompagnementList(overrides?: Partial<EtablissementAccompagnement>): Array<EtablissementAccompagnement> {
@@ -103,7 +103,7 @@ export function anEtablissementAccompagnement(overrides?: Partial<EtablissementA
 		id: 'b7c5ef55-664f-4e16-90c3-87518a823b81',
 		nom: 'Mission locale pour l‘insertion professionnelle et sociale des jeunes (16-25 ans) - Paris - 1er 2e 3e 4e 9e 10e et 11e',
 		telephone: '01 00 00 00 00',
-		type: TypeÉtablissement.MISSION_LOCALE,
+		type: TypeEtablissement.MISSION_LOCALE,
 		...overrides,
 	};
 }
@@ -113,7 +113,7 @@ export function anEtablissementAccompagnementFranceTravail(overrides?: Partial<E
 		email: 'contact@francetravail.fr',
 		nom: 'France Travail - Paris - 11e arrondissement - Beaumarchais',
 		telephone: '39 49',
-		type: TypeÉtablissement.FRANCE_TRAVAIL,
+		type: TypeEtablissement.FRANCE_TRAVAIL,
 		...overrides,
 	});
 }
@@ -123,7 +123,7 @@ export function anEtablissementAccompagnementInfoJeunes(overrides?: Partial<Etab
 		email: 'contact@info-jeunes.fr',
 		nom: 'Point information jeunesse - Paris 18e',
 		telephone: '04 65 71 01 01',
-		type: TypeÉtablissement.INFO_JEUNE,
+		type: TypeEtablissement.INFO_JEUNE,
 		...overrides,
 	});
 }
@@ -133,14 +133,14 @@ export function anEtablissementAccompagnementMissionLocale(overrides?: Partial<E
 		email: 'contact@mission-locale.fr',
 		nom: 'Mission locale pour l‘insertion professionnelle et sociale des jeunes (16-25 ans) - Paris - 1er 2e 3e 4e 9e 10e et 11e',
 		telephone: '04 65 71 01 01',
-		type: TypeÉtablissement.MISSION_LOCALE,
+		type: TypeEtablissement.MISSION_LOCALE,
 		...overrides,
 	});
 }
 
 export function aContactÉtablissementAccompagnement(): ContactEtablissementAccompagnement {
 	const missionLocale = anEtablissementAccompagnement({
-		type: TypeÉtablissement.MISSION_LOCALE,
+		type: TypeEtablissement.MISSION_LOCALE,
 	});
 	return {
 		email: missionLocale.email || '',

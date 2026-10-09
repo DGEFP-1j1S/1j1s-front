@@ -13,7 +13,7 @@ import {
 import { aLocalisationService } from '~/client/services/localisation/localisation.service.fixture';
 import { createFailure, createSuccess } from '~/server/errors/either';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
-import { TypeÉtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
+import { TypeEtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 import {
 	anEtablissementAccompagnement,
 	anEtablissementAccompagnementList,
@@ -72,7 +72,7 @@ describe('RechercherAccompagnement', () => {
 					query: {
 						codeCommune: '75056',
 						codePostal: '75006',
-						typeAccompagnement: TypeÉtablissement.INFO_JEUNE,
+						typeAccompagnement: TypeEtablissement.INFO_JEUNE,
 						ville: 'Paris',
 					},
 				});
@@ -99,7 +99,7 @@ describe('RechercherAccompagnement', () => {
 					query: {
 						codeCommune: '75056',
 						codePostal: '75006',
-						typeAccompagnement: TypeÉtablissement.INFO_JEUNE,
+						typeAccompagnement: TypeEtablissement.INFO_JEUNE,
 						ville: 'Paris',
 					},
 				});
@@ -131,7 +131,7 @@ describe('RechercherAccompagnement', () => {
 					query: {
 						codeCommune: '75056',
 						codePostal: '75006',
-						typeAccompagnement: TypeÉtablissement.INFO_JEUNE,
+						typeAccompagnement: TypeEtablissement.INFO_JEUNE,
 						ville: 'Paris',
 					},
 				});
@@ -206,7 +206,7 @@ describe('RechercherAccompagnement', () => {
 	describe('quand le type d‘accompagnement est Mission Locale', () => {
 		it('affiche le bouton "Je souhaite être rappelé"', async () => {
 			const établissementAccompagnementService = anEtablissementAccompagnementService();
-			const anEtablissementMissionLocalList = anEtablissementAccompagnementList({ type: TypeÉtablissement.MISSION_LOCALE });
+			const anEtablissementMissionLocalList = anEtablissementAccompagnementList({ type: TypeEtablissement.MISSION_LOCALE });
 			vi.spyOn(établissementAccompagnementService, 'rechercher').mockResolvedValue(createSuccess(anEtablissementMissionLocalList));
 			const localisationServiceMock = aLocalisationService();
 
@@ -214,7 +214,7 @@ describe('RechercherAccompagnement', () => {
 				query: {
 					codeCommune: '75056',
 					codePostal: '75006',
-					typeAccompagnement: TypeÉtablissement.MISSION_LOCALE,
+					typeAccompagnement: TypeEtablissement.MISSION_LOCALE,
 					ville: 'Paris',
 				},
 			});

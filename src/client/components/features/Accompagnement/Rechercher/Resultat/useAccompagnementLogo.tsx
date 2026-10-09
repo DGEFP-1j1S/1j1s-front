@@ -1,15 +1,15 @@
 import { useMemo } from 'react';
 
-import { TypeÉtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
+import { TypeEtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 
-export function useAccompagnementLogo(typeÉtablissement: TypeÉtablissement) {
+export function useAccompagnementLogo(typeÉtablissement: TypeEtablissement) {
 	return useMemo(() => {
 		switch (typeÉtablissement) {
-			case TypeÉtablissement.INFO_JEUNE:
+			case TypeEtablissement.INFO_JEUNE:
 				return '/images/logos/info-jeunes.svg';
 			case 'mission_locale':
 				return '/images/logos/union-mission-locale.svg';
-			case TypeÉtablissement.FRANCE_TRAVAIL:
+			case TypeEtablissement.FRANCE_TRAVAIL:
 				return '/images/logos/france-travail.svg';
 			default:
 				return '';
