@@ -309,7 +309,6 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 								numberOfVisibleItems={3}
 								seeMoreAriaLabel={'Voir plus de résultats sur les offres d‘emplois'}
 								seeLessAriaLabel={'Voir moins de résultats sur les offres d‘emplois'} 
-								colClass='fr-col-12 fr-col-md-6 fr-col-lg-4'
 							/>
 					</section>
 					
@@ -337,7 +336,6 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 								numberOfVisibleItems={3}
 								seeMoreAriaLabel={'Voir plus de résultats sur les formations et orientation'}
 								seeLessAriaLabel={'Voir moins de résultats sur les formations et orientation'}
-								colClass='fr-col-12 fr-col-md-6 fr-col-lg-4'
 							/>
 					</section>
 					<section className='fr-py-5v'>
@@ -350,7 +348,6 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 								numberOfVisibleItems={3}
 								seeMoreAriaLabel={'Voir plus de résultats sur les engagements et bénévolats'}
 								seeLessAriaLabel={'Voir moins de résultats sur les engagements et bénévolats'}
-								colClass='fr-col-12 fr-col-md-6 fr-col-lg-4'
 							/>
 					</section>
 					<section className='fr-py-5v'>
@@ -363,7 +360,6 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 							numberOfVisibleItems={3}
 							seeMoreAriaLabel={'Voir plus de résultats sur les logements'}
 							seeLessAriaLabel={'Voir moins de résultats sur les logements'}
-							colClass='fr-col-12 fr-col-md-6 fr-col-lg-4'
 						/>
 					</section>
 					<section className='fr-py-5v'>
@@ -376,7 +372,6 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 							numberOfVisibleItems={3}
 							seeMoreAriaLabel={'Voir plus de résultats sur les aides et accompagnements'}
 							seeLessAriaLabel={'Voir moins de résultats sur les aides et accompagnements'}
-							colClass='fr-col-12 fr-col-md-6 fr-col-lg-4'
 						/>
 					</section>				
 					<section className='fr-py-5v'>
@@ -389,7 +384,6 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 							numberOfVisibleItems={3}
 							seeMoreAriaLabel={'Voir plus de résultats sur les aides et outils'}
 							seeLessAriaLabel={'Voir moins de résultats sur les aides et outils'}
-							colClass='fr-col-12 fr-col-md-6 fr-col-lg-4'
 						/>
 					</section>
 				</div>

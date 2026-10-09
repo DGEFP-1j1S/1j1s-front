@@ -17,34 +17,3 @@
 .mesuresJeunesSection {
   background-color: utilities-deprecated.$color-background-white-lilac;
 }
-
-.cartesActualitesList {
-  display: flex;
-  gap: 2rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
-  flex-direction: column;
-
-  @include utilities-deprecated.media(medium) {
-    padding-top: 2rem;
-  }
-
-  & ul > li {
-    flex-grow: 1;
-    flex-basis: 100%;
-    max-width: 22.5rem;
-  }
-}
-
-.carteActualite {
-  height: 100%;
-
-  @include utilities-deprecated.media(medium) {
-    width: 22.5rem;
-  }
-}
-
-.carteActualiteDescription {
-  @include utilities-deprecated.line-clamp(3);
-}

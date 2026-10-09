@@ -11,7 +11,6 @@ const NUMBER_OF_VISIBLE_ITEMS_DEFAULT = 3;
 export interface SeeMoreProps extends React.ComponentPropsWithoutRef<'div'> {
 	itemList: React.ReactNode[]
 	numberOfVisibleItems: number
-	colClass?: string
 	seeMoreLabel?: string
 	seeLessLabel?: string
 	seeMoreAriaLabel: string
@@ -22,7 +21,6 @@ export default function SeeMoreItemList(props: SeeMoreProps) {
 	const {
 		itemList,
 		numberOfVisibleItems = NUMBER_OF_VISIBLE_ITEMS_DEFAULT,
-		colClass,
 		seeMoreLabel = SEE_MORE_LABEL_DEFAULT,
 		seeLessLabel = SEE_LESS_LABEL_DEFAULT,
 		seeMoreAriaLabel,
@@ -30,7 +28,6 @@ export default function SeeMoreItemList(props: SeeMoreProps) {
 		className,
 	} = props;
 
-	const columnClass = colClass ?? (numberOfVisibleItems > 0 ? `fr-col-${12 / numberOfVisibleItems}` : 'fr-col-12');
 	const ariaId = useId();
 	const listRef = useRef<HTMLUListElement>(null);
 	const [isOpen, setIsOpen] = useState(false);
@@ -66,7 +63,7 @@ export default function SeeMoreItemList(props: SeeMoreProps) {
 				
 					<ul id={`section-${ariaId}`} className='fr-grid-row fr-grid-row--gutters' ref={listRef} tabIndex={-1}>
 						{itemListToDisplay?.map((element, index) =>
-							<li key={index} className={columnClass}>{element}</li>,
+							<li key={index} className="fr-col-lg-4 fr-col-md-6 fr-col-12">{element}</li>,
 						)}
 					</ul>
 				

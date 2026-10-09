@@ -2,12 +2,11 @@ import classNames from 'classnames';
 import { GetStaticPropsResult } from 'next';
 import React, { useMemo } from 'react';
 
-import ActualiteCard from '~/client/components/features/Actualites/ActualiteCard';
 import { ServicesJeunes } from '~/client/components/features/ServicesJeunes/ServicesJeunes';
 import { Head } from '~/client/components/head/Head';
-import { Container } from '~/client/components/layouts/Container/Container';
 import { LightHero, LightHeroPrimaryText, LightHeroSecondaryText } from '~/client/components/ui/Hero/LightHero';
 import SeeMoreItemList from '~/client/components/ui/SeeMore/SeeMoreItemList';
+import { Carte } from "~/client/dsfr";
 import useAnalytics from '~/client/hooks/useAnalytics';
 import analytics from '~/pages/espace-jeune/index.analytics';
 import { Actualite } from '~/server/actualites/domain/actualite';
@@ -28,8 +27,17 @@ export default function EspaceJeunePage({ cartesActualites, serviceJeuneList }: 
 	useAnalytics(analytics);
 
 	const articleCardList: React.ReactNode[] = useMemo(() => {
-		return cartesActualites.map((carte) => (
-			<ActualiteCard actualite={carte} headingLevel={'h3'} key={carte.titre} className={styles.carteActualite} />
+		return cartesActualites.map((carte, index) => (
+			<Carte
+				key={index}
+				className={styles.card}
+				titre={carte.titre}
+				lien={carte.link}
+				imageSrc={carte.bannière?.src}
+				imageAlt={carte.bannière?.alt}
+			>
+				{carte.extraitContenu}
+			</Carte>
 		));
 	}, [cartesActualites]);
 
@@ -48,13 +56,12 @@ export default function EspaceJeunePage({ cartesActualites, serviceJeuneList }: 
 							<LightHeroSecondaryText>des dernières actualités relatives aux jeunes</LightHeroSecondaryText>
 						</h2>
 					</LightHero>
-					<Container className={styles.cartesActualitesList}>
-						<SeeMoreItemList className={styles.seeMoreButton}
-														 seeLessAriaLabel={'Voir moins de résultats sur les actualités'}
+					<div className='fr-container'>
+						<SeeMoreItemList seeLessAriaLabel={'Voir moins de résultats sur les actualités'}
 														 seeMoreAriaLabel={'Voir plus de résultats sur les actualités'}
 														 numberOfVisibleItems={MAX_VISIBLE_ACTUALITES_LENGTH}
 														 itemList={articleCardList} />
-					</Container>
+					</div>
 				</section>
 				<section className={classNames(styles.section, styles.mesuresJeunesSection)} aria-label="les services jeunes">
 					<LightHero>
