@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 /// <reference types="@testing-library/cypress" />
 
-import { TypeÉtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
+import { TypeEtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 import {
 	anEtablissementAccompagnement,
 	anEtablissementAccompagnementList,
@@ -68,7 +68,7 @@ describe('Parcours Accompagnement', () => {
 					'GET',
 					'/api/etablissements-accompagnement*',
 					JSON.stringify(anEtablissementAccompagnementList({
-						type: TypeÉtablissement.MISSION_LOCALE,
+						type: TypeEtablissement.MISSION_LOCALE,
 					})),
 				).as('recherche-accompagnement');
 				cy.findByRole('button', { name: 'Rechercher' }).click();

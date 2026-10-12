@@ -18,7 +18,7 @@ import { Card } from '~/client/components/ui/Card/Card';
 import { Link } from '~/client/components/ui/Link/Link';
 import {
 	EtablissementAccompagnement,
-	TypeÉtablissement,
+	TypeEtablissement,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 
 import styles from './ResultatRechercherAccompagnement.module.scss';
@@ -81,7 +81,7 @@ function MailLink({ email }: MailLinkProps) {
 
 export function ResultatRechercherAccompagnement({ etablissement }: RésultatRechercherAccompagnementProps) {
 
-	const isMissionLocale = etablissement.type === TypeÉtablissement.MISSION_LOCALE;
+	const isMissionLocale = etablissement.type === TypeEtablissement.MISSION_LOCALE;
 	const [isPopInOpen, setIsPopInOpen] = useState(false);
 	const logoÉtablissement = useAccompagnementLogo(etablissement.type);
 	const adresse = etablissement.adresse;

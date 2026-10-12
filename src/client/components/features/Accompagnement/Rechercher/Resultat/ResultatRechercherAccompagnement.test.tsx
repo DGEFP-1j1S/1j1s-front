@@ -11,7 +11,7 @@ import { createFailure, createSuccess } from '~/server/errors/either';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import {
 	JourSemaine,
-	TypeÉtablissement,
+	TypeEtablissement,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 import {
 	anEtablissementAccompagnement, anEtablissementAccompagnementAdresse,
@@ -53,7 +53,7 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 			const email = 'email';
 			const etablissement = anEtablissementAccompagnement({
 				email: email,
-				type: TypeÉtablissement.MISSION_LOCALE,
+				type: TypeEtablissement.MISSION_LOCALE,
 			});
 
 			// WHEN
@@ -68,7 +68,7 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 		it('affiche le bouton "Je souhaite être contacté(e)"', () => {
 			// GIVEN
 			const etablissement = anEtablissementAccompagnement({
-				type: TypeÉtablissement.MISSION_LOCALE,
+				type: TypeEtablissement.MISSION_LOCALE,
 			});
 
 			// WHEN
@@ -89,7 +89,7 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 			const email = 'email';
 			const etablissement = anEtablissementAccompagnement({
 				email: email,
-				type: TypeÉtablissement.INFO_JEUNE,
+				type: TypeEtablissement.INFO_JEUNE,
 			});
 
 			// WHEN
@@ -107,7 +107,7 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 		it('n‘affiche pas le bouton "Je souhaite être contacté(e)"', () => {
 			// GIVEN
 			const etablissement = anEtablissementAccompagnement({
-				type: TypeÉtablissement.INFO_JEUNE,
+				type: TypeEtablissement.INFO_JEUNE,
 			});
 
 			// WHEN
@@ -125,7 +125,7 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 			// GIVEN
 			const etablissement = anEtablissementAccompagnement({
 				horaires: [],
-				type: TypeÉtablissement.INFO_JEUNE,
+				type: TypeEtablissement.INFO_JEUNE,
 			});
 
 			// WHEN
@@ -153,7 +153,7 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 						jour: JourSemaine.LUNDI,
 					},
 				],
-				type: TypeÉtablissement.INFO_JEUNE,
+				type: TypeEtablissement.INFO_JEUNE,
 			});
 
 			// WHEN
@@ -179,7 +179,7 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 		it('je vois la modale de formulaire s‘afficher', async () => {
 			const user = userEvent.setup();
 			const établissement = anEtablissementAccompagnement({
-				type: TypeÉtablissement.MISSION_LOCALE,
+				type: TypeEtablissement.MISSION_LOCALE,
 			});
 			const établissementAccompagnementService = anEtablissementAccompagnementService();
 			const localisationService = aLocalisationService();
@@ -200,7 +200,7 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 			// GIVEN
 			const user = userEvent.setup();
 			const établissement = anEtablissementAccompagnement({
-				type: TypeÉtablissement.MISSION_LOCALE,
+				type: TypeEtablissement.MISSION_LOCALE,
 			});
 			const établissementAccompagnementService = anEtablissementAccompagnementService();
 			vi.spyOn(établissementAccompagnementService, 'envoyerDemandeContact').mockImplementation(() => new Promise(() => {
@@ -230,7 +230,7 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 		it('lorsque la demande de contact est un succès, affiche la modale de succès', async () => {
 			const user = userEvent.setup();
 			const établissement = anEtablissementAccompagnement({
-				type: TypeÉtablissement.MISSION_LOCALE,
+				type: TypeEtablissement.MISSION_LOCALE,
 			});
 			const établissementAccompagnementService = anEtablissementAccompagnementService();
 			vi.spyOn(établissementAccompagnementService, 'envoyerDemandeContact').mockResolvedValue(createSuccess(undefined));
@@ -257,7 +257,7 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 			it('lorsque l‘envoi de la demande de contact est en echec, affiche la modale d‘echec et ferme la modale de formulaire', async () => {
 				const user = userEvent.setup();
 				const établissement = anEtablissementAccompagnement({
-					type: TypeÉtablissement.MISSION_LOCALE,
+					type: TypeEtablissement.MISSION_LOCALE,
 				});
 				const établissementAccompagnementService = anEtablissementAccompagnementService();
 				vi.spyOn(établissementAccompagnementService, 'envoyerDemandeContact').mockResolvedValue(createFailure(ErreurMetier.SERVICE_INDISPONIBLE));
@@ -283,7 +283,7 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 			it('lorsque je ferme la modale d‘erreur avec le bouton Retour au formulaire, ouvre la modale de formulaire', async () => {
 				const user = userEvent.setup();
 				const établissement = anEtablissementAccompagnement({
-					type: TypeÉtablissement.MISSION_LOCALE,
+					type: TypeEtablissement.MISSION_LOCALE,
 				});
 				const établissementAccompagnementService = anEtablissementAccompagnementService();
 				const localisationService = aLocalisationService();
@@ -315,7 +315,7 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 			it('lorsque je ferme la modale d‘erreur avec le bouton Fermer, ferme la modale et ne re ouvre pas le formulaire', async () => {
 				const user = userEvent.setup();
 				const établissement = anEtablissementAccompagnement({
-					type: TypeÉtablissement.MISSION_LOCALE,
+					type: TypeEtablissement.MISSION_LOCALE,
 				});
 				const établissementAccompagnementService = anEtablissementAccompagnementService();
 				const localisationService = aLocalisationService();

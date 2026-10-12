@@ -5,7 +5,7 @@ import { Link } from '~/client/components/ui/Link/Link';
 import { Tag } from '~/client/dsfr';
 import {
 	EtablissementAccompagnement,
-	TypeÉtablissement,
+	TypeEtablissement,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 
 interface tagsListProps {
@@ -13,7 +13,7 @@ interface tagsListProps {
 }
 
 export function RésultatRechercherAccompagnementTagsList({ etablissement }: tagsListProps) {
-	const isMissionLocale = etablissement.type === TypeÉtablissement.MISSION_LOCALE;
+	const isMissionLocale = etablissement.type === TypeEtablissement.MISSION_LOCALE;
 
 	return (
 		<ul className={styles.tags}>
