@@ -1,6 +1,7 @@
 import {
 	render,
 	screen,
+	within,
 } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 
@@ -21,13 +22,33 @@ describe('<Entreprise />', () => {
 		it('affiche la première étape de formulaire', () => {
 			render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
 
-			expect(screen.getByText('Étape 1 sur 3 : Votre entreprise')).toBeInTheDocument();
+			expect(screen.getByRole("heading", { level: 2, name: "Votre entreprise Étape 1 sur 3" })).toBeInTheDocument();
 			expect(screen.getByRole('textbox', { name: 'Nom de l’entreprise ou de l’employeur Exemples : Crédit Agricole, SNCF…' })).toBeVisible();
 			expect(screen.getByRole('textbox', { name: 'Adresse mail de contact Exemple : contactRH@example.com' })).toBeVisible();
 			expect(screen.getByRole('textbox', { name: 'Courte description de l’entreprise (500 caractères maximum) Informations sur votre entreprise : son histoire, des objectifs, des enjeux...' })).toBeVisible();
 			expect(screen.getByRole('textbox', { name: 'Logo de l’entreprise - lien/URL Exemple : https://www.1jeune1solution.gouv.fr/images/logos/r%C3…' })).toBeVisible();
 			expect(screen.getByRole('textbox', { name: 'Lien du site de l’entreprise - lien/URL Exemple : https://1jeune1solution.gouv.fr' })).toBeVisible();
 			expect(screen.getByRole('button', { name: 'Suivant' })).toBeVisible();
+		});
+
+		it("indique la prochaine étape du formulaire", () => {
+			// GIVEN
+			render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
+
+			// THEN
+			expect(screen.getByText("Étape suivante :")).toBeVisible();
+			expect(screen.getByText("Votre offre de stage", { exact: false })).toBeVisible();
+		});
+
+		it("regroupe les champs obligatoires et facultatifs dans des groupes légendés", () => {
+			// GIVEN
+			render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
+
+			// THEN
+			const groupeObligatoire = screen.getByRole("group", { name: "Les champs suivants sont obligatoires" });
+			const groupeFacultatif = screen.getByRole("group", { name: "Les champs suivants sont facultatifs mais recommandés" });
+			expect(within(groupeObligatoire).getByRole("textbox", { name: /Adresse mail/ })).toBeVisible();
+			expect(within(groupeFacultatif).getByRole("textbox", { name: /Logo de l/ })).toBeVisible();
 		});
 
 		it('les champs contenant des données pouvant être saisie automatiquement ont un attribut autocomplete approprié', () => {
@@ -54,6 +75,36 @@ describe('<Entreprise />', () => {
 
 				await user.type(mailInput, '     mail@avecespaces.com    ');
 				expect(mailInput).toHaveValue('mail@avecespaces.com');
+			});
+
+			it("lorsque je saisis une adresse mail au mauvais format, affiche un message détaillant le format attendu", async () => {
+				// GIVEN
+				const user = userEvent.setup();
+				render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
+				const mailInput = screen.getByRole("textbox", { name: /Adresse mail/ });
+
+				// WHEN
+				await user.type(mailInput, "ds@s");
+				await user.tab();
+
+				// THEN
+				expect(mailInput).toBeInvalid();
+				expect(screen.getByText("Veuillez saisir une adresse e-mail valide, au format camille@email.fr")).toBeVisible();
+			});
+
+			it("lorsque je saisis une adresse mail au bon format, n’affiche pas de message d’erreur", async () => {
+				// GIVEN
+				const user = userEvent.setup();
+				render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
+				const mailInput = screen.getByRole("textbox", { name: /Adresse mail/ });
+
+				// WHEN
+				await user.type(mailInput, "contact@domaine.fr");
+				await user.tab();
+
+				// THEN
+				expect(mailInput).toBeValid();
+				expect(screen.queryByText("Veuillez saisir une adresse e-mail valide, au format camille@email.fr")).not.toBeInTheDocument();
 			});
 		});
 

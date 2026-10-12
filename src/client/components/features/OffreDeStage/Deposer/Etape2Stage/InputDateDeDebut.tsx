@@ -3,8 +3,6 @@ import React, { useMemo, useState } from 'react';
 import {
 	StageEnum,
 } from '~/client/components/features/OffreDeStage/Deposer/Etape2Stage/StageDeposerOffreFormulaireEtape2Stage';
-import styles
-	from '~/client/components/features/OffreDeStage/Deposer/Etape2Stage/StageDeposerOffreFormulaireEtape2Stage.module.scss';
 import { OffreDeStageDeposeeStage } from '~/client/components/features/OffreDeStage/Deposer/StageDeposerOffre';
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 import { Input } from '~/client/components/ui/Form/Input';
@@ -82,8 +80,8 @@ export function InputDateDeDebut(props: { displayDateDeDebutPrecise: boolean, in
 				</Champ>
 			)
 				: (
-					<div className={styles.contenuDateDeDebutInputDate}>
-						<Champ className="fr-input-group">
+					<div className="fr-grid-row fr-grid-row--gutters">
+						<Champ className="fr-input-group fr-col-12 fr-col-xl-6">
 							<Champ.Label>
 						Date de début du stage au plus tôt
 							</Champ.Label>
@@ -101,7 +99,7 @@ export function InputDateDeDebut(props: { displayDateDeDebutPrecise: boolean, in
 								placeholder={placeholderDate} />
 							<Champ.Error />
 						</Champ>
-						<Champ className="fr-input-group">
+						<Champ className="fr-input-group fr-col-12 fr-col-xl-6">
 							<Champ.Label>
 						Date de début du stage au plus tard
 							</Champ.Label>

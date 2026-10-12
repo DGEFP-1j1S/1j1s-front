@@ -8,16 +8,15 @@ import {
 } from '~/client/components/features/OffreDeStage/Deposer/FormulaireLayout/StageDeposerOffreFormulaireLayout';
 import { OffreDeStageDeposeeStage } from '~/client/components/features/OffreDeStage/Deposer/StageDeposerOffre';
 import { domaineStage } from '~/client/components/features/OffreDeStage/Deposer/StageDomaines';
-import { FormulaireÉtapeLayout } from '~/client/components/layouts/FormulaireEtape/FormulaireEtapeLayout';
-import { ButtonComponent } from '~/client/components/ui/Button/ButtonComponent';
+import { FormulaireEtapeLayout } from "~/client/components/layouts/FormulaireEtape/FormulaireEtapeLayout";
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 import { Input } from '~/client/components/ui/Form/Input';
 import { InputWithUnit } from '~/client/components/ui/Form/InputWithUnit/InputWithUnit';
 import { SelectSimple } from '~/client/components/ui/Form/Select/SelectSimple';
 import { TextArea } from '~/client/components/ui/Form/TextArea/TextArea';
-import { Icon } from '~/client/components/ui/Icon/Icon';
 import { Radio } from '~/client/components/ui/Radio/Radio';
 import { useDependency } from '~/client/context/dependenciesContainer.context';
+import { Button } from "~/client/dsfr";
 import {
 	StageDeposerOffreEtape1PersistenceService,
 } from '~/client/services/stageDeposerOffreEtape1Persistence/stageDeposerOffreEtape1Persistence.service';
@@ -28,8 +27,6 @@ import { URL_DEPOSER_OFFRE } from '~/pages/stages/deposer-offre/index.page';
 import { DomainesStage } from '~/server/stages/repository/domainesStage';
 import { emailRegex } from '~/shared/emailRegex';
 import { urlRegex } from '~/shared/urlRegex';
-
-import styles from './StageDeposerOffreFormulaireEtape2Stage.module.scss';
 
 const EMAIL_OR_URL_REGEX = `${emailRegex}|${urlRegex}`;
 const DUREE_MOIS_EN_JOUR = 30;
@@ -72,7 +69,7 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 
 	return (
 		<>
-			<Champ className={styles.inputNomOffre}>
+			<Champ className="fr-input-group fr-col-12">
 				<Champ.Label>Nom de l’offre de stage (200 caractères maximum)
 					<Champ.Label.Complement>Exemple : Assistant de recherche (6mois) chez ABC.ENTREPRISE</Champ.Label.Complement>
 				</Champ.Label>
@@ -84,7 +81,7 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 					required />
 				<Champ.Error />
 			</Champ>
-			<Champ className={styles.inputLienCandidature}>
+			<Champ className="fr-input-group fr-col-12">
 				<Champ.Label>Lien sur lequel les candidats pourront postuler ou une adresse e-mail à laquelle envoyer sa
 				candidature
 				<Champ.Label.Complement>Exemples : https://candidat.francetravail.fr/offres/142Y OU
@@ -99,7 +96,7 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 				<Champ.Error />
 			</Champ>
 
-			<Champ className={styles.textareaWrapper}>
+			<Champ className="fr-input-group fr-col-12">
 				<Champ.Label>Description de l’offre de stage (200 caractères minimum)
 					<Champ.Label.Complement>Informations sur le stage : les objectifs, les challenges, les
 					missions…</Champ.Label.Complement>
@@ -113,23 +110,26 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 					minLength={200} />
 				<Champ.Error />
 			</Champ>
-			<fieldset className={styles.contenuDateDeDebut}>
-				<legend>Date de début du stage</legend>
-				<RadioIsDatePrecise
-					checked={displayDateDeDebutPrecise}
-					onChange={() => setDisplayDateDeDebutPrecise(!displayDateDeDebutPrecise)} />
-				<InputDateDeDebut
-					displayDateDeDebutPrecise={displayDateDeDebutPrecise}
-					informationsStage={props.informationsStage} />
-			</fieldset>
+			<div className="fr-col-12">
+				<fieldset className="fr-fieldset">
+					<legend className="fr-fieldset__legend">Date de début du stage</legend>
+					<RadioIsDatePrecise
+						checked={displayDateDeDebutPrecise}
+						onChange={() => setDisplayDateDeDebutPrecise(!displayDateDeDebutPrecise)} />
+					<div className="fr-fieldset__element">
+						<InputDateDeDebut
+							displayDateDeDebutPrecise={displayDateDeDebutPrecise}
+							informationsStage={props.informationsStage} />
+					</div>
+				</fieldset>
+			</div>
 
-			<Champ className="fr-select-group">
+			<Champ className="fr-select-group fr-col-12 fr-col-xl-6">
 				<Champ.Label>
 				Durée du stage
 					<Champ.Label.Complement>Exemple : 3 mois</Champ.Label.Complement>
 				</Champ.Label>
 				<Champ.Input
-					className={styles.dureeStage}
 					render={SelectSimple}
 					required
 					optionsList={dureeStageList}
@@ -144,7 +144,7 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 function ChampsFaculatifs(props: { informationsStage: OffreDeStageDeposeeStage | null }) {
 	return (
 		<>
-			<Champ className="fr-select-group">
+			<Champ className="fr-select-group fr-col-12 fr-col-xl-6">
 				<Champ.Label>
 				Domaine de l’offre de stage
 					<Champ.Label.Complement>Exemple : Agriculture</Champ.Label.Complement>
@@ -157,7 +157,7 @@ function ChampsFaculatifs(props: { informationsStage: OffreDeStageDeposeeStage |
 				<Champ.Error />
 			</Champ>
 
-			<Champ className="fr-input-group">
+			<Champ className="fr-input-group fr-col-12 fr-col-xl-6">
 				<Champ.Label>
 				Rémunération par mois
 					<Champ.Label.Complement>Exemple : 560</Champ.Label.Complement>
@@ -173,18 +173,20 @@ function ChampsFaculatifs(props: { informationsStage: OffreDeStageDeposeeStage |
 				<Champ.Error />
 			</Champ>
 
-			<div>
-				<fieldset className={styles.contenuTeletravail}>
-					<legend>Télétravail possible</legend>
-					<div className={styles.inputTeletravail}>
+			<div className="fr-col-12 fr-col-xl-6">
+				<fieldset className="fr-fieldset">
+					<legend className="fr-fieldset__legend">Télétravail possible</legend>
+					<div className="fr-fieldset__element fr-fieldset__element--inline">
 						<Radio name={StageEnum.TELETRAVAIL}
 							value="true"
 							label="Oui"
-								 defaultChecked={props.informationsStage?.teletravail === Teletravail.OUI} />
+							defaultChecked={props.informationsStage?.teletravail === Teletravail.OUI} />
+					</div>
+					<div className="fr-fieldset__element fr-fieldset__element--inline">
 						<Radio name={StageEnum.TELETRAVAIL}
 							value="false"
 							label="Non"
-								 defaultChecked={props.informationsStage?.teletravail === Teletravail.NON} />
+							defaultChecked={props.informationsStage?.teletravail === Teletravail.NON} />
 					</div>
 				</fieldset>
 			</div>
@@ -218,9 +220,12 @@ export default function StageDeposerOffreFormulaireEtape2Stage() {
 	}
 
 	return (
-		<FormulaireÉtapeLayout
-			étape="Étape 2 sur 3 : Votre offre de stage"
-			urlÉtapePrécédente={URL_DEPOSER_OFFRE}>
+		<FormulaireEtapeLayout
+			etapeCourante={2}
+			nombreEtapes={3}
+			titre="Votre offre de stage"
+			titreEtapeSuivante="Localisation du stage"
+			urlEtapePrecedente={URL_DEPOSER_OFFRE}>
 			<StageDeposerOffreFormulaireLayout
 				inputsObligatoires={
 					<ChampsObligatoires informationsStage={informationsStage} />
@@ -229,13 +234,12 @@ export default function StageDeposerOffreFormulaireEtape2Stage() {
 				formRef={formRef}
 				handleFormSubmit={handleFormSubmit}
 				boutonValidation={(
-					<ButtonComponent
-						icon={<Icon name="angle-right" />}
-						iconPosition="right"
+					<Button
+						className="fr-btn--lg"
 						label="Suivant"
 						type="submit" />
 				)} />
-		</FormulaireÉtapeLayout>
+		</FormulaireEtapeLayout>
 	);
 };
 

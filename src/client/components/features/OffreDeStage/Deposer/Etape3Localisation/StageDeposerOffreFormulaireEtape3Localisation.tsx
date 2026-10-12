@@ -6,14 +6,13 @@ import {
 	StageDeposerOffreFormulaireLayout,
 } from '~/client/components/features/OffreDeStage/Deposer/FormulaireLayout/StageDeposerOffreFormulaireLayout';
 import { OffreDeStageDeposeeLocalisation } from '~/client/components/features/OffreDeStage/Deposer/StageDeposerOffre';
-import { FormulaireÉtapeLayout } from '~/client/components/layouts/FormulaireEtape/FormulaireEtapeLayout';
-import { ButtonComponent } from '~/client/components/ui/Button/ButtonComponent';
-import { LoadingButton } from '~/client/components/ui/Button/LoadingButton';
+import { FormulaireEtapeLayout } from "~/client/components/layouts/FormulaireEtape/FormulaireEtapeLayout";
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 import { Input } from '~/client/components/ui/Form/Input';
 import { ModalErrorSubmission } from '~/client/components/ui/Form/ModaleErrorSubmission/ModalErrorSubmission';
-import { Icon } from '~/client/components/ui/Icon/Icon';
+import { SpinnerIcon } from "~/client/components/ui/Icon/spinner.icon";
 import { useDependency } from '~/client/context/dependenciesContainer.context';
+import { Button } from "~/client/dsfr";
 import { paysList } from '~/client/domain/pays';
 import { StageService } from '~/client/services/stage/stage.service';
 import {
@@ -78,14 +77,16 @@ export default function StageDeposerOffreFormulaireEtape3Localisation() {
 
 	const champsObligatoires = (
 		<>
-			<ComboboxPays
-				paysList={paysList}
-				defaultValue={paysDefaultValue}
-				label={'Pays'}
-				labelComplement={'Exemple : France'}
-				valueName={LocalisationInputName.PAYS}
-				required />
-			<Champ className="fr-input-group">
+			<div className="fr-col-12 fr-col-xl-6">
+				<ComboboxPays
+					paysList={paysList}
+					defaultValue={paysDefaultValue}
+					label={'Pays'}
+					labelComplement={'Exemple : France'}
+					valueName={LocalisationInputName.PAYS}
+					required />
+			</div>
+			<Champ className="fr-input-group fr-col-12 fr-col-xl-6">
 				<Champ.Label>
 				Ville
 					<Champ.Label.Complement>Exemple : Paris</Champ.Label.Complement>
@@ -97,7 +98,7 @@ export default function StageDeposerOffreFormulaireEtape3Localisation() {
 					defaultValue={informationsLocalisation?.ville} />
 				<Champ.Error />
 			</Champ>
-			<Champ className="fr-input-group">
+			<Champ className="fr-input-group fr-col-12 fr-col-xl-6">
 				<Champ.Label>
 				Adresse
 					<Champ.Label.Complement>Exemple : 127 rue de Grenelle</Champ.Label.Complement>
@@ -109,7 +110,7 @@ export default function StageDeposerOffreFormulaireEtape3Localisation() {
 					defaultValue={informationsLocalisation?.adresse} />
 				<Champ.Error />
 			</Champ>
-			<Champ className="fr-input-group">
+			<Champ className="fr-input-group fr-col-12 fr-col-xl-6">
 				<Champ.Label>
 				Code postal
 					<Champ.Label.Complement>Exemple : 75007</Champ.Label.Complement>
@@ -126,7 +127,7 @@ export default function StageDeposerOffreFormulaireEtape3Localisation() {
 
 	const champsFacultatifs = (
 		<>
-			<Champ className="fr-input-group">
+			<Champ className="fr-input-group fr-col-12 fr-col-xl-6">
 				<Champ.Label>
 				Région
 					<Champ.Label.Complement>Exemple : Île-De-France</Champ.Label.Complement>
@@ -137,7 +138,7 @@ export default function StageDeposerOffreFormulaireEtape3Localisation() {
 					defaultValue={informationsLocalisation?.region} />
 				<Champ.Error />
 			</Champ>
-			<Champ className="fr-input-group">
+			<Champ className="fr-input-group fr-col-12 fr-col-xl-6">
 				<Champ.Label>
 				Département
 					<Champ.Label.Complement>Exemple : Yvelines</Champ.Label.Complement>
@@ -152,11 +153,10 @@ export default function StageDeposerOffreFormulaireEtape3Localisation() {
 	);
 
 	const boutonValidation = isLoading
-		? <LoadingButton />
+		? <Button disabled label="Envoi en cours" icon={<SpinnerIcon />} iconPosition="left" />
 		: (
-			<ButtonComponent
-				icon={<Icon name="angle-right" />}
-				iconPosition="right"
+			<Button
+				className="fr-btn--icon-right fr-icon-arrow-right-line"
 				label="Envoyer ma demande de dépôt d’offre"
 				type="submit"
 				disabled={isLoading} />
@@ -183,16 +183,18 @@ export default function StageDeposerOffreFormulaireEtape3Localisation() {
 
 	return (
 		<>
-			<FormulaireÉtapeLayout
-				étape="Étape 3 sur 3 : Localisation du stage"
-				urlÉtapePrécédente={`${URL_DEPOSER_OFFRE}/votre-offre-de-stage`}>
+			<FormulaireEtapeLayout
+				etapeCourante={3}
+				nombreEtapes={3}
+				titre="Localisation du stage"
+				urlEtapePrecedente={`${URL_DEPOSER_OFFRE}/votre-offre-de-stage`}>
 				<StageDeposerOffreFormulaireLayout
 					inputsObligatoires={champsObligatoires}
 					inputsFacultatifs={champsFacultatifs}
 					formRef={formRef}
 					handleFormSubmit={handleFormSubmit}
 					boutonValidation={boutonValidation} />
-			</FormulaireÉtapeLayout>
+			</FormulaireEtapeLayout>
 			<ModalErrorSubmission
 				isOpen={isModalErrorSubmitOpen}
 				onClose={() => setIsModalErrorSubmitOpen(false)}

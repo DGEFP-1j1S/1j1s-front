@@ -125,7 +125,7 @@ describe('<Localisation />', () => {
 				</DependenciesProvider>,
 			);
 
-			expect(screen.getByText('Étape 3 sur 3 : Localisation du stage')).toBeInTheDocument();
+			expect(screen.getByRole("heading", { level: 2, name: "Localisation du stage Étape 3 sur 3" })).toBeInTheDocument();
 			expect(screen.getByRole('combobox', { name: 'Pays Exemple : France' })).toBeInTheDocument();
 			expect(screen.getByRole('textbox', { name: 'Ville Exemple : Paris' })).toBeInTheDocument();
 			expect(screen.getByRole('textbox', { name: 'Adresse Exemple : 127 rue de Grenelle' })).toBeInTheDocument();
@@ -291,7 +291,7 @@ describe('<Localisation />', () => {
 				expect(modaleErreur).toBeVisible();
 				await user.click(within(modaleErreur).getByRole('button', { name:'Fermer' }));
 
-				expect(screen.getByText('Étape 3 sur 3 : Localisation du stage')).toBeVisible();
+				expect(screen.getByRole("heading", { level: 2, name: "Localisation du stage Étape 3 sur 3" })).toBeVisible();
 			});
 
 			it('lorsque je ferme la modale d‘erreur avec le bouton Retour au formulaire', async () => {
@@ -324,7 +324,7 @@ describe('<Localisation />', () => {
 				expect(modaleErreur).toBeVisible();
 				await user.click(within(modaleErreur).getByRole('button', { name:'Retour au formulaire' }));
 
-				expect(screen.getByText('Étape 3 sur 3 : Localisation du stage')).toBeVisible();
+				expect(screen.getByRole("heading", { level: 2, name: "Localisation du stage Étape 3 sur 3" })).toBeVisible();
 			});
 		});
 	});

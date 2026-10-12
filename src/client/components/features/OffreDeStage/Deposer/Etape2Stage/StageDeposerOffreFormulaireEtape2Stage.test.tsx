@@ -40,7 +40,7 @@ describe('<Stage />', () => {
 				stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}
 				stageDeposerOffreEtape2PersistenceService={aStageDeposerOffreEtape2PersistenceService()}><Stage /></DependenciesProvider>);
 
-			expect(screen.getByText('Étape 2 sur 3 : Votre offre de stage')).toBeVisible();
+			expect(screen.getByRole("heading", { level: 2, name: "Votre offre de stage Étape 2 sur 3" })).toBeVisible();
 			expect(screen.getByRole('textbox', { name: LABEL_NOM_STAGE })).toBeVisible();
 			expect(screen.getByRole('textbox', { name: LABEL_OU_POSTULER })).toBeVisible();
 			expect(screen.getByRole('textbox', { name: LABEL_DESCRIPTION_STAGE })).toBeVisible();
