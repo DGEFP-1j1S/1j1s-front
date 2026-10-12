@@ -86,10 +86,9 @@ export function FlippingCard(props: FlippingCardProps) {
 								onClick={() => flipCard()} />
 						)}
 						{link && (
-							<Link href={link} prefetch={false} appearance="asPrimaryButton">
-								{isInternalLink ? 'Lire l‘article' : 'En savoir plus'}
-								<Link.Icon />
-							</Link>
+								isInternalLink
+									? <Link href={link}>Lire l‘article</Link>
+									: <a href={link} target="_blank" rel="noreferrer" title='En savoir plus - nouvelle fenêtre'>En savoir plus</a>
 						)}
 					</div>
 				</div>
