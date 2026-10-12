@@ -48,7 +48,7 @@ export function ConsulterAnnonce({ annonceDeLogement }: ConsulterAnnonceDeLogeme
 	} = annonceDeLogement;
 	return (
 		<main id="contenu" className={styles.gridLayout}>
-			<BackButton className={styles.boutonRetour} />
+			<BackButton />
 			<AnnonceSource source={source} className={styles.mobileOnly} data-testid="source-annonce-mobile" />
 			<AnnonceCarousel imageUrlList={imageList} />
 			<AnnonceEntête>

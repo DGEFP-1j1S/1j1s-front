@@ -60,31 +60,32 @@ export function InputDateDeDebut(props: { displayDateDeDebutPrecise: boolean, in
 	return (
 		<>
 			{props.displayDateDeDebutPrecise ? (
-				<Champ className="fr-input-group">
-					<Champ.Label>
-					Date précise du début de stage
-					</Champ.Label>
-					<Champ.Input
-						render={Input}
-						type="date"
-						name={StageEnum.DATE_DE_DEBUT_MIN}
-						defaultValue={dateDeDebutMin}
-						required
-						min={disableBeforeToday}
-						max={'9999-12-31'}
-						onChange={(event) => setDateDeDebutMin(event.target.value)}
-						validation={(event) => validationDateDeDebutMin(event as string)}
-						pattern={patternDate}
-						placeholder={placeholderDate} />
-					<Champ.Error />
-				</Champ>
+				<div className="fr-fieldset__element fr-mb-0">
+					<Champ className="fr-input-group">
+						<Champ.Label>
+						Date précise du début de stage
+						</Champ.Label>
+						<Champ.Input
+							render={Input}
+							type="date"
+							name={StageEnum.DATE_DE_DEBUT_MIN}
+							defaultValue={dateDeDebutMin}
+							required
+							min={disableBeforeToday}
+							max={'9999-12-31'}
+							onChange={(event) => setDateDeDebutMin(event.target.value)}
+							validation={(event) => validationDateDeDebutMin(event as string)}
+							pattern={patternDate}
+							placeholder={placeholderDate} />
+						<Champ.Error />
+					</Champ>
+				</div>
 			)
 				: (
-					<div className="fr-grid-row fr-grid-row--gutters">
-						<Champ className="fr-input-group fr-col-12 fr-col-xl-6">
-							<Champ.Label>
-						Date de début du stage au plus tôt
-							</Champ.Label>
+					<>
+					<div className="fr-fieldset__element fr-fieldset__element--inline flex-grow--1 fr-mb-sm-0">
+						<Champ className="fr-input-group">
+							<Champ.Label>Date de début du stage au plus tôt</Champ.Label>
 							<Champ.Input
 								render={Input}
 								type="date"
@@ -99,7 +100,9 @@ export function InputDateDeDebut(props: { displayDateDeDebutPrecise: boolean, in
 								placeholder={placeholderDate} />
 							<Champ.Error />
 						</Champ>
-						<Champ className="fr-input-group fr-col-12 fr-col-xl-6">
+					</div>
+					<div className="fr-fieldset__element fr-fieldset__element--inline flex-grow--1 fr-mb-0">
+						<Champ className="fr-input-group">
 							<Champ.Label>
 						Date de début du stage au plus tard
 							</Champ.Label>
@@ -118,6 +121,7 @@ export function InputDateDeDebut(props: { displayDateDeDebutPrecise: boolean, in
 							<Champ.Error />
 						</Champ>
 					</div>
+				</>
 				)}
 		</>
 	);

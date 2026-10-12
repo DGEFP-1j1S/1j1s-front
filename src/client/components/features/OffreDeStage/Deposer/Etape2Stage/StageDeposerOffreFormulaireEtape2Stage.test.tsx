@@ -14,9 +14,9 @@ import {
 } from '~/client/services/stageDeposerOffreEtape2Persistence/stageDeposerOffreEtape2Persistence.service.fixture';
 
 const LABEL_OU_POSTULER = 'Lien sur lequel les candidats pourront postuler ou une adresse e-mail à laquelle envoyer sa candidature Exemples : https://candidat.francetravail.fr/offres/142Y OU candidature_PE_technicien@exemple.com';
-const LABEL_NOM_STAGE = 'Nom de l’offre de stage (200 caractères maximum) Exemple : Assistant de recherche (6mois) chez ABC.ENTREPRISE';
-const LABEL_DESCRIPTION_STAGE = 'Description de l’offre de stage (200 caractères minimum) Informations sur le stage : les objectifs, les challenges, les missions…';
-const LABEL_REMUNERATION = 'Rémunération par mois Exemple : 560';
+const LABEL_NOM_STAGE = 'Nom de l’offre de stage 200 caractères maximum Exemple : Assistant de recherche (6 mois) chez ABC.ENTREPRISE';
+const LABEL_DESCRIPTION_STAGE = 'Description de l’offre de stage 200 caractères minimum Informations sur le stage : les objectifs, les challenges, les missions…';
+const LABEL_REMUNERATION = 'Rémunération par mois (en euros) Exemple : 760';
 
 describe('<Stage />', () => {
 	beforeEach(() => {
@@ -181,18 +181,6 @@ describe('<Stage />', () => {
 			});
 		});
 
-		describe('champ remuneration', () => {
-			it('l‘information sur l‘unité de rémunération est bien liée au champ', () => {
-				render(<DependenciesProvider
-					stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}
-					stageDeposerOffreEtape2PersistenceService={aStageDeposerOffreEtape2PersistenceService()}><Stage /></DependenciesProvider>);
-
-				//When
-				const inputRemuneration = screen.getByRole('spinbutton', { name: LABEL_REMUNERATION });
-
-				expect(inputRemuneration).toHaveAccessibleDescription('€');
-			});
-		});
 		it('il voit afficher des champs facultatifs', async () => {
 			const labelDomaineOffreStage = 'Domaine de l’offre de stage';
 			const télétravailPossible = 'Télétravail possible';

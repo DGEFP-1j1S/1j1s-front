@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
 
-type ButtonAppearance = 'primary' | 'secondary' | 'tertiary' | 'quaternary';
+type ButtonAppearance = 'primary' | 'secondary' | 'tertiary' | 'tertiary-no-outline';
 
 type IconPosition = 'top' | 'left' | 'right';
 
 type IconProps = {
-	icon: React.ReactNode;
+	icon?: React.ReactNode;
 	iconPosition: IconPosition;
 } | {
 	icon?: never;
@@ -32,7 +32,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonPropsWithIcon>(f
 				return 'fr-btn--secondary';
 			case 'tertiary':
 				return 'fr-btn--tertiary';
-			case 'quaternary':
+			case 'tertiary-no-outline':
 				return 'fr-btn--tertiary-no-outline';
 		}
 	}, [appearance]);

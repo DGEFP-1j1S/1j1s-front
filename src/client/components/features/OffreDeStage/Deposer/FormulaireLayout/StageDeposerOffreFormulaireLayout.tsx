@@ -14,11 +14,11 @@ export function StageDeposerOffreFormulaireLayout({ inputsObligatoires, inputsFa
 	return (
 		<form
 			ref={formRef}
-			className='border--blue fr-p-5w'
+			className='border--blue fr-p-5v fr-p-md-5w'
 			onSubmit={handleFormSubmit}
 			{...rest}>
-			<fieldset className="fr-fieldset">
-				<legend className="fr-fieldset__legend fr-fieldset__legend--regular fr-text--lg">
+			<fieldset className="fr-fieldset" aria-labelledby="legend-champs-obligatoires">
+				<legend id="legend-champs-obligatoires" className="fr-fieldset__legend fr-fieldset__legend--regular fr-text--lg">
 					Les champs suivants sont obligatoires
 				</legend>
 				<div className="fr-fieldset__element">
@@ -27,8 +27,8 @@ export function StageDeposerOffreFormulaireLayout({ inputsObligatoires, inputsFa
 					</div>
 				</div>
 			</fieldset>
-			<fieldset className="fr-fieldset fr-mt-4w">
-				<legend className="fr-fieldset__legend fr-fieldset__legend--regular fr-text--lg">
+			<fieldset className="fr-fieldset fr-mt-4w" aria-labelledby="legend-champs-facultatifs">
+				<legend id="legend-champs-facultatifs" className="fr-fieldset__legend fr-fieldset__legend--regular fr-text--lg">
 				Les champs suivants sont facultatifs mais recommandés
 				</legend>
 				<div className="fr-fieldset__element">

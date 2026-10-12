@@ -7,10 +7,6 @@ import { Banner } from "~/client/components/ui/Hero/Hero";
 import useAnalytics from '~/client/hooks/useAnalytics';
 import analytics from '~/pages/stages/deposer-offre/index.analytics';
 
-export const ETAPE_ENTREPRISE = 'formulaireEtape1';
-export const ETAPE_OFFRE_DE_STAGE = 'formulaireEtape2';
-export const ETAPE_LOCALISATION = 'formulaireEtape3';
-
 export const URL_DEPOSER_OFFRE = '/stages/deposer-offre';
 
 export default function DeposerOffreStagePage() {

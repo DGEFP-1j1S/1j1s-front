@@ -23,8 +23,8 @@ describe('<Entreprise />', () => {
 			render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
 
 			expect(screen.getByRole("heading", { level: 2, name: "Votre entreprise Étape 1 sur 3" })).toBeInTheDocument();
-			expect(screen.getByRole('textbox', { name: 'Nom de l’entreprise ou de l’employeur Exemples : Crédit Agricole, SNCF…' })).toBeVisible();
-			expect(screen.getByRole('textbox', { name: 'Adresse mail de contact Exemple : contactRH@example.com' })).toBeVisible();
+			expect(screen.getByRole('textbox', { name: "Nom de l’entreprise ou de l’employeur 255 caractères maximum Exemples : Crédit Agricole, SNCF…" })).toBeVisible();
+			expect(screen.getByRole('textbox', { name: 'Adresse mail de contact Cette adresse de contact sera utilisée dans le cas où il manquerait des informations pour valider votre demande, ou pour vous informer du statut de cette dernière. Cette adresse peut donc être différente de l’adresse sur laquelle il faudra candidater. Exemple : contactRH@example.com' })).toBeVisible();
 			expect(screen.getByRole('textbox', { name: 'Courte description de l’entreprise (500 caractères maximum) Informations sur votre entreprise : son histoire, des objectifs, des enjeux...' })).toBeVisible();
 			expect(screen.getByRole('textbox', { name: 'Logo de l’entreprise - lien/URL Exemple : https://www.1jeune1solution.gouv.fr/images/logos/r%C3…' })).toBeVisible();
 			expect(screen.getByRole('textbox', { name: 'Lien du site de l’entreprise - lien/URL Exemple : https://1jeune1solution.gouv.fr' })).toBeVisible();
@@ -54,19 +54,11 @@ describe('<Entreprise />', () => {
 		it('les champs contenant des données pouvant être saisie automatiquement ont un attribut autocomplete approprié', () => {
 			render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
 
-			expect(screen.getByRole('textbox', { name: 'Nom de l’entreprise ou de l’employeur Exemples : Crédit Agricole, SNCF…' })).toHaveAttribute('autocomplete', 'organization');
-			expect(screen.getByRole('textbox', { name: 'Adresse mail de contact Exemple : contactRH@example.com' })).toHaveAttribute('autocomplete', 'email');
+			expect(screen.getByRole('textbox', { name: "Nom de l’entreprise ou de l’employeur 255 caractères maximum Exemples : Crédit Agricole, SNCF…" })).toHaveAttribute('autocomplete', 'organization');
+			expect(screen.getByRole('textbox', { name: 'Adresse mail de contact Cette adresse de contact sera utilisée dans le cas où il manquerait des informations pour valider votre demande, ou pour vous informer du statut de cette dernière. Cette adresse peut donc être différente de l’adresse sur laquelle il faudra candidater. Exemple : contactRH@example.com' })).toHaveAttribute('autocomplete', 'email');
 		});
 
 		describe('champ adresse mail', () => {
-			it('le champ adresse mail donne une indication sur l’usage de celle-ci', async () => {
-				render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
-
-				const emailInput = screen.getByRole('textbox', { name: 'Adresse mail de contact Exemple : contactRH@example.com' });
-
-				expect(emailInput).toHaveAccessibleDescription(expect.stringContaining('Cette adresse de contact sera utilisée dans le cas où il manquerait des informations pour valider votre demande, ou pour vous informer du statut de cette dernière. Cette adresse peut donc être différente de l’adresse sur laquelle il faudra candidater.'));
-			});
-
 			it('lorsque je remplis le champ email avec des espaces avant et après, ils sont pas pris en compte', async () => {
 				const user = userEvent.setup();
 
@@ -131,13 +123,13 @@ describe('<Entreprise />', () => {
 		it('il voit une erreur native sur le premier champ obligatoire mais non rempli', async () => {
 			render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
 
-			const inputNomSociété = screen.getByRole('textbox', { name: 'Nom de l’entreprise ou de l’employeur Exemples : Crédit Agricole, SNCF…' });
-			await userEvent.type(inputNomSociété, 'Crédit Agricole');
+			const inputNomSociete = screen.getByRole('textbox', { name: 'Nom de l’entreprise ou de l’employeur 255 caractères maximum Exemples : Crédit Agricole, SNCF…'});
+			await userEvent.type(inputNomSociete, 'Crédit Agricole');
 
 			await BoutonSuivant();
 
-			expect(inputNomSociété).toBeValid();
-			expect(screen.getByRole('textbox', { name: 'Adresse mail de contact Exemple : contactRH@example.com' })).toBeInvalid();
+			expect(inputNomSociete).toBeValid();
+			expect(screen.getByRole('textbox', { name: "Adresse mail de contact Cette adresse de contact sera utilisée dans le cas où il manquerait des informations pour valider votre demande, ou pour vous informer du statut de cette dernière. Cette adresse peut donc être différente de l’adresse sur laquelle il faudra candidater. Exemple : contactRH@example.com" })).toBeInvalid();
 		});
 	});
 

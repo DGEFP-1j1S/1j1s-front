@@ -11,7 +11,6 @@ import { domaineStage } from '~/client/components/features/OffreDeStage/Deposer/
 import { FormulaireEtapeLayout } from "~/client/components/layouts/FormulaireEtape/FormulaireEtapeLayout";
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 import { Input } from '~/client/components/ui/Form/Input';
-import { InputWithUnit } from '~/client/components/ui/Form/InputWithUnit/InputWithUnit';
 import { SelectSimple } from '~/client/components/ui/Form/Select/SelectSimple';
 import { TextArea } from '~/client/components/ui/Form/TextArea/TextArea';
 import { Radio } from '~/client/components/ui/Radio/Radio';
@@ -70,8 +69,9 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 	return (
 		<>
 			<Champ className="fr-input-group fr-col-12">
-				<Champ.Label>Nom de l’offre de stage (200 caractères maximum)
-					<Champ.Label.Complement>Exemple : Assistant de recherche (6mois) chez ABC.ENTREPRISE</Champ.Label.Complement>
+				<Champ.Label>Nom de l’offre de stage
+					<Champ.Label.Complement>200 caractères maximum</Champ.Label.Complement>
+					<Champ.Label.Complement>Exemple : Assistant de recherche (6 mois) chez ABC.ENTREPRISE</Champ.Label.Complement>
 				</Champ.Label>
 				<Champ.Input
 					render={Input}
@@ -97,7 +97,8 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 			</Champ>
 
 			<Champ className="fr-input-group fr-col-12">
-				<Champ.Label>Description de l’offre de stage (200 caractères minimum)
+				<Champ.Label>Description de l’offre de stage
+					<Champ.Label.Complement>200 caractères minimum</Champ.Label.Complement>
 					<Champ.Label.Complement>Informations sur le stage : les objectifs, les challenges, les
 					missions…</Champ.Label.Complement>
 				</Champ.Label>
@@ -111,20 +112,18 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 				<Champ.Error />
 			</Champ>
 			<div className="fr-col-12">
-				<fieldset className="fr-fieldset">
-					<legend className="fr-fieldset__legend">Date de début du stage</legend>
+				<fieldset className="fr-fieldset" aria-labelledby="legend-date-debut">
+					<legend className="fr-fieldset__legend" id="legend-date-debut">Date de début du stage</legend>
 					<RadioIsDatePrecise
 						checked={displayDateDeDebutPrecise}
 						onChange={() => setDisplayDateDeDebutPrecise(!displayDateDeDebutPrecise)} />
-					<div className="fr-fieldset__element">
-						<InputDateDeDebut
-							displayDateDeDebutPrecise={displayDateDeDebutPrecise}
-							informationsStage={props.informationsStage} />
-					</div>
+					<InputDateDeDebut
+						displayDateDeDebutPrecise={displayDateDeDebutPrecise}
+						informationsStage={props.informationsStage} />
 				</fieldset>
 			</div>
 
-			<Champ className="fr-select-group fr-col-12 fr-col-xl-6">
+			<Champ className="fr-select-group fr-col-12">
 				<Champ.Label>
 				Durée du stage
 					<Champ.Label.Complement>Exemple : 3 mois</Champ.Label.Complement>
@@ -141,7 +140,7 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 	);
 }
 
-function ChampsFaculatifs(props: { informationsStage: OffreDeStageDeposeeStage | null }) {
+function ChampsFacultatifs(props: { informationsStage: OffreDeStageDeposeeStage | null }) {
 	return (
 		<>
 			<Champ className="fr-select-group fr-col-12 fr-col-xl-6">
@@ -159,23 +158,24 @@ function ChampsFaculatifs(props: { informationsStage: OffreDeStageDeposeeStage |
 
 			<Champ className="fr-input-group fr-col-12 fr-col-xl-6">
 				<Champ.Label>
-				Rémunération par mois
-					<Champ.Label.Complement>Exemple : 560</Champ.Label.Complement>
+				Rémunération par mois (en euros)
+					<Champ.Label.Complement>Exemple : 760</Champ.Label.Complement>
 				</Champ.Label>
-				<Champ.Input
-					render={InputWithUnit}
-					nomDeLUnite={'Euro'}
-					unite={'€'}
-					type="number"
-					name={StageEnum.REMUNERATION}
-					min={0}
-					defaultValue={props.informationsStage?.remunerationStage} />
+				<div className="fr-input-wrap fr-icon-money-euro-circle-line">
+					<Champ.Input
+						render={Input}
+						className="fr-icon-money-euro-circle-line"
+						type="number"
+						name={StageEnum.REMUNERATION}
+						min={0}
+						defaultValue={props.informationsStage?.remunerationStage} />
+				</div>
 				<Champ.Error />
 			</Champ>
 
 			<div className="fr-col-12 fr-col-xl-6">
-				<fieldset className="fr-fieldset">
-					<legend className="fr-fieldset__legend">Télétravail possible</legend>
+				<fieldset className="fr-fieldset" aria-labelledby="legend-teletravail">
+					<legend className="fr-fieldset__legend" id="legend-teletravail">Télétravail possible</legend>
 					<div className="fr-fieldset__element fr-fieldset__element--inline">
 						<Radio name={StageEnum.TELETRAVAIL}
 							value="true"
@@ -230,7 +230,7 @@ export default function StageDeposerOffreFormulaireEtape2Stage() {
 				inputsObligatoires={
 					<ChampsObligatoires informationsStage={informationsStage} />
 				}
-				inputsFacultatifs={<ChampsFaculatifs informationsStage={informationsStage} />}
+				inputsFacultatifs={<ChampsFacultatifs informationsStage={informationsStage} />}
 				formRef={formRef}
 				handleFormSubmit={handleFormSubmit}
 				boutonValidation={(

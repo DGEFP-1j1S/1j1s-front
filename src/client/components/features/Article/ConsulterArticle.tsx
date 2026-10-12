@@ -24,7 +24,7 @@ export function ConsulterArticle({ article }: ConsulterArticleProps) {
 	return (
 		<>
 			<main className={classNames('fr-container', styles.consulterArticle)}>
-				<BackButton className={styles.consulterArticleButtonRetour} />
+				<BackButton />
 				<h1 className={classNames(styles.titre, styles.blocTexte)}>{titre}</h1>
 				{ dateDerniereMiseAJour && <p className={styles.blocTexte}>Dernière mise à jour le {dateDerniereMiseAJour}</p> }
 				{/* eslint-disable-next-line @next/next/no-img-element */}

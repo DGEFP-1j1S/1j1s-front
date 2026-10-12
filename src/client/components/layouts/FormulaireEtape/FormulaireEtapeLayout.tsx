@@ -14,7 +14,14 @@ export function FormulaireEtapeLayout(props: FormulaireEtapeLayoutProps) {
 	const { etapeCourante, nombreEtapes, titre, titreEtapeSuivante, urlEtapePrecedente, children } = props;
 	return (
 		<div className="fr-container fr-mb-5w">
-			<div className="fr-stepper">
+			<div className="fr-stepper fr-col-lg-6 fr-col-12">
+				{ urlEtapePrecedente && (
+					<Link
+						href={urlEtapePrecedente}
+						className="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-arrow-go-back-line fr-mb-3w">
+						Retour à l’étape précédente
+					</Link>
+				)}
 				<h2 className="fr-stepper__title">
 					{titre}{" "}
 					<span className="fr-stepper__state">Étape {etapeCourante} sur {nombreEtapes}</span>
@@ -26,13 +33,6 @@ export function FormulaireEtapeLayout(props: FormulaireEtapeLayoutProps) {
 					</p>
 				)}
 			</div>
-			{ urlEtapePrecedente && (
-				<Link
-					href={urlEtapePrecedente}
-					className="fr-btn fr-btn--secondary fr-btn--icon-left fr-icon-arrow-left-line fr-mb-3w">
-        Retour à l’étape précédente
-				</Link>
-			)}
 			{ children }
 		</div>
 	);
