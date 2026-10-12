@@ -20,10 +20,10 @@ import { PublicHttpClientService } from '~/server/services/http/publicHttpClient
 const JE_VEUX_AIDER_PUBLISHER_ID = '5f5931496c7ea514150a818f';
 const SERVICE_CIVIQUE_PUBLISHER_ID = '5f99dbe75eb1ad767733b206';
 
-// L’API Engagement identifie ses missions par un ObjectId MongoDB (24 caractères hexadécimaux).
-// Tout id d’un autre format (ex : UUID de vieilles URL indexées) ne peut correspondre à aucune
-// mission : on court-circuite pour ne pas polluer l’API partenaire avec des requêtes vouées au 404.
-const FORMAT_ID_MISSION_ENGAGEMENT = /^[a-f\d]{24}$/i;
+// L'API Engagement identifie ses missions par un ObjectId MongoDB (24 caracteres hexadecimaux)
+// ou, depuis sa migration, par un UUID. Tout id d'un autre format ne peut correspondre a aucune
+// mission : on court-circuite pour ne pas polluer l'API partenaire avec des requetes vouees au 404.
+const FORMAT_ID_MISSION_ENGAGEMENT = /^([a-f\d]{24}|[a-f\d]{8}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{4}-[a-f\d]{12})$/i;
 
 export class ApiEngagementRepository implements EngagementRepository {
 	constructor(private readonly httpClientService: PublicHttpClientService, private readonly errorManagementService: ErrorManagementService) {}
