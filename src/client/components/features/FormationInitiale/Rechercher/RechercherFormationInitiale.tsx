@@ -110,8 +110,7 @@ function BanniereFormationInitiale() {
 	return (
 		<Banner>
 			<h1 className="fr-h1 fr-mb-0">
-				<span className="text--blue">Des milliers de formations </span>
-				pour vous permettre de réaliser votre projet professionnel
+				Des milliers de formations pour vous permettre de réaliser votre projet professionnel
 			</h1>
 		</Banner>
 	);

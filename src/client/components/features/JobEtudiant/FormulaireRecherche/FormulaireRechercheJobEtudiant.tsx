@@ -36,7 +36,7 @@ export function FormulaireRechercheJobEtudiant() {
 			aria-label="Rechercher un job étudiant"
 			onSubmit={updateRechercherJobEtudiantQueryParams}
 			role="search">
-			<h2 className="fr-h4 text--blue fr-mb-5w">Trouvez votre job étudiant</h2>
+			<h2 className="fr-h4 fr-mb-5w">Trouvez votre job étudiant</h2>
 			<div className="fr-grid-row fr-grid-row--gutters">
 				<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
 					<Champ className="fr-input-group">

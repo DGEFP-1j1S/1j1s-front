@@ -56,7 +56,6 @@ describe('<InstantSearchLayout />', () => {
 				<InstantSearchLayout
 					meilisearchIndex="fake"
 					titre="Titre"
-					sousTitre="Sous-titre"
 					formulaireDeRecherche={<div></div>}
 					tagList={<div></div>}
 					nombreDeResultatParPage={2}

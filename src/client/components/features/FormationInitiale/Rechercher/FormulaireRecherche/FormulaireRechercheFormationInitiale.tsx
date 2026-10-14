@@ -25,7 +25,7 @@ export function FormulaireRechercheFormationInitiale() {
 			className="border--blue fr-p-5w"
 			onSubmit={submitForm}
 		>
-			<h2 className="fr-h4 text--blue fr-mb-5w">Trouvez une formation</h2>
+			<h2 className="fr-h4 fr-mb-5w">Trouvez une formation</h2>
 			<div className="fr-grid-row fr-grid-row--gutters">
 				<div className="fr-col-12">
 					<Champ className="fr-input-group">

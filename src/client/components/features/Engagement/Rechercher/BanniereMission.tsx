@@ -11,8 +11,7 @@ export function BanniereMission({ isServiceCivique }: BanniereMissionProps) {
 	return (
 		<Banner>
 			<h1 className="fr-h1 fr-mb-0">
-				<span className="text--blue">{primaryText} </span>
-				pour me rendre utile tout en préparant mon avenir
+				{primaryText} pour me rendre utile tout en préparant mon avenir
 			</h1>
 		</Banner>
 	);

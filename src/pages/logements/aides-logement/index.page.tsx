@@ -15,8 +15,7 @@ export default function AidesLogement() {
 				robots="index,follow" />
 			<main id="contenu">
 				<HeroWithButtonLink
-					titlePrimaryText="Je découvre les aides pour payer mon logement "
-					titleSecondaryText="et bien d’autres encore !"
+					title="Je découvre les aides pour payer mon logement et bien d’autres encore !"
 					content="Grâce à notre simulateur, découvrez les aides auxquelles vous avez droit
             pour votre logement mais aussi votre mobilité, vos vacances, votre santé... et bien plus encore !
             Tout cela à portée de clic et en moins de 5 minutes."
@@ -56,7 +55,7 @@ export default function AidesLogement() {
 function additionalInformation() {
 	return (
 		<p className="fr-text--sm fr-mt-2w">
-			<span className="fr-icon-information-line text--blue fr-mr-1w" aria-hidden="true" />
+			<span className="fr-icon-information-line fr-mr-1w" aria-hidden="true" />
 			Avant de démarrer la simulation de vos aides, pensez à vous munir de vos ressources et de celles de vos parents si vous êtes encore à leur charge.
 		</p>
 	);

@@ -120,8 +120,7 @@ function BanniereJobEte() {
 	return (
 		<Banner>
 			<h1 className="fr-h1 fr-mb-0">
-				<span className="text--blue">Des milliers de jobs d’été </span>
-				sélectionnés pour vous par France Travail
+				Des milliers de jobs d’été sélectionnés pour vous par France Travail
 			</h1>
 		</Banner>
 	);

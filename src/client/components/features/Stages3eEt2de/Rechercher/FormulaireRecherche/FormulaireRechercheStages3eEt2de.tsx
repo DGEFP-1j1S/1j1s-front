@@ -51,7 +51,7 @@ export function FormulaireRechercheStages3eEt2de() {
 				role="search"
 				aria-label="Rechercher un stage de 3e et 2de"
 				onSubmit={updateRechercherStage3eEt2deQueryParams}>
-				<h2 className="fr-h4 text--blue fr-mb-3w">Trouvez un stage de 3e et 2nde</h2>
+				<h2 className="fr-h4 fr-mb-3w">Trouvez un stage de 3e et 2nde</h2>
 				<p className="fr-hint">Tous les champs sont obligatoires sauf mention contraire</p>
 				<div className="fr-grid-row fr-grid-row--gutters">
 					<div className="fr-col-12 fr-col-md-6">

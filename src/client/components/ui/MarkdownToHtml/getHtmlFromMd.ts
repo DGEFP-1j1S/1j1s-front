@@ -33,9 +33,6 @@ export function getHtmlFromMd(markdown: string): string {
 	};
 
 	md.renderer.rules.heading_open = function (tokens, idx, options, env, self) {
-		if (tokens[idx].tag === "h1") {
-		tokens[idx].attrJoin("class", "text--blue");
-		}
 		return self.renderToken(tokens, idx, options);
 	};
 

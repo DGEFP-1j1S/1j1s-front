@@ -31,7 +31,6 @@ interface AfficherResultatDeRechercheProps<THit extends BaseHit> {
 interface InstantSearchLayoutProps<THit extends BaseHit> extends AfficherResultatDeRechercheProps<THit> {
     meilisearchIndex: string
     titre: string
-    sousTitre: string
     formulaireDeRecherche: React.ReactElement
     tagList: React.ReactElement
 }
@@ -41,7 +40,6 @@ export function InstantSearchLayout<THit extends BaseHit = BaseHit>(props: Insta
 		meilisearchIndex,
 		nombreDeResultatParPage,
 		titre,
-		sousTitre,
 		formulaireDeRecherche,
 		tagList,
 		messageResultatRechercheLabelSingulier,
@@ -62,8 +60,7 @@ export function InstantSearchLayout<THit extends BaseHit = BaseHit>(props: Insta
 		<main id="contenu">
 			<Banner>
 				<h1 className="fr-h1 fr-mb-0">
-					<span className="text--blue">{titre} </span>
-					{sousTitre}
+					{titre}
 				</h1>
 			</Banner>
 			<InstantSearch

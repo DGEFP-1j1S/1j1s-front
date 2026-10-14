@@ -19,7 +19,7 @@ export default function JeRecrutePage() {
 			<main id="contenu">
 				<Banner>
 					<h1 className="fr-h1">
-						Vous cherchez <span className="text--blue">à recruter</span> ?
+						Vous cherchez à recruter ?
 					</h1>
 					<p className="fr-text--lead fr-mb-0">
 						Dans le cadre du plan 1 jeune, 1 solution, nous vous accompagnons dans la recherche de vos futurs collaborateurs.

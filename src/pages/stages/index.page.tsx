@@ -26,8 +26,7 @@ export default function RechercherOffreStagePage() {
 			<InstantSearchLayout
 				meilisearchIndex={MEILISEARCH_INDEX}
 				nombreDeResultatParPage={HITS_PER_PAGE}
-				titre="Des milliers d‘offres de stages"
-				sousTitre="sélectionnées pour vous"
+				titre="Des milliers d‘offres de stages sélectionnées pour vous"
 				formulaireDeRecherche={<FormulaireRechercheOffreStage />}
 				messageResultatRechercheLabelSingulier="offre de stage"
 				messageResultatRechercheLabelPluriel="offres de stage"

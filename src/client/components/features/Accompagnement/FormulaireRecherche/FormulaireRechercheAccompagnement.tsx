@@ -54,7 +54,7 @@ export function FormulaireRechercheAccompagnement() {
 				className="border--blue fr-p-5w"
 				aria-label="Rechercher un accompagnement"
 				onSubmit={updateRechercheAccompagnementQueryParams}>
-				<h2 className="fr-h4 text--blue fr-mb-3w">Trouvez un accompagnement</h2>
+				<h2 className="fr-h4 fr-mb-3w">Trouvez un accompagnement</h2>
 				<p className="fr-hint">Tous les champs sont obligatoires sauf mention contraire</p>
 				<div className="fr-grid-row fr-grid-row--gutters">
 					<div className="fr-col-12 fr-col-md-6">

@@ -25,7 +25,7 @@ export default function Entreprendre() {
 			<main id="contenu">
 				<BannerWithIllustration image="/images/entrepreneurs.webp" isCover>
 					<h1 className="fr-h1">
-						<span className="text--blue">Je découvre les solutions qui s’offrent à moi, pour créer mon entreprise… </span>
+						Je découvre les solutions qui s’offrent à moi, pour créer mon entreprise… 
 						quel que soit le stade de mon projet de création !
 					</h1>
 				</BannerWithIllustration>
@@ -35,8 +35,8 @@ export default function Entreprendre() {
 							<React.Fragment key={titre}>
 								{index > 0 && (
 									<>
-										<span className="fr-col-12 fr-hidden-md flex justify-center fr-py-1w text--blue fr-icon-arrow-down-line fr-icon--lg" aria-hidden="true" />
-										<span className="fr-hidden fr-unhidden-md align-items--center fr-px-2w text--blue fr-icon-arrow-right-line fr-icon--lg" aria-hidden="true" />
+										<span className="fr-col-12 fr-hidden-md flex justify-center fr-py-1w fr-icon-arrow-down-line fr-icon--lg" aria-hidden="true" />
+										<span className="fr-hidden fr-unhidden-md align-items--center fr-px-2w fr-icon-arrow-right-line fr-icon--lg" aria-hidden="true" />
 									</>
 								)}
 								<div role="listitem" className="fr-col-12 fr-col-md">

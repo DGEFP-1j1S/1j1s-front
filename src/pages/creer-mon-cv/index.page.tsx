@@ -15,8 +15,7 @@ export default function FormationPage() {
 				robots="index,follow" />
 			<main id="contenu">
 				<HeroWithButtonLink
-					titlePrimaryText="Je crée un CV personnalisé qui valorise mes compétences "
-					titleSecondaryText="et s’adapte à chaque annonce"
+					title="Je crée un CV personnalisé qui valorise mes compétences et s’adapte à chaque annonce"
 					content={heroCVContent()}
 					buttonHref="https://diagoriente.fr/"
 					buttonLabel="Créer mon CV"
