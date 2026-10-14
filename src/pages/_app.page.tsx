@@ -64,7 +64,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 		}
 	}, [router.asPath]);
 
-	const getLayout = Component.getLayout ?? defaultLayout;
+	const getLayout = Component.getLayout ?? ((page: ReactElement) => defaultLayout(page, pageProps));
 	return (
 		<>
 			<Head>
@@ -84,8 +84,8 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 	);
 }
 
-function defaultLayout(page: ReactElement) {
+function defaultLayout(page: ReactElement, pageProps: AppProps["pageProps"]) {
 	return (
-		<Layout>{page}</Layout>
+		<Layout pageProps={pageProps} afficherFilDAriane={!pageProps.error}>{page}</Layout>
 	);
 }
