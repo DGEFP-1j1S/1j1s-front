@@ -3,9 +3,7 @@ import React from 'react';
 import OffreStage
 	from '~/client/components/features/OffreDeStage/Deposer/Etape2Stage/StageDeposerOffreFormulaireEtape2Stage';
 import { Head } from '~/client/components/head/Head';
-import { LightHero, LightHeroPrimaryText, LightHeroSecondaryText } from '~/client/components/ui/Hero/LightHero';
-
-import styles from './DeposerOffreStageEtape2Stage.module.scss';
+import { Banner } from "~/client/components/ui/Hero/Hero";
 
 export default function DeposerOffreStageEtape2Page() {
 
@@ -15,18 +13,11 @@ export default function DeposerOffreStageEtape2Page() {
 				title={'Dépôt d’offre de stage - Étape 2 sur 3 : Votre offre de stage | 1jeune1solution'}
 				robots="index,follow" />
 			<main id="contenu">
-				<div className={styles.section}>
-					<LightHero>
-						<h1>
-							<LightHeroPrimaryText>
-								Déposez votre offre de stage
-							</LightHeroPrimaryText>
-							<LightHeroSecondaryText>
-								sur 1jeune1solution
-							</LightHeroSecondaryText>
-						</h1>
-					</LightHero>
-				</div>
+				<Banner>
+					<h1 className="fr-mb-0">
+						Je dépose une offre de stage sur 1jeune1solution
+					</h1>
+				</Banner>
 				<OffreStage />
 			</main>
 		</>

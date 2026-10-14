@@ -129,7 +129,7 @@ describe('FormulaireRechercherFormationAlternance', () => {
 			);
 
 			const user = userEvent.setup();
-			const selectNiveauEtudes = screen.getByRole('combobox', { name: 'Niveau d’études visé (facultatif) Exemples : CAP, Bac...' });
+			const selectNiveauEtudes = screen.getByRole('combobox', { name: 'Niveau d’études visé (optionnel) Exemples : CAP, Bac...' });
 			await user.selectOptions(selectNiveauEtudes, FORMATION_NIVEAU_3.libellé);
 
 			await user.click(screen.getByRole('button', { name: 'Rechercher' }));
@@ -195,7 +195,7 @@ describe('FormulaireRechercherFormationAlternance', () => {
 			);
 
 			const user = userEvent.setup();
-			await user.selectOptions(screen.getByRole('combobox', { name: 'Niveau d’études visé (facultatif) Exemples : CAP, Bac...' }), FORMATION_NIVEAU_3.libellé);
+			await user.selectOptions(screen.getByRole('combobox', { name: 'Niveau d’études visé (optionnel) Exemples : CAP, Bac...' }), FORMATION_NIVEAU_3.libellé);
 			await user.click(screen.getByRole('button', { name: 'Rechercher' }));
 
 			expect(routerPush).toHaveBeenCalledTimes(1);

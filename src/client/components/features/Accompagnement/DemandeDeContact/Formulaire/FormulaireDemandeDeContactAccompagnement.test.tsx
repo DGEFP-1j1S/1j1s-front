@@ -29,7 +29,7 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 	});
 
 	describe('champ email', () => {
-		it('a un champ Adresse e-mail facultatif', async () => {
+		it('a un champ Adresse e-mail optionnel', async () => {
 			render(<DependenciesProvider
 				localisationService={aLocalisationService()}
 				établissementAccompagnementService={anEtablissementAccompagnementService()}>
@@ -39,7 +39,7 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 					onFailure={vi.fn()} />
 			</DependenciesProvider>,
 			);
-			const inputEmail = screen.getByRole('textbox', { name: 'Adresse e-mail (facultatif) Exemple : jean.dupont@gmail.com' });
+			const inputEmail = screen.getByRole('textbox', { name: 'Adresse e-mail (optionnel) Exemple : jean.dupont@gmail.com' });
 
 			await userEvent.type(inputEmail, 's{backspace}');
 
@@ -60,7 +60,7 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 			);
 
 			//When
-			const inputEmail = screen.getByRole('textbox', { name: 'Adresse e-mail (facultatif) Exemple : jean.dupont@gmail.com' });
+			const inputEmail = screen.getByRole('textbox', { name: 'Adresse e-mail (optionnel) Exemple : jean.dupont@gmail.com' });
 			await userEvent.type(inputEmail, '    mail@avecespace.com   ');
 
 			// Then
@@ -68,7 +68,7 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 		});
 	});
 
-	it('a un champ Commentaire facultatif', async () => {
+	it('a un champ Commentaire optionnel', async () => {
 		// Given
 		render(
 			<DependenciesProvider
@@ -82,7 +82,7 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 		);
 
 		//When
-		const textarea = screen.getByRole('textbox', { name: 'Commentaires ou autres informations utiles (facultatif)' });
+		const textarea = screen.getByRole('textbox', { name: 'Commentaires ou autres informations utiles (optionnel)' });
 		await userEvent.type(textarea, 's{backspace}');
 
 		// Then
@@ -130,11 +130,11 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 				</DependenciesProvider>,
 			);
 
-			await user.type(screen.getByRole('textbox', { name: 'Adresse e-mail (facultatif) Exemple : jean.dupont@gmail.com' }), 'john.doe@email.com');
+			await user.type(screen.getByRole('textbox', { name: 'Adresse e-mail (optionnel) Exemple : jean.dupont@gmail.com' }), 'john.doe@email.com');
 			await user.type(screen.getByRole('textbox', { name: 'Nom Exemple : Dupont' }), 'Doe');
 			await user.type(screen.getByRole('textbox', { name: 'Prénom Exemple : Jean' }), 'John');
 			await user.type(screen.getByRole('textbox', { name: 'Téléphone Exemple : 0606060606' }), '0606060606');
-			await user.type(screen.getByRole('textbox', { name: 'Commentaires ou autres informations utiles (facultatif)' }), 'Merci de me recontacter');
+			await user.type(screen.getByRole('textbox', { name: 'Commentaires ou autres informations utiles (optionnel)' }), 'Merci de me recontacter');
 
 			await user.selectOptions(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }), '23 ans');
 
@@ -173,11 +173,11 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 				</DependenciesProvider>,
 			);
 
-			await user.type(screen.getByRole('textbox', { name: 'Adresse e-mail (facultatif) Exemple : jean.dupont@gmail.com' }), 'john.doe@email.com');
+			await user.type(screen.getByRole('textbox', { name: 'Adresse e-mail (optionnel) Exemple : jean.dupont@gmail.com' }), 'john.doe@email.com');
 			await user.type(screen.getByRole('textbox', { name: 'Nom Exemple : Dupont' }), 'Doe');
 			await user.type(screen.getByRole('textbox', { name: 'Prénom Exemple : Jean' }), 'John');
 			await user.type(screen.getByRole('textbox', { name: 'Téléphone Exemple : 0606060606' }), '0606060606');
-			await user.type(screen.getByRole('textbox', { name: 'Commentaires ou autres informations utiles (facultatif)' }), 'Merci de me recontacter');
+			await user.type(screen.getByRole('textbox', { name: 'Commentaires ou autres informations utiles (optionnel)' }), 'Merci de me recontacter');
 
 			await user.selectOptions(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }), '23 ans');
 

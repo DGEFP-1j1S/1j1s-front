@@ -25,7 +25,7 @@ export function Champ(props: ComponentPropsWithoutRef<'div'>) {
 			setHintId,
 			setInputId,
 		}}>
-			<div className={classNames(classNameProps)} {...otherProps} />
+			<div className={classNames(classNameProps, errorMessage && getErrorClassName(classNameProps))} {...otherProps} />
 		</ChampContextProvider>
 	);
 }
@@ -122,6 +122,14 @@ Champ.Input = InputChamp;
 Champ.Label = Object.assign(LabelChamp, Label);
 Champ.Error = ErrorChamp;
 Champ.Hint = HintChamp;
+
+function getErrorClassName(className?: string) {
+	const classes = className?.split(" ") ?? [];
+	return {
+		"fr-input-group--error": classes.includes("fr-input-group"),
+		"fr-select-group--error": classes.includes("fr-select-group"),
+	};
+}
 
 function doNothing() {
 	return;

@@ -59,7 +59,7 @@ export function FormulaireRechercheStages3eEt2de() {
 							<ComboboxMetiers
 								defaultValue={metierDefaultValue}
 								placeholder={'Exemples : boulanger, styliste...'}
-								label={'Métier (facultatif)'}
+								label={'Métier (optionnel)'}
 								valueName={'codeMetier'}/>
 						</MetierDependenciesProvider>
 					</div>

@@ -125,19 +125,19 @@ describe('<Localisation />', () => {
 				</DependenciesProvider>,
 			);
 
-			expect(screen.getByText('Étape 3 sur 3 : Localisation du stage')).toBeInTheDocument();
+			expect(screen.getByRole("heading", { level: 2, name: "Localisation du stage Étape 3 sur 3" })).toBeInTheDocument();
 			expect(screen.getByRole('combobox', { name: 'Pays Exemple : France' })).toBeInTheDocument();
 			expect(screen.getByRole('textbox', { name: 'Ville Exemple : Paris' })).toBeInTheDocument();
 			expect(screen.getByRole('textbox', { name: 'Adresse Exemple : 127 rue de Grenelle' })).toBeInTheDocument();
 			expect(screen.getByRole('textbox', { name: 'Code postal Exemple : 75007' })).toBeInTheDocument();
-			expect(screen.getByRole('textbox', { name: 'Région Exemple : Île-De-France' })).toBeInTheDocument();
-			expect(screen.getByRole('textbox', { name: 'Département Exemple : Yvelines' })).toBeInTheDocument();
+			expect(screen.getByRole('textbox', { name: 'Région (optionnel) Exemple : Île-De-France' })).toBeInTheDocument();
+			expect(screen.getByRole('textbox', { name: 'Département (optionnel) Exemple : Yvelines' })).toBeInTheDocument();
 			expect(screen.getByRole('button', { name: 'Envoyer ma demande de dépôt d’offre' })).toBeInTheDocument();
 		});
 
-		it('il voit affiché des champs facultatifs', async () => {
-			const labelRegion = 'Région Exemple : Île-De-France';
-			const labelDepartement = 'Département Exemple : Yvelines';
+		it('il voit affiché des champs optionnels', async () => {
+			const labelRegion = 'Région (optionnel) Exemple : Île-De-France';
+			const labelDepartement = 'Département (optionnel) Exemple : Yvelines';
 			const stageService = aStageService();
 			const persistenceEntreprise = aStageDeposerOffreEtape1PersistenceService({
 				getInformationsEtape1: vi.fn().mockReturnValue(aFormulaireEtapeEntreprise()),
@@ -226,8 +226,8 @@ describe('<Localisation />', () => {
 				expect(screen.getByRole('textbox', { name: 'Ville Exemple : Paris' })).toHaveValue('Paris');
 				expect(screen.getByRole('textbox', { name: 'Adresse Exemple : 127 rue de Grenelle' })).toHaveValue('34 avenue de l’Opéra');
 				expect(screen.getByRole('textbox', { name: 'Code postal Exemple : 75007' })).toHaveValue('75000');
-				expect(screen.getByRole('textbox', { name: 'Région Exemple : Île-De-France' })).toHaveValue('Ile-de-France');
-				expect(screen.getByRole('textbox', { name: 'Département Exemple : Yvelines' })).toHaveValue('Paris');
+				expect(screen.getByRole('textbox', { name: 'Région (optionnel) Exemple : Île-De-France' })).toHaveValue('Ile-de-France');
+				expect(screen.getByRole('textbox', { name: 'Département (optionnel) Exemple : Yvelines' })).toHaveValue('Paris');
 			});
 		});
 
@@ -291,7 +291,7 @@ describe('<Localisation />', () => {
 				expect(modaleErreur).toBeVisible();
 				await user.click(within(modaleErreur).getByRole('button', { name:'Fermer' }));
 
-				expect(screen.getByText('Étape 3 sur 3 : Localisation du stage')).toBeVisible();
+				expect(screen.getByRole("heading", { level: 2, name: "Localisation du stage Étape 3 sur 3" })).toBeVisible();
 			});
 
 			it('lorsque je ferme la modale d‘erreur avec le bouton Retour au formulaire', async () => {
@@ -324,7 +324,7 @@ describe('<Localisation />', () => {
 				expect(modaleErreur).toBeVisible();
 				await user.click(within(modaleErreur).getByRole('button', { name:'Retour au formulaire' }));
 
-				expect(screen.getByText('Étape 3 sur 3 : Localisation du stage')).toBeVisible();
+				expect(screen.getByRole("heading", { level: 2, name: "Localisation du stage Étape 3 sur 3" })).toBeVisible();
 			});
 		});
 	});

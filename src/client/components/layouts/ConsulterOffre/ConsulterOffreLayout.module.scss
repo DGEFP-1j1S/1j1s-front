@@ -20,10 +20,6 @@ $layout-border-color: utilities.$color-background-border;
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    &Button {
-        padding: 1.5rem 1rem;
-    }
 }
 
 @include utilities.media(medium) {
@@ -32,15 +28,5 @@ $layout-border-color: utilities.$color-background-border;
         border-radius: 1.25rem;
         margin: 2rem auto 3.5rem auto;
         padding: 0 6rem 2rem 6rem;
-
-        &Button {
-            padding: 0;
-            width: 100%;
-            margin: 2rem auto auto;
-            border: inherit;
-            button {
-                margin-left: 1rem;
-            }
-        }
     }
 }

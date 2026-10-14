@@ -88,7 +88,7 @@ describe('FormulaireRechercheStages3eEt2de', () => {
 		);
 
 		// WHEN
-		const inputRechercheMetier = screen.getByRole('combobox', { name: 'Métier (facultatif) Exemples : boulangerie, enseignement' });
+		const inputRechercheMetier = screen.getByRole('combobox', { name: 'Métier (optionnel) Exemples : boulangerie, enseignement' });
 		await user.type(inputRechercheMetier, 'boulanger');
 		const boulangerOption = await screen.findByRole('option', { name: 'boulanger' });
 		await user.click(boulangerOption);

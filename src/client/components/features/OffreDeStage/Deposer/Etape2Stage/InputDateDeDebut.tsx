@@ -3,8 +3,6 @@ import React, { useMemo, useState } from 'react';
 import {
 	StageEnum,
 } from '~/client/components/features/OffreDeStage/Deposer/Etape2Stage/StageDeposerOffreFormulaireEtape2Stage';
-import styles
-	from '~/client/components/features/OffreDeStage/Deposer/Etape2Stage/StageDeposerOffreFormulaireEtape2Stage.module.scss';
 import { OffreDeStageDeposeeStage } from '~/client/components/features/OffreDeStage/Deposer/StageDeposerOffre';
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 import { Input } from '~/client/components/ui/Form/Input';
@@ -62,31 +60,32 @@ export function InputDateDeDebut(props: { displayDateDeDebutPrecise: boolean, in
 	return (
 		<>
 			{props.displayDateDeDebutPrecise ? (
-				<Champ className="fr-input-group">
-					<Champ.Label>
-					Date précise du début de stage
-					</Champ.Label>
-					<Champ.Input
-						render={Input}
-						type="date"
-						name={StageEnum.DATE_DE_DEBUT_MIN}
-						defaultValue={dateDeDebutMin}
-						required
-						min={disableBeforeToday}
-						max={'9999-12-31'}
-						onChange={(event) => setDateDeDebutMin(event.target.value)}
-						validation={(event) => validationDateDeDebutMin(event as string)}
-						pattern={patternDate}
-						placeholder={placeholderDate} />
-					<Champ.Error />
-				</Champ>
+				<div className="fr-fieldset__element fr-mb-0">
+					<Champ className="fr-input-group fr-col-6">
+						<Champ.Label>
+						Date précise du début de stage
+						</Champ.Label>
+						<Champ.Input
+							render={Input}
+							type="date"
+							name={StageEnum.DATE_DE_DEBUT_MIN}
+							defaultValue={dateDeDebutMin}
+							required
+							min={disableBeforeToday}
+							max={'9999-12-31'}
+							onChange={(event) => setDateDeDebutMin(event.target.value)}
+							validation={(event) => validationDateDeDebutMin(event as string)}
+							pattern={patternDate}
+							placeholder={placeholderDate} />
+						<Champ.Error />
+					</Champ>
+				</div>
 			)
 				: (
-					<div className={styles.contenuDateDeDebutInputDate}>
+					<>
+					<div className="fr-fieldset__element fr-fieldset__element--inline flex-grow--1 fr-mb-sm-0">
 						<Champ className="fr-input-group">
-							<Champ.Label>
-						Date de début du stage au plus tôt
-							</Champ.Label>
+							<Champ.Label>Date de début du stage au plus tôt</Champ.Label>
 							<Champ.Input
 								render={Input}
 								type="date"
@@ -101,6 +100,8 @@ export function InputDateDeDebut(props: { displayDateDeDebutPrecise: boolean, in
 								placeholder={placeholderDate} />
 							<Champ.Error />
 						</Champ>
+					</div>
+					<div className="fr-fieldset__element fr-fieldset__element--inline flex-grow--1 fr-mb-0">
 						<Champ className="fr-input-group">
 							<Champ.Label>
 						Date de début du stage au plus tard
@@ -120,6 +121,7 @@ export function InputDateDeDebut(props: { displayDateDeDebutPrecise: boolean, in
 							<Champ.Error />
 						</Champ>
 					</div>
+				</>
 				)}
 		</>
 	);

@@ -13,7 +13,7 @@ export function ConsulterOffreLayout(props: React.PropsWithChildren<ConsulterOff
 
 	return (
 		<main id="contenu" className={styles.container}>
-			<BackButton className={styles.layoutButton} />
+			<BackButton />
 			<Container className={styles.layoutContainer}>
 				<article className={styles.layout}>
 					{children}

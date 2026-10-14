@@ -82,7 +82,7 @@ export function FormulaireDemandeDeContactAccompagnement({
 
 			<Champ className="fr-input-group">
 				<Champ.Label>
-					Adresse e-mail (facultatif)
+					Adresse e-mail (optionnel)
 					<Champ.Label.Complement>Exemple : jean.dupont@gmail.com</Champ.Label.Complement>
 				</Champ.Label>
 				<Champ.Input
@@ -119,7 +119,7 @@ export function FormulaireDemandeDeContactAccompagnement({
 
 			<ComboboxCommune required />
 			<Champ className={styles.commentaireDemandeDeContact}>
-				<Champ.Label>Commentaires ou autres informations utiles (facultatif)</Champ.Label>
+				<Champ.Label>Commentaires ou autres informations utiles (optionnel)</Champ.Label>
 				<Champ.Input render={TextArea} name="commentaire" rows={5} />
 				<Champ.Error />
 			</Champ>

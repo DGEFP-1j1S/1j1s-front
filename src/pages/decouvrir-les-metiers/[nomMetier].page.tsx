@@ -35,7 +35,7 @@ export default function ConsulterFicheMetierPage({ ficheMetier }: ConsulterFiche
 				robots="index,follow" />
 			<main id="contenu">
 				<Container className={styles.container}>
-					<BackButton className={styles.backButton} />
+					<BackButton />
 					<ConsulterFicheMétier ficheMetier={ficheMetier} />
 				</Container>
 				<div className={'background-white-lilac'}>
