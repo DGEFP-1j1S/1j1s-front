@@ -27,7 +27,6 @@ const externalLinks: Array<FooterLink> = [
 	{ title: 'gouvernement.fr', url: 'https://www.gouvernement.fr/' },
 	{ title: 'service-public.fr', url: 'https://www.service-public.fr/' },
 	{ title: 'data.gouv.fr', url: 'https://www.data.gouv.fr/' },
-	{ title: 'france.fr', url: 'https://www.france.fr/' },
 ];
 
 const helpfulLinks: Array<FooterLink> = [
@@ -94,7 +93,7 @@ export function Footer() {
 					<div className="fr-container">
 						<div className="fr-grid-row fr-grid-row--start fr-grid-row--gutters">
 							{getFooterNavigationCategories().map((category) => (
-								<div key={category.label} className="fr-col">
+								<div key={category.label} className="fr-col-md fr-col-6">
 									<h2 className="fr-footer__top-cat">{category.label}</h2>
 									<ul className="fr-footer__top-list">
 										{category.children.map((item) => (
