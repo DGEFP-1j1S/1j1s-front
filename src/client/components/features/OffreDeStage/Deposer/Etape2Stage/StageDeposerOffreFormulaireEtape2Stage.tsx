@@ -123,7 +123,7 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 				</fieldset>
 			</div>
 
-			<Champ className="fr-select-group fr-col-12">
+			<Champ className="fr-select-group fr-col-6">
 				<Champ.Label>
 				Durée du stage
 					<Champ.Label.Complement>Exemple : 3 mois</Champ.Label.Complement>
@@ -140,12 +140,12 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 	);
 }
 
-function ChampsFacultatifs(props: { informationsStage: OffreDeStageDeposeeStage | null }) {
+function Champsoptionnels(props: { informationsStage: OffreDeStageDeposeeStage | null }) {
 	return (
 		<>
 			<Champ className="fr-select-group fr-col-12 fr-col-xl-6">
 				<Champ.Label>
-				Domaine de l’offre de stage
+				Domaine de l’offre de stage (optionnel)
 					<Champ.Label.Complement>Exemple : Agriculture</Champ.Label.Complement>
 				</Champ.Label>
 				<Champ.Input
@@ -158,7 +158,7 @@ function ChampsFacultatifs(props: { informationsStage: OffreDeStageDeposeeStage 
 
 			<Champ className="fr-input-group fr-col-12 fr-col-xl-6">
 				<Champ.Label>
-				Rémunération par mois (en euros)
+				Rémunération par mois en euros (optionnel)
 					<Champ.Label.Complement>Exemple : 760</Champ.Label.Complement>
 				</Champ.Label>
 				<div className="fr-input-wrap fr-icon-money-euro-circle-line">
@@ -175,7 +175,7 @@ function ChampsFacultatifs(props: { informationsStage: OffreDeStageDeposeeStage 
 
 			<div className="fr-col-12 fr-col-xl-6">
 				<fieldset className="fr-fieldset" aria-labelledby="legend-teletravail">
-					<legend className="fr-fieldset__legend" id="legend-teletravail">Télétravail possible</legend>
+					<legend className="fr-fieldset__legend" id="legend-teletravail">Télétravail possible (optionnel)</legend>
 					<div className="fr-fieldset__element fr-fieldset__element--inline">
 						<Radio name={StageEnum.TELETRAVAIL}
 							value="true"
@@ -230,13 +230,13 @@ export default function StageDeposerOffreFormulaireEtape2Stage() {
 				inputsObligatoires={
 					<ChampsObligatoires informationsStage={informationsStage} />
 				}
-				inputsFacultatifs={<ChampsFacultatifs informationsStage={informationsStage} />}
+				inputsoptionnels={<Champsoptionnels informationsStage={informationsStage} />}
 				formRef={formRef}
 				handleFormSubmit={handleFormSubmit}
 				boutonValidation={(
 					<Button
 						className="fr-btn--lg"
-						label="Suivant"
+						label="Passer à l'étape suivante"
 						type="submit" />
 				)} />
 		</FormulaireEtapeLayout>

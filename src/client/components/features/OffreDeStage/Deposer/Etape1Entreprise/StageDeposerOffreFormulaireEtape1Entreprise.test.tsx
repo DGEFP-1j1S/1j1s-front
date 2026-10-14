@@ -25,10 +25,10 @@ describe('<Entreprise />', () => {
 			expect(screen.getByRole("heading", { level: 2, name: "Votre entreprise Étape 1 sur 3" })).toBeInTheDocument();
 			expect(screen.getByRole('textbox', { name: "Nom de l’entreprise ou de l’employeur 255 caractères maximum Exemples : Crédit Agricole, SNCF…" })).toBeVisible();
 			expect(screen.getByRole('textbox', { name: 'Adresse mail de contact Cette adresse de contact sera utilisée dans le cas où il manquerait des informations pour valider votre demande, ou pour vous informer du statut de cette dernière. Cette adresse peut donc être différente de l’adresse sur laquelle il faudra candidater. Exemple : contactRH@example.com' })).toBeVisible();
-			expect(screen.getByRole('textbox', { name: 'Courte description de l’entreprise (500 caractères maximum) Informations sur votre entreprise : son histoire, des objectifs, des enjeux...' })).toBeVisible();
-			expect(screen.getByRole('textbox', { name: 'Logo de l’entreprise - lien/URL Exemple : https://www.1jeune1solution.gouv.fr/images/logos/r%C3…' })).toBeVisible();
-			expect(screen.getByRole('textbox', { name: 'Lien du site de l’entreprise - lien/URL Exemple : https://1jeune1solution.gouv.fr' })).toBeVisible();
-			expect(screen.getByRole('button', { name: 'Suivant' })).toBeVisible();
+			expect(screen.getByRole('textbox', { name: 'Courte description de l’entreprise 500 caractères maximum Informations sur votre entreprise : son histoire, des objectifs, des enjeux...' })).toBeVisible();
+			expect(screen.getByRole('textbox', { name: 'Logo de l’entreprise - lien/URL (optionnel) Exemple : https://www.1jeune1solution.gouv.fr/images/logos/r%C3…' })).toBeVisible();
+			expect(screen.getByRole('textbox', { name: 'Lien du site de l’entreprise - lien/URL (optionnel) Exemple : https://1jeune1solution.gouv.fr' })).toBeVisible();
+			expect(screen.getByRole('button', { name: "Passer à l'étape suivante" })).toBeVisible();
 		});
 
 		it("indique la prochaine étape du formulaire", () => {
@@ -40,15 +40,15 @@ describe('<Entreprise />', () => {
 			expect(screen.getByText("Votre offre de stage", { exact: false })).toBeVisible();
 		});
 
-		it("regroupe les champs obligatoires et facultatifs dans des groupes légendés", () => {
+		it("regroupe les champs obligatoires et optionnels dans des groupes légendés", () => {
 			// GIVEN
 			render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
 
 			// THEN
 			const groupeObligatoire = screen.getByRole("group", { name: "Les champs suivants sont obligatoires" });
-			const groupeFacultatif = screen.getByRole("group", { name: "Les champs suivants sont facultatifs mais recommandés" });
+			const groupeoptionnel = screen.getByRole("group", { name: "Les champs suivants sont optionnels mais recommandés" });
 			expect(within(groupeObligatoire).getByRole("textbox", { name: /Adresse mail/ })).toBeVisible();
-			expect(within(groupeFacultatif).getByRole("textbox", { name: /Logo de l/ })).toBeVisible();
+			expect(within(groupeoptionnel).getByRole("textbox", { name: /Logo de l/ })).toBeVisible();
 		});
 
 		it('les champs contenant des données pouvant être saisie automatiquement ont un attribut autocomplete approprié', () => {
@@ -101,9 +101,9 @@ describe('<Entreprise />', () => {
 		});
 
 
-		it('il voit afficher des champs facultatifs', async () => {
-			const labelLogo = 'Logo de l’entreprise - lien/URL Exemple : https://www.1jeune1solution.gouv.fr/images/logos/r%C3…';
-			const labelSite = 'Lien du site de l’entreprise - lien/URL Exemple : https://1jeune1solution.gouv.fr';
+		it('il voit afficher des champs optionnels', async () => {
+			const labelLogo = 'Logo de l’entreprise - lien/URL (optionnel) Exemple : https://www.1jeune1solution.gouv.fr/images/logos/r%C3…';
+			const labelSite = 'Lien du site de l’entreprise - lien/URL (optionnel) Exemple : https://1jeune1solution.gouv.fr';
 			// Given
 			render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
 			const logoEntrepriseInput = screen.getByRole('textbox', { name: labelLogo });
@@ -140,7 +140,7 @@ describe('<Entreprise />', () => {
 				render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
 
 				// When
-				const logoUrlInputText = screen.getByRole('textbox', { name: 'Logo de l’entreprise - lien/URL Exemple : https://www.1jeune1solution.gouv.fr/images/logos/r%C3…' });
+				const logoUrlInputText = screen.getByRole('textbox', { name: 'Logo de l’entreprise - lien/URL (optionnel) Exemple : https://www.1jeune1solution.gouv.fr/images/logos/r%C3…' });
 				await userEvent.type(logoUrlInputText, 'some random text');
 				await userEvent.tab();
 
@@ -155,7 +155,7 @@ describe('<Entreprise />', () => {
 				render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
 
 				// When
-				const logoUrlInputText = screen.getByRole('textbox', { name: 'Logo de l’entreprise - lien/URL Exemple : https://www.1jeune1solution.gouv.fr/images/logos/r%C3…' });
+				const logoUrlInputText = screen.getByRole('textbox', { name: 'Logo de l’entreprise - lien/URL (optionnel) Exemple : https://www.1jeune1solution.gouv.fr/images/logos/r%C3…' });
 				await userEvent.type(logoUrlInputText, 'http://some.random.url.com');
 
 				// Then
@@ -171,7 +171,7 @@ describe('<Entreprise />', () => {
 				render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
 
 				// When
-				const websiteUrlInputText = screen.getByRole('textbox', { name: 'Lien du site de l’entreprise - lien/URL Exemple : https://1jeune1solution.gouv.fr' });
+				const websiteUrlInputText = screen.getByRole('textbox', { name: 'Lien du site de l’entreprise - lien/URL (optionnel) Exemple : https://1jeune1solution.gouv.fr' });
 				await userEvent.type(websiteUrlInputText, 'some random text');
 				await userEvent.tab();
 
@@ -185,7 +185,7 @@ describe('<Entreprise />', () => {
 				render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
 
 				// When
-				const websiteUrlInputText = screen.getByRole('textbox', { name: 'Lien du site de l’entreprise - lien/URL Exemple : https://1jeune1solution.gouv.fr' });
+				const websiteUrlInputText = screen.getByRole('textbox', { name: 'Lien du site de l’entreprise - lien/URL (optionnel) Exemple : https://1jeune1solution.gouv.fr' });
 				await userEvent.type(websiteUrlInputText, 'http://some.random.url.com');
 				await userEvent.tab();
 				// Then
@@ -196,6 +196,6 @@ describe('<Entreprise />', () => {
 });
 
 async function BoutonSuivant() {
-	const button = screen.getByRole('button', { name: 'Suivant' });
+	const button = screen.getByRole('button', { name: "Passer à l'étape suivante" });
 	await userEvent.click(button);
 }

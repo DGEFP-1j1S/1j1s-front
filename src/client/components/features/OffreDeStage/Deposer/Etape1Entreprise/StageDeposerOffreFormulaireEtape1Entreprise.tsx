@@ -44,7 +44,7 @@ export default function StageDeposerOffreFormulaireEtape1Entreprise() {
 
 	const champsObligatoires = (
 		<>
-			<Champ className="fr-input-group fr-col-12">
+			<Champ className="fr-input-group fr-col-12 fr-col-lg-6 fr-col-offset-lg-6--right">
 				<Champ.Label>Nom de l’entreprise ou de l’employeur
 					<Champ.Label.Complement>255 caractères maximum</Champ.Label.Complement>
 					<Champ.Label.Complement>Exemples : Crédit Agricole, SNCF… </Champ.Label.Complement>
@@ -59,14 +59,15 @@ export default function StageDeposerOffreFormulaireEtape1Entreprise() {
 					autoComplete="organization" />
 				<Champ.Error />
 			</Champ>
-			<Champ className="fr-input-group fr-col-12">
+			<Champ className="fr-input-group fr-col-12 fr-col-lg-6 fr-col-offset-lg-6--right">
 				<Champ.Label>Adresse mail de contact
 					<Champ.Label.Complement>
 						Cette adresse de contact sera utilisée dans le cas où
 						il manquerait des informations pour valider votre demande, ou pour vous informer du statut de cette dernière.
 						Cette adresse peut donc être différente de l’adresse sur laquelle il faudra candidater.
 					</Champ.Label.Complement>
-						<Champ.Label.Complement>Exemple : contactRH@example.com
+					<Champ.Label.Complement>
+						Exemple : contactRH@example.com
 					</Champ.Label.Complement>
 				</Champ.Label>
 				<Champ.Input
@@ -81,9 +82,13 @@ export default function StageDeposerOffreFormulaireEtape1Entreprise() {
 				<Champ.Error />
 			</Champ>
 			<Champ className="fr-input-group fr-col-12">
-				<Champ.Label>Courte description de l’entreprise (500 caractères maximum)
-					<Champ.Label.Complement>Informations sur votre entreprise : son histoire, des objectifs, des
-					enjeux...</Champ.Label.Complement>
+				<Champ.Label>Courte description de l’entreprise
+					<Champ.Label.Complement>
+						500 caractères maximum
+					</Champ.Label.Complement>
+					<Champ.Label.Complement>
+						Informations sur votre entreprise : son histoire, des objectifs, des enjeux...
+					</Champ.Label.Complement>
 				</Champ.Label>
 				<Champ.Input
 					render={TextArea}
@@ -98,10 +103,10 @@ export default function StageDeposerOffreFormulaireEtape1Entreprise() {
 		</>
 	);
 
-	const champsFacultatifs = (
+	const champsoptionnels = (
 		<>
 			<Champ className="fr-input-group fr-col-12 fr-col-lg-6">
-				<Champ.Label>Logo de l’entreprise - lien/URL
+				<Champ.Label>Logo de l’entreprise - lien/URL (optionnel)
 					<Champ.Label.Complement>Exemple :
 					https://www.1jeune1solution.gouv.fr/images/logos/r%C3…</Champ.Label.Complement>
 				</Champ.Label>
@@ -113,7 +118,7 @@ export default function StageDeposerOffreFormulaireEtape1Entreprise() {
 				<Champ.Error />
 			</Champ>
 			<Champ className="fr-input-group fr-col-12 fr-col-lg-6">
-				<Champ.Label>Lien du site de l’entreprise - lien/URL
+				<Champ.Label>Lien du site de l’entreprise - lien/URL (optionnel)
 					<Champ.Label.Complement>Exemple : https://1jeune1solution.gouv.fr</Champ.Label.Complement>
 				</Champ.Label>
 				<Champ.Input render={Input}
@@ -129,7 +134,7 @@ export default function StageDeposerOffreFormulaireEtape1Entreprise() {
 	const boutonValidation = (
 		<Button
 			className="fr-btn--lg"
-			label="Suivant"
+			label="Passer à l'étape suivante"
 			type="submit" />
 	);
 
@@ -150,7 +155,7 @@ export default function StageDeposerOffreFormulaireEtape1Entreprise() {
 			titreEtapeSuivante="Votre offre de stage">
 			<StageDeposerOffreFormulaireLayout
 				inputsObligatoires={champsObligatoires}
-				inputsFacultatifs={champsFacultatifs}
+				inputsoptionnels={champsoptionnels}
 				formRef={formRef}
 				handleFormSubmit={handleFormSubmit}
 				boutonValidation={boutonValidation} />

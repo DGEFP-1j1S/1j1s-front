@@ -20,7 +20,7 @@ export default function DeposerOffreStagePage() {
 			<main id="contenu">
 				<Banner>
 					<h1>
-						<span className="text--blue">Je dépose une offre de stage sur</span> 1jeune1solution
+						Je dépose une offre de stage sur 1jeune1solution
 					</h1>
 				</Banner>
 				<Entreprise />

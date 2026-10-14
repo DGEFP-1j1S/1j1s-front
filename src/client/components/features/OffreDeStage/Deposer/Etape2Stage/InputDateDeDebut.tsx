@@ -61,7 +61,7 @@ export function InputDateDeDebut(props: { displayDateDeDebutPrecise: boolean, in
 		<>
 			{props.displayDateDeDebutPrecise ? (
 				<div className="fr-fieldset__element fr-mb-0">
-					<Champ className="fr-input-group">
+					<Champ className="fr-input-group fr-col-6">
 						<Champ.Label>
 						Date précise du début de stage
 						</Champ.Label>

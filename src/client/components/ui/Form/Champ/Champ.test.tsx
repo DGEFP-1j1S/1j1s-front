@@ -38,6 +38,30 @@ describe('<Champ/>', () => {
 		expect(container.children[0]).toHaveAttribute('class', 'someStyle');
 	});
 
+	it.each([
+		["fr-input-group", "fr-input-group--error"],
+		["fr-select-group", "fr-select-group--error"],
+	])("lorsque le champ %s est en erreur, ajoute la classe %s", async (groupClassName, errorClassName) => {
+		// GIVEN
+		const user = userEvent.setup();
+		const { container } = render(
+			<Champ className={groupClassName}>
+				<Champ.Input render={Input} required />
+				<Champ.Error />
+			</Champ>,
+		);
+		const input = screen.getByRole("textbox");
+		expect(container.children[0]).not.toHaveClass(errorClassName);
+
+		// WHEN
+		await user.type(input, "a");
+		await user.tab();
+		await user.clear(input);
+
+		// THEN
+		expect(container.children[0]).toHaveClass(groupClassName, errorClassName);
+	});
+
 	it('affiche son contenu', () => {
 		render(
 			<Champ>

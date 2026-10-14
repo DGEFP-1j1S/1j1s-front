@@ -16,7 +16,7 @@ import {
 const LABEL_OU_POSTULER = 'Lien sur lequel les candidats pourront postuler ou une adresse e-mail à laquelle envoyer sa candidature Exemples : https://candidat.francetravail.fr/offres/142Y OU candidature_PE_technicien@exemple.com';
 const LABEL_NOM_STAGE = 'Nom de l’offre de stage 200 caractères maximum Exemple : Assistant de recherche (6 mois) chez ABC.ENTREPRISE';
 const LABEL_DESCRIPTION_STAGE = 'Description de l’offre de stage 200 caractères minimum Informations sur le stage : les objectifs, les challenges, les missions…';
-const LABEL_REMUNERATION = 'Rémunération par mois (en euros) Exemple : 760';
+const LABEL_REMUNERATION = 'Rémunération par mois en euros (optionnel) Exemple : 760';
 
 describe('<Stage />', () => {
 	beforeEach(() => {
@@ -46,10 +46,10 @@ describe('<Stage />', () => {
 			expect(screen.getByRole('textbox', { name: LABEL_DESCRIPTION_STAGE })).toBeVisible();
 			expect(screen.getByText('Date de début du stage')).toBeVisible();
 			expect(screen.getByText('Durée du stage')).toBeVisible();
-			expect(screen.getByText('Domaine de l’offre de stage')).toBeVisible();
+			expect(screen.getByText('Domaine de l’offre de stage (optionnel)')).toBeVisible();
 			expect(screen.getByRole('spinbutton', { name: LABEL_REMUNERATION })).toBeVisible();
-			expect(screen.getByText('Télétravail possible')).toBeVisible();
-			expect(screen.getByRole('button', { name: 'Suivant' })).toBeVisible();
+			expect(screen.getByText('Télétravail possible (optionnel)')).toBeVisible();
+			expect(screen.getByRole('button', { name: "Passer à l'étape suivante" })).toBeVisible();
 		});
 
 		describe('champs date', () => {
@@ -181,9 +181,9 @@ describe('<Stage />', () => {
 			});
 		});
 
-		it('il voit afficher des champs facultatifs', async () => {
-			const labelDomaineOffreStage = 'Domaine de l’offre de stage';
-			const télétravailPossible = 'Télétravail possible';
+		it('il voit afficher des champs optionnels', async () => {
+			const labelDomaineOffreStage = 'Domaine de l’offre de stage (optionnel)';
+			const télétravailPossible = 'Télétravail possible (optionnel)';
 			// Given
 			render(<DependenciesProvider
 				stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}
@@ -290,6 +290,6 @@ describe('<Stage />', () => {
 });
 
 async function BoutonSuivant() {
-	const button = screen.getByRole('button', { name: 'Suivant' });
+	const button = screen.getByRole('button', { name: "Passer à l'étape suivante" });
 	await userEvent.click(button);
 }

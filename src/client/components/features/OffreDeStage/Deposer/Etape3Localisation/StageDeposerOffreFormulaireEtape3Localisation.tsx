@@ -77,15 +77,6 @@ export default function StageDeposerOffreFormulaireEtape3Localisation() {
 
 	const champsObligatoires = (
 		<>
-			<div className="fr-col-12 fr-col-xl-6 fr-col-offset-xl-6--right">
-				<ComboboxPays
-					paysList={paysList}
-					defaultValue={paysDefaultValue}
-					label={'Pays'}
-					labelComplement={'Exemple : France'}
-					valueName={LocalisationInputName.PAYS}
-					required />
-			</div>
 			<Champ className="fr-input-group fr-col-12 fr-col-xl-6 fr-col-offset-xl-6--right fr-mb-0">
 				<Champ.Label>
 					Adresse
@@ -98,19 +89,7 @@ export default function StageDeposerOffreFormulaireEtape3Localisation() {
 					defaultValue={informationsLocalisation?.adresse} />
 				<Champ.Error />
 			</Champ>
-			<Champ className="fr-input-group fr-col-12 fr-col-xl-6 fr-mb-0">
-				<Champ.Label>
-				Ville
-					<Champ.Label.Complement>Exemple : Paris</Champ.Label.Complement>
-				</Champ.Label>
-				<Champ.Input
-					render={Input}
-					name={LocalisationInputName.VILLE}
-					required
-					defaultValue={informationsLocalisation?.ville} />
-				<Champ.Error />
-			</Champ>
-			<Champ className="fr-input-group fr-col-12 fr-col-xl-2">
+			<Champ className="fr-input-group fr-col-12 fr-col-xl-2 fr-mb-0">
 				<Champ.Label>
 				Code postal
 					<Champ.Label.Complement>Exemple : 75007</Champ.Label.Complement>
@@ -122,14 +101,35 @@ export default function StageDeposerOffreFormulaireEtape3Localisation() {
 					defaultValue={informationsLocalisation?.codePostal} />
 				<Champ.Error />
 			</Champ>
+			<Champ className="fr-input-group fr-col-12 fr-col-xl-4 fr-mb-0">
+				<Champ.Label>
+				Ville
+					<Champ.Label.Complement>Exemple : Paris</Champ.Label.Complement>
+				</Champ.Label>
+				<Champ.Input
+					render={Input}
+					name={LocalisationInputName.VILLE}
+					required
+					defaultValue={informationsLocalisation?.ville} />
+				<Champ.Error />
+			</Champ>
+			<div className="fr-col-12 fr-col-xl-6 fr-col-offset-xl-6--right">
+				<ComboboxPays
+					paysList={paysList}
+					defaultValue={paysDefaultValue}
+					label='Pays'
+					labelComplement={'Exemple : France'}
+					valueName={LocalisationInputName.PAYS}
+					required />
+			</div>
 		</>
 	);
 
-	const champsFacultatifs = (
+	const champsoptionnels = (
 		<>
 			<Champ className="fr-input-group fr-col-12 fr-col-xl-6">
 				<Champ.Label>
-				Région
+				Région  (optionnel)
 					<Champ.Label.Complement>Exemple : Île-De-France</Champ.Label.Complement>
 				</Champ.Label>
 				<Champ.Input
@@ -140,7 +140,7 @@ export default function StageDeposerOffreFormulaireEtape3Localisation() {
 			</Champ>
 			<Champ className="fr-input-group fr-col-12 fr-col-xl-6">
 				<Champ.Label>
-				Département
+				Département  (optionnel)
 					<Champ.Label.Complement>Exemple : Yvelines</Champ.Label.Complement>
 				</Champ.Label>
 				<Champ.Input
@@ -190,7 +190,7 @@ export default function StageDeposerOffreFormulaireEtape3Localisation() {
 				urlEtapePrecedente={`${URL_DEPOSER_OFFRE}/votre-offre-de-stage`}>
 				<StageDeposerOffreFormulaireLayout
 					inputsObligatoires={champsObligatoires}
-					inputsFacultatifs={champsFacultatifs}
+					inputsoptionnels={champsoptionnels}
 					formRef={formRef}
 					handleFormSubmit={handleFormSubmit}
 					boutonValidation={boutonValidation} />

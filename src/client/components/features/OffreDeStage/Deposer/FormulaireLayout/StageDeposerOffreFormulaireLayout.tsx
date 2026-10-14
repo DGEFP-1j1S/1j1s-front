@@ -5,12 +5,12 @@ import React, {
 
 interface StageDeposerOffreFormulaireLayoutProps extends React.ComponentPropsWithoutRef<'form'>{
 	inputsObligatoires: React.ReactElement
-	inputsFacultatifs: React.ReactElement
+	inputsoptionnels: React.ReactElement
 	formRef: RefObject<HTMLFormElement>
 	handleFormSubmit: (event: FormEvent<HTMLFormElement>) => Promise<boolean | undefined>
 	boutonValidation: React.ReactElement
 }
-export function StageDeposerOffreFormulaireLayout({ inputsObligatoires, inputsFacultatifs, formRef, handleFormSubmit, boutonValidation, ...rest }: StageDeposerOffreFormulaireLayoutProps) {
+export function StageDeposerOffreFormulaireLayout({ inputsObligatoires, inputsoptionnels, formRef, handleFormSubmit, boutonValidation, ...rest }: StageDeposerOffreFormulaireLayoutProps) {
 	return (
 		<form
 			ref={formRef}
@@ -27,13 +27,13 @@ export function StageDeposerOffreFormulaireLayout({ inputsObligatoires, inputsFa
 					</div>
 				</div>
 			</fieldset>
-			<fieldset className="fr-fieldset fr-mt-4w" aria-labelledby="legend-champs-facultatifs">
-				<legend id="legend-champs-facultatifs" className="fr-fieldset__legend fr-fieldset__legend--regular fr-text--lg">
-				Les champs suivants sont facultatifs mais recommandés
+			<fieldset className="fr-fieldset fr-mt-4w" aria-labelledby="legend-champs-optionnels">
+				<legend id="legend-champs-optionnels" className="fr-fieldset__legend fr-fieldset__legend--regular fr-text--lg">
+				Les champs suivants sont optionnels mais recommandés
 				</legend>
 				<div className="fr-fieldset__element">
 					<div className="fr-grid-row fr-grid-row--gutters">
-						{inputsFacultatifs}
+						{inputsoptionnels}
 					</div>
 				</div>
 			</fieldset>

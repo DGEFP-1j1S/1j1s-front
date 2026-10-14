@@ -15,7 +15,7 @@ export default function DeposerOffreStageEtape2Page() {
 			<main id="contenu">
 				<Banner>
 					<h1 className="fr-mb-0">
-						<span className="text--blue">Je dépose une offre de stage sur</span> 1jeune1solution
+						Je dépose une offre de stage sur 1jeune1solution
 					</h1>
 				</Banner>
 				<OffreStage />
