@@ -107,8 +107,7 @@ function BaniereStages3eEt2de() {
 	return (
 		<Banner>
 			<h1 className="fr-h1 fr-mb-0">
-				<span className="text--blue">Des milliers d’entreprises prêtes à vous accueillir </span>
-				pour votre stage de 3e et 2de
+				Des milliers d’entreprises prêtes à vous accueillir pour votre stage de 3e et 2de
 			</h1>
 		</Banner>
 	);

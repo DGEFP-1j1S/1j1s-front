@@ -35,7 +35,7 @@ export function FormulaireRechercheJobEte() {
 			aria-label="Rechercher un job d’été"
 			onSubmit={updateRechercherJobEteQueryParams}
 			role="search">
-			<h2 className="fr-h4 text--blue fr-mb-5w">Trouvez votre job d’été</h2>
+			<h2 className="fr-h4 fr-mb-5w">Trouvez votre job d’été</h2>
 			<div className="fr-grid-row fr-grid-row--gutters">
 				<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
 					<Champ className="fr-input-group">

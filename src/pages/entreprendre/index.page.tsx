@@ -25,7 +25,7 @@ export default function Entreprendre() {
 			<main id="contenu">
 				<BannerWithIllustration image="/images/entrepreneurs.webp" isCover>
 					<h1 className="fr-h1">
-						<span className="text--blue">Je découvre les solutions qui s’offrent à moi, pour créer mon entreprise… </span>
+						Je découvre les solutions qui s’offrent à moi, pour créer mon entreprise… 
 						quel que soit le stade de mon projet de création !
 					</h1>
 				</BannerWithIllustration>

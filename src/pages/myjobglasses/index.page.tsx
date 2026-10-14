@@ -16,8 +16,7 @@ export default function MyJobGlassesPage() {
 			<main id="contenu">
 				<Banner>
 					<h1 className="fr-h1 fr-mb-0">
-						<span className="text--blue">Échangez avec des professionnels </span>
-						avec <i>My Job Glasses</i>
+						Échangez avec des professionnels avec <i>My Job Glasses</i>
 					</h1>
 				</Banner>
 				<div className='fr-container fr-mb-5w'>

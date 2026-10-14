@@ -6,15 +6,14 @@ export function ExperiencesEnEurope() {
 		<section>
 			<Banner>
 				<h1 className="fr-h1">
-					<span className="text--blue">Je cherche une expérience </span>
-					en Europe
+					Je cherche une expérience en Europe
 				</h1>
 				<p className="fr-text--lead">
 					Trouvez des offres d’emploi, de stage et des volontariats internationaux au sein de pays Européens ainsi que
 					des aides financières afin de partir à la découverte de nouvelles opportunités et de nouveaux pays !
 				</p>
 				<p className="fr-text--sm">
-					<span className="fr-icon-information-line text--blue fr-mr-1w" aria-hidden="true" />
+					<span className="fr-icon-information-line fr-mr-1w" aria-hidden="true" />
 						Si vous êtes accompagné·e en mission locale, rapprochez-vous de votre conseiller pour en savoir plus sur les mobilités courtes
 				</p>
 				<Link

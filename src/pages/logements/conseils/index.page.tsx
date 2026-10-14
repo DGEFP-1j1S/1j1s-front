@@ -64,8 +64,7 @@ function BannièreConseilsLogement() {
 	return (
 		<Banner>
 			<h1 className="fr-h1 fr-mb-0">
-				<span className="text--blue">Tout ce qu’il faut savoir et tous nos conseils </span>
-				concernant votre logement
+				Tout ce qu’il faut savoir et tous nos conseils concernant votre logement
 			</h1>
 		</Banner>
 	);

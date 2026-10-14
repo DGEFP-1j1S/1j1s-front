@@ -26,8 +26,7 @@ export default function RechercherFicheMetierPage() {
 			<InstantSearchLayout
 				meilisearchIndex={MEILISEARCH_INDEX}
 				nombreDeResultatParPage={HITS_PER_PAGE}
-				titre="Je trouve le métier"
-				sousTitre="qui me correspond"
+				titre="Je trouve le métier qui me correspond"
 				formulaireDeRecherche={<FormulaireRechercheFicheMetier />}
 				messageResultatRechercheLabelSingulier="fiche métier"
 				messageResultatRechercheLabelPluriel="fiches métier"

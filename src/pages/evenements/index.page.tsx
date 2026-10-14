@@ -27,8 +27,7 @@ export default function PageEvenements() {
 							robots="index,follow" />
 						<main id='contenu'>
 							<HeroWithButtonLink
-								titlePrimaryText="Des centaines d‘événements de recrutement "
-								titleSecondaryText="pour tous les jeunes, partout en France"
+								title="Des centaines d‘événements de recrutement pour tous les jeunes, partout en France"
 								content='À la recherche d’un emploi ou d’une formation ?
               Dépassez les frontières du virtuel en allant directement à la rencontre de votre futur employeur,
               en participant à des ateliers thématiques ou en assistant à une conférence près de chez vous !'
@@ -50,8 +49,7 @@ export default function PageEvenements() {
 					<InstantSearchLayout
 						meilisearchIndex={MEILISEARCH_INDEX}
 						nombreDeResultatParPage={HITS_PER_PAGE}
-						titre="Des centaines d‘évènements de recrutement"
-						sousTitre="pour tous les jeunes, partout en France"
+						titre="Des centaines d‘évènements de recrutement pour tous les jeunes, partout en France"
 						formulaireDeRecherche={<FormulaireRechercheEvenement />}
 						messageResultatRechercheLabelSingulier="évènement"
 						messageResultatRechercheLabelPluriel="évènements"

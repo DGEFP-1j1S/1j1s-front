@@ -48,7 +48,7 @@ export function FormulaireRechercheMissionEngagement({domainList}: FormulaireRec
 			className="border--blue fr-p-5w"
 			onSubmit={rechercherMission}
 			aria-label="Rechercher une mission d'engagement">
-			<h2 className="fr-h4 text--blue fr-mb-3w">Trouvez une mission d&apos;engagement</h2>
+			<h2 className="fr-h4 fr-mb-3w">Trouvez une mission d&apos;engagement</h2>
 			<div className="fr-grid-row fr-grid-row--gutters">
 				<div className="fr-col-12 fr-col-md-6">
 					<Champ className="fr-select-group">

@@ -267,7 +267,7 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 								<Image src="/images/banner-alternance-handshake.png" alt="" width={660} height={330} className="img-cover"/>
 							</div>
 							<div className="fr-col-12 fr-col-lg-6 fr-p-4w">
-								<h2 className="text--blue">Employeurs : Trouvez vos futurs apprentis sur 1jeune1solution</h2>
+								<h2>Employeurs : Trouvez vos futurs apprentis sur 1jeune1solution</h2>
 								<p>Déposez gratuitement vos offres en apprentissage et gagnez en visibilité auprès des jeunes en recherche d’une opportunité</p>
 								<div className="fr-grid-row fr-grid-row--center">
 									<Link className="fr-btn " onClick={() => evenementAnalyticsService.envoyerEvenement({ action: "clic", categorie: "accueil", nom: "deposer_une_offre_lba" })} href="https://labonnealternance.apprentissage.beta.gouv.fr/espace-pro/creation/entreprise">Déposer une offre</Link>
@@ -300,7 +300,7 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 				}
 				<div className="fr-container">
 					<section className='fr-py-5v'>
-						<h2 id="offres" className="fr-h2 text--blue flex align-items--center fr-mb-2w">
+						<h2 id="offres" className="fr-h2 flex align-items--center fr-mb-2w">
 							<Image src={documentSvg} alt="" width={64} height={64} className='fr-mr-2w' />
 							Offres
 						</h2>
@@ -315,7 +315,7 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 					<section className="background--blue-light fr-my-5v">
 						<div className="fr-grid-row fr-grid-row--no-gutters align-items--center">
 							<div className="fr-col-12 fr-col-lg-6 fr-p-4w">
-								<h2 className="text--blue">Trouvez votre alternance</h2>
+								<h2>Trouvez votre alternance</h2>
 								<p>Avec la bonne alternance, accédez à 38 000 offres d’apprentissage et trouvez celle qui vous correspond. Déjà 6 000 offres déposées et 4 000 candidatures pour vous aider à passer à l’action.</p>
 								<div className="fr-grid-row fr-grid-row--center">
 									<Link className="fr-btn" onClick={() => evenementAnalyticsService.envoyerEvenement({ action: "clic", categorie: "accueil", nom: "consulter_les_offres_lba" })} href="https://labonnealternance.apprentissage.beta.gouv.fr/1jeune1solution?utm_source=1j1s&utm_medium=website&utm_campaign=landinglba1j1s">Consulter les offres</Link>
@@ -327,7 +327,7 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 					</section>
 
 					<section className='fr-py-5v'>
-						<h2 id="formation" className="fr-h2 text--blue flex align-items--center fr-mb-2w">
+						<h2 id="formation" className="fr-h2 flex align-items--center fr-mb-2w">
 							<Image src={schoolSvg} alt="" width={64} height={64}  className='fr-mr-2w' />
 							Formations et orientation
 						</h2>
@@ -339,7 +339,7 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 							/>
 					</section>
 					<section className='fr-py-5v'>
-						<h2 id="engagement-benevolat" className="fr-h2 text--blue flex align-items--center fr-mb-2w">
+						<h2 id="engagement-benevolat" className="fr-h2 flex align-items--center fr-mb-2w">
 							<Image src={communitySvg} alt="" width={64} height={64}  className='fr-mr-2w' />
 							Engagement
 						</h2>
@@ -351,7 +351,7 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 							/>
 					</section>
 					<section className='fr-py-5v'>
-						<h2 id="logement" className="fr-h2 text--blue flex align-items--center fr-mb-2w">
+						<h2 id="logement" className="fr-h2 flex align-items--center fr-mb-2w">
 							<Image src={houseSvg} alt="" width={64} height={64}  className='fr-mr-2w' />
 							Logement
 						</h2>
@@ -363,7 +363,7 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 						/>
 					</section>
 					<section className='fr-py-5v'>
-						<h2 id="aides-orientation-accompagnement" className="fr-h2 text--blue flex align-items--center fr-mb-2w">
+						<h2 id="aides-orientation-accompagnement" className="fr-h2 flex align-items--center fr-mb-2w">
 							<Image src={mentalDisabilitiesSvg} alt="" width={64} height={64}  className='fr-mr-2w' />
 							Accompagnement
 						</h2>
@@ -375,7 +375,7 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 						/>
 					</section>				
 					<section className='fr-py-5v'>
-						<h2 id="aides-et-outils" className="fr-h2 text--blue flex align-items--center fr-mb-2w">
+						<h2 id="aides-et-outils" className="fr-h2 flex align-items--center fr-mb-2w">
 							<Image src={ecosystemSvg} alt="" width={64} height={64}  className='fr-mr-2w' />
 							Aides et outils
 						</h2>

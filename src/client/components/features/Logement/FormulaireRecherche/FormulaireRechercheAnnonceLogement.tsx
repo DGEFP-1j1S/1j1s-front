@@ -19,7 +19,7 @@ export function FormulaireRechercheAnnonceLogement() {
 			className="border--blue fr-p-5w"
 			role="search"
 			onSubmit={(event) => event.preventDefault()}>
-			<h2 className="fr-h4 text--blue fr-mb-3w">Trouvez un logement qui vous correspond</h2>
+			<h2 className="fr-h4 fr-mb-3w">Trouvez un logement qui vous correspond</h2>
 			<div className="fr-grid-row fr-grid-row--gutters">
 				<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
 					<MeilisearchInput

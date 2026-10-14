@@ -45,7 +45,7 @@ export function sortByDurationAscending(a: SearchResults.FacetValue, b: SearchRe
 export function FormulaireRechercheOffreStage() {
 	return (
 		<form className="border--blue fr-p-5w" onSubmit={(event) => event.preventDefault()}>
-			<h2 className="fr-h4 text--blue fr-mb-3w">Trouvez un stage qui vous correspond</h2>
+			<h2 className="fr-h4 fr-mb-3w">Trouvez un stage qui vous correspond</h2>
 			<div className="fr-grid-row fr-grid-row--gutters">
 				<div className="fr-col-12 fr-col-md-6">
 					<MeilisearchInput
