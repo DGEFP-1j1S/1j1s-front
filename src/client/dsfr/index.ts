@@ -1,5 +1,5 @@
 export { Accordion } from "./Accordion";
-export { Breadcrumb } from './Breadcrumb';
+export { Breadcrumb, type BreadcrumbItem } from './Breadcrumb';
 export { Button } from './Button';
 export { Carte } from './Carte';
 export { Footer } from './Footer/Footer';
