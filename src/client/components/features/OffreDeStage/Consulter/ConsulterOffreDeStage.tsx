@@ -88,7 +88,8 @@ export function ConsulterOffreDeStage({offreDeStage}: ConsulterOffreDeStageProps
 			<h1 className="fr-h1 fr-my-2w">{offreDeStage.titre}</h1>
 			{offreDeStage.employeur?.nom && <h2 className="fr-h2">{offreDeStage.employeur?.nom}</h2>}
 			<TagList list={listeEtiquettes} aria-label="Caractéristiques de l‘offre de stage"/>
-			<Link className='fr-btn fr-btn--lg fr-mb-6w' href={offreDeStage.urlDeCandidature}>Postuler</Link>
+			{offreDeStage.urlDeCandidature && (
+				<Link className='fr-btn fr-btn--lg fr-mb-6w' href={offreDeStage.urlDeCandidature}>Postuler</Link>)}
 			<section>
 				{offreDeStage.employeur?.description && (
 					<div>
