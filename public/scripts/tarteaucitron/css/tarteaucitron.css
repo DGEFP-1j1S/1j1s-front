@@ -18,6 +18,11 @@
     display: inline-block !important;
 }
 
+/* Interface remplacée par le gestionnaire de consentement DSFR (React), le DOM reste requis par tarteaucitron.js */
+#tarteaucitronRoot {
+    display: none !important;
+}
+
 /* FIN - A REPORTER SI MAJ DU FICHIER TARTEAUCITRON.CSS */
 
 div#tarteaucitronMainLineOffset, .tarteaucitronBorder {

@@ -15,6 +15,7 @@ import ErrorServer from '~/client/components/layouts/Error/ErrorServer';
 import { Layout } from '~/client/components/layouts/Layout';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
 import dependenciesContainer from '~/client/dependencies.container';
+import { GestionnaireConsentement } from '~/client/dsfr';
 import usePageHistory from '~/client/hooks/usePageHistory';
 import useSessionId from '~/client/hooks/useSessionId';
 import { CookiesService } from '~/client/services/cookies/cookies.service';
@@ -52,8 +53,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
 	useEffect(function initDsfr() {
 		import('@gouvfr/dsfr/dist/dsfr.module').then(() => {
-			// @ts-expect-error dsfr is attached to window
-			window.dsfr.start();
+			window.dsfr?.start();
 		});
 	}, []);
 
@@ -74,6 +74,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 				<meta name="description" content="Toutes les solutions pour l‘avenir des jeunes" />
 			</Head>
 			<DependenciesProvider {...dependenciesContainerInstance}>
+				<GestionnaireConsentement />
 				{getLayout(
 					pageProps.error
 						? <ErrorServer error={pageProps.error} />
