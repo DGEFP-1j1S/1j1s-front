@@ -2,7 +2,6 @@ import React, {useCallback, useMemo} from 'react';
 
 import { BackButton } from '~/client/components/features/ButtonRetour/BackButton';
 import { dureeCategorisee } from '~/client/components/features/OffreDeStage/Consulter/getDureeCategorisee';
-import { ConsulterOffreLayout } from '~/client/components/layouts/ConsulterOffre/ConsulterOffreLayout';
 import { Link } from '~/client/components/ui/Link/Link';
 import { getHtmlFromMd } from '~/client/components/ui/MarkdownToHtml/getHtmlFromMd';
 import { TagList } from '~/client/components/ui/Tag/TagList';
