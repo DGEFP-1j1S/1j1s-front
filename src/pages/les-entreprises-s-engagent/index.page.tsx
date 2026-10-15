@@ -23,7 +23,7 @@ export default function LesEntreprisesSEngagent() {
 					buttonHref={urlRejoindreLaMobilisation}
 					buttonLabelSecondary='Découvrir les entreprises engagées'
 					buttonHrefSecondary='https://lesentreprises-sengagent.gouv.fr/les-entreprises-engagees'
-					imgSrc='/icons/les-entreprises-s-engagent.svg'
+					imgSrc='/images/logos/les-entreprises-s-engagent.svg'
 					imgAlt="Les Entreprises s'engagent"
 					imgContain={true} />
 				<section className='fr-container fr-pb-4w'>
