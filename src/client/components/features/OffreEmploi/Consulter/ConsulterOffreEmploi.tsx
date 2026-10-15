@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { BackButton } from '~/client/components/features/ButtonRetour/BackButton';
-import { ConsulterOffreLayout } from '~/client/components/layouts/ConsulterOffre/ConsulterOffreLayout';
 import { Link } from '~/client/components/ui/Link/Link';
 import { TagList } from '~/client/components/ui/Tag/TagList';
 import useSanitize from '~/client/hooks/useSanitize';
