@@ -1,7 +1,6 @@
-import React from 'react';
+import React from "react";
 
 import { Head } from '~/client/components/head/Head';
-import { Container } from '~/client/components/layouts/Container/Container';
 import {
 	isNavigationItem,
 	NavigationItem,
@@ -11,9 +10,8 @@ import {
 import { Link } from '~/client/components/ui/Link/Link';
 import useAnalytics from '~/client/hooks/useAnalytics';
 import analytics from '~/pages/plan-du-site/index.analytics';
-import styles from '~/pages/plan-du-site/index.module.scss';
 
-export default function PlanDuSite() {
+export default function PagePlanDuSite() {
 	useAnalytics(analytics);
 	const isServicesJeunesVisibles = process.env.NEXT_PUBLIC_OLD_ESPACE_JEUNE_FEATURE === '0';
 
@@ -26,8 +24,8 @@ export default function PlanDuSite() {
 		} else {
 			return (
 				<li key={item.label}>
-					<span id="sectionPlanDuSite">{item.label}</span>
-					<ul aria-labelledby="sectionPlanDuSite">
+					<span className="fr-text--bold">{item.label}</span>
+					<ul>
 						{item.children.map((sub) => displayNavigationTree(sub))}
 					</ul>
 				</li>
@@ -41,10 +39,10 @@ export default function PlanDuSite() {
 				title="Plan du site | 1jeune1solution"
 				description="Plan du site"
 				robots="index,follow" />
-			<Container className={styles.planDuSiteContainer}>
-				<main id="contenu">
-					<h1 id="planDuSite" className={styles.planDuSiteTitre}>Plan du site</h1>
-					<ul aria-labelledby="planDuSite">
+			<main id="contenu">
+				<div className="fr-container fr-pb-6w">
+					<h1>Plan du site</h1>
+					<ul>
 						<li>
 							<Link href={navigationItemList().accueil.link}>{navigationItemList().accueil.label}</Link>
 						</li>
@@ -69,8 +67,8 @@ export default function PlanDuSite() {
 						<li><Link href="/mentions-legales">Mentions légales</Link></li>
 						<li><Link href="/confidentialite">Politique de confidentialité</Link></li>
 					</ul>
-				</main>
-			</Container>
+				</div>
+			</main>
 		</>
 	);
 }
