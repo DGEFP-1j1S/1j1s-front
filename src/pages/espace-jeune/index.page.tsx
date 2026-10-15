@@ -44,9 +44,11 @@ export default function EspaceJeunePage({ cartesActualites, serviceJeuneList }: 
 				title="Actualités et services jeunes | 1jeune1solution"
 				robots="index,follow" />
 			<main id="contenu">
-				<section className='fr-container' aria-label="les actualités">
+				<div className="fr-container">
+					<h1>Actualités et services jeune</h1>
+				</div>
+				<section aria-label="les actualités">
 					<Banner>
-						<h1>Actualités et services jeune</h1>
 						<h2>Retrouvez une sélection des dernières actualités relatives aux jeunes</h2>
 					</Banner>
 					<div className='fr-container'>
@@ -56,7 +58,7 @@ export default function EspaceJeunePage({ cartesActualites, serviceJeuneList }: 
 														 itemList={articleCardList} />
 					</div>
 				</section>
-				<section className='fr-container' aria-label="les services jeunes">
+				<section aria-label="les services jeunes">
 					<Banner>
 						<h2>
 							Services jeunes, retrouvez les services conçus pour vous : entrée dans la vie professionnelle, orientation, formation, accompagnement
