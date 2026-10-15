@@ -18,20 +18,20 @@ export function ConsulterOffreEmploi({offreEmploi}: ConsulterOffreEmploiProps) {
 		<div className="fr-container fr-pt-8w">
 			<BackButton/>
 			<h1 className="fr-h1 fr-my-2w">{offreEmploi.intitulé}</h1>
-			{offreEmploi.entreprise.nom && <h3 className="fr-h3">{offreEmploi.entreprise.nom}</h3>}
+			{offreEmploi.entreprise.nom && <h2 className="fr-h2">{offreEmploi.entreprise.nom}</h2>}
 			<TagList list={offreEmploi.étiquetteList} aria-label="Caractéristiques de l‘offre d‘emploi"/>
 			<Link className='fr-btn fr-btn--lg fr-mb-6w' href={offreEmploi.urlOffreOrigine}>Je postule sur France
 				Travail</Link>
 			<section>
 				{offreEmploi.description && (
 					<div>
-						<h4 className="fr-h4">Description du poste</h4>
+						<h3 className="fr-h3">Description du poste</h3>
 						<p dangerouslySetInnerHTML={{__html: descriptionOffreEmploi}}/>
 					</div>
 				)}
 				{offreEmploi.compétenceList.length > 0 && (
 					<div className="fr-mb-2w">
-						<h4 className="fr-h4">Connaissances et compétences requises :</h4> {' '}
+						<h3 className="fr-h3 fr-mb-0">Connaissances et compétences requises :</h3> {' '}
 						<ul>
 							{offreEmploi.compétenceList.map((compétence, index) => (
 								<li key={index}>{compétence}</li>
@@ -41,7 +41,7 @@ export function ConsulterOffreEmploi({offreEmploi}: ConsulterOffreEmploiProps) {
 				)}
 				{offreEmploi.qualitéeProfessionnelleList.length > 0 && (
 					<div className="fr-mb-2w">
-						<h4 className="fr-h4">Qualités professionnelles</h4> {' '}
+						<h3 className="fr-h3 fr-mb-0">Qualités professionnelles</h3> {' '}
 						<ul>
 							{offreEmploi.qualitéeProfessionnelleList.map((qualitéeProfessionnelle, index) => (
 								<li key={index}>{qualitéeProfessionnelle}</li>
@@ -51,7 +51,7 @@ export function ConsulterOffreEmploi({offreEmploi}: ConsulterOffreEmploiProps) {
 				)}
 				{offreEmploi.formationList.length > 0 && (
 					<div className="fr-mb-2w">
-						<h4 className="fr-h4">Formation requise</h4> {' '}
+						<h3 className="fr-h3 fr-mb-0">Formation requise</h3> {' '}
 						{offreEmploi.formationList.length === 1
 							? <p
 								data-testid="FormationParagraph">{offreEmploi.formationList[0].libellé} - {offreEmploi.formationList[0].commentaire}</p>
@@ -67,7 +67,7 @@ export function ConsulterOffreEmploi({offreEmploi}: ConsulterOffreEmploiProps) {
 				)}
 				{offreEmploi.salaire && (
 					<div className="fr-mb-2w">
-						<h4 className="fr-h4">Salaire</h4> {' '}
+						<h3 className="fr-h3 fr-mb-1w">Salaire</h3> {' '}
 						<p dangerouslySetInnerHTML={{__html: salaireOffreEmploi}}/>
 					</div>
 				)}
