@@ -19,7 +19,7 @@ export function ConsulterOffreEmploi({offreEmploi}: ConsulterOffreEmploiProps) {
 			<h1 className="fr-h1 fr-my-2w">{offreEmploi.intitulé}</h1>
 			{offreEmploi.entreprise.nom && <h2 className="fr-h2">{offreEmploi.entreprise.nom}</h2>}
 			<TagList list={offreEmploi.étiquetteList} aria-label="Caractéristiques de l‘offre d‘emploi"/>
-			<Link className='fr-btn fr-btn--lg fr-mb-6w' href={offreEmploi.urlOffreOrigine}>Je postule sur France
+			<Link className='fr-btn fr-btn--lg fr-mb-6w' href={offreEmploi.urlOffreOrigine}>Postuler sur France
 				Travail</Link>
 			<section>
 				{offreEmploi.description && (
