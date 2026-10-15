@@ -12,17 +12,19 @@ interface HeroWithButtonLinkProps {
   buttonHref: string
   buttonHrefSecondary?: string
   imgSrc: string
+	imgAlt?: string
+	imgContain?: boolean
   additionalInformation?: React.ReactNode
 }
 
 export function HeroWithButtonLink(props: HeroWithButtonLinkProps) {
-	const { title, content, buttonLabel, buttonLabelSecondary, buttonHref, buttonHrefSecondary, imgSrc, additionalInformation } = props;
+	const { title, content, buttonLabel, buttonLabelSecondary, buttonHref, buttonHrefSecondary, imgSrc, imgAlt, imgContain = false, additionalInformation } = props;
 
 	return (
 		<div className="fr-container">
 			<div className="fr-grid-row fr-grid-row--gutters">
 				<div className="fr-col-lg-6 fr-col-12">
-					<div className="fr-py-4w">
+					<div className="fr-pb-4w">
 							<h1 className="fr-h1 fr-mb-4w">
 								{title}
 							</h1>
@@ -37,7 +39,7 @@ export function HeroWithButtonLink(props: HeroWithButtonLinkProps) {
 						</div>
 					</div>
 				<div className="fr-col-lg-6 fr-col-12 fr-hidden fr-unhidden-lg">
-					<Image className="img-cover height--full" src={imgSrc} alt="" width="810" height="540" priority />
+					<Image className={imgContain ? "img-contain" : "img-cover height--full"} src={imgSrc} alt={imgAlt ?? ""} width="810" height="540" priority />
 				</div>
 			</div>
 		</div>
