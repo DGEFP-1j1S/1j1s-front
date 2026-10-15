@@ -14,7 +14,7 @@ export function TagList({list, ...rest }: TagListProps) {
 					.filter((tag) => !!tag)
 					.map((tag, index) => (
 						<li className="fr-col-auto" key={`${tag}-${index}`}>
-							<Tag className="background--green">{tag}</Tag>
+							<Tag className="background--blue-ecume text--blue" >{tag}</Tag>
 						</li>
 					))
 			}
