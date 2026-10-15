@@ -20,6 +20,7 @@ interface CarteProps {
 	end?: React.ReactNode
 	footer?: React.ReactNode
 	isContain?: boolean
+	descriptionAs?: 'p' | 'div'
 }
 
 export function Carte({
@@ -35,6 +36,7 @@ export function Carte({
 	end,
 	footer,
 	isContain = false,
+	descriptionAs = 'p',
 }: React.PropsWithChildren<CarteProps>) {
 	const isInternalLink = useIsInternalLink(lien || "");
 	const imageClassName = classNames(isContain ? 'img-contain' : 'fr-responsive-img');
@@ -63,7 +65,7 @@ export function Carte({
 								: <a href={lien} target="_blank" rel="noreferrer" title={`${titre} - nouvelle fenêtre`}>{titre}</a>)
 							: titre
 					)}
-					<p className="fr-card__desc">{children}</p>
+					{React.createElement(descriptionAs, { className: 'fr-card__desc' }, children)}
 					{end && (
 						<div className="fr-card__end">{end}</div>
 					)}
