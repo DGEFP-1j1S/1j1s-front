@@ -9,7 +9,7 @@ export interface ConsulterContenuProps {
 export function ConsulterContenu({ titre, contenu }: ConsulterContenuProps) {
 	return (
 		<main id="contenu">
-			<article className="fr-container fr-py-4w">
+			<article className="fr-container fr-pb-4w">
 				<Head
 					title={`${titre} | 1jeune1solution`}
 					robots="index,follow" />
