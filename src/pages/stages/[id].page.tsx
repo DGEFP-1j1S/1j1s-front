@@ -2,7 +2,6 @@ import { GetServerSidePropsContext } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import React from 'react';
 
-import JeDonneMonAvis from '~/client/components/features/JeDonneMonAvis/JeDonneMonAvis';
 import { ConsulterOffreDeStage } from '~/client/components/features/OffreDeStage/Consulter/ConsulterOffreDeStage';
 import { Head } from '~/client/components/head/Head';
 import useAnalytics from '~/client/hooks/useAnalytics';
@@ -28,7 +27,6 @@ export default function ConsulterOffreStagePage({ offreDeStage }: ConsulterStage
 				title={`${offreDeStage.titre} | 1jeune1solution`}
 				robots="noindex" />
 			<ConsulterOffreDeStage offreDeStage={offreDeStage} />
-			<JeDonneMonAvis />
 		</>
 	);
 }

@@ -94,7 +94,7 @@ describe('DetailOffreEmploiEurope', () => {
 			);
 
 
-			const linkCandidature = screen.getByRole('link', { name: 'Je postule sur Eures - nouvelle fenêtre' });
+			const linkCandidature = screen.getByRole('link', { name: 'Postuler sur Eures - nouvelle fenêtre' });
 
 			expect(linkCandidature).toHaveAttribute('href', 'https://urlDeCandidature.com');
 			expect(linkCandidature).toBeVisible();
@@ -111,7 +111,7 @@ describe('DetailOffreEmploiEurope', () => {
 			);
 
 
-			const linkCandidature = screen.queryByRole('link', { name: 'Je postule sur Eures' });
+			const linkCandidature = screen.queryByRole('link', { name: 'Postuler sur Eures' });
 
 			expect(linkCandidature).not.toBeInTheDocument();
 		});
