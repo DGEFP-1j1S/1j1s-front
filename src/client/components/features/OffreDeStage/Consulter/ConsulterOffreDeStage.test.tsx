@@ -8,7 +8,6 @@ import {aStorageService} from '~/client/services/storage/storage.service.fixture
 import {RemunerationPeriode} from '~/server/stages/domain/remunerationPeriode';
 import {anOffreDeStage, anOffreDeStageLocalisation} from '~/server/stages/domain/stages.fixture';
 import {DomainesStage} from '~/server/stages/repository/domainesStage';
-import {queries} from '~/test-utils';
 
 describe('ConsulterOffreDeStage', () => {
 	const offreDeStage = anOffreDeStage({
