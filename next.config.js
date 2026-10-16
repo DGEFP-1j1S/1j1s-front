@@ -2,7 +2,7 @@ const { LOCAL_MODE_HEADERS, SECURITY_MODE_HEADERS } = require('./config/headers'
 const { ALL_MODE_REDIRECT } = require('./config/redirects');
 const { ALL_MODE_REWRITE } = require('./config/rewrites');
 const { name, version } = require('./package.json');
-const { withSentryConfig } = require('@sentry/nextjs/config');
+const { withSentryConfig } = require('@sentry/nextjs');
 const { URL } = require('url');
 
 const IS_ONLINE_CONFIG_ENVIRONMENT = ['recette', 'production'];
@@ -36,7 +36,7 @@ const moduleExports = {
 		ignoreDuringBuilds: true,
 	},
 	experimental: {
-		scrollRestoration: true,
+	    scrollRestoration: true,
 	},
 	images: {
 		remotePatterns: [
@@ -69,9 +69,6 @@ const moduleExports = {
 	},
 	pageExtensions: ['page.tsx','controller.ts'],
 	poweredByHeader: false,
-	sassOptions: {
-		charset: false,
-	},
 	reactStrictMode: true,
 	redirects: async () => ALL_MODE_REDIRECT,
 	rewrites: async () => ALL_MODE_REWRITE,

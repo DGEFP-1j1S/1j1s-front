@@ -1,0 +1,11 @@
+@use "@styles/utilities";
+
+.nomEntreprise {
+  width: 100%;
+}
+
+.textareaWrapper {
+  @include utilities.media(xlarge) {
+    width: 100%;
+  }
+}

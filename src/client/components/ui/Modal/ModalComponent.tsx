@@ -132,6 +132,7 @@ export function ModalComponent(props: ModalPropsWithAccessibleDescription) {
 					<div className={styles.modalBody}>
 						<div className={styles.modalClose}>
 							<ButtonComponent
+								appearance="quaternary"
 								icon={<Icon name="close" />}
 								iconPosition="right"
 								label={closeLabel}

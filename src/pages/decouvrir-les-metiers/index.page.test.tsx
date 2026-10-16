@@ -36,7 +36,7 @@ describe('<RechercherFicheMetierPage />', () => {
 			</DependenciesProvider>,
 		);
 
-		await screen.findByText('Je trouve le métier qui me correspond');
+		await screen.findByText('Je trouve le métier');
 
 		expect(container.outerHTML).toHTMLValidate();
 	});

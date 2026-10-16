@@ -36,29 +36,6 @@ describe('getHtmlFromMd', () => {
 		expect(result).toBe('<h1 id="1.-avantages-du-travail">1. Avantages du travail</h1>\n');
 	});
 
-	it("encapsule les tableaux dans la structure fr-table du DSFR", () => {
-		// GIVEN
-		const markdown = "| Titre |\n| --- |\n| Valeur |";
-
-		// WHEN
-		const result = getHtmlFromMd(markdown);
-
-		// THEN
-		expect(result).toContain("<div class=\"fr-table\"><div class=\"fr-table__wrapper\"><div class=\"fr-table__container\"><div class=\"fr-table__content\">\n<table>");
-		expect(result).toContain("</table>\n</div></div></div></div>");
-	});
-
-	it("colore en bleu uniquement les titres de niveau 1", () => {
-		// GIVEN
-		const markdown = "# Titre principal\n## Sous-titre";
-
-		// WHEN
-		const result = getHtmlFromMd(markdown);
-
-		// THEN
-		expect(result).toBe("<h1 id=\"titre-principal\">Titre principal</h1>\n<h2 id=\"sous-titre\">Sous-titre</h2>\n");
-	});
-
 	it('accepte le html', () => {
 		const markdown = '# 1. Avantages du travail\n <p>je suis le paragraphe</p>';
 		const result = getHtmlFromMd(markdown);

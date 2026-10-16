@@ -7,10 +7,11 @@ import {
 import {
 	EtiquettesFiltreMission,
 } from '~/client/components/features/Engagement/Rechercher/ResultatsRecherche/EtiquettesFiltreMission';
-import { ServiceCardList } from '~/client/components/features/ServiceCard/Card/ServiceCard';
-import { Carte } from '~/client/dsfr';
+import { ListeMissions } from '~/client/components/features/Engagement/Rechercher/ResultatsRecherche/ListeMissions';
+import { ServiceCard, ServiceCardList } from '~/client/components/features/ServiceCard/Card/ServiceCard';
 import { Head } from '~/client/components/head/Head';
 import { RechercherSolutionLayout } from '~/client/components/layouts/RechercherSolution/RechercherSolutionLayout';
+import { EnTete } from '~/client/components/ui/EnTete/EnTete';
 import { Footnote } from '~/client/components/ui/Footnote/Footnote';
 import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { useMissionEngagementQuery } from '~/client/hooks/useMissionEngagementQuery';
@@ -117,32 +118,36 @@ export function RechercherMission(props: RechercherMissionProps) {
 							les annonces listées ci-dessus nous sont fournies par nos partenaires (<a href="/cgu#3.-services">liste disponible dans les <abbr title="Conditions Générales d'Utilisation">CGU</abbr></a>)
 						</Footnote>
 					)} />
+				<EnTete heading="Consultez nos articles et découvrez des services faits pour vous" />
 				{isServiceCivique ? (
-					<ServiceCardList heading="Consultez nos articles et découvrez des services faits pour vous">
-						<Carte
-							horizontal
-							imageSrc="/images/logos/service-civique.svg"
-							lien="/articles/faire-un-service-civique"
-							titre="Pourquoi faire un service civique ?">
+					<ServiceCardList>
+						<ServiceCard
+							linkLabel="Lire l'article"
+							logo="/images/logos/service-civique.svg"
+							link="/articles/faire-un-service-civique"
+							title="Pourquoi faire un service civique ?"
+							titleAs={'h3'}>
 							Découvrez l’univers du service civique : ses missions, sa rémunération et les perspectives d’avenir qu’offre cet engagement enrichissant !
-						</Carte>
-						<Carte
-							horizontal
-							imageSrc="/images/logos/service-civique.svg"
-							lien="/articles/service-civique-jeunes"
-							titre="L’impact du service civique sur les jeunes">
+						</ServiceCard>
+						<ServiceCard
+							linkLabel="Lire l'article"
+							logo="/images/logos/service-civique.svg"
+							link="/articles/service-civique-jeunes"
+							title="L'impact du service civique sur les jeunes"
+							titleAs={'h3'}>
 							Découvrez comment le service civique favorise le développement personnel et professionnel des jeunes engagés !
-						</Carte>
+						</ServiceCard>
 					</ServiceCardList>
 				) : (
-					<ServiceCardList heading="Consultez nos articles et découvrez des services faits pour vous">
-						<Carte
-							horizontal
-							imageSrc="/images/bénévolat-disponible-article.webp"
-							lien="/articles/des-missions-de-benevolat-toujours-disponibles"
-							titre="Des missions de bénévolat toujours disponibles">
+					<ServiceCardList>
+						<ServiceCard
+							linkLabel="Lire l'article"
+							logo="/images/bénévolat-disponible-article.webp"
+							link="/articles/des-missions-de-benevolat-toujours-disponibles"
+							title="Des missions de bénévolat toujours disponibles"
+							titleAs={'h3'}>
 							Trouver des centaines d’offres sur la plateforme.
-						</Carte>
+						</ServiceCard>
 					</ServiceCardList>
 				)}
 			</main>
@@ -165,24 +170,5 @@ export function messageNombreResultats({ nombreResultats, isServiceCivique, doma
 		domaine && `pour ${domaine}`,
 	].filter(Boolean)
 		.join(' ');
-}
-
-function ListeMissions({ resultatList, isServiceCivique }: { resultatList: Mission[], isServiceCivique: boolean }) {
-	if (!resultatList.length) return null;
-
-	return (
-		<ul className="fr-grid-row fr-grid-row--gutters" aria-label={isServiceCivique ? 'Offre pour le service civique' : 'Offre pour le bénévolat'}>
-			{resultatList.map((mission: Mission) => (
-				<li key={mission.id} className="fr-col-lg-4 fr-col-md-6 fr-col-12">
-					<Carte
-						titre={mission.titre}
-						lien={isServiceCivique ? `/service-civique/${mission.id}` : `/benevolat/${mission.id}`}
-						tags={mission.etiquetteList}>
-						{mission.nomEntreprise}
-					</Carte>
-				</li>
-			))}
-		</ul>
-	);
 }
 

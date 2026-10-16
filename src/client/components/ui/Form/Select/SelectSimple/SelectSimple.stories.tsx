@@ -6,26 +6,33 @@ import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 
 import { SelectSimple } from './SelectSimple';
 
-const optionsList = ['France', 'Suisse', 'Allemagne', 'Royaume-Uni', 'Espagne', 'Belgique', 'Japon', 'Australie', 'Chine', 'Canada', 'États-Unis']
-	.map((pays) => ({ libellé: pays, valeur: pays }));
-
 const meta: Meta<typeof SelectSimple> = {
+	argTypes: {
+		children: {
+			control: 'object',
+		},
+	},
 	args: {
-		optionsList,
+		children: ['France', 'Suisse', 'Allemagne', 'Royaume-Uni', 'Espagne', 'Belgique', 'Japon', 'Australie', 'Chine', 'Canada', 'États-Unis'],
+		optionsAriaLabel: 'Pays',
 	},
 	component: SelectSimple,
 	title: 'Components/Form/Select/SelectSimple',
 };
 
 export default meta;
-type Story = StoryObj<typeof SelectSimple>;
-
+type SelectProps = React.ComponentPropsWithRef<typeof SelectSimple>;
+type Controls = Omit<SelectProps, 'children'> & { children: string[] };
+type Story = StoryObj<Controls>;
 export const exemple: Story = {
 	args: {},
-	render: (args) => (
+	render: ({ children, ...args }) => (
 		<>
 			<label htmlFor="pays">Pays</label>
-			<SelectSimple id="pays" onChange={() => {}} {...args} />
+			<SelectSimple id="pays" {...args}>
+				<SelectSimple.Option value="">Aucun</SelectSimple.Option>
+				{children.map((child) => <SelectSimple.Option value={child} key={child}>{child}</SelectSimple.Option>)}
+			</SelectSimple>
 		</>
 	),
 };
@@ -33,10 +40,13 @@ export const disabled: Story = {
 	args: {
 		disabled: true,
 	},
-	render: (args) => (
+	render: ({ children, ...args }) => (
 		<>
 			<label htmlFor="pays">Pays</label>
-			<SelectSimple id="pays" onChange={() => {}} {...args} />
+			<SelectSimple id="pays" {...args}>
+				<SelectSimple.Option value="">Aucun</SelectSimple.Option>
+				{children.map((child) => <SelectSimple.Option value={child} key={child}>{child}</SelectSimple.Option>)}
+			</SelectSimple>
 		</>
 	),
 };
@@ -46,14 +56,17 @@ export const validation: Story = {
 		name: 'pays',
 		required: true,
 	},
-	render: (args) => (
+	render: ({ children, ...args }) => (
 		<form onSubmit={(event) => {
 			event.preventDefault();
 			alert(Array.from(new FormData(event.currentTarget).entries()));
 		}}>
 			<Champ>
 				<Champ.Label>Pays</Champ.Label>
-				<Champ.Input render={SelectSimple} {...args} />
+				<Champ.Input render={SelectSimple} {...args}>
+					<SelectSimple.Option value="">Aucun</SelectSimple.Option>
+					{children.map((child) => <SelectSimple.Option value={child} key={child}>{child}</SelectSimple.Option>)}
+				</Champ.Input>
 				<Champ.Error />
 			</Champ>
 			<Button label="Envoyer" />
@@ -65,10 +78,12 @@ export const defaultValue: Story = {
 	args: {
 		defaultValue: 'France',
 	},
-	render: (args) => (
+	render: ({ children, ...args }) => (
 		<>
 			<label htmlFor="pays">Pays</label>
-			<SelectSimple id="pays" onChange={() => {}} {...args} />
+			<SelectSimple id="pays" {...args}>
+				{children.map((child) => <SelectSimple.Option value={child} key={child}>{child}</SelectSimple.Option>)}
+			</SelectSimple>
 		</>
 	),
 };

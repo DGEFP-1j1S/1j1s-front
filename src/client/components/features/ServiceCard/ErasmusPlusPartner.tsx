@@ -1,15 +1,17 @@
 import React from 'react';
 
-import { Carte } from '~/client/dsfr';
+import { ServiceCard } from './Card/ServiceCard';
 
 export function EurasmusPlusPartner() {
 	return (
-		<Carte
-			horizontal
-			titre="Le programme « ERASMUS+ »"
-			imageSrc="/images/logos/erasmus-plus.webp"
-			lien="https://info.erasmusplus.fr/">
+		<ServiceCard
+			imageFit="cover"
+			linkLabel="Acceder au site web"
+			link="https://info.erasmusplus.fr/"
+			logo="/images/logos/erasmus-plus.webp"
+			title="Le programme “ERASMUS+”"
+			titleAs={'h3'}>
 			Il vous donne la possibilité de séjourner à l’étranger pour renforcer vos compétences et accroître votre employabilité.
-		</Carte>
+		</ServiceCard>
 	);
 }

@@ -11,7 +11,7 @@ export function FormulaireRechercheEvenement() {
 	  <MeilisearchInput
 				label="Mot-clé, métier, accompagnement…"
 				name="motCle"
-				labelComplement="Exemples : gendarmerie, cuisinier, mentorat" />
+				placeholder="Exemples : gendarmerie, cuisinier, mentorat" />
 	  <MeilisearchComboboxLocalisation
 				attribute="lieuEvenement" />
 		</form>

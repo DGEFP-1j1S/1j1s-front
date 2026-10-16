@@ -1,4 +1,4 @@
-import { OffreCheckboxFiltre, OffreTypeDeContrat, ReferentielDomaine } from '~/server/offres/domain/offre';
+import { OffreCheckboxFiltre, OffreTypeDeContrat, RéférentielDomaine } from '~/server/offres/domain/offre';
 
 export function mapTypeDeContratToOffreEmploiCheckboxFiltre(typeDeContratList: OffreTypeDeContrat[]): OffreCheckboxFiltre[] {
 	return typeDeContratList.map((typeDeContrat) => {
@@ -9,7 +9,7 @@ export function mapTypeDeContratToOffreEmploiCheckboxFiltre(typeDeContratList: O
 	});
 }
 
-export function mapReferentielDomaineToOffreCheckboxFiltre(domaineList: ReferentielDomaine[]): OffreCheckboxFiltre[] {
+export function mapRéférentielDomaineToOffreCheckboxFiltre(domaineList: RéférentielDomaine[]): OffreCheckboxFiltre[] {
 	return domaineList.map((domaine) => {
 		return {
 			libellé: domaine.libelle,

@@ -93,7 +93,7 @@ export const ComboboxMetiers = React.forwardRef<ComboboxRef, ComboboxMetiersProp
 	}, [handleRechercherWithDebounce]);
 
 	return (
-		<Champ className="fr-select-group">
+		<Champ>
 			<Champ.Label>
 				{label}
 				<Champ.Label.Complement>Exemples : boulangerie, enseignement</Champ.Label.Complement>

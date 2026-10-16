@@ -1,0 +1,35 @@
+import {Canvas, Meta, Primary, Controls} from "@storybook/addon-docs/blocks";
+import * as stories from './Tag.stories';
+import { Icon } from '~/client/components/ui/Icon/Icon';
+import { Tag } from '~/client/components/ui/Tag/Tag';
+
+<Meta of={stories} />
+
+# Definition
+
+Le tag utilisé sur 1jeune1solution :
+<Canvas layout={'centered'}>
+    <Tag>Je suis un tag</Tag>
+</Canvas>
+
+# Variante cliquable
+
+Le tag a été conçu pour pouvoir être transformé en bouton avec icon, le svg est alors automatiquement centré / aligné avec le texte
+<Canvas layout={'centered'}>
+    <Tag>
+        <button>
+            <>Je suis un tag cliquable</>
+            <Icon name="close" />
+        </button>
+    </Tag>
+</Canvas>
+
+Pour cela on peut utiliser le code :
+```jsx
+<Tag>
+    <button>
+        je suis un tag cliquable
+        <Icon name="close" />
+    </button>
+</Tag>
+```

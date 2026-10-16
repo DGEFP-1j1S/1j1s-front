@@ -97,7 +97,6 @@ export function MeilisearchRange(props: UseRangeProps & MeilisearchRangeProps) {
   		<span className={styles.customRangeInputWrapper}>
   			<input
   				id={inputMinId}
-					className='fr-input'
   				type="number"
   				min={min}
   				max={max}
@@ -109,7 +108,6 @@ export function MeilisearchRange(props: UseRangeProps & MeilisearchRangeProps) {
   		<span className={classNames(styles.customRangeInputWrapper)}>
   			<input
   				id={inputMaxId}
-					className='fr-input'
   				type="number"
   				min={min}
   				max={max}

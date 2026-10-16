@@ -101,21 +101,21 @@ describe('mapEngagement', () => {
 				résultats: [
 					{
 						description: 'description',
-						debutContrat: '01/12/2021',
+						débutContrat: '01/12/2021',
 						id: 'id',
 						logoUrl: 'http://organizationLogo.com/image.png',
 						nomEntreprise: 'associationName',
 						titre: 'title',
-						etiquetteList: ['Dès 16 ans', 'Nantes (44000)', '01/12/2021'],
+						étiquetteList: ['Dès 16 ans', 'Nantes (44000)', '01/12/2021'],
 					},
 					{
 						description: 'description2',
-						debutContrat: undefined,
+						débutContrat: undefined,
 						id: 'id2',
 						localisation: undefined,
 						nomEntreprise: 'organizationName2',
 						titre: 'title2',
-						etiquetteList: [],
+						étiquetteList: [],
 					},
 				],
 			});

@@ -1,0 +1,147 @@
+@use "@styles/utilities";
+
+$transition-duration: 700ms;
+$transition-visibility: visibility 0ms $transition-duration linear;
+
+.cardWrapper.flipped .recto, .cardWrapper:not(.flipped) .verso {
+  transition: $transition-visibility;
+  visibility: hidden;
+}
+
+.cardWrapper.flipped {
+  --flipped: 1;
+}
+
+.cardWrapper {
+  height: 100%;
+  --flipped: 0;
+  transform-style: preserve-3d;
+  transition: transform $transition-duration ease-in-out;
+  transform: rotateY(calc(180deg * var(--flipped)));
+}
+
+.cardWrapper {
+  & .card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 20px;
+    box-shadow: utilities.$box-shadow;
+    background-color: utilities.$color-background-primary;
+    border: 1px solid utilities.$color-background-border;
+    overflow: hidden;
+
+    > img {
+      object-fit: cover;
+      width: auto;
+      height: 180px;
+    }
+
+    & .category {
+      @include utilities.text-small;
+      font-weight: bold;
+      color: utilities.$color-text-primary-inverse;
+      margin-inline: 1rem;
+      padding: 0.25rem;
+      width: fit-content;
+    }
+
+    & .categoryAccompagnement {
+      background-color: utilities.$color-groupe-2-light-green;
+    }
+
+    & .categoryOrienterFormer {
+      background-color: utilities.$color-groupe-2-burgundy;
+    }
+
+    & .categoryVieProfessionnelle {
+      background-color: utilities.$color-groupe-2-rust;
+    }
+
+    & .categoryAidesFinancieres {
+      background-color: utilities.$color-groupe-3-green;
+    }
+
+    & .categoryEngagement {
+      background-color: utilities.$color-groupe-3-blue;
+    }
+
+    & .categoryLogement {
+      background-color: utilities.$color-groupe-3-pink;
+    }
+
+    & .body {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      padding: 1rem;
+
+      & .bodyTitle {
+        @include utilities.text-medium;
+        $lineHeight: 1.2;
+        line-height: $lineHeight;
+        @include utilities.line-clamp(3, $lineHeight);
+        font-weight: bold;
+        margin-bottom: 0.75rem;
+      }
+    }
+
+    & .actionWrapper {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+
+      & > button {
+        @include utilities.text-small;
+      }
+    }
+  }
+
+  & .recto {
+    backface-visibility: visible;
+  }
+
+  & .verso {
+    position: absolute;
+    inset: 0;
+    backface-visibility: visible;
+    background-color: utilities.$color-background-secondary;
+    transform: rotateY(180deg) translateZ(1px);
+    color: utilities.$color-text-primary-inverse;
+    padding: 1rem;
+
+    & button {
+      background-color: utilities.$color-background-primary;
+      border-radius: 50%;
+      padding: 0.25rem;
+      font-size: 1rem;
+      color: utilities.$color-text-primary-alternative;
+      width: 2rem;
+      height: 2rem;
+
+      &:focus {
+        outline-color: utilities.$color-text-primary-inverse;
+        outline-offset: 2px;
+      }
+    }
+
+    & .title {
+      font-weight: bold;
+      text-align: center;
+      margin: 1rem 0;
+    }
+
+    & .content {
+      overflow: auto;
+      padding-inline: 1rem;
+      @include utilities.media(medium) {
+        padding-top: 1rem;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardWrapper, .verso {
+    transform: none;
+  }
+}

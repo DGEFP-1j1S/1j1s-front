@@ -1,0 +1,79 @@
+@use "sass:color";
+@use "@styles/utilities-deprecated";
+@use "@styles/utilities";
+@use "./Navigation/Nav.module" as navStyles;
+
+
+.header {
+  border-bottom: 1px solid utilities.$color-background-disabled;
+  background-color: utilities.$color-background-primary;
+
+  a {
+    outline-offset: 8px;
+  }
+
+  & .headerBodyContainer {
+    padding: 1rem;
+
+    & .headerBody {
+      @media (min-width: navStyles.$breakpoint-menu) {
+        display: flex;
+        align-items: center;
+        gap: 4rem;
+      }
+
+      & .headerBodyLien {
+        position: relative;
+
+        @media (min-width: navStyles.$breakpoint-menu) {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 4rem;
+        }
+
+        & .headerBodyBurgerMenu {
+          position: relative;
+          z-index: 2;
+        }
+
+        a:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          background-color: rgba(0, 0, 0, 0);
+          z-index: 1;
+        }
+      }
+
+      & .headerBodyLogoWrapper {
+        border-bottom: 2px solid utilities.$color-background-disabled;
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+
+        @media (min-width: navStyles.$breakpoint-menu) {
+          border-bottom: none;
+          padding-bottom: 0;
+        }
+      }
+
+      & .headerBodyTitle {
+        text-decoration: none;
+        line-height: 1rem;
+        @extend %text-large;
+        @extend %bold;
+      }
+
+      & .headerBodyNavigationMobile {
+        @media (min-width: navStyles.$breakpoint-menu) {
+          display: none;
+        }
+      }
+    }
+  }
+}

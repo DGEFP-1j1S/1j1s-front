@@ -78,6 +78,7 @@ export function VideoFrame({ videoToDisplay, className }: VideoFrameProps) {
 							<ButtonComponent
 								label={'Accepter les cookies'}
 								onClick={allowYoutube}
+								appearance={'secondary'}
 								className={styles.buttonAcceptCookies}
 								icon={<Icon name="check-line" />}
 								iconPosition="right" />

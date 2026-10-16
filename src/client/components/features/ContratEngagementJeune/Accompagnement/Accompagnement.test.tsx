@@ -7,7 +7,7 @@ import { aDemandeDeContactService } from '~/client/services/demandeDeContact/dem
 import { aLocalisationService } from '~/client/services/localisation/localisation.service.fixture';
 import { createFailure, createSuccess } from '~/server/errors/either';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
-import { aCommune } from '~/server/localisations/domain/localisationAvecCoordonnees.fixture';
+import { aCommune } from '~/server/localisations/domain/localisationAvecCoordonnées.fixture';
 
 import Accompagnement from './Accompagnement';
 
@@ -585,5 +585,6 @@ async function remplirFormulaire() {
 	await user.click(villeOption);
 
 	const selectAge = screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' });
-	await user.selectOptions(selectAge, formulaireContact.age);
+	await user.click(selectAge);
+	await user.click(screen.getByRole('option', { name: formulaireContact.age }));
 }

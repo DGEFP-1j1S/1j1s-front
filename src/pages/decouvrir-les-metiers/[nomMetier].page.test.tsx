@@ -55,12 +55,10 @@ describe('Page consulter fiche métier', () => {
 		);
 
 		const nomMetier = await screen.findByRole('heading', { level: 1 });
-		const expandedFirstSection = await screen.findByRole('button', { expanded: true });
-		const collapsedSections = await screen.findAllByRole('button', { expanded: false });
+		const sections = await screen.findAllByRole('heading', { level: 2 });
 
 		expect(nomMetier).toBeInTheDocument();
-		expect(expandedFirstSection).toBeVisible();
-		expect(collapsedSections.length).toEqual(4);
+		expect(sections.length).toEqual(7);
 	});
 
 	it('envoie les analytics de la page à son affichage', () => {

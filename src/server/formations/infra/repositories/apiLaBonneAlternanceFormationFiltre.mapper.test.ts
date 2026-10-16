@@ -1,47 +1,53 @@
 import {
-	aFormationQuery,
-	aFormationQueryWithNiveauEtudes,
-} from '~/server/formations/infra/repositories/apiLaBonneAlternanceFormation.fixture';
-import {
-	mapFiltreToQueryParams,
+	mapFiltreNiveauEtudeVise,
 } from '~/server/formations/infra/repositories/apiLaBonneAlternanceFormationFiltre.mapper';
 
-describe('mapFiltreToQueryParams', () => {
-	it('mappe les paramètres obligatoires', () => {
+describe('mapFiltreNiveauEtudeVise', () => {
+	it('un niveau 3 doit correspondre au filtre "3 (CAP...)"', () => {
 		// WHEN
-		const result = mapFiltreToQueryParams(aFormationQuery());
+		const result = mapFiltreNiveauEtudeVise('3');
 
 		// THEN
-		expect(result).toBe('romes=F1603,I1308&longitude=29.10&latitude=48.2&radius=30');
+		expect(result).toBe('3 (CAP...)');
 	});
 
-	describe('quand le niveau d’études est renseigné', () => {
-		it('le mappe sur le niveau de diplôme européen attendu par l’api', () => {
-			// WHEN
-			const result = mapFiltreToQueryParams(aFormationQueryWithNiveauEtudes());
+	it('un niveau 4 doit correspondre au filtre "4 (BAC...)"', () => {
+		// WHEN
+		const result = mapFiltreNiveauEtudeVise('4');
 
-			// THEN
-			expect(result).toBe('romes=F1603,I1308&longitude=29.10&latitude=48.2&radius=30&target_diploma_level=6');
-		});
+		// THEN
+		expect(result).toBe('4 (BAC...)');
 	});
 
-	describe('quand le niveau d’études n’est pas renseigné', () => {
-		it('n’ajoute pas le paramètre de niveau de diplôme', () => {
-			// WHEN
-			const result = mapFiltreToQueryParams(aFormationQuery());
+	it('un niveau 5 doit correspondre au filtre "5 (BTS, DEUST...)"', () => {
+		// WHEN
+		const result = mapFiltreNiveauEtudeVise('5');
 
-			// THEN
-			expect(result).not.toContain('target_diploma_level');
-		});
+		// THEN
+		expect(result).toBe('5 (BTS, DEUST...)');
 	});
 
-	describe('quand les codes ROME sont en minuscules', () => {
-		it('les passe en majuscules car l’api Alternance les refuse autrement', () => {
-			// WHEN
-			const result = mapFiltreToQueryParams({ ...aFormationQuery(), codeRomes: ['f1603', 'i1308'] });
+	it('un niveau 6 doit correspondre au filtre "6 (Licence, BUT...)"', () => {
+		// WHEN
+		const result = mapFiltreNiveauEtudeVise('6');
 
-			// THEN
-			expect(result).toContain('romes=F1603,I1308');
-		});
+		// THEN
+		expect(result).toBe('6 (Licence, BUT...)');
+	});
+
+	it('un niveau 7 doit correspondre au filtre "7 (Master, titre ingénieur...)"', () => {
+		// WHEN
+		const result = mapFiltreNiveauEtudeVise('7');
+
+		// THEN
+		expect(result).toBe('7 (Master, titre ingénieur...)');
+	});
+
+	it('un niveau autre que 3, 4, 5, 6, ou 7 ne correspond pas à un filtre, donc ne retourne rien', () => {
+		// WHEN
+		const result = mapFiltreNiveauEtudeVise('1');
+
+		// THEN
+		expect(result).toBe(undefined);
 	});
 });

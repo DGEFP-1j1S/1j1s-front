@@ -165,21 +165,10 @@ describe('ApiEngagementRepository', () => {
 			});
 		});
 
-		describe("quand l'id est un UUID", () => {
-			it("appelle l'api engagement avec cet id", async () => {
-				vi.spyOn(httpClientService, "get").mockResolvedValue(anAxiosResponse(anAmbassadeurDuDonDeVêtementMissionResponse()));
-				const uuid = "8e971c7f-6dc1-4588-a8d8-d0f72611e615";
-
-				await apiEngagementRepository.getMissionEngagement(uuid);
-
-				expect(httpClientService.get).toHaveBeenCalledWith(`mission/${uuid}`);
-			});
-		});
-
-		describe('quand l’id n’a pas le format d’un identifiant de mission (ObjectId ou UUID)', () => {
+		describe('quand l’id n’a pas le format d’un identifiant de mission (ObjectId)', () => {
 			it('retourne une erreur de contenu indisponible sans appeler l’api engagement', async () => {
 				vi.spyOn(httpClientService, 'get');
-				const identifiantAuMauvaisFormat = "id-invalide";
+				const identifiantAuMauvaisFormat = 'b0d143f4-4b75-49be-bfab-cbf4d5443368';
 
 				const { errorType } = await apiEngagementRepository.getMissionEngagement(identifiantAuMauvaisFormat) as Failure;
 

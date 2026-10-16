@@ -113,7 +113,7 @@ export const ComboboxLocalisation = React.forwardRef<ComboboxRef, ComboboxLocali
 	}, [handleRechercherWithDebounce]);
 
 	return (
-		<Champ className="fr-select-group">
+		<Champ>
 			<Champ.Label>
 				{label}
 				<Champ.Label.Complement>{labelComplement}</Champ.Label.Complement>

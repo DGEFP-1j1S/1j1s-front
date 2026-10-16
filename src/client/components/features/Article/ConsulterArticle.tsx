@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import styles from '~/client/components/features/Article/ConsulterArticle.module.scss';
 import { BackButton } from '~/client/components/features/ButtonRetour/BackButton';
 import MarkdownToHtml from '~/client/components/ui/MarkdownToHtml/MarkdownToHtml';
+import MarkdownToHtmlStyles from '~/client/components/ui/MarkdownToHtml/MarkdownToHtml.module.scss';
 import { useDependency } from '~/client/context/dependenciesContainer.context';
 import useSanitize from '~/client/hooks/useSanitize';
 import { DateService } from '~/client/services/date/date.service';
@@ -24,12 +25,12 @@ export function ConsulterArticle({ article }: ConsulterArticleProps) {
 	return (
 		<>
 			<main className={classNames('fr-container', styles.consulterArticle)}>
-				<BackButton />
+				<BackButton className={styles.consulterArticleButtonRetour} />
 				<h1 className={classNames(styles.titre, styles.blocTexte)}>{titre}</h1>
 				{ dateDerniereMiseAJour && <p className={styles.blocTexte}>Dernière mise à jour le {dateDerniereMiseAJour}</p> }
 				{/* eslint-disable-next-line @next/next/no-img-element */}
 				{ bannièreSrc && <img src={bannièreSrc} alt={bannièreAlt} decoding="async" loading="lazy" /> }
-				<MarkdownToHtml markdown={contenu} className={styles.blocTexte} />
+				<MarkdownToHtml markdown={contenu} className={classNames(styles.blocTexte, MarkdownToHtmlStyles.normalize)} />
 			</main>
 		</>
 	);

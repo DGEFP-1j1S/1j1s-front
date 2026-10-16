@@ -1,0 +1,149 @@
+@use "@styles/utilities-deprecated";
+
+.témoignage {
+  padding: 2rem;
+
+  article {
+    .portrait, h2 {
+      display: none;
+    }
+
+    .bio {
+      @extend %text-large;
+      margin: 0 0 1em;
+
+      p {
+        font-size: inherit;
+        margin: 0;
+        color: inherit;
+      }
+    }
+
+    .programme {
+      @extend %background-surface;
+
+      h3 {
+        font-size: inherit;
+        font-weight: 700;
+      }
+
+      ul {
+        list-style-type: initial;
+        padding-left: 20px;
+        margin-bottom: 2rem;
+      }
+
+      &SeeMore {
+        color: utilities-deprecated.$color-primary;
+      }
+    }
+  }
+
+  @include utilities-deprecated.media(large) {
+    padding: 5rem 0;
+    background-color: utilities-deprecated.$color-background-white-lilac;
+
+    & + & {
+      padding-top: 0;
+      margin-top: -3em;
+    }
+
+    & + & article {
+      grid-template-columns: 7.8rem auto 30rem 21.5em;
+      grid-template-areas:
+        ".         titre     titre     titre"
+        ".         .         .         ."
+        ".         .         bio       portrait"
+        "programme programme programme portrait"
+        "programme programme programme ."
+        "programme programme programme .";
+
+      &::before {
+        grid-area: 2 / 3 / span 4 / span 2;
+      }
+
+      .portrait {
+        margin: 0 3em 0 1em;
+      }
+
+      .bio {
+        margin: 0 0 0 utilities-deprecated.$gutter;
+      }
+
+      h2 {
+        text-align: right;
+      }
+    }
+
+    article {
+      display: grid;
+      grid-template-rows: auto 50px auto auto 50px auto;
+      grid-template-columns:  21.5em 30rem auto 7.8rem;
+      grid-template-areas:
+        "titre    titre titre ."
+        ".        .     .     ."
+        "portrait bio . ."
+        "portrait programme programme programme"
+        ".        programme programme programme"
+        ".        programme programme programme";
+
+      gap: utilities-deprecated.$gutter;
+      max-width: utilities-deprecated.$breakpoint-xl;
+      margin: 0 auto;
+      padding: 0 utilities-deprecated.$gutter;
+
+      &::before {
+        content: '';
+        background-color: utilities-deprecated.$color-cej-background;
+        grid-area: 2 / 1 / span 4 / span 2;
+        border-radius: 20px;
+      }
+
+
+      h2 {
+        display: initial;
+        font-size: 1.8em;
+        color: utilities-deprecated.$color-primary;
+        margin: 3em 0 0 0;
+        grid-area: titre;
+      }
+
+      .bio {
+        grid-area: bio;
+        color: utilities-deprecated.$color-on-primary;
+        margin: 0 utilities-deprecated.$gutter 0 0;
+      }
+
+
+      .portrait {
+        grid-area: portrait;
+        display: initial;
+        justify-self: end;
+        position: relative;
+        margin: 0 2em 0 3em;
+        line-height: 0;
+        border: solid 4px utilities-deprecated.$color-on-primary;
+        box-shadow: 16px 16px 0 utilities-deprecated.$color-primary;
+      }
+
+      .programmeSeeMore {
+        grid-area: programme;
+      }
+
+      .programme { // TODO fixer ici pour éviter une double application de la border -> c'est surtout la gridarea qu'il faut reprendre pour programmeSeeMore
+        border-radius: 1.25rem;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        line-height: 1.5;
+        padding: utilities-deprecated.$gutter;
+
+        h4 {
+          font-size: initial;
+        }
+
+        ul > li {
+          margin-top: utilities-deprecated.$gutter;
+        }
+      }
+    }
+  }
+}

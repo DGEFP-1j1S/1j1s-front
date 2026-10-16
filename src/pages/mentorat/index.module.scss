@@ -1,0 +1,299 @@
+@use "@styles/utilities-deprecated";
+
+.heading {
+  padding: 2rem 1.5rem;
+
+  &Container {
+    max-width: 35rem;
+    margin: 0 auto;
+
+    &__Title {
+      @extend %headline;
+      @extend %bold;
+      color: utilities-deprecated.$color-primary;
+      margin-bottom: 1.25rem;
+    }
+
+    &__TextContentWrapper {
+      div:first-child {
+        margin-bottom: 2rem;
+      }
+
+    }
+
+    &__TextContent {
+      margin-bottom: 0.75rem;
+
+      p {
+        font-size: 1rem;
+        @include utilities-deprecated.media(large) {
+          font-size: 1.25rem;
+        }
+      }
+
+      p:first-child {
+        @extend %bold;
+        margin-bottom: 0.25rem;
+      }
+
+      &Orange {
+        font-size: 1rem;
+        @include utilities-deprecated.media(large) {
+          font-size: 1.5rem;
+        }
+        @extend %bold;
+        color: utilities-deprecated.$mentorat-primary;
+        margin-bottom: 0.75rem;
+      }
+
+      .linkAsButtonWrapper {
+        margin-top: 1rem;
+
+        a {
+          justify-content: center;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@include utilities-deprecated.media(large) {
+  .heading {
+    padding: 0;
+
+    &Container {
+      max-width: 78rem;
+      margin: 0 auto;
+      padding: 4rem 1rem;
+
+      &__Title {
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
+      &__TextContentWrapper {
+        display: flex;
+
+        > div {
+          width: 50%;
+        }
+
+        & > div:first-child {
+          margin-bottom: 0;
+          border-right: 1px solid utilities-deprecated.$color-separator;
+          padding-right: 2.5rem;
+        }
+
+        & > div:last-child {
+          padding-left: 2.5rem;
+        }
+      }
+
+      &__TextContent {
+        margin-bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        p:first-child {
+          text-align: center;
+        }
+
+        &Orange {
+          text-align: center;
+          margin-bottom: 5rem;
+        }
+
+        .linkAsButtonWrapper {
+          margin-top: 2rem;
+          display: flex;
+
+          a {
+            margin: auto;
+            width: initial;
+          }
+        }
+      }
+    }
+  }
+}
+
+.contentContainer {
+  &OnPrimary {
+    background-color: utilities-deprecated.$color-primary;
+  }
+}
+
+.QuestCeQueMentorat {
+  &Wrapper {
+    padding: 2rem 1.5rem;
+    color: utilities-deprecated.$color-on-primary;
+    @extend %max-container;
+  }
+
+  &Content {
+    h1 {
+      font-size: 1.25rem;
+      margin-bottom: 1.25rem;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .linkAsButtonWrapper {
+      display: flex;
+      flex-direction: column;
+      margin: auto;
+      max-width: 35rem;
+
+      & > * + * {
+        margin-top: 1rem;
+      }
+
+      a {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.RaisonParticipationMentorat {
+  &Wrapper {
+    padding: 2rem 1.5rem;
+    @extend %max-container;
+
+    h1 {
+      font-size: 1.25rem;
+      color: utilities-deprecated.$color-primary;
+      margin-bottom: 1.25rem;
+    }
+
+    img {
+      height: 370px;
+      width: 490px;
+      display: none;
+    }
+
+    .RaisonParticipationMentoratContainer {
+      padding-bottom: 1.25rem;
+
+      .RaisonParticipationMentoratElement {
+        &:not(:last-child) {
+          margin-bottom: 1.25rem;
+        }
+
+        &__Title {
+          display: flex;
+          align-items: center;
+
+          p {
+            @extend %text-regular;
+            @extend %bold;
+            margin: inherit;
+          }
+
+          svg {
+            margin-right: 12px;
+            flex-shrink: 0;
+          }
+        }
+
+        > p {
+          padding-left: 2.25rem;
+          @extend %text-regular;
+        }
+      }
+    }
+  }
+}
+
+@include utilities-deprecated.media(large) {
+  .contentContainer {
+    display: flex;
+  }
+
+  .QuestCeQueMentorat {
+    &Wrapper {
+      padding: 4rem 1rem;
+    }
+    &Content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      h1 {
+        font-size: 1.5rem;
+        margin-bottom: 2.5rem;
+      }
+
+      p {
+        font-size: 1.25rem;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .RaisonParticipationMentorat {
+    &Wrapper {
+      display: flex;
+      padding: 4rem 1rem;
+      .RaisonParticipationMentoratContainer {
+        padding-bottom: 0;
+
+        .RaisonParticipationMentoratElement {
+          &:not(:last-child) {
+            margin-bottom: 1.25rem;
+          }
+
+          &__Title {
+            display: flex;
+            align-items: center;
+
+            p {
+              font-size: 1.25rem;
+              margin: initial;
+            }
+
+            svg {
+              margin-right: 0.75rem;
+              flex-shrink: 0;
+            }
+          }
+
+          &__Title:not(:last-child) {
+            margin-bottom: 0.75rem;
+          }
+
+          > p {
+            font-size: 1.25rem;
+            padding-left: 0;
+          }
+        }
+      }
+
+      img {
+        display: unset;
+      }
+    }
+
+    &Content {
+      display: flex;
+      flex-direction: column;
+
+      &__Title {
+        h1 {
+          font-size: 1.5rem;
+          margin-bottom: 2.5rem;
+        }
+      }
+    }
+
+    &Container {
+      padding-bottom: 0;
+    }
+  }
+}
+

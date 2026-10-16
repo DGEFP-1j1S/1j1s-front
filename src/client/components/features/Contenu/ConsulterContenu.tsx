@@ -1,5 +1,8 @@
+import styles from '~/client/components/features/Contenu/ConsulterContenu.module.scss';
 import { Head } from '~/client/components/head/Head';
+import { Container } from '~/client/components/layouts/Container/Container';
 import MarkdownToHtml from '~/client/components/ui/MarkdownToHtml/MarkdownToHtml';
+import MarkdownToHtmlStyles from '~/client/components/ui/MarkdownToHtml/MarkdownToHtml.module.scss';
 
 export interface ConsulterContenuProps {
   titre: string
@@ -9,12 +12,14 @@ export interface ConsulterContenuProps {
 export function ConsulterContenu({ titre, contenu }: ConsulterContenuProps) {
 	return (
 		<main id="contenu">
-			<article className="fr-container fr-pb-4w">
-				<Head
-					title={`${titre} | 1jeune1solution`}
-					robots="index,follow" />
-				<MarkdownToHtml markdown={contenu} />
-			</article>
+			<Container>
+				<article className={styles.article}>
+					<Head
+						title={`${titre} | 1jeune1solution`}
+						robots="index,follow" />
+					<MarkdownToHtml markdown={contenu} className={MarkdownToHtmlStyles.normalize} />
+				</article>
+			</Container>
 		</main>
 	);
 }

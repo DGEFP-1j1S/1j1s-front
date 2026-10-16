@@ -1,4 +1,4 @@
-import { OffreDeStageDeposeeStage } from '~/client/components/features/OffreDeStage/Deposer/StageDeposerOffre';
+import { OffreDeStageDeposeeStage } from '~/client/components/features/OffreDeStage/Déposer/StageDeposerOffre';
 
 export interface StageDeposerOffreEtape2PersistenceService {
 	getInformationsEtape2: () => OffreDeStageDeposeeStage | null;

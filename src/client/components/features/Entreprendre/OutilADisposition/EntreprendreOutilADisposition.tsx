@@ -1,6 +1,8 @@
-import React from "react";
+import React from 'react';
 
-import { Carte } from "~/client/dsfr";
+import styles
+	from '~/client/components/features/Entreprendre/OutilADisposition/EntreprendreOutilADisposition.module.scss';
+import { Link } from '~/client/components/ui/Link/Link';
 
 interface EntreprendreOutilADispositionProps {
   link: string
@@ -10,8 +12,12 @@ interface EntreprendreOutilADispositionProps {
 
 export function EntreprendreOutilADisposition({ link, linkLabel, description }: EntreprendreOutilADispositionProps) {
 	return (
-		<Carte className="height--full" titre={linkLabel} lien={link}>
-			{description}
-		</Carte>
+		<div className={styles.entreprendreOutilADisposition}>
+			<p>{description}</p>
+			<Link appearance="asPrimaryButton" href={link}>
+				{linkLabel}
+				<Link.Icon />
+			</Link>
+		</div>
 	);
 }

@@ -1,0 +1,82 @@
+@use "@styles/utilities-deprecated";
+.abstractSection {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 1rem;
+  column-gap: 1.5rem;
+
+  @include utilities-deprecated.media(large) {
+    grid-template-columns: 1fr 0.5fr 1fr;
+    grid-auto-flow: column;
+    padding-inline: 1.5rem;
+  }
+}
+
+.mainTitle {
+  background-color: utilities-deprecated.$color-primary;
+  color: utilities-deprecated.$color-on-primary;
+  text-align: center;
+  padding: 1.5rem;
+  @extend %text-large;
+  @extend %bold;
+}
+
+.fieldDomaine, .fieldRésumé {
+  @include utilities-deprecated.media(large) {
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+
+  .fieldContent {
+    display: inline-block;
+    vertical-align: sub;
+  }
+}
+
+.fieldDomaine .fieldContent {
+  @include utilities-deprecated.media(medium) {
+    max-width: 75%;
+  }
+}
+
+.fieldRésumé {
+  @include utilities-deprecated.media(large) {
+    display: flex;
+  }
+
+  .fieldLabel {
+    flex-shrink: 0;
+  }
+}
+
+.fieldNiveauAccès, .fieldStatutsPro {
+  @include utilities-deprecated.media(large) {
+    grid-column-start: 3;
+  }
+
+  .fieldContent {
+    display: inline-block;
+
+    @include utilities-deprecated.media(large) {
+      display: block;
+    }
+  }
+}
+
+.fieldLabel {
+  margin-right: 0.5rem;
+  @extend %text-medium;
+  @extend %bold;
+
+  @include utilities-deprecated.media(large) {
+    margin-right: 1rem;
+  }
+}
+
+.lastSectionTitle {
+  background-color: utilities-deprecated.$color-primary;
+  color: utilities-deprecated.$color-on-primary;
+  padding: 1.5rem;
+  @extend %bold;
+  @extend %text-medium;
+}

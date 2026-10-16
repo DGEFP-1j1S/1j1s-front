@@ -1,0 +1,16 @@
+@use "@styles/utilities";
+@use "../styles.module";
+
+.stageSeconde {
+  background-color: utilities.$color-primary-campagne-stage-seconde;
+  color: utilities.$color-text-on-primary-campagne-stage-seconde;
+
+  img {
+    object-fit: cover;
+    display: none;
+
+    @include utilities.media(xlarge) {
+      display: unset;
+    }
+  }
+}

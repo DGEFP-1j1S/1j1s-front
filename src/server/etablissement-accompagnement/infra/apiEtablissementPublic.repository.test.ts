@@ -1,6 +1,6 @@
 import { createFailure, createSuccess, Failure } from '~/server/errors/either';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
-import { TypeEtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
+import { TypeÉtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 import {
 	anEtablissementAccompagnementList,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement.fixture';
@@ -30,7 +30,7 @@ describe('ApiÉtablissementPublicRepository', () => {
 				const httpClient = aPublicHttpClientService();
 				const repository = new ApiEtablissementPublicRepository(httpClient, anErrorManagementService());
 				const codeCommune = '13055';
-				const typeAccompagnement = TypeEtablissement.INFO_JEUNE;
+				const typeAccompagnement = TypeÉtablissement.INFO_JEUNE;
 
 				await repository.search({ codeCommune, typeAccompagnement });
 
@@ -41,7 +41,7 @@ describe('ApiÉtablissementPublicRepository', () => {
 				const httpClient = aPublicHttpClientService();
 				const repository = new ApiEtablissementPublicRepository(httpClient, anErrorManagementService());
 				const codeCommune = '69123';
-				const typeAccompagnement = TypeEtablissement.INFO_JEUNE;
+				const typeAccompagnement = TypeÉtablissement.INFO_JEUNE;
 
 				await repository.search({ codeCommune, typeAccompagnement });
 
@@ -52,7 +52,7 @@ describe('ApiÉtablissementPublicRepository', () => {
 				const httpClient = aPublicHttpClientService();
 				const repository = new ApiEtablissementPublicRepository(httpClient, anErrorManagementService());
 				const codeCommune = '75056';
-				const typeAccompagnement = TypeEtablissement.INFO_JEUNE;
+				const typeAccompagnement = TypeÉtablissement.INFO_JEUNE;
 
 				await repository.search({ codeCommune, typeAccompagnement });
 
@@ -64,7 +64,7 @@ describe('ApiÉtablissementPublicRepository', () => {
 			const httpClient = aPublicHttpClientService();
 			const repository = new ApiEtablissementPublicRepository(httpClient, anErrorManagementService());
 			const codeCommune = '83000';
-			const typeAccompagnement = TypeEtablissement.INFO_JEUNE;
+			const typeAccompagnement = TypeÉtablissement.INFO_JEUNE;
 
 			await repository.search({ codeCommune, typeAccompagnement });
 
@@ -80,7 +80,7 @@ describe('ApiÉtablissementPublicRepository', () => {
 				const repository = new ApiEtablissementPublicRepository(httpClient, anErrorManagementService());
 				const expected = createSuccess(anEtablissementAccompagnementList());
 				const codeCommune = '46000';
-				const typeAccompagnement = TypeEtablissement.INFO_JEUNE;
+				const typeAccompagnement = TypeÉtablissement.INFO_JEUNE;
 
 				// when
 				const result = await repository.search({ codeCommune, typeAccompagnement });

@@ -1,9 +1,11 @@
 import React, { useMemo } from 'react';
 
+import styles from '~/client/components/features/ServicesJeunes/ServicesJeunes.module.scss';
+import { Container } from '~/client/components/layouts/Container/Container';
+import { FlippingCard } from '~/client/components/ui/Card/Flipping/FlippingCard';
 import SeeMoreItemList from '~/client/components/ui/SeeMore/SeeMoreItemList';
 import useSanitize from '~/client/hooks/useSanitize';
 import { ServiceJeune } from '~/server/services-jeunes/domain/servicesJeunes';
-import { Carte } from "~/client/dsfr";
 
 interface ServicesJeunesProps {
 	cardList: Array<ServiceJeune>
@@ -21,7 +23,7 @@ export function ServicesJeunes(props: ServicesJeunesProps) {
 
 	return (
 		<>
-			<section className="fr-container fr-pb-5w">
+			<Container className={styles.container}>
 				{ props.cardList.length > 0 ? (
 					<SeeMoreItemList
 						seeLessLabel="Voir moins de services"
@@ -32,7 +34,7 @@ export function ServicesJeunes(props: ServicesJeunesProps) {
 						itemList={cardListToDisplay} />
 				)
 					: <p>Aucun service disponible. Veuillez modifier votre sélection.</p>}
-			</section>
+			</Container>
 		</>
 	);
 }
@@ -52,14 +54,12 @@ function ServiceJeuneCard({ serviceJeune }: ServiceJeuneCardProps) {
 	const titre = useSanitize(dirtyTitre);
 
 	return (
-		<Carte
-			titre={titre}
-			imageSrc={banniere?.src ?? '/images/image-par-defaut-carte.webp'}
-			imageAlt={banniere?.alt ?? ''}
-			lien={link}
-			tags={[categorie.libelle]}
-		>
-			{concerne}
-		</Carte>
+		<FlippingCard
+			className={styles.card}
+			category={categorie}
+			imageUrl={banniere?.src}
+			link={link}
+			title={titre}
+			flippingCardContent={concerne} />
 	);
 }

@@ -1,7 +1,7 @@
-import { ResultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnees';
+import { RésultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnées';
 import { ApiAdresseResponse } from '~/server/localisations/infra/repositories/apiAdresse.response';
 
-export function mapRésultatsRechercheCommune(response: ApiAdresseResponse): ResultatsRechercheCommune {
+export function mapRésultatsRechercheCommune(response: ApiAdresseResponse): RésultatsRechercheCommune {
 	return {
 		résultats: response.features.map(({ properties, geometry }) => {
 			return {

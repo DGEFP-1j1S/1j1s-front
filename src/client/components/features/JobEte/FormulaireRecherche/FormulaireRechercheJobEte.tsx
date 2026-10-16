@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { FormEvent, useRef } from 'react';
 
+import { ButtonComponent } from '~/client/components/ui/Button/ButtonComponent';
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 import { ComboboxLocalisation } from '~/client/components/ui/Form/Combobox/ComboboxLocalisation/ComboboxLocalisation';
 import {
@@ -8,11 +9,13 @@ import {
 } from '~/client/components/ui/Form/Combobox/ComboboxLocalisation/defaultLocalisation/mapToDefaultLocalisation';
 import { Input } from '~/client/components/ui/Form/Input';
 import { SelectMultiple } from '~/client/components/ui/Form/Select/SelectMultiple';
-import { Button } from '~/client/dsfr';
-import { referentielDomaineList } from '~/client/domain/referentielDomaineList';
+import { Icon } from '~/client/components/ui/Icon/Icon';
+import { référentielDomaineList } from '~/client/domain/référentielDomaineList';
 import { useOffreQuery } from '~/client/hooks/useOffreQuery';
 import { getFormAsQuery } from '~/client/utils/form.util';
-import { mapReferentielDomaineToOffreCheckboxFiltre } from '~/client/utils/offreEmploi.mapper';
+import { mapRéférentielDomaineToOffreCheckboxFiltre } from '~/client/utils/offreEmploi.mapper';
+
+import styles from './FormulaireRechercheJobEte.module.scss';
 
 export function FormulaireRechercheJobEte() {
 	const rechercheJobEteForm = useRef<HTMLFormElement>(null);
@@ -30,53 +33,49 @@ export function FormulaireRechercheJobEte() {
 
 	return (
 		<form
-			className="border--blue fr-p-5w"
 			ref={rechercheJobEteForm}
-			aria-label="Rechercher un job d’été"
-			onSubmit={updateRechercherJobEteQueryParams}
-			role="search">
-			<h2 className="fr-h4 fr-mb-5w">Trouvez votre job d’été</h2>
-			<div className="fr-grid-row fr-grid-row--gutters">
-				<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
-					<Champ className="fr-input-group">
-						<Champ.Label>
-							Métier, mot-clé (minimum 2 caractères)
-							<Champ.Label.Complement>Exemples : boulanger, informatique…</Champ.Label.Complement>
-						</Champ.Label>
-						<Champ.Input
-							render={Input}
-							defaultValue={queryParams.motCle}
-							name="motCle"
-							minLength={2} />
-						<Champ.Error />
-					</Champ>
-				</div>
-				<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
-					<ComboboxLocalisation defaultValue={inputLocalisation} />
-				</div>
-				<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
-					<Champ className="fr-select-group">
-						<Champ.Label>
-							Domaines
-							<Champ.Label.Complement>Exemple : Commerce, Immobilier…</Champ.Label.Complement>
-						</Champ.Label>
-						<Champ.Input
-							render={SelectMultiple}
-							optionsAriaLabel={'Domaines'}
-							name="grandDomaine"
-							defaultValue={queryParams.grandDomaine?.split(',')}>
-							{mapReferentielDomaineToOffreCheckboxFiltre(referentielDomaineList).map((option) =>
-								<SelectMultiple.Option key={option.libellé} value={option.valeur}>{option.libellé}</SelectMultiple.Option>,
-							)}
-						</Champ.Input>
-						<Champ.Error />
-					</Champ>
-				</div>
-				<div className="fr-m-auto fr-mt-4w">
-					<Button className="fr-btn--lg"
-						label="Rechercher"
-						type="submit" />
-				</div>
+			role="search"
+			className={styles.rechercheOffreForm}
+			onSubmit={updateRechercherJobEteQueryParams}>
+			<div className={styles.filtres}>
+				<Champ>
+					<Champ.Label>
+						Métier, mot-clé (minimum 2 caractères)
+						<Champ.Label.Complement>Exemples : boulanger, informatique…</Champ.Label.Complement>
+					</Champ.Label>
+					<Champ.Input
+						render={Input}
+						defaultValue={queryParams.motCle}
+						name="motCle"
+						minLength={2} />
+					<Champ.Error />
+				</Champ>
+
+				<ComboboxLocalisation defaultValue={inputLocalisation} />
+
+				<Champ className={styles.domaine}>
+					<Champ.Label>
+						Domaines
+						<Champ.Label.Complement>Exemple : Commerce, Immobilier…</Champ.Label.Complement>
+					</Champ.Label>
+					<Champ.Input
+						render={SelectMultiple}
+						optionsAriaLabel={'Domaines'}
+						name="grandDomaine"
+						defaultValue={queryParams.grandDomaine?.split(',')}>
+						{mapRéférentielDomaineToOffreCheckboxFiltre(référentielDomaineList).map((option) =>
+							<SelectMultiple.Option key={option.libellé} value={option.valeur}>{option.libellé}</SelectMultiple.Option>,
+						)}
+					</Champ.Input>
+					<Champ.Error />
+				</Champ>
+			</div>
+			<div className={styles.buttonRechercher}>
+				<ButtonComponent
+					label="Rechercher"
+					icon={<Icon name="magnifying-glass" />}
+					iconPosition="right"
+					type="submit" />
 			</div>
 		</form>
 	);

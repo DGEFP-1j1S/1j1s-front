@@ -1,0 +1,25 @@
+@use "@styles/utilities";
+
+.carteResultat {
+  @include utilities.media(medium) {
+    padding: 1.5rem;
+  }
+}
+
+.listeMetiers {
+  padding-top: 10px;
+  > li {
+    display: inline;
+
+    > p {
+      display: inline;
+    }
+  }
+
+  > li::before {
+    content: ', ';
+  }
+  > li:first-of-type::before{
+    content: none;
+  }
+}

@@ -31,10 +31,11 @@ function CardContent({ children, className, ...rest }: React.ComponentPropsWitho
 }
 
 function CardButton(props: React.ComponentPropsWithoutRef<typeof ButtonComponent>) {
-	const { className, icon, label, ...rest } = props;
+	const { appearance = 'tertiary', className, icon, label, ...rest } = props;
 	return (
 		<ButtonComponent
 			className={className}
+			appearance={appearance}
 			label={label || ''}
 			icon={icon}
 			iconPosition={'right'}
@@ -42,14 +43,26 @@ function CardButton(props: React.ComponentPropsWithoutRef<typeof ButtonComponent
 	);
 }
 
-type CardCallToActionProps = Required<Pick<ButtonComponentProps, 'label'>>
+type CardCallToActionProps = Required<Pick<ButtonComponentProps, 'appearance' | 'label'>>
 	& { icon: React.ReactNode }
 
 function CardFakeLink(props: CardCallToActionProps & React.ComponentPropsWithoutRef<'span'>) {
-	const { className, icon, label, ...rest } = props;
+	const { appearance = 'quaternary', className, icon, label, ...rest } = props;
+	const appearanceClass = useMemo(() => {
+		switch (appearance) {
+			case 'primary':
+				return styles.cardButtonPrimary;
+			case 'secondary':
+				return styles.cardButtonSecondary;
+			case 'tertiary':
+				return styles.cardButtonTertiary;
+			case 'quaternary':
+				return styles.cardButtonQuaternary;
+		}
+	}, [appearance]);
 
 	return (
-		<span className={classNames(className, styles.cardButton)} {...rest}>
+		<span className={classNames(className, appearanceClass, styles.cardButton)} {...rest}>
 			<span>{label}</span>
 			{icon}
 		</span>

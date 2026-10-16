@@ -1,15 +1,17 @@
 import React from 'react';
 
-import { Carte } from '~/client/dsfr';
+import { ServiceCard } from './Card/ServiceCard';
 
 export function AidesFinancieresEurope() {
 	return (
-		<Carte
-			horizontal
-			titre="Je cherche des aides financières pour vivre une expérience en Europe"
-			imageSrc="/images/aides-financières.webp"
-			lien="/mes-aides">
+		<ServiceCard
+			imageFit="cover"
+			linkLabel="Simuler mes aides"
+			link="/mes-aides"
+			logo="/images/aides-financières.webp"
+			title="Je cherche des aides financières pour vivre une expérience en Europe"
+			titleAs={'h3'}>
 			Simuler les aides auxquelles vous êtes éligibles afin de vivre au mieux votre expérience en Europe.
-		</Carte>
+		</ServiceCard>
 	);
 }

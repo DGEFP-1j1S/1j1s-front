@@ -1,5 +1,5 @@
 import { Either } from '~/server/errors/either';
-import { ResultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnees';
+import { RésultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnées';
 import {
 	RechercheLocalisationApiResponse,
 } from '~/server/localisations/infra/controllers/RechercheLocalisationApiResponse';
@@ -7,5 +7,5 @@ import {
 export interface LocalisationService {
 	isInvalidLocalisationQuery(recherche: string): boolean;
 	rechercherLocalisation(recherche: string): Promise<Either<RechercheLocalisationApiResponse> | null>;
-	rechercherCommune(recherche: string): Promise<Either<ResultatsRechercheCommune>>;
+	rechercherCommune(recherche: string): Promise<Either<RésultatsRechercheCommune>>;
 }

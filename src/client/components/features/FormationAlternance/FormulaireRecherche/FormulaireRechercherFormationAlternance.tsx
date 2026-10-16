@@ -1,11 +1,13 @@
 import { useRouter } from 'next/router';
 import React, { FormEvent } from 'react';
 
+import { ButtonComponent } from '~/client/components/ui/Button/ButtonComponent';
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 import { ComboboxCommune } from '~/client/components/ui/Form/Combobox/ComboboxCommune/ComboboxCommune';
 import { ComboboxMetiers } from '~/client/components/ui/Form/Combobox/ComboboxMetiers';
 import { Metier } from '~/client/components/ui/Form/Combobox/ComboboxMetiers/Metier';
 import { SelectSimple } from '~/client/components/ui/Form/Select/SelectSimple';
+import { Icon } from '~/client/components/ui/Icon/Icon';
 import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { MetierDependenciesProvider } from '~/client/context/metier.context';
 import { mapToCommune } from '~/client/hooks/useCommuneQuery';
@@ -15,7 +17,8 @@ import { getFormAsQuery } from '~/client/utils/form.util';
 import { estQueryIdentiqueAAsPath } from '~/client/utils/queryString.util';
 import { FORMATION_NIVEAU_ETUDES } from '~/server/formations/domain/formation';
 
-import {Button} from "~/client/dsfr";
+import styles
+	from './FormulaireRechercheFormationAlternance.module.scss';
 
 type FormulaireRechercherFormationAlternanceProps = {
 	enEtatErreur?: boolean
@@ -60,46 +63,48 @@ export function FormulaireRechercherFormationAlternance({ enEtatErreur = false }
 
 	return (
 		<>
+			<p className={styles.champsObligatoires}>Tous les champs sont obligatoires sauf mention contraire</p>
 			<form
-				className="border--blue fr-p-5w"
+				className={styles.rechercheFormationForm}
 				aria-label="Rechercher une formation"
 				onSubmit={updateRechercherFormationQueryParams}>
-				<h2 className="fr-h4 fr-mb-3w">Trouvez une formation en alternance</h2>
-				<p className="fr-hint">Tous les champs sont obligatoires sauf mention contraire</p>
-				<div className="fr-grid-row fr-grid-row--gutters">
-					<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
-						<MetierDependenciesProvider metierService={metierService}>
-							<ComboboxMetiers
-								defaultValue={domaineDefaultValue}
-								required
-								autoFocus
-								valueName={'codeRomes'}/>
-						</MetierDependenciesProvider>
-					</div>
-					<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
-						<ComboboxCommune
-							defaultCommune={communeDefaultValue}
-							showRadiusInput
-							defaultDistance={distanceCommune}
-							required/>
-					</div>
-					<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
-						<Champ className="fr-select-group">
-							<Champ.Label>
-								Niveau d’études visé (optionnel)
-								<Champ.Label.Complement>Exemples : CAP, Bac...</Champ.Label.Complement>
-							</Champ.Label>
-							<Champ.Input
-								render={SelectSimple}
-								optionsList={FORMATION_NIVEAU_ETUDES}
-								name="niveauEtudes"
-								defaultValue={niveauEtudes}/>
-							<Champ.Error/>
-						</Champ>
-					</div>
-					<div className="fr-m-auto fr-mt-4w">
-						<Button label="Rechercher" type="submit" className="fr-btn--lg" />
-					</div>
+				<div className={styles.filtresRechercherFormation}>
+					<MetierDependenciesProvider metierService={metierService}>
+						<ComboboxMetiers
+							defaultValue={domaineDefaultValue}
+							required
+							autoFocus
+							valueName={'codeRomes'} />
+					</MetierDependenciesProvider>
+					<ComboboxCommune
+						defaultCommune={communeDefaultValue}
+						showRadiusInput
+						defaultDistance={distanceCommune}
+						required />
+
+					<Champ>
+						<Champ.Label>
+							Niveau d’études visé (facultatif)
+							<Champ.Label.Complement>Exemples : CAP, Bac...</Champ.Label.Complement>
+						</Champ.Label>
+						<Champ.Input
+							render={SelectSimple}
+							optionsAriaLabel={'Niveau d‘études'}
+							name="niveauEtudes"
+							defaultValue={niveauEtudes}>
+							{FORMATION_NIVEAU_ETUDES.map((option) =>
+								<SelectSimple.Option key={option.libellé} value={option.valeur}>{option.libellé}</SelectSimple.Option>,
+							)}
+						</Champ.Input>
+						<Champ.Error />
+					</Champ>
+				</div>
+				<div className={styles.buttonRechercher}>
+					<ButtonComponent
+						label="Rechercher"
+						icon={<Icon name="magnifying-glass" />}
+						iconPosition="right"
+						type="submit" />
 				</div>
 			</form>
 		</>

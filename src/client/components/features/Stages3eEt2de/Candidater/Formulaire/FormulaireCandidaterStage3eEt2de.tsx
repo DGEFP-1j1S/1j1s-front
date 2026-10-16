@@ -187,7 +187,7 @@ function FormulaireContactParTelephone(props: {
 					aria-label={`Candidater à l’offre de stage de 3e et 2de de l’entreprise ${props.nomEntreprise}`}
 					onSubmit={props.envoyerCandidature}
 					className={styles.formulaireEtapeUnique}>
-					<Champ className="fr-input-group">
+					<Champ>
 						<Champ.Label>Prénom
 							<Champ.Label.Complement>Exemple : Alexis</Champ.Label.Complement>
 						</Champ.Label>
@@ -198,7 +198,7 @@ function FormulaireContactParTelephone(props: {
 											 autoComplete="given-name" />
 						<Champ.Error />
 					</Champ>
-					<Champ className="fr-input-group">
+					<Champ>
 						<Champ.Label>Nom
 							<Champ.Label.Complement>Exemple : Dupont</Champ.Label.Complement>
 						</Champ.Label>
@@ -209,7 +209,7 @@ function FormulaireContactParTelephone(props: {
 											 autoComplete="family-name" />
 						<Champ.Error />
 					</Champ>
-					<Champ className="fr-input-group">
+					<Champ>
 						<Champ.Label>E-mail
 							<Champ.Label.Complement>Exemple : alexis.dupont@example.com</Champ.Label.Complement>
 						</Champ.Label>
@@ -223,7 +223,7 @@ function FormulaireContactParTelephone(props: {
 					</Champ>
 					{ /* FIXME (DORO 22-01-2024: Ajouter la gestion de readonly dans Select */}
 					{isMoreThanOneMetier ? (
-						<Champ className="fr-select-group">
+						<Champ>
 							<Champ.Label>
 							Métier sur lequel porte la demande d’immersion
 								<Champ.Label.Complement>Un ou plusieurs métiers ont été renseignés par l’entreprise</Champ.Label.Complement>
@@ -231,12 +231,16 @@ function FormulaireContactParTelephone(props: {
 							<Champ.Input
 								render={SelectSimple}
 								required
-								optionsList={props.metiersStage3eEt2de.map((metier) => ({ libellé: metier.label, valeur: metier.code }))}
-								name={'metierCode'} />
+								optionsAriaLabel={'metiers'}
+								name={'metierCode'}>
+								{props.metiersStage3eEt2de.map((metier) =>
+									<SelectSimple.Option key={metier.label} value={metier.code}>{metier.label}</SelectSimple.Option>,
+								)}
+							</Champ.Input>
 							<Champ.Error />
 						</Champ>
 					) : (
-						<Champ className="fr-input-group">
+						<Champ>
 							<Champ.Label>
 							Métier sur lequel porte la demande d’immersion
 								<Champ.Label.Complement className={styles.elementDesactive}>Un ou plusieurs métiers ont été renseignés par
@@ -283,7 +287,7 @@ function FormulaireContactParEmail(props: {
 					aria-label={`Candidater à l’offre de stage de 3e et 2de de l’entreprise ${props.nomEntreprise}`}
 					onSubmit={props.envoyerCandidature}
 					className={styles.formulaireEtapeUnique}>
-					<Champ className="fr-input-group">
+					<Champ>
 						<Champ.Label>Prénom
 							<Champ.Label.Complement>Exemple : Alexis</Champ.Label.Complement>
 						</Champ.Label>
@@ -294,7 +298,7 @@ function FormulaireContactParEmail(props: {
 											 autoComplete="given-name" />
 						<Champ.Error />
 					</Champ>
-					<Champ className="fr-input-group">
+					<Champ>
 						<Champ.Label>Nom
 							<Champ.Label.Complement>Exemple : Dupont</Champ.Label.Complement>
 						</Champ.Label>
@@ -305,7 +309,7 @@ function FormulaireContactParEmail(props: {
 											 autoComplete="family-name" />
 						<Champ.Error />
 					</Champ>
-					<Champ className="fr-input-group">
+					<Champ>
 						<Champ.Label>E-mail
 							<Champ.Label.Complement>Exemple : alexis.dupont@example.com</Champ.Label.Complement>
 						</Champ.Label>
@@ -317,7 +321,7 @@ function FormulaireContactParEmail(props: {
 											 pattern={emailRegex} />
 						<Champ.Error />
 					</Champ>
-					<Champ className="fr-input-group">
+					<Champ>
 						<Champ.Label>
 						Téléphone
 							<Champ.Label.Complement>
@@ -334,7 +338,7 @@ function FormulaireContactParEmail(props: {
 					</Champ>
 					{ /* FIXME (DORO 22-01-2024: Ajouter la gestion de readonly dans Select */}
 					{isMoreThanOneMetier ? (
-						<Champ className="fr-select-group">
+						<Champ>
 							<Champ.Label>
 							Métier sur lequel porte la demande d’immersion
 								<Champ.Label.Complement>Un ou plusieurs métiers ont été renseignés par l’entreprise</Champ.Label.Complement>
@@ -342,12 +346,16 @@ function FormulaireContactParEmail(props: {
 							<Champ.Input
 								render={SelectSimple}
 								required
-								optionsList={props.metiersStage3eEt2de.map((metier) => ({ libellé: metier.label, valeur: metier.code }))}
-								name={'metierCode'} />
+								optionsAriaLabel={'metiers'}
+								name={'metierCode'}>
+								{props.metiersStage3eEt2de.map((metier) =>
+									<SelectSimple.Option key={metier.label} value={metier.code}>{metier.label}</SelectSimple.Option>,
+								)}
+							</Champ.Input>
 							<Champ.Error />
 						</Champ>
 					) : (
-						<Champ className="fr-input-group">
+						<Champ>
 							<Champ.Label>
 							Métier sur lequel porte la demande d’immersion
 								<Champ.Label.Complement className={styles.elementDesactive}>Un ou plusieurs métiers ont été renseignés par

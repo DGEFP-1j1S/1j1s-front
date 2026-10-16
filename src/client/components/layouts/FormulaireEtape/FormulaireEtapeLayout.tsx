@@ -1,39 +1,33 @@
 import React from 'react';
 
+import { Container } from '~/client/components/layouts/Container/Container';
 import { Link } from '~/client/components/ui/Link/Link';
 
+import styles from './FormulaireEtapeLayout.module.scss';
+
 interface FormulaireEtapeLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
-	etapeCourante: number
-	nombreEtapes: number
-	titre: string
-	titreEtapeSuivante?: string
-	urlEtapePrecedente?: string
+	étape: string
+	urlÉtapePrécédente?: string
 }
 
-export function FormulaireEtapeLayout(props: FormulaireEtapeLayoutProps) {
-	const { etapeCourante, nombreEtapes, titre, titreEtapeSuivante, urlEtapePrecedente, children } = props;
+export function FormulaireÉtapeLayout(props: FormulaireEtapeLayoutProps) {
+	const { étape, urlÉtapePrécédente, children } = props;
 	return (
-		<div className="fr-container fr-mb-5w">
-			<div className="fr-stepper fr-col-lg-6 fr-col-12">
-				{ urlEtapePrecedente && (
-					<Link
-						href={urlEtapePrecedente}
-						className="fr-btn fr-btn--tertiary-no-outline fr-btn--icon-left fr-icon-arrow-go-back-line fr-mb-3w">
-						Retour à l’étape précédente
-					</Link>
-				)}
-				<h2 className="fr-stepper__title">
-					{titre}{" "}
-					<span className="fr-stepper__state">Étape {etapeCourante} sur {nombreEtapes}</span>
-				</h2>
-				<div className="fr-stepper__steps" data-fr-current-step={etapeCourante} data-fr-steps={nombreEtapes}></div>
-				{titreEtapeSuivante && (
-					<p className="fr-stepper__details">
-						<span className="fr-text--bold">Étape suivante :</span> {titreEtapeSuivante}
-					</p>
-				)}
-			</div>
+		<Container className={styles.container}>
+			<ÉtapeFormulaire étape={étape} />
+			{ urlÉtapePrécédente && (
+				<Link
+					href={urlÉtapePrécédente}
+					appearance="asSecondaryButton"
+					className={styles.boutonRetour}>
+					<Link.Icon name="angle-left" />
+        Retour à l’étape précédente
+				</Link>
+			)}
 			{ children }
-		</div>
+		</Container>
 	);
 }
+
+
+const ÉtapeFormulaire = (props: {étape: string}) => <div className={styles.étape}>{props.étape}</div>;

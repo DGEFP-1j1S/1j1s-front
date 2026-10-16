@@ -16,7 +16,7 @@ export interface Offre {
 	expérience?: OffreExpérience
 	duréeTravail?: OffreDuréeTravail
 	urlOffreOrigine: string
-	étiquetteList: React.ReactNode[]
+	étiquetteList: string[]
 }
 
 export enum OffreExpérience {
@@ -141,7 +141,7 @@ export interface OffreCheckboxFiltre {
 	valeur: string
 }
 
-export interface ResultatsRechercheOffre {
+export interface RésultatsRechercheOffre {
 	nombreRésultats: number
 	résultats: Offre[]
 }
@@ -182,7 +182,7 @@ export enum DomaineCode {
 	N = 'N'
 }
 
-export interface ReferentielDomaine {
+export interface RéférentielDomaine {
 	code: DomaineCode
 	libelle: string
 }

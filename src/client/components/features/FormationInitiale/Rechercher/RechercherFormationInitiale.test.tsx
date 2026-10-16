@@ -151,8 +151,7 @@ describe('RechercherFormationInitiale', () => {
 						render(<DependenciesProvider formationInitialeService={aFormationService}>
 							<RechercherFormationInitiale />
 						</DependenciesProvider>);
-						const formationList = await screen.findByRole('list', { name: 'Formations Initiales' });
-						const listeTags = await within(formationList).findByRole('list');
+						const listeTags = await screen.findByRole('list', { name: 'Caractéristiques de l‘offre' });
 						const tags = within(listeTags).getAllByRole('listitem');
 						expect(tags).toHaveLength(3);
 						expect(tags[0]).toHaveTextContent('Certifiante');
@@ -175,8 +174,7 @@ describe('RechercherFormationInitiale', () => {
 							<RechercherFormationInitiale />
 						</DependenciesProvider>);
 
-						const formationList = await screen.findByRole('list', { name: 'Formations Initiales' });
-						const listeTags = await within(formationList).findByRole('list');
+						const listeTags = await screen.findByRole('list', { name: 'Caractéristiques de l‘offre' });
 						const tags = within(listeTags).getAllByRole('listitem');
 						expect(tags).toHaveLength(2);
 						expect(tags[0]).toHaveTextContent('Bac + 2');
@@ -243,7 +241,7 @@ describe('RechercherFormationInitiale', () => {
 			</DependenciesProvider>);
 
 			// THEN
-			const titreSection = screen.getByRole("heading", { level: 2, name: /Découvrez des services faits pour vous/ });
+			const titreSection = screen.getByRole('heading', { level: 2, name: /Des services faits pour vous/ });
 			expect(titreSection).toBeVisible();
 		});
 

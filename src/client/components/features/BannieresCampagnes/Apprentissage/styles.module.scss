@@ -1,0 +1,8 @@
+@use "@styles/utilities";
+@use "../styles.module";
+
+.apprentissage {
+  h2 {
+    color: utilities.$color-title-apprentissage;
+  }
+}

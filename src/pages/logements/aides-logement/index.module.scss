@@ -1,0 +1,53 @@
+@use "@styles/utilities-deprecated";
+
+.contentWrapper {
+  padding-block: 1.5rem;
+  padding-inline: 1rem;
+
+  @include utilities-deprecated.media(xlarge) {
+    padding-block: 1rem;
+    padding-inline: 0;
+  }
+}
+
+.section {
+  &:not(:last-of-type) {
+    margin-bottom: 3rem;
+  }
+
+  @include utilities-deprecated.media(large) {
+    margin-bottom: 3rem;
+  }
+}
+
+.sectionHeading {
+  color: utilities-deprecated.$color-primary;
+  margin-top: 1.5rem;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  @extend %bold;
+  @extend %subheading;
+}
+
+.serviceCard {
+  &:last-of-type {
+    margin-bottom: 1rem;
+  }
+  &:not(:last-of-type) {
+    margin-bottom: 2rem;
+  }
+}
+
+.additionalInfo {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 1.5rem;
+  @extend %text-small;
+
+  svg {
+    color: utilities-deprecated.$color-primary;
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+    margin-top: 0.3rem;
+  }
+}

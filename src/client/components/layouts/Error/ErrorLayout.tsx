@@ -1,37 +1,52 @@
+import classNames from 'classnames';
 import React from 'react';
 
 import { BackButton } from '~/client/components/features/ButtonRetour/BackButton';
+import { Container } from '~/client/components/layouts/Container/Container';
+import styles from '~/client/components/layouts/Error/ErrorLayout.module.scss';
+import { HtmlHeadingTag } from '~/client/components/props';
 import { Image } from '~/client/components/ui/Img';
 import { Link } from '~/client/components/ui/Link/Link';
 
 
 interface ErrorLayoutProps {
-	title: string
-	errorCode: string
-	subTitle: string
-	content: string
+	children: React.ReactNode
 }
 
 export function ErrorLayout(props: React.PropsWithChildren<ErrorLayoutProps>) {
-	const { title, errorCode, subTitle, content } = props;
+	const { children } = props;
 
 	return (
-		<div className="fr-container fr-my-8w">
-			<div className="fr-grid-row fr-grid-row--gutters fr-grid-row--middle fr-grid-row--center">
-				<div className="fr-col-9">
-					<h1>{title}</h1>
-					<p className="fr-text--sm fr-mb-3w">Erreur {errorCode}</p>
-					<p className="fr-text--lead fr-mb-3w">{subTitle}</p>
-					<p className="fr-text--sm fr-mb-5w">{content}</p>
-					<div className="fr-btns-group fr-btns-group--inline-md">
-						<BackButton aria-label="Retourner à la page précédente" label="Retourner à la page précédente"/>
-						<Link href="/" className="fr-btn fr-btn--secondary">Aller à l‘accueil</Link>
-					</div>
-				</div>
-				<div className="fr-col-3 fr-hidden fr-unhidden-lg">
-					<Image src="/images/logos/technical-error.svg" alt="" width={185} height={205}/>
+		<Container className={styles.container}>
+			<div>
+				{children}
+				<div className={styles.buttonWrapper}>
+					<BackButton aria-label="Retourner à la page précédente" label="Retourner à la page précédente" appearance="primary" className={styles.backButton} />
+					<Link href="/" appearance="asSecondaryButton" className={styles.homeLink}>Aller à l‘accueil</Link>
 				</div>
 			</div>
-		</div>
+
+			<div className={styles.errorLogo}>
+				<Image src="/images/logos/technical-error.svg" alt="" width={185} height={205} />
+			</div>
+		</Container>
 	);
 }
+
+function ErrorTitle({ children, className, id, titleAs }: {
+	titleAs: HtmlHeadingTag
+} & React.HTMLAttributes<HTMLTitleElement>) {
+	return React.createElement(titleAs, { className: classNames(styles.title, className), id }, children);
+}
+
+function ErrorSubTitle({ children, className }: React.HTMLAttributes<HTMLParagraphElement>) {
+	return <p className={classNames('bold', styles.subtitle, className)}>{children}</p>;
+}
+
+function ErrorContent({ children, className }: React.HTMLAttributes<HTMLParagraphElement>) {
+	return <p className={className}>{children}</p>;
+}
+
+ErrorLayout.Title = ErrorTitle;
+ErrorLayout.SubTitle = ErrorSubTitle;
+ErrorLayout.Content = ErrorContent;

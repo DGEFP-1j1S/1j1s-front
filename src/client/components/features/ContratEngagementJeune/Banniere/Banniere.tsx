@@ -27,7 +27,7 @@ export function Banniere() {
 				priority
 				src={banniereImage}
 				alt={'Contrat d‘engagement jeune, finie la galère, trouvez un métier qui va vous plaire.'}
-				width={700}
+				width={800}
 				height={400} />
 		</div>
 	);

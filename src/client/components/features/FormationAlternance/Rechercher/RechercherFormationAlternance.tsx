@@ -10,26 +10,32 @@ import {
 import { ServiceCardList } from '~/client/components/features/ServiceCard/Card/ServiceCard';
 import { CarifOrefPartner } from '~/client/components/features/ServiceCard/CarifOrefPartner';
 import { DecouvrirApprentissage } from '~/client/components/features/ServiceCard/DecouvrirApprentissage';
-import { MétierDuSoinPartner } from '~/client/components/features/ServiceCard/MetiersDuSoinPartner';
+import { MétierDuSoinPartner } from '~/client/components/features/ServiceCard/MétiersDuSoinPartner';
 import { MonCompteFormationPartner } from '~/client/components/features/ServiceCard/MonCompteFormationPartner';
 import { ParcourSupPartner } from '~/client/components/features/ServiceCard/ParcourSupPartner';
 import { PixPartner } from '~/client/components/features/ServiceCard/PixPartner';
 import { Head } from '~/client/components/head/Head';
+import {
+	ListeRésultatsRechercherSolution,
+} from '~/client/components/layouts/RechercherSolution/ListeRésultats/ListeRésultatsRechercherSolution';
 import { RechercherSolutionLayout } from '~/client/components/layouts/RechercherSolution/RechercherSolutionLayout';
-import { Carte } from '~/client/dsfr';
+import {
+	ResultatRechercherSolution,
+} from '~/client/components/layouts/RechercherSolution/Resultat/ResultatRechercherSolution';
+import { EnTete } from '~/client/components/ui/EnTete/EnTete';
+import { LightHero, LightHeroPrimaryText, LightHeroSecondaryText } from '~/client/components/ui/Hero/LightHero';
 import { useFormationQuery } from '~/client/hooks/useFormationQuery';
 import empty from '~/client/utils/empty';
 import { formatRechercherSolutionDocumentTitle } from '~/client/utils/formatRechercherSolutionDocumentTitle.util';
 import { Erreur } from '~/server/errors/erreur.types';
-import { ResultatRechercheFormation } from '~/server/formations/domain/formation';
+import { RésultatRechercheFormation } from '~/server/formations/domain/formation';
 import { transformObjectToQueryString } from '~/server/services/utils/urlParams.util';
-import {Banner} from "~/client/components/ui/Hero/Hero";
 
 const PREFIX_TITRE_PAGE = 'Rechercher une formation en apprentissage';
 
 type RechercherFormationProps = {
 	erreurRecherche?: never
-	resultats: Array<ResultatRechercheFormation>
+	resultats: Array<RésultatRechercheFormation>
 } | {
 	erreurRecherche: Erreur
 	resultats?: never
@@ -84,14 +90,15 @@ export default function RechercherFormationAlternance({ resultats: formationAlte
 							})} />
 					)
 					} />
-					<ServiceCardList>
-						<DecouvrirApprentissage />
-						<MonCompteFormationPartner />
-						<ParcourSupPartner />
-						<CarifOrefPartner />
-						<PixPartner />
-						<MétierDuSoinPartner />
-					</ServiceCardList>
+				<EnTete heading="Découvrez des services faits pour vous" />
+				<ServiceCardList>
+					<DecouvrirApprentissage />
+					<MonCompteFormationPartner />
+					<ParcourSupPartner />
+					<CarifOrefPartner />
+					<PixPartner />
+					<MétierDuSoinPartner />
+				</ServiceCardList>
 			</main>
 		</>
 	);
@@ -99,40 +106,47 @@ export default function RechercherFormationAlternance({ resultats: formationAlte
 
 function BannièreFormation() {
 	return (
-		<Banner>
-			<h1 className="fr-h1 fr-mb-0">
-				Des milliers de formations en alternance pour vous permettre de réaliser votre projet professionnel
+		<LightHero>
+			<h1>
+				<LightHeroPrimaryText>Des milliers de formations en alternance</LightHeroPrimaryText>
 			</h1>
-		</Banner>
+			<LightHeroSecondaryText>pour vous permettre de réaliser votre projet professionnel</LightHeroSecondaryText>
+		</LightHero>
 	);
 }
 
 interface ListeRésultatProps {
-	résultatList: ResultatRechercheFormation[]
+	résultatList: RésultatRechercheFormation[]
 	queryParams: string
 }
 
 function ListeFormation({ résultatList, queryParams }: ListeRésultatProps) {
-	if (!résultatList.length) return null;
+	if (!résultatList.length) {
+		return undefined;
+	}
 
 	return (
-		<ul className="fr-grid-row fr-grid-row--gutters" aria-label="Formations en alternance">
+
+		<ListeRésultatsRechercherSolution aria-label="Formations en alternance">
 			{résultatList.map((formation) => (
-				<li key={formation.id} className="fr-col-lg-4 fr-col-md-6 fr-col-12">
-					<Carte
-						titre={formation.titre}
-						lien={getLienOffre(formation, queryParams)}
-						tags={formation.tags as string[]}>
-						{formation.nomEntreprise}
-						{formation.adresse && <><br />Adresse : {formation.adresse}</>}
-					</Carte>
+				<li key={formation.id}>
+					<ResultatRechercherSolution
+						lienOffre={getLienOffre(formation, queryParams)}
+						intituléOffre={formation.titre}
+						// TODO (BRUJ 05/08/2024): les tags devraient être constitués côté client
+						étiquetteOffreList={formation.tags as string[]}>
+						<section>
+							<div>{formation.nomEntreprise && formation.nomEntreprise}</div>
+							<div>Adresse : {formation.adresse && formation.adresse}</div>
+						</section>
+					</ResultatRechercherSolution>
 				</li>
 			))}
-		</ul>
+		</ListeRésultatsRechercherSolution>
 	);
 }
 
 // TODO (BRUJ 05/08/2024): Le lien devrait être construit côté serveur
-function getLienOffre(formation: ResultatRechercheFormation, queryParams: string) {
+function getLienOffre(formation: RésultatRechercheFormation, queryParams: string) {
 	return `/formations/apprentissage/${encodeURIComponent(formation.id)}?${queryParams}&codeCertification=${formation.codeCertification}`;
 }

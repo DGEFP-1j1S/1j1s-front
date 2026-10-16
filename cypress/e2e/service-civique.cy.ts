@@ -2,7 +2,7 @@
 /// <reference types="@testing-library/cypress" />
 
 import { aRésultatRechercheMission } from '~/server/engagement/domain/missionEngagement.fixture';
-import { aCommune } from '~/server/localisations/domain/localisationAvecCoordonnees.fixture';
+import { aCommune } from '~/server/localisations/domain/localisationAvecCoordonnées.fixture';
 
 context('Parcours service civique', () => {
 	beforeEach(() => {
@@ -14,7 +14,8 @@ context('Parcours service civique', () => {
 			cy.visit('/service-civique');
 		});
 		it('affiche la liste des résultats', () => {
-			cy.findByRole('combobox', { name: 'Domaine Exemple : Culture et loisirs' }).select(1);
+			cy.findByRole('combobox', { name: 'Domaine Exemple : Culture et loisirs' }).click();
+			cy.findAllByRole('option').first().click();
 
 			cy.intercept(
 				'GET',
@@ -33,7 +34,7 @@ context('Parcours service civique', () => {
 			cy.findByRole('combobox', { name: /Localisation/i }).type('paris');
 			cy.wait('@recherche-communes');
 
-      cy.get('li[role="option"]').first().click()
+			cy.findAllByRole('option').first().click();
 
 			cy.intercept('GET', '/api/services-civique*', JSON.stringify(aRésultatRechercheMission()))
 				.as('recherche-services-civique');
@@ -68,7 +69,7 @@ context('Parcours service civique', () => {
 				.as('get-services-civique');
 
 			cy.findByRole('list', { name: /Offre pour le service civique/i }).children().first()
-				.within(() => cy.findByRole('link', { name: aRésultatRechercheMission().résultats[0].titre }).click());
+				.within(() => cy.findByRole('link', { name: /En savoir plus/i }).click());
 			cy.wait('@get-services-civique');
 
 			cy.findByRole('heading', { level: 1 })
