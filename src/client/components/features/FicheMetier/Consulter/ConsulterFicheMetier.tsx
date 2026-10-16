@@ -1,14 +1,12 @@
-import classNames from 'classnames';
 import React, { useMemo } from 'react';
 
-import { FoldingSection } from '~/client/components/ui/FoldingSection/FoldingSection';
 import MarkdownToHtml from '~/client/components/ui/MarkdownToHtml/MarkdownToHtml';
-import { TagList } from '~/client/components/ui/Tag/TagList';
 import { FicheMétier } from '~/server/fiche-metier/domain/ficheMetier';
 
-import styles from './ConsulterFicheMetier.module.scss';
+import { BadgeList } from "~/client/components/ui/Badge/BadgeList";
+import { Accordion } from "~/client/dsfr";
 
-export function ConsulterFicheMétier({ ficheMetier }: { ficheMetier: FicheMétier }) {
+export function ConsulterFicheMetier({ ficheMetier }: { ficheMetier: FicheMétier }) {
 	const {
 		accesMetier,
 		accrocheMetier,
@@ -25,6 +23,7 @@ export function ConsulterFicheMétier({ ficheMetier }: { ficheMetier: FicheMéti
 
 	const capitalizeFirstLetter = (sentence: string) => `${sentence.charAt(0).toUpperCase()}${sentence.slice(1)}` || '';
 
+	const displaySynthese = niveauAccesMin.length > 0 || statuts.length > 0 || centresInteret && centresInteret.length > 0
 	const displayedNomMetier = useMemo(() => capitalizeFirstLetter(nomMetier), [nomMetier]);
 	const displayedNiveauAccesMin = useMemo(() =>
 		niveauAccesMin.map((niveau) => niveau.libelle).join(', '), [niveauAccesMin]);
@@ -34,72 +33,74 @@ export function ConsulterFicheMétier({ ficheMetier }: { ficheMetier: FicheMéti
 		centresInteret.map((centre) => centre.libelle), [centresInteret]);
 
 	return (
-		<>
-			<section className={styles.section}>
-				<h1 className={styles.mainTitle}>{displayedNomMetier}</h1>
-				<div className={classNames(styles.abstractSection, styles.sectionContent)}>
-					{secteursActivite.length > 0 && (
-						<div className={styles.fieldDomaine}>
-							<span className={styles.fieldLabel}>Domaine(s) :</span>
-							<div className={styles.fieldContent}>
-								<TagList list={secteursActivite.map((fiche) => fiche.libelle)} />
-							</div>
-						</div>
-					)}
-					{accrocheMetier && (
-						<div className={styles.fieldRésumé}>
-							<span className={styles.fieldLabel}>Résumé :</span>
-							{accrocheMetier &&
-							<div className={styles.fieldContent} dangerouslySetInnerHTML={{ __html: accrocheMetier }} />}
-						</div>
-					)}
-					{niveauAccesMin.length > 0 && (
-						<div className={styles.fieldNiveauAccès}>
-							<span className={styles.fieldLabel}>Niveau d‘accès minimum :</span>
-							{niveauAccesMin && <div className={styles.fieldContent}>{displayedNiveauAccesMin}</div>}
-						</div>
-					)}
-					{statuts.length > 0 && (
-						<div className={styles.fieldStatutsPro}>
-							<span className={styles.fieldLabel}>Statuts professionnels :</span>
-							{statuts && <div className={styles.fieldContent}>{displayedStatuts}</div>}
-						</div>
-					)}
-				</div>
-			</section>
-			{natureTravail && (
-				<FoldingSection summary="Nature du travail" open={true}>
-					<MarkdownToHtml markdown={natureTravail} />
-				</FoldingSection>
-			)}
-			{competences && (
-				<FoldingSection summary="Compétences requises">
-					<MarkdownToHtml markdown={competences} />
-				</FoldingSection>
-			)}
-			{conditionTravail && (
-				<FoldingSection summary="Lieu d‘exercice et status">
-					<MarkdownToHtml markdown={conditionTravail} />
-				</FoldingSection>
-			)}
-			{vieProfessionnelle && (
-				<FoldingSection summary="Carrière et salaire">
-					<MarkdownToHtml markdown={vieProfessionnelle} />
-				</FoldingSection>
-			)}
-			{accesMetier && (
-				<FoldingSection summary="Accès au métier">
-					<MarkdownToHtml markdown={accesMetier} />
-				</FoldingSection>
-			)}
-			{centresInteret && centresInteret.length > 0 && (
-				<section className={styles.section}>
-					<h2 className={styles.lastSectionTitle}>Centres d‘intérêt</h2>
-					<div className={styles.sectionContent}>
-						<TagList list={displayedCentresInteret} />
+		<article className="fr-mx-md-15w fr-mb-3w">
+			<section>
+				<h1 className="fr-mt-5w">{displayedNomMetier}</h1>
+				{ secteursActivite.length > 0 && (
+					<BadgeList 
+						className="fr-mb-7w"
+						colorClass="fr-badge--blue-cumulus" 
+						list={secteursActivite.map((fiche) => fiche.libelle)} />
+				)}
+
+				{ accrocheMetier && (
+					<section className="fr-mb-7w">
+						<h2 className="fr-h4">Résumé :</h2>
+						<div dangerouslySetInnerHTML={{ __html: accrocheMetier }} />
+					</section>
+				)}
+
+				{ displaySynthese && (
+					<div className="background--blue-france fr-p-3v fr-mb-7w">
+						<h2 className="fr-h4">En synthèse :</h2>
+						<ul className="fr-grid-row">
+							{ niveauAccesMin.length > 0 && (
+								<li className="list-style-none fr-icon-award-line fr-col-6 fr-pl-1w">
+									<span className="fr-ml-2w">Niveau : <span className='fr-text--bold'>{displayedNiveauAccesMin}</span></span>
+								</li>
+							)}
+							{ statuts.length > 0 && (
+								<li className="list-style-none fr-icon-building-line fr-col-6 fr-pl-1w">
+									<span className="fr-ml-2w">Statut : <span className='fr-text--bold'>{displayedStatuts}</span></span>
+								</li>
+							)}
+							{ centresInteret && centresInteret.length > 0 && (
+								<li className="list-style-none fr-icon-eye-line fr-col-6 fr-pl-1w">
+									<span className="fr-ml-2w">Centres d&#39;intérêt : <span className='fr-text--bold'>{displayedCentresInteret}</span></span>
+								</li>
+							)}
+						</ul>
 					</div>
-				</section>
-			)}
-		</>
+				)}
+			</section>
+
+			<div className="fr-accordions-group fr-mb-7w">
+				{ natureTravail && (
+					<Accordion titreAs="h2" titre="Nature du travail" expanded={true}>
+						<MarkdownToHtml markdown={natureTravail} />
+					</Accordion>
+				)}
+				{ competences && (
+					<Accordion titreAs="h2" titre="Compétences requises">
+						<MarkdownToHtml markdown={competences} />
+					</Accordion>
+				)}
+				{ conditionTravail && (
+					<Accordion titreAs="h2" titre="Lieu d‘exercice et statut">
+						<MarkdownToHtml markdown={conditionTravail} />
+					</Accordion>
+				)}
+				{ vieProfessionnelle && (
+					<Accordion titreAs="h2" titre="Carrière et salaire">
+						<MarkdownToHtml markdown={vieProfessionnelle} />
+					</Accordion>
+				)}
+				{ accesMetier && (
+					<Accordion titreAs="h2" titre="Accès au métier">
+						<MarkdownToHtml markdown={accesMetier} />
+					</Accordion>
+				)}
+			</div>
+		</article>
 	);
 }

@@ -9,7 +9,7 @@ interface TagListProps extends React.ComponentPropsWithoutRef<'ul'> {
 
 export function BadgeList({list, colorClass, ...rest }: TagListProps) {
 	return (
-		<ul className="fr-badges-group" {...rest}>
+		<ul {...rest} className={`fr-badges-group ${rest.className ?? ''}`} >
 			{
 				list
 					.filter((tag) => !!tag)
