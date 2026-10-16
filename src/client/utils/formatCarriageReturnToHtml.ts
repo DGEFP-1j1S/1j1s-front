@@ -1,7 +1,7 @@
 export function formatCarriageReturnToHtml(contentToFormat?: string): string {
-	const carriageReturnRegex = new RegExp('\\n', 'g');
+	const lineBreaksRegex = /(?:\s*(?:\n|<br\s*\/?>)\s*)+/gi;
 	if (!contentToFormat) {
 		return '';
 	}
-	return contentToFormat.trim().replace(carriageReturnRegex, '<br />');
+	return contentToFormat.trim().replace(lineBreaksRegex, '<br />');
 }

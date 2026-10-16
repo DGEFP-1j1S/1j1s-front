@@ -50,14 +50,14 @@ export function mapMission(mission: RésultatsMissionEngagementResponse): Missio
 
 	return {
 		description: data.description,
-		duréeContrat: data.duration,
-		débutContrat: mapDateDébutContratLong(data.startAt),
+		dureeContrat: data.duration,
+		debutContrat: mapDateDébutContratLong(data.startAt),
 		id: data._id,
 		localisation: fullLocalisation,
 		nomEntreprise: data.associationName || data.organizationName,
 		titre: data.title,
 		url: data.applicationUrl,
-		étiquetteList,
+		etiquetteList: étiquetteList,
 	};
 }
 
@@ -93,12 +93,12 @@ export function mapMissionList(missionList: Array<MissionEngagementResponse>): A
 
 		return {
 			description: mission.description,
-			débutContrat: mapDateDébutContrat(mission.startAt),
+			debutContrat: mapDateDébutContrat(mission.startAt),
 			id: mission._id,
 			logoUrl: mission.organizationLogo,
 			nomEntreprise: mission.associationName || mission.organizationName,
 			titre: mission.title,
-			étiquetteList,
+			etiquetteList: étiquetteList,
 		};
 	});
 }
