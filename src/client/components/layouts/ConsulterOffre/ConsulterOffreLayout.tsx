@@ -1,8 +1,6 @@
 import React from 'react';
 
 import { BackButton } from '~/client/components/features/ButtonRetour/BackButton';
-import styles from '~/client/components/layouts/ConsulterOffre/ConsulterOffreLayout.module.scss';
-import { Container } from '~/client/components/layouts/Container/Container';
 
 interface ConsulterOffreLayoutProps {
   children: React.ReactNode;
@@ -12,13 +10,13 @@ export function ConsulterOffreLayout(props: React.PropsWithChildren<ConsulterOff
 	const { children } = props;
 
 	return (
-		<main id="contenu" className={styles.container}>
-			<BackButton />
-			<Container className={styles.layoutContainer}>
-				<article className={styles.layout}>
+		<main id="contenu">
+			<div className="fr-container">
+				<BackButton />
+				<article>
 					{children}
 				</article>
-			</Container>
+			</div>
 		</main>
 	);
 }

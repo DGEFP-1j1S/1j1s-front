@@ -177,7 +177,7 @@ function ListeMissions({ resultatList, isServiceCivique }: { resultatList: Missi
 					<Carte
 						titre={mission.titre}
 						lien={isServiceCivique ? `/service-civique/${mission.id}` : `/benevolat/${mission.id}`}
-						tags={mission.étiquetteList}>
+						tags={mission.etiquetteList}>
 						{mission.nomEntreprise}
 					</Carte>
 				</li>
