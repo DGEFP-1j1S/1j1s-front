@@ -104,6 +104,25 @@ $color-text-on-primary-campagne-handicap: $color-secondary-campagne-handicap;
 $color-text-on-secondary-campagne-handicap: #FFFFFF;
 
 /* ***************
+ * Complementary colors - Campagne Fête des métiers
+ * ***************/
+$color-primary-campagne-fete-des-metiers: hsl(336, 74%, 55%);
+$color-text-on-primary-campagne-fete-des-metiers: black;
+$color-border-campagne-fete-des-metiers: hsl(336, 74%, 40%);
+
+/* ***************
+ * Complementary colors - Campagne Stage de seconde
+ * ***************/
+$color-primary-campagne-stage-seconde: #51BCB3;
+$color-text-on-primary-campagne-stage-seconde: white;
+
+/* ***************
+ * Complementary colors - Campagne WorldSkills
+ * ***************/
+$color-primary-campagne-world-skills: #2E1651;
+$color-text-on-primary-campagne-world-skills: white;
+
+/* ***************
  * Shadows
  * ***************/
 $box-shadow: 10px 10px 20px rgba(22, 22, 22, 0.05);

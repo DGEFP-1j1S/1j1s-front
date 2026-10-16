@@ -1,11 +1,12 @@
-import { Banner } from "~/client/components/ui/Hero/Hero";
+import { LightHero, LightHeroPrimaryText, LightHeroSecondaryText } from '~/client/components/ui/Hero/LightHero';
 
 export function BanniereEmploisEurope() {
 	return (
-		<Banner>
-			<h1 className="fr-h1 fr-mb-0">
-				Des milliers d‘offres d‘emplois en Europe sélectionnées pour vous par EURES
+		<LightHero>
+			<h1>
+				<LightHeroPrimaryText>Des milliers d‘offres d‘emplois en Europe</LightHeroPrimaryText>
+				<LightHeroSecondaryText>sélectionnées pour vous par EURES</LightHeroSecondaryText>
 			</h1>
-		</Banner>
+		</LightHero>
 	);
 }

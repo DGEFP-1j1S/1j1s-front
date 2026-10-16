@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
 	FormulaireRechercheStages3eEt2de,
@@ -8,6 +8,7 @@ import {
 } from '~/client/components/features/Stages3eEt2de/Rechercher/FormulaireRecherche/ListeResultatsStage3eEt2de';
 import { Head } from '~/client/components/head/Head';
 import { RechercherSolutionLayout } from '~/client/components/layouts/RechercherSolution/RechercherSolutionLayout';
+import { LightHero, LightHeroPrimaryText, LightHeroSecondaryText } from '~/client/components/ui/Hero/LightHero';
 import { TagList } from '~/client/components/ui/Tag/TagList';
 import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { useStage3eEt2deQuery } from '~/client/hooks/useStage3eEt2deQuery';
@@ -17,7 +18,6 @@ import { formatRechercherSolutionDocumentTitle } from '~/client/utils/formatRech
 import { isSuccess } from '~/server/errors/either';
 import { Erreur } from '~/server/errors/erreur.types';
 import { ResultatRechercheStage3eEt2de } from '~/server/stage-3e-et-2de/domain/stage3eEt2de';
-import { Banner } from "~/client/components/ui/Hero/Hero";
 
 const PREFIX_TITRE_PAGE = 'Rechercher un stage de 3e et 2de';
 
@@ -105,10 +105,11 @@ export default function RechercherStages3eEt2de() {
 
 function BaniereStages3eEt2de() {
 	return (
-		<Banner>
-			<h1 className="fr-h1 fr-mb-0">
-				Des milliers d’entreprises prêtes à vous accueillir pour votre stage de 3e et 2de
+		<LightHero>
+			<h1>
+				<LightHeroPrimaryText>Des milliers d’entreprises prêtes à vous accueillir</LightHeroPrimaryText>
+				<LightHeroSecondaryText>pour votre stage de 3e et 2de</LightHeroSecondaryText>
 			</h1>
-		</Banner>
+		</LightHero>
 	);
 }

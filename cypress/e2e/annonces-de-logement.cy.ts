@@ -22,9 +22,8 @@ describe('Parcours logement', () => {
 	  it("affiche une liste d'annonces de logement par défaut", () => {
 				cy.intercept({ method: 'POST', pathname: '/multi-search' }, logementNonFiltreeResponse);
 
-        cy.get('section[aria-label="Résultats de la recherche"]')
-          .find('ol > li')
-          .should('have.length', 4);
+				// FIXME (GAFI 23-05-2023): Manque un label sur la liste de résultats
+				cy.get('ol > li').should('have.length', 4);
 	  });
 		});
 
@@ -33,11 +32,9 @@ describe('Parcours logement', () => {
 				cy.intercept({ pathname: '/multi-search' }, logementNonFiltreeResponse);
 				cy.intercept({ pathname: '/multi-search' }, logementFiltreeResponse);
 
-				cy.findByRole('textbox', { name: /Ville/ }).type('par');
+				cy.findByRole('textbox', { name: 'Ville' }).type('par');
 
-      cy.get('section[aria-label="Résultats de la recherche"]')
-        .find('ol > li')
-        .should('have.length', 2);
+				cy.get('ol > li').should('have.length', 2);
 	  });
 		});
 

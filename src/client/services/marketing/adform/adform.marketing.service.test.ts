@@ -11,7 +11,17 @@ describe('AdformMarketingService', () => {
 
 		expect(cookiesService.addService).toHaveBeenCalledWith('adform');
 		expect(cookiesService.addUser).toHaveBeenCalledWith('adformpm', ID_1J1S);
-		expect(cookiesService.addUser).toHaveBeenCalledWith("adformpagename", "2026-10-1jeune1solution.gouv.fr-PageArrivee-PageArrivee");
+		expect(cookiesService.addUser).toHaveBeenCalledWith('adformpagename', undefined);
 	});
 
+	describe('trackPage', () => {
+		it('configure le cookie pour envoyer les données vers la bonne page', () => {
+			const cookiesService = aCookiesService();
+			const service = new AdformMarketingService(cookiesService);
+
+			service.trackPage('2023-04-1jeune1solution.gouv.fr-PageArrivee-ChoisirApprentissage');
+
+			expect(cookiesService.addUser).toHaveBeenCalledWith('adformpagename', '2023-04-1jeune1solution.gouv.fr-PageArrivee-ChoisirApprentissage');
+		});
+	});
 });

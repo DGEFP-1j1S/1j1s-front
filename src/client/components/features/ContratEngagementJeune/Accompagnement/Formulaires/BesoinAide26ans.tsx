@@ -12,6 +12,7 @@ export default function BesoinAide26ans({ setTypeFormulaireAffiché, setIsDispos
 	return (
 		<>
 			<ButtonComponent
+				appearance={'quaternary'}
 				className={styles.boutonRetour}
 				onClick={onBackButton}
 				label="Retour"

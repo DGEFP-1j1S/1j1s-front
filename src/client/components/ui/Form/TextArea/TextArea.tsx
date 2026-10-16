@@ -65,7 +65,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(fun
 			onChange={onChange}
 			onFocus={onFocus}
 			onBlur={onBlur}
-			className={classNames('fr-input', styles.textarea, className)}
+			className={classNames(styles.textarea, className)}
 			ref={ref}
 			{...props} />
 	);

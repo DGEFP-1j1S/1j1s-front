@@ -2,7 +2,7 @@
 /// <reference types="@testing-library/cypress" />
 
 import { aRésultatRechercheMission } from '~/server/engagement/domain/missionEngagement.fixture';
-import { aCommune } from '~/server/localisations/domain/localisationAvecCoordonnees.fixture';
+import { aCommune } from '~/server/localisations/domain/localisationAvecCoordonnées.fixture';
 
 describe('Parcours bénévolat', () => {
 
@@ -12,7 +12,8 @@ describe('Parcours bénévolat', () => {
 			cy.visit('/benevolat');
 		});
 		it('affiche la liste des résultats', () => {
-			cy.findByRole('combobox', { name: 'Domaine Exemple : Culture et loisirs' }).select(1)
+			cy.findByRole('combobox', { name: 'Domaine Exemple : Culture et loisirs' }).click();
+			cy.findAllByRole('option').first().click();
 
 			cy.intercept(
 				'GET',
@@ -27,7 +28,7 @@ describe('Parcours bénévolat', () => {
 			cy.findByRole('combobox', { name: /Localisation/i }).type('paris');
 			cy.wait('@recherche-communes');
 
-      cy.get('li[role="option"]').first().click();
+			cy.findAllByRole('option').first().click();
 			cy.intercept(
 				'GET',
 				'/api/benevolats*',

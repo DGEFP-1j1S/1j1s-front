@@ -1,0 +1,18 @@
+@use "@styles/utilities";
+
+.banner {
+
+  & .cta {
+    margin-top: 1.5rem;
+    outline-color: utilities.$color-cta-background-secondary;
+    width: 100%;
+    @include utilities.media(medium) {
+      width: fit-content;
+    }
+
+  }
+
+  & h2 {
+    @extend %bold;
+  }
+}

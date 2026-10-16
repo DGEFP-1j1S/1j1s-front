@@ -45,7 +45,7 @@ const config = {
 
 	// GitHub pages deployment config.
 	// If you aren't using GitHub pages, you don't need these.
-	organizationName: 'DGEFP-1j1S',
+	organizationName: 'DNUM-SocialGouv',
 
 
 	presets: [
@@ -57,7 +57,7 @@ const config = {
 					// Please change this to your repo.
 					// Remove this to remove the "edit this page" links.
 					editUrl:
-						'https://github.com/DGEFP-1j1S/1j1s-front/tree/main/docs/docs/',
+						'https://github.com/DNUM-SocialGouv/1j1s-front/tree/main/docs/docs/',
 
 
 					lastVersion: 'current',
@@ -99,7 +99,7 @@ const config = {
 					{
 						items: [
 							{
-								href: 'https://github.com/DGEFP-1j1S/1j1s-front',
+								href: 'https://github.com/DNUM-SocialGouv/1j1s-front',
 								label: 'Front (sur Github)',
 							},
 							{
@@ -171,7 +171,7 @@ const config = {
 						type: 'docsVersionDropdown',
 					},
 					{
-						href: 'https://github.com/DGEFP-1j1S/1j1s-front',
+						href: 'https://github.com/DNUM-SocialGouv/1j1s-front',
 						label: 'Code source',
 						position: 'right',
 					},
@@ -193,7 +193,7 @@ const config = {
 	title: 'Documentation Technique 1jeune1solution',
 
 	// URL de votre site web. Cela peut également être considéré comme le nom d'hôte de premier niveau.
-	url: 'https://dgefp-1j1s.github.io/',
+	url: 'https://dnum-socialgouv.github.io/',
 };
 
 module.exports = config;

@@ -21,7 +21,7 @@ export function MonEspaceEntreprise() {
 					</LightHeroPrimaryText>
 				</h1>
 				<div className={styles.entreprisesPourLaJeunesse}>
-					<Image src="/images/logos/les-entreprises-s-engagent.svg" alt="" width={150} height={150} />
+					<Image src="/images/logos/les-entrerprises-s-engagent.svg" alt="" width={150} height={150} />
 					<h2>
 						<LightHeroSecondaryText>
 							<span>Vous êtes déjà membre de la Communauté</span> &quot;Les entreprises s‘engagent&quot; ?

@@ -96,17 +96,22 @@ const engagementNav = (): NavigationItemWithChildren => ({
 
 const employeurNav = (): NavigationItemWithChildren => ({
 	children: [
-		{ label: "Rejoindre la mobilisation", link: "/les-entreprises-s-engagent" },
-		{ label: "Je recrute", link: "/je-recrute" },
-		{ label: "Je deviens mentor", link: "/je-deviens-mentor" },
-		{ label: "Je propose des immersions", link: "/immersions" },
-		{ label: "Je forme les jeunes grâce à l‘emploi", link: "/je-recrute-afpr-poei" },
-		{ label: "Je recrute un apprenti", link: LBA_RECRUTEUR_URL },
-		{ label: "Découvrir les mesures employeurs", link: "/mesures-employeurs" },
-		{ label: "Accéder à mon espace", link: "/mon-espace" },
+		{ label: 'Rejoindre la mobilisation', link: '/les-entreprises-s-engagent' },
+		{
+			children: [
+				{ label: 'Je recrute', link: '/je-recrute' },
+				{ label: 'Je deviens mentor', link: '/je-deviens-mentor' },
+				{ label: 'Je propose des immersions', link: '/immersions' },
+				{ label: 'Je forme les jeunes grâce à l‘emploi', link: '/je-recrute-afpr-poei' },
+				{ label: 'Je recrute un apprenti', link: LBA_RECRUTEUR_URL },
+			],
+			label: 'Recruter et agir pour les jeunes',
+		},
+		{ label: 'Découvrir les mesures employeurs', link: '/mesures-employeurs' },
+		{ label: 'Accéder à mon espace', link: '/mon-espace' },
 	],
-	label: "Je suis employeur",
-	legend: "Découvrez des services faits pour vous !",
+	label: 'Je suis employeur',
+	legend: 'Découvrez des services faits pour vous !',
 });
 
 const logementsNav = (): NavigationItemWithChildren => ({

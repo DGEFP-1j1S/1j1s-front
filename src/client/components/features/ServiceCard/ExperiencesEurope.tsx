@@ -1,15 +1,17 @@
 import React from 'react';
 
-import { Carte } from '~/client/dsfr';
+import { ServiceCard } from './Card/ServiceCard';
 
 export function ExperiencesEurope() {
 	return (
-		<Carte
-			horizontal
-			titre="Je découvre les dispositifs pour m'accompagner dans mon projet"
-			imageSrc="/images/passeport.webp"
-			lien="/experience-europe">
+		<ServiceCard
+			imageFit="cover"
+			linkLabel="En savoir plus"
+			link="/experience-europe"
+			logo="/images/passeport.webp"
+			title="Je découvre les dispositifs pour m’accompagner dans mon projet"
+			titleAs={'h3'}>
 			Découvrez les services destinés à vous aider à trouver l’expérience en Europe faite pour vous
-		</Carte>
+		</ServiceCard>
 	);
 }

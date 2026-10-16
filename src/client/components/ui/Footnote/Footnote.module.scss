@@ -1,6 +1,20 @@
 @use "@styles/utilities-deprecated";
 
-.icon {
-  height: 0.75rem;
-  width: 0.75rem;
+.footnote {
+  @extend %text-small;
+  text-align: justify;
+  @include utilities-deprecated.media(medium) {
+    text-align: end;
+  }
+
+  & .icon {
+    color: utilities-deprecated.$color-primary;
+    height: 1em;
+    width: 1em;
+  }
+}
+
+.reference {
+  color: utilities-deprecated.$color-primary;
+  text-decoration: none;
 }

@@ -13,6 +13,7 @@ export default function PasDAccompagnement({ setTypeFormulaireAffiché, setIsMis
 	return (
 		<>
 			<ButtonComponent
+				appearance={'quaternary'}
 				className={styles.boutonRetour}
 				onClick={onBackButton}
 				label="Retour"

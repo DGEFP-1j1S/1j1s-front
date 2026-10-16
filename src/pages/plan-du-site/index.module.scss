@@ -1,0 +1,25 @@
+@use "@styles/utilities-deprecated";
+
+.planDuSiteContainer {
+  padding-inline: 1rem;
+  padding-block: 1rem;
+
+  ul {
+    list-style-type: disc;
+    margin-left: 1.2rem;
+
+    li {
+      padding: 0.1rem;
+
+      a, a > * {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.planDuSiteTitre {
+  font-size: 2rem;
+  @extend %bold;
+  margin-bottom: 1rem;
+}

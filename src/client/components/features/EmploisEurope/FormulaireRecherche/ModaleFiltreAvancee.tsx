@@ -1,11 +1,13 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent } from 'react';
 
+import styles
+	from '~/client/components/features/EmploisEurope/FormulaireRecherche/FormulaireRechercheEmploisEurope.module.scss';
+import { ButtonComponent } from '~/client/components/ui/Button/ButtonComponent';
 import { Checkbox } from '~/client/components/ui/Checkbox/Checkbox';
 import { FilterAccordion } from '~/client/components/ui/FilterAccordion/FilterAccordion';
 import { Icon } from '~/client/components/ui/Icon/Icon';
 import { ModalComponent } from '~/client/components/ui/Modal/ModalComponent';
 import { tempsDeTravailEures } from '~/client/domain/codesTempsTravailEures';
-import { Button } from "~/client/dsfr";
 import { niveauDEtudes } from '~/server/emplois-europe/domain/niveauDEtudes';
 import { secteurActiviteEures } from '~/server/emplois-europe/infra/secteurActiviteEures';
 import { typesContratEures } from '~/server/emplois-europe/infra/typesContratEures';
@@ -43,6 +45,7 @@ export function ModaleFiltreAvancee(props: {
 								label={typeContrat.libellé}
 								onChange={(e: ChangeEvent<HTMLInputElement>) => props.toggleTypeContrat(e.target.value)}
 								value={typeContrat.valeur}
+								// NOTE (DORO - 05-12-2023): Pourrait ne plus marcher si on ajoute des types de contrat (cas avec 2 chiffres)
 								checked={props.inputTypeContrat.includes(typeContrat.valeur)} />
 						))}
 					</FilterAccordion.Content>
@@ -97,8 +100,10 @@ export function ModaleFiltreAvancee(props: {
 				</FilterAccordion>
 			</ModalComponent.Content>
 			<ModalComponent.Footer>
-				<div className="fr-m-auto">
-					<Button
+				<div className={styles.buttonRechercher}>
+					<ButtonComponent
+						icon={<Icon name="angle-right" />}
+						iconPosition="right"
 						label="Appliquer les filtres"
 						onClick={props.onClick} />
 				</div>

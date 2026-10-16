@@ -2,7 +2,7 @@ import {
 	OffreDeStageDeposeeEntreprise,
 	OffreDeStageDeposeeLocalisation,
 	OffreDeStageDeposeeStage,
-} from '~/client/components/features/OffreDeStage/Deposer/StageDeposerOffre';
+} from '~/client/components/features/OffreDeStage/Déposer/StageDeposerOffre';
 import { Either } from '~/server/errors/either';
 
 export interface StageService {

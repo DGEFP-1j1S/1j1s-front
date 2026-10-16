@@ -32,6 +32,7 @@ export default function AutresBesoins26ans(
 	return (
 		<>
 			<ButtonComponent
+				appearance={'quaternary'}
 				className={styles.boutonRetour}
 				onClick={onBackButton}
 				label="Retour"

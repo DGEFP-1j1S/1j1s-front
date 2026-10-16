@@ -101,7 +101,10 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 								 aria-label="Caractéristiques de l‘offre d‘emploi" />
 			</header>
 			{annonceEmploiEurope.urlCandidature && (
-				<Link className='fr-btn fr-btn--lg' href={annonceEmploiEurope.urlCandidature}>Je postule sur Eures</Link>
+				<Link href={annonceEmploiEurope.urlCandidature} appearance="asPrimaryButton">
+					Je postule sur Eures
+					<Link.Icon />
+				</Link>
 			)}
 			<section className={styles.contenu}>
 				<dl>

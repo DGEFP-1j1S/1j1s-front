@@ -1,93 +1,132 @@
-import Joi from 'joi';
-
-import { createSuccess, Either, isSuccess } from '~/server/errors/either';
+import { createFailure, createSuccess, Either, isSuccess } from '~/server/errors/either';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
-import { Formation, FormationFiltre, ResultatRechercheFormation } from '~/server/formations/domain/formation';
+import { Formation, FormationFiltre, RésultatRechercheFormation } from '~/server/formations/domain/formation';
 import { FormationRepository } from '~/server/formations/domain/formation.repository';
 import {
-	ApiAlternanceFormationRechercheResponse,
-	ApiAlternanceFormationResponse,
-	apiAlternanceFormationValidationSchemas,
+	ApiLaBonneAlternanceFormationRechercheResponse,
+	ApiLaBonneAlternanceFormationResponse,
 } from '~/server/formations/infra/repositories/apiLaBonneAlternanceFormation';
 import {
+	getCleMinistereEducatif,
 	mapFormation,
-	mapResultatRechercheFormation,
-	mapResultatRechercheFormationToFormation,
+	mapRésultatRechercheFormation,
+	mapRésultatRechercheFormationToFormation,
 } from '~/server/formations/infra/repositories/apiLaBonneAlternanceFormation.mapper';
 import {
-	mapFiltreToQueryParams,
+	mapFiltreNiveauEtudeVise,
 } from '~/server/formations/infra/repositories/apiLaBonneAlternanceFormationFiltre.mapper';
-import { validateApiResponse } from '~/server/services/error/apiResponseValidator';
 import { ErrorManagementService } from '~/server/services/error/errorManagement.service';
-import { AuthenticatedHttpClientService } from '~/server/services/http/authenticatedHttpClient.service';
+import { isHttpError } from '~/server/services/http/httpError';
 import { PublicHttpClientService } from '~/server/services/http/publicHttpClient.service';
 
 const DEMANDE_RENDEZ_VOUS_REFERRER = 'jeune_1_solution';
+export const ID_FORMATION_SEPARATOR = '__';
 
-// NOTE (JUFE 05-10-2026): La Bonne Alternance a supprimé ses routes /v1/formations, les formations viennent désormais de
-// l’API Alternance. Seule la prise de rendez-vous reste chez La Bonne Alternance, d’où les deux clients http.
-export class ApiAlternanceFormationRepository implements FormationRepository {
-	constructor(
-		private readonly apiAlternanceHttpClientService: AuthenticatedHttpClientService,
-		private readonly laBonneAlternanceHttpClientService: PublicHttpClientService,
-		private readonly errorManagementService: ErrorManagementService,
-	) {
+export class ApiLaBonneAlternanceFormationRepository implements FormationRepository {
+	constructor(private readonly httpClientService: PublicHttpClientService, private readonly caller: string, private readonly errorManagementService: ErrorManagementService) {
 	}
 
-	async search(filtre: FormationFiltre): Promise<Either<Array<ResultatRechercheFormation>>> {
+	async search(filtre: FormationFiltre): Promise<Either<Array<RésultatRechercheFormation>>> {
+		const searchResult = await this.searchFormationWithFiltre(filtre);
+		if (isSuccess(searchResult)) {
+			return createSuccess(mapRésultatRechercheFormation(searchResult.result));
+		}
+		return searchResult;
+	}
+
+	private async searchFormationWithFiltre(filtre: FormationFiltre): Promise<Either<ApiLaBonneAlternanceFormationRechercheResponse>> {
+		const endpoint = this.getEndPointWithQueryParams(filtre);
 		try {
-			const response = await this.apiAlternanceHttpClientService.get<ApiAlternanceFormationRechercheResponse>(`/formation/v1/search?${mapFiltreToQueryParams(filtre)}`);
-			this.logErreurDeValidation(response.data, apiAlternanceFormationValidationSchemas.search, 'search formation api alternance');
-			return createSuccess(mapResultatRechercheFormation(response.data));
+			const response = await this.httpClientService.get<ApiLaBonneAlternanceFormationRechercheResponse>(endpoint);
+			return createSuccess(response.data);
 		} catch (error) {
-			return this.errorManagementService.handleFailureError(error, {
-				apiSource: 'API Alternance',
-				contexte: 'search formation api alternance',
-				message: 'impossible d’effectuer une recherche de formation',
-			});
+			return this.errorManagementService.handleFailureError(error,
+				{
+					apiSource: 'API LaBonneAlternance',
+					contexte: 'search formation la bonne alternance',
+					message: 'impossible d’effectuer une recherche de formation',
+				});
 		}
 	}
 
+	private getEndPointWithQueryParams(filtre: FormationFiltre): string {
+		const codeRomes = filtre.codeRomes.join(',');
+		return '/v1/formations?'
+			.concat(`caller=${this.caller}`)
+			.concat(`&romes=${codeRomes}`)
+			.concat(`&insee=${filtre.codeCommune}`)
+			.concat(`&longitude=${filtre.longitudeCommune}`)
+			.concat(`&latitude=${filtre.latitudeCommune}`)
+			.concat(`&radius=${filtre.distanceCommune}`)
+			.concat(filtre.niveauEtudes ? `&diploma=${mapFiltreNiveauEtudeVise(filtre.niveauEtudes)}` : '');
+	}
+
 	async get(id: string, filtreRecherchePourRetrouverLaFormation?: FormationFiltre): Promise<Either<Formation>> {
+		const cleMinistereEducatif = getCleMinistereEducatif(id);
+		const encodedCleMinistereEducatif = encodeURIComponent(cleMinistereEducatif);
 		try {
-			const response = await this.apiAlternanceHttpClientService.get<ApiAlternanceFormationResponse>(`/formation/v1/${encodeURIComponent(id)}`);
-			this.logErreurDeValidation(response.data, apiAlternanceFormationValidationSchemas.get, 'search formation api alternance');
-			const formation = mapFormation(response.data);
-			formation.lienDemandeRendezVous = await this.getFormationLienRendezVous(id);
+			const apiResponse = await this.httpClientService.get<ApiLaBonneAlternanceFormationResponse>(`/v1/formations/formation/${encodedCleMinistereEducatif}`);
+			const formation = mapFormation(apiResponse.data);
+			if (formation === undefined) {
+				if (filtreRecherchePourRetrouverLaFormation) {
+					return await this.getFormationFromSearch(filtreRecherchePourRetrouverLaFormation, id, cleMinistereEducatif);
+				} else {
+					return createFailure(ErreurMetier.CONTENU_INDISPONIBLE);
+				}
+			}
+			formation.lienDemandeRendezVous = await this.getFormationLienRendezVous(cleMinistereEducatif);
 			return createSuccess(formation);
 		} catch (error) {
-			if (filtreRecherchePourRetrouverLaFormation) {
-				return await this.getFormationFromResultatsRecherche(filtreRecherchePourRetrouverLaFormation, id);
+			if (ApiLaBonneAlternanceFormationRepository.isErrorBecauseLbaFailedToRequestTheirDependencies(error) && filtreRecherchePourRetrouverLaFormation) {
+				return await this.getFormationFromSearch(filtreRecherchePourRetrouverLaFormation, id, cleMinistereEducatif);
 			}
 			return this.errorManagementService.handleFailureError(error, {
-				apiSource: 'API Alternance',
-				contexte: 'get formation api alternance',
+				apiSource: 'API LaBonneAlternance',
+				contexte: 'get formation la bonne alternance',
 				message: 'impossible de récupérer le détail d’une formation',
 			});
 		}
 	}
 
-	private async getFormationFromResultatsRecherche(filtre: FormationFiltre, id: string): Promise<Either<Formation>> {
+	private async getFormationFromSearch(filtreRecherchePourRetrouverLaFormation: FormationFiltre, id: string, cleMinistereEducatif: string | undefined) {
+		const formationOrError = await this.getFormationFromRésultatsRecherche(filtreRecherchePourRetrouverLaFormation, id);
+		if (isSuccess(formationOrError)) {
+			const formation = formationOrError.result;
+			formation.lienDemandeRendezVous = await this.getFormationLienRendezVous(cleMinistereEducatif);
+			return createSuccess(formation);
+		}
+		return formationOrError;
+	}
+
+	private static isErrorBecauseLbaFailedToRequestTheirDependencies(error: unknown) {
+		return isHttpError(error)
+			&& error.response !== undefined
+			&& error.response.status === 500
+			&& error.response.data.error === 'internal_error';
+	}
+
+	private async getFormationFromRésultatsRecherche(filtre: FormationFiltre, id: string): Promise<Either<Formation>> {
 		const searchResultOrError = await this.search(filtre);
 		if (isSuccess(searchResultOrError)) {
-			const resultatRechercheFormation = searchResultOrError.result.find((formation) => formation.id === id);
-			if (resultatRechercheFormation) {
-				const formation = mapResultatRechercheFormationToFormation(resultatRechercheFormation);
-				formation.lienDemandeRendezVous = await this.getFormationLienRendezVous(id);
-				return createSuccess(formation);
+			const résultatRechercheFormation = searchResultOrError.result.find((f) => f.id === id);
+			if (résultatRechercheFormation) {
+				return createSuccess(mapRésultatRechercheFormationToFormation(résultatRechercheFormation));
 			}
 			return this.errorManagementService.handleFailureError(ErreurMetier.DEMANDE_INCORRECTE, {
-				apiSource: 'API Alternance',
-				contexte: 'get formation api alternance',
+				apiSource: 'API LaBonneAlternance',
+				contexte: 'get formation la bonne alternance',
 				message: 'impossible de récupérer le détail d’une formation en effectuant de nouveau la recherche',
 			});
 		}
 		return searchResultOrError;
 	}
 
-	private async getFormationLienRendezVous(cleMinistereEducatif: string): Promise<string | undefined> {
+	private async getFormationLienRendezVous(cleMinistereEducatif: string | undefined): Promise<string | undefined> {
 		try {
-			const response = await this.laBonneAlternanceHttpClientService.post<{ idCleMinistereEducatif: string, referrer: string }, {
+			if (!cleMinistereEducatif) {
+				return undefined;
+			}
+			const response = await this.httpClientService.post<{ idCleMinistereEducatif: string, referrer: string }, {
 				form_url: string
 			}>(
 				'/appointment-request/context/create',
@@ -100,21 +139,10 @@ export class ApiAlternanceFormationRepository implements FormationRepository {
 		} catch (error) {
 			this.errorManagementService.handleFailureError(error, {
 				apiSource: 'API LaBonneAlternance',
-				contexte: 'get formation api alternance',
+				contexte: 'get formation la bonne alternance',
 				message: 'impossible de créer le lien de demande de rdv pour une formation',
 			});
 			return undefined;
-		}
-	}
-
-	private logErreurDeValidation(response: unknown, schema: Joi.Schema, contexte: string): void {
-		const apiValidationError = validateApiResponse(response, schema);
-		if (apiValidationError) {
-			this.errorManagementService.logValidationError(apiValidationError, {
-				apiSource: 'API Alternance',
-				contexte,
-				message: 'erreur de validation du schéma de l’api',
-			});
 		}
 	}
 }

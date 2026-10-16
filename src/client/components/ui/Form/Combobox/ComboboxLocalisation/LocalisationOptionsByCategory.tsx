@@ -17,7 +17,7 @@ export const LocalisationOptionsByCategory = ({ localisations, optionMessage }: 
 			<Combobox.Category name="Régions">
 				{localisations.regionList.map((suggestion) =>
 					(
-						<Combobox.Option key={suggestion.code} className="fr-ml-0 fr-pl-2w">
+						<Combobox.Option key={suggestion.code}>
 							{formatLibelleLocalisation(suggestion.nom, suggestion.code)}
 						</Combobox.Option>
 					))}
@@ -28,7 +28,7 @@ export const LocalisationOptionsByCategory = ({ localisations, optionMessage }: 
 			<Combobox.Category name="Départements">
 				{localisations.departementList.map((suggestion) =>
 					(
-						<Combobox.Option key={suggestion.code} className="fr-ml-0 fr-pl-2w">
+						<Combobox.Option key={suggestion.code}>
 							{formatLibelleLocalisation(suggestion.nom, suggestion.code)}
 						</Combobox.Option>
 					))}
@@ -39,13 +39,13 @@ export const LocalisationOptionsByCategory = ({ localisations, optionMessage }: 
 			<Combobox.Category name="Communes">
 				{localisations.communeList.map((suggestion) =>
 					(
-						<Combobox.Option key={suggestion.codeInsee} className="fr-ml-0 fr-pl-2w">
+						<Combobox.Option key={suggestion.codeInsee}>
 							{formatLibelleLocalisation(suggestion.nom, suggestion.codePostal)}
 						</Combobox.Option>
 					))}
 			</Combobox.Category>
 		)}
-		<Combobox.AsyncMessage className="fr-pl-2w fr-pb-1w">
+		<Combobox.AsyncMessage>
 			{optionMessage}
 		</Combobox.AsyncMessage>
 	</>

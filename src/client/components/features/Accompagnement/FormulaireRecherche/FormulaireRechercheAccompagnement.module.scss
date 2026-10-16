@@ -1,0 +1,29 @@
+@use "@styles/utilities";
+@use "@styles/components/form/variables";
+
+.rechercheAccompagnementForm {
+  @include utilities.media(medium){
+    padding-bottom: 2.5rem;
+  }
+}
+
+.filtresRecherche {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: variables.$form-vertical-gap-mobile;
+
+  @include utilities.media(medium){
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: 1fr;
+    grid-gap: variables.$form-vertical-gap-desktop;
+  }
+}
+
+.buttonRechercher {
+  @extend %buttonRechercher;
+}
+
+.rechercherAccompagnementHint {
+  color: utilities.$color-primary;
+  margin-block: 1.25rem;
+}

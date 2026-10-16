@@ -1,0 +1,7 @@
+@use "@styles/utilities-deprecated";
+
+.hero {
+  @include utilities-deprecated.media(small) {
+    padding-bottom: 1.5rem;
+  }
+}

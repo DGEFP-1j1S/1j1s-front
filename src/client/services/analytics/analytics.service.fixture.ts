@@ -1,6 +1,6 @@
 import { PageTags } from '~/client/services/analytics/analytics';
 
-import { EvenementAnalyticsService, ManualAnalyticsService } from './analytics.service';
+import { ManualAnalyticsService } from './analytics.service';
 
 export function aManualAnalyticsService(overrides?: Partial<ManualAnalyticsService>): ManualAnalyticsService {
 	return {
@@ -16,13 +16,6 @@ export function aPageTags(overrides?: Partial<PageTags>): PageTags {
 		pagegroup: 'accueil',
 		pagelabel: 'accueil',
 		'segment-site': 'accueil',
-		...overrides,
-	};
-}
-
-export function anEvenementAnalyticsService(overrides?: Partial<EvenementAnalyticsService>): EvenementAnalyticsService {
-	return {
-		envoyerEvenement: vi.fn(),
 		...overrides,
 	};
 }

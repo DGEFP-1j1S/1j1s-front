@@ -1,8 +1,8 @@
 import markdownit from 'markdown-it';
 import markdownItAnchor from 'markdown-it-anchor';
 
-function isAnchor(url: string | number | null): boolean {
-	if (typeof url !== 'string') return false;
+function isAnchor(url: string | null): boolean {
+	if (!url) return false;
 	return url.startsWith('#');
 }
 
@@ -22,18 +22,6 @@ export function getHtmlFromMd(markdown: string): string {
 			tokens[idx].attrSet('target', '_blank');
 		}
 		return defaultRender(tokens, idx, options, env, self);
-	};
-
-	md.renderer.rules.table_open = function (tokens, idx, options, env, self) {
-		return "<div class=\"fr-table\"><div class=\"fr-table__wrapper\"><div class=\"fr-table__container\"><div class=\"fr-table__content\">\n" + self.renderToken(tokens, idx, options);
-	};
-
-	md.renderer.rules.table_close = function (tokens, idx, options, env, self) {
-		return self.renderToken(tokens, idx, options) + "</div></div></div></div>\n";
-	};
-
-	md.renderer.rules.heading_open = function (tokens, idx, options, env, self) {
-		return self.renderToken(tokens, idx, options);
 	};
 
 	return md.render(markdown);

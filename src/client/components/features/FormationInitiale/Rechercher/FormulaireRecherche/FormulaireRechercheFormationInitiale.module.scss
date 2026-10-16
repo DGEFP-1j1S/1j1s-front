@@ -1,0 +1,24 @@
+@use "@styles/utilities";
+@use "@styles/components/form/variables";
+
+.RechercheFormationInitialeForm {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: variables.$form-submit-button-vertical-gap-mobile;
+
+  @include utilities.media(medium) {
+    grid-template-columns: 1fr auto;
+    grid-gap: variables.$form-vertical-gap-desktop;
+  }
+
+  & .buttonWrapper {
+    > button {
+      width: 100%;
+    }
+    @include utilities.media(medium) {
+      margin-top: auto;
+    }
+  }
+}
+
+

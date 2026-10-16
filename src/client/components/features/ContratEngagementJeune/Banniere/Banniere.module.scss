@@ -20,13 +20,12 @@ $color-cej-background: #ea711b;
   padding: 36px;
 
   @include utilities.media(large) {
-    padding: 42px 42px 30px 1.5rem;
+    padding: 42px 42px 42px 1.5rem;
   }
 
 }
 
 .banniereContentImage {
-  object-fit: contain;
   display: none;
 
   @include utilities.media(large) {

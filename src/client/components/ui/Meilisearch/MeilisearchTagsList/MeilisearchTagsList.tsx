@@ -2,6 +2,7 @@ import React from 'react';
 import { useCurrentRefinements, UseCurrentRefinementsProps } from 'react-instantsearch';
 
 import { Icon } from '~/client/components/ui/Icon/Icon';
+import { Tag } from '~/client/components/ui/Tag/Tag';
 
 import { getCapitalizedItems } from '../getCapitalizedItems';
 import styles from './MeilisearchTagsList.module.scss';
@@ -17,14 +18,12 @@ export default function MeilisearchTagsList(props: UseCurrentRefinementsProps) {
 			{items.map((item) => {
 				return item.refinements.map((refinement, index) => (
 					<li key={index}>
-						<button
-							aria-label={`${refinement.label} - supprimer le filtre`}
-							onClick={() => refine(refinement)}
-							type="button"
-							className="fr-tag fr-tag--green-emeraude">
-							{getCapitalizedItems(refinement.label)}
-							<Icon name="close"/>
-						</button>
+						<Tag>
+							<button aria-label={`${refinement.label} - supprimer le filtre`} type="button" onClick={() => refine(refinement)}>
+								{getCapitalizedItems(refinement.label)}
+								<Icon name="close" />
+							</button>
+						</Tag>
 					</li>
 				));
 			})}

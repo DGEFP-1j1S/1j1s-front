@@ -1,17 +1,18 @@
 import React from 'react';
 
-import { Carte } from '~/client/dsfr';
+import { ServiceCard } from './Card/ServiceCard';
 
 export function MonCompteFormationPartner() {
 	return (
-		<Carte
-			horizontal
-			titre="Découvrez le dispositif Mon compte formation"
-			imageSrc="/images/logos/mon-compte-formation.svg"
-			lien="https://www.moncompteformation.gouv.fr/espace-prive/html/#/">
+		<ServiceCard
+			linkLabel="Accéder à mon compte formation"
+			logo="/images/logos/mon-compte-formation.svg"
+			link="https://www.moncompteformation.gouv.fr/espace-prive/html/#/"
+			title="Découvrez le dispositif Mon compte formation"
+			titleAs={'h3'}>
 			Le compte personnel de formation (CPF) permet d’acquérir des droits à la
 			formation mobilisables tout au long de sa vie professionnelle. Il a une
 			vocation universelle et s’adresse à tous les actifs.
-		</Carte>
+		</ServiceCard>
 	);
 }

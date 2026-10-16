@@ -1,0 +1,19 @@
+@use "@styles/utilities-deprecated";
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+  list-style-type: none;
+}
+
+.tagItem {
+  color: utilities-deprecated.$color-on-background;
+  display: flex;
+  align-items: center;
+}
+
+.strike {
+  text-decoration: line-through;
+}

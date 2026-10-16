@@ -1,0 +1,28 @@
+@use "@styles/utilities" as utilities;
+
+.bouée {
+  position: fixed;
+  z-index: 1;
+  --inset: #{utilities.$gutter};
+  right: var(--inset);
+  bottom: var(--inset);
+
+  --size: 2rem;
+  min-height: var(--size);
+  min-width: var(--size);
+  padding: 0;
+
+  box-shadow: 10px 10px 20px rgb(0 0 0 / 10%);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &[hidden]:not([hidden="false"]) {
+    transform: translateY(calc(100% + var(--inset)));
+    visibility: hidden;
+  }
+  transition:
+          transform 400ms ease-in-out,
+          visibility 400ms ease-in-out;
+}

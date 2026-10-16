@@ -8,14 +8,14 @@ import { MetierAlternance } from '~/server/metiers/domain/metierAlternance';
 import { aListeDeMetierLaBonneAlternance } from '~/server/metiers/domain/metierAlternance.fixture';
 import {
 	aMetierLaBonneAlternanceApiResponse,
-} from '~/server/metiers/infra/apiLaBonneAlternanceMetier.fixture';
+} from '~/server/metiers/infra/apiLaBonneAlternanceMétier.fixture';
 
 
 describe('récupérer les métiers correspondant à la recherche', () => {
 	it('retourne les métiers recherchés', async () => {
 		const recherche = 'boulang';
-		nock('https://labonnealternance-recette.apprentissage.beta.gouv.fr/api/').get(
-			`/rome?title=${recherche}`,
+		nock('https://labonnealternance-recette.apprentissage.beta.gouv.fr/api/v1/').get(
+			`/metiers?title=${recherche}`,
 		).reply(200, aMetierLaBonneAlternanceApiResponse());
 
 		await testApiHandler<MetierAlternance[] | ErrorHttpResponse>({

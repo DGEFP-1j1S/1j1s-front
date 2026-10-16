@@ -5,7 +5,7 @@ export interface EtablissementAccompagnement {
 	telephone?: string
 	email?: string
 	horaires?: Array<EtablissementAccompagnementHoraire>
-	type: TypeEtablissement
+	type: TypeÉtablissement
 }
 
 export type ContactEtablissementAccompagnement = Required<Pick<EtablissementAccompagnement, 'nom' | 'email' | 'type'>>
@@ -31,11 +31,11 @@ export interface ParametresRechercheEtablissementAccompagnement {
 	codeCommune: string
 }
 
-export function isTypeEtablissement(type: string): type is TypeEtablissement {
-	return Object.values(TypeEtablissement).includes(type as TypeEtablissement);
+export function isTypeEtablissement(type: string): type is TypeÉtablissement {
+	return Object.values(TypeÉtablissement).includes(type as TypeÉtablissement);
 }
 
-export enum TypeEtablissement {
+export enum TypeÉtablissement {
 	FRANCE_TRAVAIL = 'france_travail',
 	MISSION_LOCALE = 'mission_locale',
 	INFO_JEUNE = 'cij',

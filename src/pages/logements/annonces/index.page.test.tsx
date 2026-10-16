@@ -36,7 +36,7 @@ describe('<AnnoncesPage />', () => {
 			</DependenciesProvider>,
 		);
 
-		await screen.findByText('Plus de 3 000 offres de logements étudiants et de locations jeune actif partout en France');
+		await screen.findByText('Plus de 3 000 offres de logements étudiants et de locations jeune actif');
 
 		expect(container.outerHTML).toHTMLValidate();
 	});

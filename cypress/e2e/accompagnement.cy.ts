@@ -1,12 +1,12 @@
 /// <reference types="cypress" />
 /// <reference types="@testing-library/cypress" />
 
-import { TypeEtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
+import { TypeÉtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 import {
 	anEtablissementAccompagnement,
 	anEtablissementAccompagnementList,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement.fixture';
-import { aCommuneList } from '~/server/localisations/domain/localisationAvecCoordonnees.fixture';
+import { aCommuneList } from '~/server/localisations/domain/localisationAvecCoordonnées.fixture';
 
 describe('Parcours Accompagnement', () => {
 	beforeEach(() => {
@@ -27,8 +27,12 @@ describe('Parcours Accompagnement', () => {
 
 				cy.findByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' }).type('par');
 				cy.wait('@get-communes');
-        cy.get('li[role="option"]').first().click()
-				cy.findByRole('combobox', { name: 'Type d‘accompagnement Exemple : Missions locales' }).select(1);
+				cy.findByRole('listbox', { name: 'communes' })
+					.within(() => cy.findAllByRole('option').first().click());
+
+				cy.findByRole('combobox', { name: 'Type d‘accompagnement Exemple : Missions locales' }).click();
+				cy.findByRole('listbox')
+					.within(() => cy.findAllByRole('option').first().click());
 
 				const apiResponse = [
 					anEtablissementAccompagnement({ id: '1' }),
@@ -44,7 +48,7 @@ describe('Parcours Accompagnement', () => {
 				cy.findByRole('button', { name: 'Rechercher' }).click();
 				cy.wait('@recherche-accompagnement');
 
-				cy.findByRole('list', { name: 'Établissements d’accompagnement' })
+				cy.findByRole('list', { name: 'Établissements d‘accompagnement' })
 					.children('li')
 					.should('have.length', 2);
 			});
@@ -60,21 +64,24 @@ describe('Parcours Accompagnement', () => {
 
 				cy.findByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' }).type('par');
 				cy.wait('@get-communes');
-        cy.get('li[role="option"]').first().click()
+				cy.findByRole('listbox', { name: 'communes' })
+					.within(() => cy.findAllByRole('option').first().click());
 
-				cy.findByRole('combobox', { name: 'Type d‘accompagnement Exemple : Missions locales' }).select(1);
+				cy.findByRole('combobox', { name: 'Type d‘accompagnement Exemple : Missions locales' }).click();
+				cy.findByRole('listbox')
+					.within(() => cy.findAllByRole('option').first().click());
 
 				cy.intercept(
 					'GET',
 					'/api/etablissements-accompagnement*',
 					JSON.stringify(anEtablissementAccompagnementList({
-						type: TypeEtablissement.MISSION_LOCALE,
+						type: TypeÉtablissement.MISSION_LOCALE,
 					})),
 				).as('recherche-accompagnement');
 				cy.findByRole('button', { name: 'Rechercher' }).click();
 				cy.wait('@recherche-accompagnement');
 
-				cy.findByRole('list', { name: 'Établissements d’accompagnement' })
+				cy.findByRole('list', { name: 'Établissements d‘accompagnement' })
 					.children('li')
 					.should('have.length', 1);
 
@@ -84,7 +91,8 @@ describe('Parcours Accompagnement', () => {
 				cy.findByRole('textbox', { name: 'Nom Exemple : Dupont' }).type('Doe', { force: true });
 				cy.findByRole('textbox', { name: /Adresse e-mail/ }).type('john.doe@email.com');
 				cy.findByRole('textbox', { name: 'Téléphone Exemple : 0606060606' }).type('0606060606');
-				cy.findByRole('combobox', { name: 'Age Exemple : 16 ans' }).select('23 ans');
+				cy.findByRole('combobox', { name: 'Age Exemple : 16 ans' }).click();
+				cy.findByRole('option', { name: '23 ans' }).click();
 
 				cy.intercept({
 					method: 'GET',

@@ -1,0 +1,7 @@
+@use "@styles/utilities";
+@use "../styles.module";
+
+.worldSkills {
+  background-color: utilities.$color-primary-campagne-world-skills;
+  color: utilities.$color-text-on-primary-campagne-world-skills;
+}

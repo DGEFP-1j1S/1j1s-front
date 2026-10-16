@@ -3,14 +3,14 @@ import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import {
 	aLocalisationAvecCoordonnéesRepository,
 	aRésultatsRechercheCommune,
-} from '~/server/localisations/domain/localisationAvecCoordonnees.fixture';
-import { LocalisationAvecCoordonneesRepository } from '~/server/localisations/domain/localisationAvecCoordonnees.repository';
+} from '~/server/localisations/domain/localisationAvecCoordonnées.fixture';
+import { LocalisationAvecCoordonnéesRepository } from '~/server/localisations/domain/localisationAvecCoordonnées.repository';
 import { RechercherCommuneUseCase } from '~/server/localisations/useCases/rechercherCommune.useCase';
 import { ConfigurationService } from '~/server/services/configuration.service';
 import { ConfigurationServiceFixture } from '~/server/services/configuration.service.fixture';
 
 describe('RechercherCommuneUseCase', () => {
-	let localisationAvecCoordonnéesRepository: LocalisationAvecCoordonneesRepository;
+	let localisationAvecCoordonnéesRepository: LocalisationAvecCoordonnéesRepository;
 	let configurationService: ConfigurationService;
 
 	beforeEach(() => {

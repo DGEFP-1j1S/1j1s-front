@@ -1,6 +1,6 @@
 import { createSuccess, Either } from '~/server/errors/either';
 import { JobEteFiltre } from '~/server/jobs-ete/domain/jobEte';
-import { isOffreÉchantillonFiltre, Offre, OffreId, ResultatsRechercheOffre } from '~/server/offres/domain/offre';
+import { isOffreÉchantillonFiltre, Offre, OffreId, RésultatsRechercheOffre } from '~/server/offres/domain/offre';
 import { OffreRepository } from '~/server/offres/domain/offre.repository';
 import {
 	mapOffre,
@@ -55,7 +55,7 @@ export class ApiFranceTravailJobEteRepository implements OffreRepository {
 		}
 	}
 
-	async search(jobEteFiltre: JobEteFiltre): Promise<Either<ResultatsRechercheOffre>> {
+	async search(jobEteFiltre: JobEteFiltre): Promise<Either<RésultatsRechercheOffre>> {
 		if (isOffreÉchantillonFiltre(jobEteFiltre)) return this.getEchantillonOffre();
 		return this.getOffreJobEteRecherche(jobEteFiltre);
 	}
@@ -72,7 +72,7 @@ export class ApiFranceTravailJobEteRepository implements OffreRepository {
 		return params.toString();
 	}
 
-	private async getOffreJobEteRecherche(jobEteFiltre: JobEteFiltre): Promise<Either<ResultatsRechercheOffre>> {
+	private async getOffreJobEteRecherche(jobEteFiltre: JobEteFiltre): Promise<Either<RésultatsRechercheOffre>> {
 		const parametresRecherche = await this.franceTravailParametreBuilderService.buildCommonParamètresRecherche(jobEteFiltre);
 		const jobEteParametresRecherche = await this.buildJobEteParametresRecherche(jobEteFiltre);
 		try {
@@ -91,7 +91,7 @@ export class ApiFranceTravailJobEteRepository implements OffreRepository {
 		}
 	}
 
-	private async getEchantillonOffre(): Promise<Either<ResultatsRechercheOffre>> {
+	private async getEchantillonOffre(): Promise<Either<RésultatsRechercheOffre>> {
 		const responseInCache = await this.cacheService.get<RésultatsRechercheOffreResponse>(this.ECHANTILLON_OFFRE_JOB_ETE_KEY);
 		const range = buildRangeParamètre({ page: 1 });
 

@@ -1,0 +1,167 @@
+@use "sass:color";
+@use "@styles/utilities-deprecated";
+@use "@styles/utilities";
+
+$background-color-NavItem: utilities.$color-title-primary-contrast;
+$background-color-NavItem-hover :color.adjust($background-color-NavItem, utilities.$alpha:-0.15);
+
+@mixin underline {
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.navItem {
+  position: relative;
+  @extend %text-regular;
+  color: utilities.$color-cta-texte-primary;
+  background-color: $background-color-NavItem;
+
+  &:hover {
+    background-color: $background-color-NavItem-hover ;
+    .navItemLabel {
+      @include underline;
+    }
+  }
+
+  & .navItemButton {
+    font-size: inherit;
+    padding-block: 0.8rem;
+    padding-inline: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin: auto;
+    color: inherit;
+    width: 100%;
+    outline-offset: 4px;
+
+    .icon {
+      transition: all 200ms ease-in-out;
+    }
+
+    .icon.expanded {
+      transform: rotate(180deg);
+    }
+  }
+
+  .navWrapper {
+    @extend %box-shadow;
+    background: utilities-deprecated.$color-background;
+    color: utilities-deprecated.$color-on-background;
+    position: absolute;
+    z-index: 12;
+    box-sizing: border-box;
+    top: 100%;
+    right: 0;
+    width: 100vw;
+    overflow-y: hidden;
+
+    height: 0;
+
+    &.expanded {
+      height: auto;
+      border-top: 1px solid utilities-deprecated.$color-separator;
+    }
+
+    transition: height 200ms ease-in-out;
+
+    > .navDetail {
+      visibility: hidden;
+    }
+
+    &.expanded > .navDetail {
+      visibility: visible;
+    }
+  }
+
+  .navDetail {
+    a {
+      text-decoration: none;
+    }
+
+    a:hover {
+      @include underline;
+    }
+
+    @extend %max-container;
+    --gutter: 2.5rem;
+    padding: var(--gutter) 1rem;
+
+    > .navSection {
+      display: flex;
+      justify-content: space-between;
+
+      > .navSectionHeader {
+        padding-right: calc(var(--gutter) + .5rem);
+
+        > * {
+          display: block;
+        }
+
+        strong {
+          @extend %text-large;
+          margin-bottom: .5em;
+        }
+
+        em {
+          font-style: normal;
+
+        }
+      }
+
+      > .navSectionItems {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+
+        > li {
+          padding: 0 var(--gutter);
+          border-left: 1px solid utilities-deprecated.$color-primary;
+
+          &:first-child {
+            border: none;
+          }
+        }
+
+        > .navLeaf {
+          color: utilities-deprecated.$color-primary;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .navSectionItems > .navSection {
+    > .navSectionItems {
+      padding-left: 1rem;
+
+      > li {
+        margin-top: 1rem;
+      }
+    }
+
+    > .navSectionHeader {
+      color: utilities-deprecated.$color-primary;
+
+      &:after {
+        content: ' :'
+      }
+    }
+  }
+}
+
+.employeursLien {
+  cursor: pointer;
+}
+
+.navItemLabel[aria-current=true], .employeursLien[aria-current=true] {
+  @include underline;
+  @extend %bold;
+}
+
+@include utilities-deprecated.media(xlarge) {
+  .navItem .navWrapper {
+    right: calc((100vw - utilities-deprecated.$breakpoint-xl) / -2);
+    width: 100vw;
+  }
+}

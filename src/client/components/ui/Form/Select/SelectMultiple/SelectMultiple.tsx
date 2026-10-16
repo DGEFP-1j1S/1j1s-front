@@ -250,7 +250,6 @@ export function SelectMultiple({
 						value={optionValue} />
 				))}
 				<button
-					className='fr-input'
 					type="button"
 					role="combobox"
 					aria-controls={listboxId}
@@ -268,7 +267,6 @@ export function SelectMultiple({
 					<Icon name={'angle-down'} />
 				</button>
 				<ul
-					className="fr-pl-0"
 					aria-multiselectable="true"
 					role="listbox"
 					ref={listboxRef}

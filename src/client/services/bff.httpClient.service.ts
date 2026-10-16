@@ -1,4 +1,4 @@
-import { uuid4 } from '@sentry/core';
+import { uuid4 } from '@sentry/utils';
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
 
 import { HttpClientService } from '~/client/services/httpClient.service';

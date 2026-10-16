@@ -3,8 +3,8 @@ import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { RechercheLocalisation } from '~/server/localisations/domain/localisation';
 import { LocalisationRepository } from '~/server/localisations/domain/localisation.repository';
 import {
-	LocalisationAvecCoordonneesRepository,
-} from '~/server/localisations/domain/localisationAvecCoordonnees.repository';
+	LocalisationAvecCoordonnéesRepository,
+} from '~/server/localisations/domain/localisationAvecCoordonnées.repository';
 import RechercheLocalisationUtils from '~/server/localisations/domain/rechercheLocalisationUtils';
 
 const MIN_CHAR_LENGTH_FOR_SEARCH = 3;
@@ -12,7 +12,7 @@ const MIN_CHAR_LENGTH_FOR_SEARCH = 3;
 export class RechercherLocalisationUseCase {
 	constructor(
 		private localisationRepository: LocalisationRepository,
-		private localisationAvecCoordonnéesRepository: LocalisationAvecCoordonneesRepository) {
+		private localisationAvecCoordonnéesRepository: LocalisationAvecCoordonnéesRepository) {
 	}
 
 	async handle(recherche: string): Promise<Either<RechercheLocalisation>> {

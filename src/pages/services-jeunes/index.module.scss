@@ -1,0 +1,19 @@
+@use "@styles/utilities-deprecated";
+@use "@styles/utilities";
+
+.container {
+  margin-bottom: 2rem;
+
+  & > *:not(:first-child) {
+    margin-top: 1rem;
+    padding-inline: 1rem;
+
+    @include utilities.media(medium) {
+      padding-inline: 5rem;
+    }
+  }
+}
+
+.etiquettes {
+  margin-top: 1rem;
+}

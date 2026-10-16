@@ -9,7 +9,7 @@ import { aDemandeDeContactService } from '~/client/services/demandeDeContact/dem
 import { aLocalisationService } from '~/client/services/localisation/localisation.service.fixture';
 import { createFailure, createSuccess } from '~/server/errors/either';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
-import { aCommune } from '~/server/localisations/domain/localisationAvecCoordonnees.fixture';
+import { aCommune } from '~/server/localisations/domain/localisationAvecCoordonnées.fixture';
 
 describe('<DemandeContactCEJ />', () => {
 	beforeAll(() => {
@@ -83,7 +83,8 @@ describe('<DemandeContactCEJ />', () => {
 			await user.type(screen.getByRole('textbox', { name: 'Téléphone Exemple : 0606060606' }), '0123456789');
 			await user.type(screen.getByRole('combobox', { name: 'Ville Exemples : Paris, Béziers…' }), 'Paris');
 			await user.click(await screen.findByRole('option', { name: 'Paris (75006)' }));
-			await user.selectOptions(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }), '16 ans');
+			await user.click(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }));
+			await user.click(screen.getByRole('option', { name: '16 ans' }));
 
 			await user.click(screen.getByRole('button', { name: 'Envoyer la demande' }));
 
@@ -119,7 +120,8 @@ describe('<DemandeContactCEJ />', () => {
 				await user.type(screen.getByRole('textbox', { name: 'Téléphone Exemple : 0606060606' }), '0123456789');
 				await user.type(screen.getByRole('combobox', { name: 'Ville Exemples : Paris, Béziers…' }), 'Paris');
 				await user.click(await screen.findByRole('option', { name: 'Paris (75006)' }));
-				await user.selectOptions(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }), '16 ans');
+				await user.click(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }));
+				await user.click(screen.getByRole('option', { name: '16 ans' }));
 
 				await user.click(screen.getByRole('button', { name: 'Envoyer la demande' }));
 
@@ -155,7 +157,8 @@ describe('<DemandeContactCEJ />', () => {
 				await user.type(screen.getByRole('textbox', { name: 'Téléphone Exemple : 0606060606' }), '0123456789');
 				await user.type(screen.getByRole('combobox', { name: 'Ville Exemples : Paris, Béziers…' }), 'Paris');
 				await user.click(await screen.findByRole('option', { name: 'Paris (75006)' }));
-				await user.selectOptions(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }), '16 ans');
+				await user.click(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }));
+				await user.click(screen.getByRole('option', { name: '16 ans' }));
 
 				await user.click(screen.getByRole('button', { name: 'Envoyer la demande' }));
 
@@ -194,7 +197,8 @@ describe('<DemandeContactCEJ />', () => {
 				await user.type(screen.getByRole('textbox', { name: 'Téléphone Exemple : 0606060606' }), '0123456789');
 				await user.type(screen.getByRole('combobox', { name: 'Ville Exemples : Paris, Béziers…' }), 'Paris');
 				await user.click(await screen.findByRole('option', { name: 'Paris (75006)' }));
-				await user.selectOptions(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }), '16 ans');
+				await user.click(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }));
+				await user.click(screen.getByRole('option', { name: '16 ans' }));
 
 				await user.click(screen.getByRole('button', { name: 'Envoyer la demande' }));
 

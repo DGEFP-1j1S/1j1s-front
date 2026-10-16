@@ -1,0 +1,33 @@
+@use "@styles/utilities-deprecated";
+
+.container {
+  padding: 1rem;
+
+  @include utilities-deprecated.media(xlarge) {
+    padding-block: 2rem;
+    padding-inline: 0;
+  }
+}
+
+.backButton {
+  margin-bottom: 1rem;
+
+  @include utilities-deprecated.media(xlarge) {
+    margin-bottom: 2rem;
+  }
+}
+
+.partnerInfo {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+  &Icon {
+    color: utilities-deprecated.$color-primary;
+    vertical-align: bottom;
+    margin-right: 0.5rem;
+  }
+
+  span {
+    line-height: 1.6rem;
+  }
+}

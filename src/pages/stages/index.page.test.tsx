@@ -36,7 +36,7 @@ describe('<RechercherOffreStagePage />', () => {
 			</DependenciesProvider>,
 		);
 
-		await screen.findByText('Des milliers d‘offres de stages sélectionnées pour vous');
+		await screen.findByText('Des milliers d‘offres de stages');
 
 		expect(container.outerHTML).toHTMLValidate();
 	});

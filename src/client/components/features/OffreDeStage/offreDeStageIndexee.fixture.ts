@@ -3,7 +3,7 @@ import {
 	LocalisationStageIndexée,
 	OffreDeStageIndexée,
 } from '~/client/components/features/OffreDeStage/OffreDeStageIndexee';
-import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonneesStage';
+import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonnéesStage';
 
 export function anOffreDeStageIndexee(override?: Partial<OffreDeStageIndexée>): OffreDeStageIndexée {
 	return {

@@ -1,10 +1,10 @@
 import React from 'react';
+
+import { EmploiEnEuropeContent } from '~/client/components/features/Europe/EmploiEnEuropeContent';
 import { Head } from '~/client/components/head/Head';
 import useAnalytics from '~/client/hooks/useAnalytics';
+
 import analytics from './index.analytics';
-import { ExperiencesEnEurope } from '~/client/components/features/Europe/Sections/ExperiencesEnEurope';
-import { Dispositifs } from '~/client/components/features/Europe/Sections/Dispositifs';
-import { LiensUtiles } from '~/client/components/features/Europe/Sections/LiensUtiles';
 
 
 export default function EuropePage() {
@@ -14,13 +14,8 @@ export default function EuropePage() {
 		<>
 			<Head
 				title={'Trouver un emploi ou un volontariat en Europe  | 1jeune1solution'}
-				robots="index,follow"
-			/>
-			<main id="contenu">
-				<ExperiencesEnEurope />
-				<Dispositifs />
-				<LiensUtiles />
-			</main>
+				robots="index,follow" />
+			<EmploiEnEuropeContent />
 		</>
 	);
 }

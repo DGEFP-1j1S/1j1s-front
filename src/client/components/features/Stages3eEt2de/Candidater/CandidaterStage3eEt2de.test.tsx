@@ -467,8 +467,9 @@ En vous remerciant,
 		});
 
 		describe('lorsque l’entreprise propose plusieurs métiers', () => {
-			it('affiche un champ de sélection du métier actif', () => {
+			it('affiche un champ de sélection du métier actif', async () => {
 				// GIVEN
+				const user = userEvent.setup();
 				const donneesEntreprise = aDonneesEntrepriseStage3eEt2de(
 					{
 						appellations: [
@@ -495,7 +496,8 @@ En vous remerciant,
 				);
 				const selectMetier = screen.getByRole('combobox', { name: 'Métier sur lequel porte la demande d’immersion Un ou plusieurs métiers ont été renseignés par l’entreprise' });
 
-				const metierOptions = within(selectMetier).getAllByRole('option').filter((option) => option.getAttribute('value'));
+				await user.click(selectMetier);
+				const metierOptions = screen.getAllByRole('option');
 
 				// THEN
 				expect(selectMetier).toBeVisible();
@@ -1244,5 +1246,8 @@ async function remplirLeFormulaire(donneesFormulaire: DonneesFormulaires) {
 async function selectionnerUnMetier(metierLabel: string) {
 	const user = userEvent.setup();
 	const selectMetier = screen.getByRole('combobox', { name: 'Métier sur lequel porte la demande d’immersion Un ou plusieurs métiers ont été renseignés par l’entreprise' });
-	await user.selectOptions(selectMetier, metierLabel);
+	await user.click(selectMetier);
+
+	const optionDuMetierLabel = screen.getByRole('option', { name: metierLabel });
+	await user.click(optionDuMetierLabel);
 }

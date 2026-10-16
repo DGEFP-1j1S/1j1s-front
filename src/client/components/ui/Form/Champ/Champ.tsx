@@ -5,6 +5,7 @@ import { Error } from '~/client/components/ui/Form/Error';
 import { Hint } from '~/client/components/ui/Form/Hint';
 import { Label } from '~/client/components/ui/Form/Label';
 
+import styles from './Champ.module.scss';
 import { ChampContextProvider, useChampContext } from './ChampContext';
 
 export function Champ(props: ComponentPropsWithoutRef<'div'>) {
@@ -25,7 +26,7 @@ export function Champ(props: ComponentPropsWithoutRef<'div'>) {
 			setHintId,
 			setInputId,
 		}}>
-			<div className={classNames(classNameProps, errorMessage && getErrorClassName(classNameProps))} {...otherProps} />
+			<div className={classNames(styles.champ, classNameProps)} {...otherProps} />
 		</ChampContextProvider>
 	);
 }
@@ -122,14 +123,6 @@ Champ.Input = InputChamp;
 Champ.Label = Object.assign(LabelChamp, Label);
 Champ.Error = ErrorChamp;
 Champ.Hint = HintChamp;
-
-function getErrorClassName(className?: string) {
-	const classes = className?.split(" ") ?? [];
-	return {
-		"fr-input-group--error": classes.includes("fr-input-group"),
-		"fr-select-group--error": classes.includes("fr-select-group"),
-	};
-}
 
 function doNothing() {
 	return;

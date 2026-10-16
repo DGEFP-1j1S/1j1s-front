@@ -50,10 +50,9 @@ export function MeilisearchComboboxLocalisation(props: UseRefinementListProps) {
 	}
 
 	return (
-		<Champ className='fr-select-group' onKeyDown={onKeyDown}>
+		<Champ onKeyDown={onKeyDown}>
 			<Champ.Label>
 				Localisation
-				<Champ.Label.Complement>Exemples : Toulouse, Paris…</Champ.Label.Complement>
 			</Champ.Label>
 			<Champ.Input
 				render={Combobox}
@@ -61,6 +60,7 @@ export function MeilisearchComboboxLocalisation(props: UseRefinementListProps) {
 				valueName={INPUT_VALUE_NAME}
 				requireValidOption
 				optionsAriaLabel="villes"
+				placeholder={'Exemples : Toulouse, Paris…'}
 				value={userInput}
 				autoComplete="off"
 				filter={Combobox.noFilter}

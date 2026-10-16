@@ -1,0 +1,107 @@
+@use "@styles/utilities";
+
+$color-card-background: utilities.$color-background-primary;
+$color-card-lead-border: utilities.$color-primary;
+$color-border-left: utilities.$color-primary;
+$color-call-to-action-text: utilities.$color-cta-texte-secondary;
+$border-card-lead: 4px solid $color-card-lead-border;
+$padding-card-content: 1rem;
+$gap-between-sections: 1rem;
+
+.card {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+  grid-template-columns: auto 1fr;
+  padding-top: $padding-card-content;
+  padding-bottom: $padding-card-content;
+  background: $color-card-background;
+  border-radius: 20px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+
+  & > img {
+    padding-left: $padding-card-content;
+    width: 140px;
+    grid-row: 1;
+    margin: auto;
+    object-fit: contain;
+  }
+
+  & .mainContent {
+    grid-row: 1;
+    grid-column: 2;
+    padding: 0 $padding-card-content $gap-between-sections $gap-between-sections;
+
+    & > header {
+      h3 {
+        @extend %bold;
+        @include utilities.title-small;
+      }
+
+      p {
+        min-height: 24px;
+        @include utilities.text-medium;
+      }
+    }
+  }
+
+  & .separator {
+    grid-column: 1 / -1;
+    border-bottom: $border-card-lead;
+  }
+
+  & .tags {
+    grid-column: 1 / -1;
+    padding: $gap-between-sections $padding-card-content 0 $padding-card-content;
+  }
+
+  & > a {
+    grid-column: 2;
+    padding-right: $padding-card-content;
+    padding-top: $gap-between-sections;
+    margin-left: auto;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0);
+    }
+  }
+
+  @include utilities.media(medium) {
+    padding: $padding-card-content;
+    border-left: 4px solid #566bb1;
+
+    & > img {
+      width: 150px;
+      grid-row: 1 / -1;
+      margin-right: $gap-between-sections;
+    }
+
+    & .mainContent {
+      padding: 0;
+      grid-column: 2;
+    }
+
+    & .separator{
+      display: none;
+    }
+    & .tags {
+      padding-right: 0;
+      padding-left: 0;
+      grid-column: 2;
+    }
+
+    & > a {
+      padding-top: $gap-between-sections;
+      padding-right: 0;
+      grid-column: 2;
+    }
+  }
+}
+
+

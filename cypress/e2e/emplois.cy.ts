@@ -1,31 +1,38 @@
 /// <reference types="cypress" />
 /// <reference types="@testing-library/cypress" />
 
-import { toQueryString } from '../toQueryString';
+import { stringify } from 'querystring';
 
 import { Success } from '~/server/errors/either';
-import { Offre, ResultatsRechercheOffre } from '~/server/offres/domain/offre';
+import { Offre, RésultatsRechercheOffre } from '~/server/offres/domain/offre';
 import {
 	getOffreRepositoryMockResults,
 	searchOffreRepositoryMockResults,
 } from '~/server/offres/infra/repositories/mockOffre.repository';
 
 describe('Page de recherche d’emplois', () => {
+	beforeEach(() => {
+		cy.viewport('iphone-x');
+	});
 
 	context('Parcours standard', () => {
 		it('affiche 15 résultats par défaut', () => {
-			const expectedResult = searchOffreRepositoryMockResults({ page: 1 }) as Success<ResultatsRechercheOffre>;
+			const expectedResult = searchOffreRepositoryMockResults({ page: 1 }) as Success<RésultatsRechercheOffre>;
 
 			cy.visit('/emplois');
 
-      cy.contains('li', expectedResult.result.résultats[0].intitulé).parent('ul')
+			cy.findByRole('list', { name: /Offres d‘emplois/i })
 				.children()
 				.should('have.length', expectedResult.result.résultats.length);
+			cy.findByRole('list', { name: /Offres d‘emplois/i })
+				.children()
+				.first()
+				.should('contain.text', expectedResult.result.résultats[0].intitulé);
 		});
 
 		context('quand l‘utilisateur rentre un mot clé', () => {
 			it('filtre les résultats par mot clé', () => {
-				const expectedResult = searchOffreRepositoryMockResults({ motClé: 'barman', page: 1 }) as Success<ResultatsRechercheOffre>;
+				const expectedResult = searchOffreRepositoryMockResults({ motClé: 'barman', page: 1 }) as Success<RésultatsRechercheOffre>;
 
 				cy.visit('/emplois');
 
@@ -33,7 +40,7 @@ describe('Page de recherche d’emplois', () => {
 
 				cy.findByRole('button', { name: /Rechercher/i }).click();
 
-        cy.contains('li', expectedResult.result.résultats[0].intitulé).parent('ul')
+				cy.findByRole('list', { name: /Offres d‘emplois/i })
 					.children()
 					.should('have.length', expectedResult.result.résultats.length);
 			});
@@ -45,7 +52,7 @@ describe('Page de recherche d’emplois', () => {
 
 				cy.visit('/emplois');
 
-        cy.contains('li', expectedResult.result.intitulé).parent('ul')
+				cy.findByRole('list', { name: /Offres d‘emplois/i })
 					.children()
 					.first()
 					.click();
@@ -68,21 +75,20 @@ describe('Page de recherche d’emplois', () => {
 				typeLocalisation: 'DEPARTEMENT',
 			};
 
-			cy.visit(`/emplois?${toQueryString(query)}`);
+			cy.visit(`/emplois?${stringify(query)}`);
 
 			cy.findByRole('textbox', { name: /Métier, Mot-clé/i }).should('have.value', query.motCle);
 			cy.findByRole('combobox', { name: /Localisation/i }).should('have.value', `${query.nomLocalisation} (${query.codeLocalisation})`);
 
-			cy.findByRole('button', { name: /Rechercher/i }).click();
+			cy.findByRole('button', { name: /Filtrer ma recherche/i }).click();
 
-      cy.get('li[role="option"]')
-        .contains(/CDI/i)
-        .should('have.attr', 'aria-selected', 'true')
-      cy.findByRole('option', { name: /Temps partiel/i }).should('be.selected', true);
-      cy.findByRole('option', { name: /Plus de 3 ans/i }).should('be.selected', true);
-      cy.get('li[role="option"]')
-        .contains(/Arts \/ Artisanat d‘art/i)
-        .should('have.attr', 'aria-selected', 'true')
+			cy.findByRole('checkbox', { name: /Contrat à durée indéterminé/i }).should('be.checked');
+			cy.findByText(summary(/Temps de travail/i)).click();
+			cy.findByRole('radio', { name: /Temps partiel/i }).should('be.checked');
+			cy.findByText(summary(/Niveau demandé/i)).click();
+			cy.findByRole('radio', { name: /Plus de 3 ans/i }).should('be.checked');
+			cy.findByText(summary(/Domaine/i)).click();
+			cy.findByRole('checkbox', { name: /Arts \/ Artisanat d‘art/i }).should('be.checked');
 		});
 	});
 
@@ -94,3 +100,11 @@ describe('Page de recherche d’emplois', () => {
 		});
 	});
 });
+
+// NOTE (GAFI 08-08-2023): summary n'a pas de role mais est intéractif :(
+//	cf. https://w3c.github.io/html-aria/#el-summary
+function summary(expectedContent: string | RegExp) {
+	return function summary(content: string, element: Element | null): boolean {
+		return Boolean(element?.tagName === 'SUMMARY' && content.match(expectedContent));
+	};
+}

@@ -110,10 +110,12 @@ describe('RechercherMission', () => {
 				const user = userEvent.setup();
 				const comboboxCommune = screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' });
 				await user.type(comboboxCommune, 'Pari');
-				const communeOption = await screen.findByRole('option', { name: 'Paris (75006)' });
-				await user.click(communeOption);
+				const resultListCommune = await screen.findAllByRole('option');
+				await user.click(resultListCommune[0]);
 				const selectRadius = screen.getByRole('combobox', { name: 'Rayon Exemple : 30 km' });
-				expect(selectRadius).toHaveDisplayValue('30 km');
+				await user.click(selectRadius);
+
+				expect(screen.getByRole('option', { name: '30 km' })).toBeVisible();
 				expect(await screen.findByText('2 missions de service civique')).toBeInTheDocument();
 				// eslint-disable-next-line testing-library/no-node-access
 				expect((await screen.findAllByRole('list', { name: /Offre pour/ }))[0].children).toHaveLength(2);
@@ -185,10 +187,13 @@ describe('RechercherMission', () => {
 				const user = userEvent.setup();
 				const comboboxCommune = screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' });
 				await user.type(comboboxCommune, 'Pari');
-				const communeOption = await screen.findByRole('option', { name: 'Paris (75006)' });
-				await user.click(communeOption);
+				const resultListCommune = await screen.findAllByRole('option');
+				await user.click(resultListCommune[0]);
 				const selectRadius = screen.getByRole('combobox', { name: 'Rayon Exemple : 30 km' });
-				expect(selectRadius).toHaveDisplayValue('100 km');
+				await user.click(selectRadius);
+
+				expect(screen.getByRole('option', { name: '100 km' })).toHaveAttribute('aria-selected', 'true');
+				;
 				expect(await screen.findByText('2 missions de bénévolat')).toBeInTheDocument();
 				// eslint-disable-next-line testing-library/no-node-access
 				expect((await screen.findAllByRole('list', { name: /Offre pour/ }))[0].children).toHaveLength(2);
@@ -318,7 +323,7 @@ describe('RechercherMission', () => {
 			);
 
 			const serviceCardsUl = await screen.findByRole('list', { name: 'Liste des partenaires et des services' });
-			const serviceCards = await within(serviceCardsUl).findAllByRole('listitem');
+			const serviceCards = within(serviceCardsUl).getAllByTestId(/^card-.*$/);
 			expect(serviceCards).toHaveLength(2);
 			expect(within(serviceCards[0]).getByRole('heading', {
 				level: 3,
@@ -327,7 +332,7 @@ describe('RechercherMission', () => {
 			expect(within(serviceCards[0]).getByRole('link')).toHaveAttribute('href', '/articles/faire-un-service-civique');
 			expect(within(serviceCards[1]).getByRole('heading', {
 				level: 3,
-				name: "L’impact du service civique sur les jeunes",
+				name: "L'impact du service civique sur les jeunes",
 			})).toBeVisible();
 			expect(within(serviceCards[1]).getByRole('link')).toHaveAttribute('href', '/articles/service-civique-jeunes');
 		});
@@ -342,7 +347,7 @@ describe('RechercherMission', () => {
 			);
 
 			const serviceCardsUl = await screen.findByRole('list', { name: 'Liste des partenaires et des services' });
-			const serviceCards = await within(serviceCardsUl).findAllByRole('listitem');
+			const serviceCards = within(serviceCardsUl).getAllByTestId(/^card-.*$/);
 			expect(serviceCards).toHaveLength(1);
 			expect(within(serviceCards[0]).getByRole('heading', {
 				level: 3,

@@ -10,11 +10,14 @@ export default function Error400Page() {
 				title="Demande incorrecte | 1jeune1solution"
 				robots="noindex" />
 			<main id="contenu">
-				<ErrorLayout
-					title="Erreur - Demande Incorrecte"
-					errorCode="400"
-					subTitle="Votre navigateur a envoyé une demande que ce serveur n’a pas pu comprendre."
-					content="Si le problème persiste, merci de nous contacter pour obtenir de l’aide.">
+				<ErrorLayout>
+					<ErrorLayout.Title titleAs="h1">Erreur - Demande Incorrecte</ErrorLayout.Title>
+					<ErrorLayout.SubTitle>
+						Votre navigateur a envoyé une demande que ce serveur n’a pas pu comprendre.
+					</ErrorLayout.SubTitle>
+					<ErrorLayout.Content>
+						Si le problème persiste, merci de nous contacter pour obtenir de l’aide.
+					</ErrorLayout.Content>
 				</ErrorLayout>
 			</main>
 		</>

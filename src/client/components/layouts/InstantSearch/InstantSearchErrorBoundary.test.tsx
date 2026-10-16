@@ -51,37 +51,9 @@ describe('InstantSearchErrorBoundary', () => {
 				</DependenciesProvider>,
 			);
 
-			const errorContent = screen.getByRole('heading', { level: 1 });
+			const errorContent = screen.getByRole('heading', { level: 2 });
 			expect(errorContent).toBeInTheDocument();
 			expect(errorContent).toHaveTextContent('Service Indisponible');
-		});
-
-		it('reste sur le composant service indisponible quand instantsearch réinitialise l’erreur', () => {
-			spyOnInstantSearch.mockImplementation(() => mockUseInstantSearch({
-				error: {
-					message: 'MeilisearchCommunicationError',
-					name: 'Error',
-				},
-			}));
-			const { rerender } = render(
-				<DependenciesProvider sessionStorageService={aStorageService()}>
-					<InstantSearchErrorBoundary>
-						<ChildrenComponent />
-					</InstantSearchErrorBoundary>
-				</DependenciesProvider>,
-			);
-
-			spyOnInstantSearch.mockImplementation(() => mockUseInstantSearch({ error: undefined }));
-			rerender(
-				<DependenciesProvider sessionStorageService={aStorageService()}>
-					<InstantSearchErrorBoundary>
-						<ChildrenComponent />
-					</InstantSearchErrorBoundary>
-				</DependenciesProvider>,
-			);
-
-			expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Service Indisponible');
-			expect(screen.queryByLabelText('composant enfant')).not.toBeInTheDocument();
 		});
 	});
 });

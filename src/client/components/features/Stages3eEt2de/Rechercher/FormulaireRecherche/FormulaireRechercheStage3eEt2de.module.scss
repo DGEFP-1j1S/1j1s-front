@@ -1,0 +1,36 @@
+@use "sass:color";
+@use "@styles/utilities";
+@use "@styles/components/form/variables";
+@use "@styles/theme/variables" as theme-variables;
+
+$color-message-champs-obligatoires: utilities.$color-primary;
+
+.champsInformation {
+  color: $color-message-champs-obligatoires;
+  @include utilities.text-large;
+}
+
+.rechercheOffreForm {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  @include utilities.media(medium) {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+}
+
+.filtresRechercherOffre {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-gap: variables.$form-vertical-gap-mobile;
+
+  @include utilities.media(medium) {
+    grid-template-columns: 1fr 1fr;
+    grid-gap: variables.$form-vertical-gap-desktop;
+  }
+}
+
+.buttonRechercher {
+  @extend %buttonRechercher;
+}
