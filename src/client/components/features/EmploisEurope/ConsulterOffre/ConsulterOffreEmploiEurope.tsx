@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { getTagsFromAnnonce } from '~/client/components/features/EmploisEurope/tags.utils';
-import { ConsulterOffreLayout } from '~/client/components/layouts/ConsulterOffre/ConsulterOffreLayout';
 import { Link } from '~/client/components/ui/Link/Link';
 import { TagList } from '~/client/components/ui/Tag/TagList';
 import useSanitize from '~/client/hooks/useSanitize';
@@ -11,8 +10,7 @@ import {
 	LanguageSpecificationCompetence,
 } from '~/server/emplois-europe/domain/emploiEurope';
 import { UNITE_EXPERIENCE_NECESSAIRE } from '~/server/emplois-europe/infra/uniteExperienceNecessaire';
-
-import styles from './ConsulterOffreEmploiEurope.module.scss';
+import { capitalizeFirstLetter } from "~/server/services/utils/capitalizeFirstLetter.util";
 
 interface ConsulterOffreEmploiEuropeProps {
 	annonceEmploiEurope: EmploiEurope
@@ -28,8 +26,8 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 			<ul>
 				{detailCompetenceLanguistique?.map((specification, index) => {
 					return (
-						<li key={`${specification.nomCompetence}-${index}`} className={styles.competenceLangageSpecification}>
-							{specification.nomCompetence} ({specification.codeDuNiveauDeLaCompetence} - {specification.nomDuNiveauDeLaCompetence})
+						<li key={`${specification.nomCompetence}-${index}`} className="fr-ml-2w">
+							{capitalizeFirstLetter(specification.nomCompetence)} ({specification.codeDuNiveauDeLaCompetence} - {specification.nomDuNiveauDeLaCompetence})
 						</li>
 					);
 				})}
@@ -40,8 +38,8 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 	function getCompetencesLinguistiquesRequises() {
 		return competencesLinguistiques?.map((competence) => {
 			return (
-				<div key={competence.langage} className={styles.competenceLangage}>
-					<strong>{competence.langage}</strong> ({competence.codeDuNiveauDeLangue} - {competence.nomDuNiveauDeLangue})
+				<div key={competence.langage} className="fr-mt-1w">
+					<strong>{capitalizeFirstLetter(competence.langage)}</strong> ({competence.codeDuNiveauDeLangue} - {competence.nomDuNiveauDeLangue})
 					{getDetailLanguageCompetence(competence.detailCompetenceLanguistique)}
 				</div>
 			);
@@ -91,58 +89,56 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 	}
 
 	return (
-		<ConsulterOffreLayout>
-			<header className={styles.entete}>
-				{annonceEmploiEurope.titre ? <h1 lang={codeLangueDeLOffre}>{annonceEmploiEurope.titre}</h1>
-					: <h1>Offre d’emploi sans titre</h1>}
-				{annonceEmploiEurope.nomEntreprise && <p className={styles.sousTitre}>{annonceEmploiEurope.nomEntreprise}</p>}
-				<TagList className={styles.tags}
-					list={getTagsFromAnnonce(annonceEmploiEurope)}
-								 aria-label="Caractéristiques de l‘offre d‘emploi" />
-			</header>
+		<div className="fr-container">
+			{annonceEmploiEurope.titre ? <h1 className="fr-h1 fr-my-2w" lang={codeLangueDeLOffre}>{annonceEmploiEurope.titre}</h1>
+				: <h1 className="fr-h1 fr-my-2w">Offre d’emploi sans titre</h1>}
+			{annonceEmploiEurope.nomEntreprise && <p className="fr-text--lead">{annonceEmploiEurope.nomEntreprise}</p>}
+			<TagList
+				list={getTagsFromAnnonce(annonceEmploiEurope)}
+							 aria-label="Caractéristiques de l‘offre d‘emploi" />
 			{annonceEmploiEurope.urlCandidature && (
 				<Link className='fr-btn fr-btn--lg' href={annonceEmploiEurope.urlCandidature}>Postuler sur Eures</Link>
 			)}
-			<section className={styles.contenu}>
-				<dl>
+			<section>
+				<dl className="fr-p-0">
 					{annonceEmploiEurope.description && (
-						<div className={styles.caracteristique}>
-							<dt>Description du poste</dt>
-							<dd dangerouslySetInnerHTML={{ __html: descriptionSanitized }} lang={codeLangueDeLOffre} />
+						<div className="fr-mb-2w">
+							<dt className="fr-h3 fr-mb-1w">Description du poste</dt>
+							<dd style={{ whiteSpace: "pre-line" }} dangerouslySetInnerHTML={{ __html: descriptionSanitized }} lang={codeLangueDeLOffre} />
 						</div>
 					)}
 					{annonceEmploiEurope.localisations.length > 0 && (
-						<div className={styles.caracteristique}>
-							<dt>{annonceEmploiEurope.localisations.length > 1 ? 'Localisations' : 'Localisation'}</dt>
+						<div className="fr-mb-2w">
+							<dt className="fr-h3 fr-mb-1w">{annonceEmploiEurope.localisations.length > 1 ? 'Localisations' : 'Localisation'}</dt>
 							<dd>{getLocalisations()}</dd>
 						</div>
 					)}
 					{annonceEmploiEurope.langueDeTravail.length > 0 && (
-						<div className={styles.caracteristique}>
-							<dt>Langue de travail</dt>
-							<dd className={styles.langueDeTravailDescription}>{annonceEmploiEurope.langueDeTravail.join(', ')}</dd>
+						<div className="fr-mb-2w">
+							<dt className="fr-h3 fr-mb-1w">Langue de travail</dt>
+							<dd>{capitalizeFirstLetter(annonceEmploiEurope.langueDeTravail.join(', '))}</dd>
 						</div>
 					)}
 					{competencesLinguistiques?.length > 0 && (
-						<div className={styles.caracteristique}>
-							<dt>Compétences linguistiques requises</dt>
+						<div className="fr-mb-2w">
+							<dt className="fr-h3 fr-mb-1w">Compétences linguistiques requises</dt>
 							<dd>{getCompetencesLinguistiquesRequises()}</dd>
 						</div>
 					)}
 					{annonceEmploiEurope.laPlusLongueExperienceNecessaire !== undefined && (
-						<div className={styles.caracteristique}>
-							<dt>Expérience</dt>
+						<div className="fr-mb-2w">
+							<dt className="fr-h3 fr-mb-1w">Expérience</dt>
 							<dd>{getExperienceRequired(annonceEmploiEurope.laPlusLongueExperienceNecessaire)}</dd>
 						</div>
 					)}
 					{annonceEmploiEurope.listePermis?.length > 0 && (
-						<div className={styles.caracteristique}>
-							<dt>Type de permis requis</dt>
+						<div className="fr-mb-2w">
+							<dt className="fr-h3 fr-mb-1w">Type de permis requis</dt>
 							<dd>{annonceEmploiEurope.listePermis.join(', ')}</dd>
 						</div>
 					)}
 				</dl>
 			</section>
-		</ConsulterOffreLayout>
+		</div>
 	);
 }
