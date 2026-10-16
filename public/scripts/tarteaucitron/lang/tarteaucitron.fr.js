@@ -46,7 +46,7 @@ tarteaucitron.lang = {
   fallback: 'est désactivé.',
   icon: 'Gérer mes cookies',
   info: 'Protection de votre vie privée',
-  mandatoryText: '<p>• Finalité : Ce site utilise des cookies nécessaires à son bon fonctionnement, ils ne peuvent être désactivés. Ces traceurs sont mis en œuvre par la Délégation générale à l\'emploi et à la formation professionnelle</p><p>• Durée de conservation : 12 mois</p>',
+  mandatoryText: '<p><span style="font-weight: bold; display: inline">Finalité</span> : Ce site utilise des cookies nécessaires à son bon fonctionnement, ils ne peuvent être désactivés. Ces traceurs sont mis en œuvre par la Délégation générale à l\'emploi et à la formation professionnelle</p><p><span style="font-weight: bold; display: inline">Durée de conservation</span> : 12 mois</p>',
   mandatoryTitle: 'Cookies techniques',
   middleBarHead: '☝ 🍪',
   modalWindow: '(fenêtre modale)',

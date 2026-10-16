@@ -3,6 +3,8 @@ import {
 	navigationItemList,
 	NavigationItem,
 } from "~/client/components/layouts/Header/Navigation/NavigationStructure";
+import { useDependency } from "~/client/context/dependenciesContainer.context";
+import { CookiesService } from "~/client/services/cookies/cookies.service";
 
 interface SocialLink {
 	id: string
@@ -58,6 +60,8 @@ function getFooterNavigationCategories() {
 }
 
 export function Footer() {
+	const cookiesService = useDependency<CookiesService>('cookiesService');
+
 	return (
 		<>
 			<div className="fr-follow" id="follow">
@@ -141,6 +145,11 @@ export function Footer() {
 									<Link href={link.url} className="fr-footer__bottom-link" prefetch={false}>{link.title}</Link>
 								</li>
 							))}
+							<li className="fr-footer__bottom-item">
+								<button type="button" className="fr-footer__bottom-link" onClick={() => cookiesService.openPanel()}>
+									Gestion des cookies
+								</button>
+							</li>
 						</ul>
 						<div className="fr-footer__bottom-copy">
 							<p>Sauf mention contraire, tous les contenus de ce site sont sous licence&nbsp;
