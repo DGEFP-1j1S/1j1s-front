@@ -83,7 +83,7 @@ export function InputDateDeDebut(props: { displayDateDeDebutPrecise: boolean, in
 			)
 				: (
 					<>
-					<div className="fr-fieldset__element fr-fieldset__element--inline flex-grow--1 fr-mb-sm-0">
+					<div className="fr-fieldset__element fr-fieldset__element--inline flex-grow--1 fr-mb-sm-0 align-self--start">
 						<Champ className="fr-input-group">
 							<Champ.Label>Date de début du stage au plus tôt</Champ.Label>
 							<Champ.Input
@@ -101,7 +101,7 @@ export function InputDateDeDebut(props: { displayDateDeDebutPrecise: boolean, in
 							<Champ.Error />
 						</Champ>
 					</div>
-					<div className="fr-fieldset__element fr-fieldset__element--inline flex-grow--1 fr-mb-0">
+					<div className="fr-fieldset__element fr-fieldset__element--inline flex-grow--1 fr-mb-0 align-self--start">
 						<Champ className="fr-input-group">
 							<Champ.Label>
 						Date de début du stage au plus tard
