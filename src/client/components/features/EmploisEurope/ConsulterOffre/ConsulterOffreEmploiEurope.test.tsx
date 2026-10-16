@@ -517,9 +517,9 @@ describe('DetailOffreEmploiEurope', () => {
 			);
 
 			const competencesLinguistiquesDescription = getByDescriptionTerm('Compétences linguistiques requises');
-			expect(competencesLinguistiquesDescription).toHaveTextContent('français (B2 - avancé)');
-			expect(competencesLinguistiquesDescription).toHaveTextContent('competence 1 (A1 - élémentaire)');
-			expect(competencesLinguistiquesDescription).toHaveTextContent('competence 2 (C2 - maitrise)');
+			expect(competencesLinguistiquesDescription).toHaveTextContent('Français (B2 - avancé)');
+			expect(competencesLinguistiquesDescription).toHaveTextContent('Competence 1 (A1 - élémentaire)');
+			expect(competencesLinguistiquesDescription).toHaveTextContent('Competence 2 (C2 - maitrise)');
 		});
 
 		it('n‘affiche pas les compétences s‘il n‘y en a pas', () => {
