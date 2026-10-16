@@ -176,13 +176,13 @@ function Champsoptionnels(props: { informationsStage: OffreDeStageDeposeeStage |
 			<div className="fr-col-12 fr-col-xl-6">
 				<fieldset className="fr-fieldset" aria-labelledby="legend-teletravail">
 					<legend className="fr-fieldset__legend" id="legend-teletravail">Télétravail possible (optionnel)</legend>
-					<div className="fr-fieldset__element fr-fieldset__element--inline">
+					<div className="fr-fieldset__element">
 						<Radio name={StageEnum.TELETRAVAIL}
 							value="true"
 							label="Oui"
 							defaultChecked={props.informationsStage?.teletravail === Teletravail.OUI} />
 					</div>
-					<div className="fr-fieldset__element fr-fieldset__element--inline">
+					<div className="fr-fieldset__element">
 						<Radio name={StageEnum.TELETRAVAIL}
 							value="false"
 							label="Non"
