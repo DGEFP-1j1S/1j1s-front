@@ -52,14 +52,14 @@ jobs:
 
       - name: Exposer tous les secrets comme des variables d'environnement
         if: ${{ (inputs.validate == true) || (inputs.plan == true) || (inputs.apply == true) }}
-        uses: Firenza/secrets-to-env@v1.3.0
+        uses: Firenza/secrets-to-env@v1.4.0
         with:
           secrets: ${{ toJSON(secrets) }}
           env_var_name_lower_case_regex: (?<=TF_VAR_).*
 
       - name: Exposer toutes les variables comme des variables d'environnement
         if: ${{ (inputs.validate == true) || (inputs.plan == true) || (inputs.apply == true) }}
-        uses: Firenza/secrets-to-env@v1.3.0
+        uses: Firenza/secrets-to-env@v1.4.0
         with:
           secrets: ${{ toJSON(vars) }}
           env_var_name_lower_case_regex: (?<=TF_VAR_).*
