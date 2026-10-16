@@ -2,7 +2,7 @@
 @use "@styles/utilities-deprecated";
 @use "@styles/utilities";
 
-$background-color-NavItem: utilities.$color-title-primary-contrast;
+$background-color-NavItem: #a9fb68;
 $background-color-NavItem-hover :color.adjust($background-color-NavItem, utilities.$alpha:-0.15);
 
 @mixin underline {
@@ -13,7 +13,7 @@ $background-color-NavItem-hover :color.adjust($background-color-NavItem, utiliti
 .navItem {
   position: relative;
   @extend %text-regular;
-  color: utilities.$color-cta-texte-primary;
+  color: #000;
   background-color: $background-color-NavItem;
 
   &:hover {

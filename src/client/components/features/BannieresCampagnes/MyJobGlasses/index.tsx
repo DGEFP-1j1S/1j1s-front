@@ -11,15 +11,14 @@ export default function MyJobGlassesBanner() {
 		<HeroWithIllustration image="/images/myjobglasses.webp" className={classNames(styles.banner)}>
 			<h2>
 				<HeroPrimaryText>
-					Échangez avec un professionnel avec My Job Glasses !
+					Employeurs : Trouvez vos futurs apprentis sur 1jeune1solution
 				</HeroPrimaryText>
 			</h2>
 			<HeroSecondaryText>
-				<b><i>1Jeune1Solution</i></b> s&apos;est associé à <b><i>My Job Glasses</i></b> pour
-				vous permettre de rencontrer des professionnels qui répondront à vos questions sur leur métier.
+				Déposez gratuitement vos offres en apprentissage et gagnez en visibilité auprès des jeunes en recherche d’une opportunité
 			</HeroSecondaryText>
-			<Link href="/myjobglasses" appearance={'asSecondaryButton'} className={styles.cta}>
-				Trouver un professionnel
+			<Link href="https://labonnealternance.apprentissage.beta.gouv.fr/1jeune1solution-recruteurs?utm_source=1j1s&utm_medium=website&utm_campaign=recruteurs_landinglba1j1s:" appearance={'asSecondaryButton'} className={styles.cta}>
+				Déposer offre
 				<Link.Icon />
 			</Link>
 		</HeroWithIllustration>
