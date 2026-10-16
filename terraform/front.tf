@@ -1,6 +1,6 @@
 module "front_app" {
   source  = "scalingo-community/app/scalingo"
-  version = "0.3.2"
+  version = "0.6.0"
 
   stack = "scalingo-22"
 
