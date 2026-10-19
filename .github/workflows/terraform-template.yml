@@ -1,10 +1,10 @@
 name: Déploiement Terraform
 
-# Le déploiement s'éxecute en 4 temps :
-# - un "plan" sur la recette lors d'un push sur une pull_request
-# - un "apply" lors du push sur main (hors commit de release)
-# - un "plan" sur la production lors d'un push sur une pull_request de release (startsWith(github.head_ref, 'release-please--'))
-# - un "apply" lors du push sur main avec un commit de release (github.event.type == 'PushEvent')
+# Le déploiement s'éxecute en 3 temps :
+# - un "plan" sur la recette lors d'un push sur une pull_request (terraform-pr.yml)
+# - un "apply" sur la recette lors du push sur develop (terraform-recette.yml)
+# - un "plan" puis un "apply" sur la production lors du lancement manuel
+#   de la mise en production (mise-en-production.yml)
 
 on:
   workflow_call:
@@ -162,8 +162,8 @@ jobs:
             </details>
 
             Pour appliquer les changements proposés par ce plan :
-            - en recette : il suffit de merger cette PR
-            - en production : il faut merger la PR de release (créée par release-please)
+            - en recette : il suffit de merger cette PR sur develop
+            - en production : il faut merger sur main puis lancer le workflow « Mise en production »
 
             *Environnement: \`${{ inputs.environnement_name }}\`, Auteur: @${{ github.actor }}, Répertoire: \`./terraform\`*`;
 

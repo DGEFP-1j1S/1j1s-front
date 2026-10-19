@@ -1,0 +1,43 @@
+name: Synchroniser develop avec main
+
+# Ouvre une pull request main → develop dès que main contient des changements
+# absents de develop (commit de release-please, hotfix…), pour éviter que les
+# deux branches divergent.
+# Après un simple merge develop → main, le contenu des deux branches est identique :
+# aucune pull request n'est ouverte.
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  synchroniser:
+    name: Ouvrir la pull request main → develop
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Ouvrir la pull request si nécessaire
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet origin/develop origin/main; then
+            echo "develop a déjà le même contenu que main, rien à synchroniser"
+            exit 0
+          fi
+
+          if [ -n "$(gh pr list --base develop --head main --state open --json number --jq '.[].number')" ]; then
+            echo "Une pull request main → develop est déjà ouverte"
+            exit 0
+          fi
+
+          gh pr create \
+            --base develop \
+            --head main \
+            --title "chore: synchronisation de develop avec main" \
+            --body "Pull request ouverte automatiquement pour ramener sur develop les changements de main (release, hotfix…). À merger avec un **merge commit**, pas en squash."

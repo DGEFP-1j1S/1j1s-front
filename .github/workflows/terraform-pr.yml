@@ -6,19 +6,20 @@ name: Simulation de déploiement Terraform
 # dans une pull request
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
     paths:
       - 'terraform/**'
       - '.github/workflows/terraform-*.yml'
       - '.env.scalingo'
 
 jobs:
-  # Quand le job est exécuté sur une pull request le "plan" s'éxécute sur la recette
-  # sauf si la pull request est générée par release-please, auquel cas le "plan" s'éxécute sur la production 
+  # Le "plan" s'éxécute toujours sur la recette : l'environnement scalingo-production
+  # n'est accessible qu'à main, pas aux refs de pull request (refs/pull/N/merge).
+  # Le plan de production est affiché par mise-en-production.yml juste avant l'apply.
   terraform_plan:
     uses: ./.github/workflows/terraform-template.yml
     secrets: inherit
     with:
       plan: true
-      environnement_name: ${{ startsWith(github.head_ref, 'release-please--') && 'scalingo-production' || 'scalingo-recette' }}
-      environnement_url: ${{ startsWith(github.head_ref, 'release-please--') && 'https://www.1jeune1solution.gouv.fr' || 'https://recette.1jeune1solution.gouv.fr' }}
+      environnement_name: scalingo-recette
+      environnement_url: https://recette.1jeune1solution.gouv.fr
