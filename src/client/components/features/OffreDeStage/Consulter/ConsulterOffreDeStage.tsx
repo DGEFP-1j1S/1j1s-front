@@ -83,37 +83,37 @@ export function ConsulterOffreDeStage({offreDeStage}: ConsulterOffreDeStageProps
 	const doitAfficherPeriodeDePaiment = remuneration !== LABEL_AUCUNE_REMUNERATION && remuneration !== LABEL_REMUNERATION_NON_RENSEIGNEE;
 
 	return (
-		<div className="fr-container">
+		<main id="contenu" className="fr-container">
 			<BackButton/>
-			<h1 className="fr-h1 fr-my-2w">{offreDeStage.titre}</h1>
-			{offreDeStage.employeur?.nom && <h2 className="fr-h2">{offreDeStage.employeur?.nom}</h2>}
+			<h1 className="fr-my-2w">{offreDeStage.titre}</h1>
+			{offreDeStage.employeur?.nom && <h2>{offreDeStage.employeur?.nom}</h2>}
 			<TagList list={listeEtiquettes} aria-label="Caractéristiques de l‘offre de stage"/>
 			{offreDeStage.urlDeCandidature && (
 				<Link className='fr-btn fr-btn--lg fr-mb-3w' href={offreDeStage.urlDeCandidature}>Postuler</Link>)}
 			<section>
 				{offreDeStage.employeur?.description && (
 					<div>
-						<h3 className="fr-h3">Description de l‘employeur</h3>
+						<h3>Description de l‘employeur</h3>
 						<div dangerouslySetInnerHTML={{__html: descriptionEmployeurHtmlSanitiezd}}/>
 					</div>
 				)}
 				{offreDeStage.description && (
 					<div>
-						<h3 className="fr-h3">Description du poste</h3>
+						<h3>Description du poste</h3>
 						<div dangerouslySetInnerHTML={{__html: descriptionHtmlSanitized}}/>
 					</div>
 				)}
 				<div>
-					<h3 className="fr-h3">Rémunération</h3>
+					<h3>Rémunération</h3>
 					<p>{remuneration}</p>
 				</div>
 				{doitAfficherPeriodeDePaiment && (
 					<div>
-						<h3 className="fr-h3">Période de paiement</h3>
+						<h3>Période de paiement</h3>
 						<p>{periodeDePaiementLabel}</p>
 					</div>
 				)}
 			</section>
-		</div>
+		</main>
 	);
 }
