@@ -208,7 +208,7 @@ describe('FormulaireRechercheAlternance', () => {
 
 		const comboboxRayon = screen.getByRole('combobox', { name: 'Rayon Exemple : 30 km' });
 		expect(comboboxRayon).toHaveTextContent('10 km');
-		expect(screen.getByDisplayValue('10')).toBeInTheDocument();
+		expect(screen.getByDisplayValue('10 km')).toBeInTheDocument();
 	});
 
 	it('laisse le champ domaine vide quand il manque les codes romes dans les query params', () => {

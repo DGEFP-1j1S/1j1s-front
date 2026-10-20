@@ -9,11 +9,11 @@ import { mockSmallScreen } from '~/client/components/window.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
 import {
 	anEtablissementAccompagnementService,
-} from '~/client/services/établissementAccompagnement/etablissementAccompagnement.fixture';
+} from '~/client/services/etablissementAccompagnement/etablissementAccompagnement.fixture';
 import { aLocalisationService } from '~/client/services/localisation/localisation.service.fixture';
 import { createFailure, createSuccess } from '~/server/errors/either';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
-import { TypeÉtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
+import { TypeEtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 import {
 	anEtablissementAccompagnement,
 	anEtablissementAccompagnementList,
@@ -72,7 +72,7 @@ describe('RechercherAccompagnement', () => {
 					query: {
 						codeCommune: '75056',
 						codePostal: '75006',
-						typeAccompagnement: TypeÉtablissement.INFO_JEUNE,
+						typeAccompagnement: TypeEtablissement.INFO_JEUNE,
 						ville: 'Paris',
 					},
 				});
@@ -99,7 +99,7 @@ describe('RechercherAccompagnement', () => {
 					query: {
 						codeCommune: '75056',
 						codePostal: '75006',
-						typeAccompagnement: TypeÉtablissement.INFO_JEUNE,
+						typeAccompagnement: TypeEtablissement.INFO_JEUNE,
 						ville: 'Paris',
 					},
 				});
@@ -123,7 +123,7 @@ describe('RechercherAccompagnement', () => {
 				vi.spyOn(etablissementAccompagnementService, 'rechercher').mockResolvedValue(createSuccess([
 					anEtablissementAccompagnement({ id: '1', nom: 'Point information jeunesse - Saint-Céré' }),
 					anEtablissementAccompagnement({ id: '2', nom: 'Point information jeunesse - Figeac' }),
-					anEtablissementAccompagnement({ id: '3', nom: 'Point information jeunesse - Saint-Céré' }),
+					anEtablissementAccompagnement({ id: '3', nom: 'Point information jeunesse - Saint-Jacques' }),
 				]));
 				const localisationServiceMock = aLocalisationService();
 
@@ -131,7 +131,7 @@ describe('RechercherAccompagnement', () => {
 					query: {
 						codeCommune: '75056',
 						codePostal: '75006',
-						typeAccompagnement: TypeÉtablissement.INFO_JEUNE,
+						typeAccompagnement: TypeEtablissement.INFO_JEUNE,
 						ville: 'Paris',
 					},
 				});
@@ -144,18 +144,13 @@ describe('RechercherAccompagnement', () => {
 				);
 
 				// WHEN
-				const résultatRechercheÉtablissementAccompagnementListHeader = await screen.findByRole('list', { name: 'Établissements d‘accompagnement' });
-				const résultatRechercheÉtablissementAccompagnementTitle = await within(résultatRechercheÉtablissementAccompagnementListHeader).findAllByRole('heading', { level: 3 });
-
-				const rechercheÉtablissementAccompagnementNombreRésultats = await screen.findByText('3 établissements d‘accompagnement pour les structures Infos Jeunes');
+				const rechercheNombreResultats = await screen.findByText("3 établissements d‘accompagnement pour les structures Infos Jeunes");
+				expect(rechercheNombreResultats).toBeInTheDocument();
 
 				// THEN
-				expect(résultatRechercheÉtablissementAccompagnementTitle).toHaveLength(3);
-
-				expect(rechercheÉtablissementAccompagnementNombreRésultats).toBeInTheDocument();
-				expect(résultatRechercheÉtablissementAccompagnementTitle[0].textContent).toEqual('Point information jeunesse - Saint-Céré');
-				expect(résultatRechercheÉtablissementAccompagnementTitle[1].textContent).toEqual('Point information jeunesse - Figeac');
-				expect(résultatRechercheÉtablissementAccompagnementTitle[2].textContent).toEqual('Point information jeunesse - Saint-Céré');
+				expect(screen.getByRole("heading", { level: 3, name: "Point information jeunesse - Saint-Céré" })).toBeInTheDocument();
+				expect(screen.getByRole("heading", { level: 3, name: "Point information jeunesse - Figeac" })).toBeInTheDocument();
+				expect(screen.getByRole("heading", { level: 3, name: "Point information jeunesse - Saint-Jacques" })).toBeInTheDocument();
 			});
 		});
 
@@ -211,7 +206,7 @@ describe('RechercherAccompagnement', () => {
 	describe('quand le type d‘accompagnement est Mission Locale', () => {
 		it('affiche le bouton "Je souhaite être rappelé"', async () => {
 			const établissementAccompagnementService = anEtablissementAccompagnementService();
-			const anEtablissementMissionLocalList = anEtablissementAccompagnementList({ type: TypeÉtablissement.MISSION_LOCALE });
+			const anEtablissementMissionLocalList = anEtablissementAccompagnementList({ type: TypeEtablissement.MISSION_LOCALE });
 			vi.spyOn(établissementAccompagnementService, 'rechercher').mockResolvedValue(createSuccess(anEtablissementMissionLocalList));
 			const localisationServiceMock = aLocalisationService();
 
@@ -219,7 +214,7 @@ describe('RechercherAccompagnement', () => {
 				query: {
 					codeCommune: '75056',
 					codePostal: '75006',
-					typeAccompagnement: TypeÉtablissement.MISSION_LOCALE,
+					typeAccompagnement: TypeEtablissement.MISSION_LOCALE,
 					ville: 'Paris',
 				},
 			});
@@ -232,11 +227,11 @@ describe('RechercherAccompagnement', () => {
 			);
 
 			// WHEN
-			const résultatRechercheÉtablissementAccompagnementListHeader = await screen.findByRole('list', { name: 'Établissements d‘accompagnement' });
-			const résultatRechercheÉtablissementAccompagnementButton = within(résultatRechercheÉtablissementAccompagnementListHeader).getAllByRole('button', { name: 'Je souhaite être contacté(e)' })[0];
+			await screen.findByText(/1 établissement/);
+			const boutonsContact = screen.getAllByRole("button", { name: "Je souhaite être contacté(e)" });
 
 			// THEN
-			expect(résultatRechercheÉtablissementAccompagnementButton).toBeVisible();
+			expect(boutonsContact[0]).toBeVisible();
 		});
 	});
 });

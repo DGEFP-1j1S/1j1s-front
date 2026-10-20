@@ -5,7 +5,7 @@ import Application from '~/client/components/features/ContratEngagementJeune/App
 describe('<Application />', () => {
 	it('affiche de téléchargement de l‘application sur Google Play', () => {
 		// Given
-		const name = 'Télécharger sur Google Play';
+		const name = 'Télécharger sur Google Play - nouvelle fenêtre';
 
 		// When
 		render(<Application />);
@@ -17,7 +17,7 @@ describe('<Application />', () => {
 
 	it('affiche de téléchargement de l‘application sur l‘App Store', () => {
 		// Given
-		const name = 'Télécharger sur APP Store';
+		const name = 'Télécharger sur APP Store - nouvelle fenêtre';
 
 		// When
 		render(<Application />);

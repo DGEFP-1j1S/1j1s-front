@@ -14,7 +14,7 @@ import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { ageOptions } from '~/client/domain/selectAgeData';
 import {
 	EtablissementAccompagnementService,
-} from '~/client/services/établissementAccompagnement/etablissementAccompagnement.service';
+} from '~/client/services/etablissementAccompagnement/etablissementAccompagnement.service';
 import { Age, DemandeDeContactAccompagnement } from '~/server/demande-de-contact/domain/demandeDeContact';
 import { isSuccess } from '~/server/errors/either';
 import {
@@ -24,17 +24,17 @@ import { emailRegex } from '~/shared/emailRegex';
 import { telFrRegex } from '~/shared/telRegex';
 
 interface FormulaireDemandeDeContactAccompagnementProps {
-	contactÉtablissementAccompagnement: ContactEtablissementAccompagnement
+	contactEtablissementAccompagnement: ContactEtablissementAccompagnement
 	onSuccess: () => void;
 	onFailure: () => void;
 }
 
 export function FormulaireDemandeDeContactAccompagnement({
-																													 contactÉtablissementAccompagnement,
+																													 contactEtablissementAccompagnement,
 																													 onSuccess,
 																													 onFailure,
 																												 }: FormulaireDemandeDeContactAccompagnementProps) {
-	const établissementAccompagnementService = useDependency<EtablissementAccompagnementService>('établissementAccompagnementService');
+	const etablissementAccompagnementService = useDependency<EtablissementAccompagnementService>('établissementAccompagnementService');
 	const [isLoading, setIsLoading] = useState(false);
 
 	async function envoyerFormulaire(event: FormEvent<HTMLFormElement>) {
@@ -42,8 +42,8 @@ export function FormulaireDemandeDeContactAccompagnement({
 		setIsLoading(true);
 		const form: HTMLFormElement = event.currentTarget;
 		const data = new FormData(form);
-		const demandeDeContactAccompagnement = mapDemandeDeContactAccompagnement(data, contactÉtablissementAccompagnement);
-		const result = await établissementAccompagnementService.envoyerDemandeContact(demandeDeContactAccompagnement);
+		const demandeDeContactAccompagnement = mapDemandeDeContactAccompagnement(data, contactEtablissementAccompagnement);
+		const result = await etablissementAccompagnementService.envoyerDemandeContact(demandeDeContactAccompagnement);
 		setIsLoading(false);
 		if (isSuccess(result)) {
 			onSuccess();
@@ -56,7 +56,7 @@ export function FormulaireDemandeDeContactAccompagnement({
 		<form
 			className={styles.formulaire}
 			onSubmit={envoyerFormulaire}>
-			<Champ>
+			<Champ className="fr-input-group">
 				<Champ.Label>
 					Prénom
 					<Champ.Label.Complement>Exemple : Jean</Champ.Label.Complement>
@@ -68,7 +68,7 @@ export function FormulaireDemandeDeContactAccompagnement({
 				<Champ.Error />
 			</Champ>
 
-			<Champ>
+			<Champ className="fr-input-group">
 				<Champ.Label>
 					Nom
 					<Champ.Label.Complement>Exemple : Dupont</Champ.Label.Complement>
@@ -80,9 +80,9 @@ export function FormulaireDemandeDeContactAccompagnement({
 				<Champ.Error />
 			</Champ>
 
-			<Champ>
+			<Champ className="fr-input-group">
 				<Champ.Label>
-					Adresse e-mail (facultatif)
+					Adresse e-mail (optionnel)
 					<Champ.Label.Complement>Exemple : jean.dupont@gmail.com</Champ.Label.Complement>
 				</Champ.Label>
 				<Champ.Input
@@ -93,7 +93,7 @@ export function FormulaireDemandeDeContactAccompagnement({
 				<Champ.Error />
 			</Champ>
 
-			<Champ>
+			<Champ className="fr-input-group">
 				<Champ.Label>
 					Téléphone
 					<Champ.Label.Complement>Exemple : 0606060606</Champ.Label.Complement>
@@ -107,23 +107,19 @@ export function FormulaireDemandeDeContactAccompagnement({
 				<Champ.Error />
 			</Champ>
 
-			<Champ>
+			<Champ className="fr-input-group">
 				<Champ.Label>Age<Champ.Label.Complement>Exemple : 16 ans</Champ.Label.Complement></Champ.Label>
 				<Champ.Input
 					render={SelectSimple}
 					required
-					optionsAriaLabel={'années'}
-					name="age">
-					{ageOptions.map((option) =>
-						<SelectSimple.Option key={option.libellé} value={option.valeur}>{option.libellé}</SelectSimple.Option>,
-					)}
-				</Champ.Input>
+					optionsList={ageOptions}
+					name="age" />
 				<Champ.Error />
 			</Champ>
 
 			<ComboboxCommune required />
 			<Champ className={styles.commentaireDemandeDeContact}>
-				<Champ.Label>Commentaires ou autres informations utiles (facultatif)</Champ.Label>
+				<Champ.Label>Commentaires ou autres informations utiles (optionnel)</Champ.Label>
 				<Champ.Input render={TextArea} name="commentaire" rows={5} />
 				<Champ.Error />
 			</Champ>
@@ -153,7 +149,7 @@ export function FormulaireDemandeDeContactAccompagnement({
 
 }
 
-function mapDemandeDeContactAccompagnement(formData: FormData, contactÉtablissementAccompagnement: ContactEtablissementAccompagnement): DemandeDeContactAccompagnement {
+function mapDemandeDeContactAccompagnement(formData: FormData, contactEtablissementAccompagnement: ContactEtablissementAccompagnement): DemandeDeContactAccompagnement {
 	return {
 		age: Number(formData.get('age')) as Age,
 		commentaire: String(formData.get('commentaire')),
@@ -163,6 +159,6 @@ function mapDemandeDeContactAccompagnement(formData: FormData, contactÉtablisse
 		nom: String(formData.get('lastname')),
 		prénom: String(formData.get('firstname')),
 		téléphone: String(formData.get('phone')),
-		établissement: contactÉtablissementAccompagnement,
+		établissement: contactEtablissementAccompagnement,
 	};
 }

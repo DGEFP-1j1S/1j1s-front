@@ -13,7 +13,7 @@ import FormationAlternancePage, { getServerSideProps } from '~/pages/formations/
 import { aGetServerSidePropsContext } from '~/server/aGetServerSidePropsContext.fixture';
 import { createFailure, createSuccess } from '~/server/errors/either';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
-import { aRésultatRechercheFormationList } from '~/server/formations/domain/formation.fixture';
+import { aResultatRechercheFormationList } from '~/server/formations/domain/formation.fixture';
 import { dependencies } from '~/server/start';
 
 vi.mock('~/server/start', () => ({
@@ -96,7 +96,7 @@ describe('Page Formations en Apprentissage', () => {
 					query: rechercheFormationAlternanceQuery(),
 				},
 			);
-			const resultats = aRésultatRechercheFormationList();
+			const resultats = aResultatRechercheFormationList();
 
 			const { container } = render(
 				<DependenciesProvider
@@ -152,7 +152,7 @@ describe('Page Formations en Apprentissage', () => {
 			// romes=m1805 renvoie HTTP 200. Le pattern /^[A-Z]\d{4}$/ suggéré par le message d‘erreur du partenaire régresserait ce cas.
 			describe('et que les codes ROME sont en minuscules', () => {
 				it('fait la recherche', async () => {
-					vi.spyOn(dependencies.formationDependencies.rechercherFormation, 'handle').mockResolvedValue(createSuccess(aRésultatRechercheFormationList()));
+					vi.spyOn(dependencies.formationDependencies.rechercherFormation, 'handle').mockResolvedValue(createSuccess(aResultatRechercheFormationList()));
 					const context = aGetServerSidePropsContext({
 						query: rechercheFormationAlternanceQuery({ codeRomes: 'm1805' }),
 					});
@@ -167,7 +167,7 @@ describe('Page Formations en Apprentissage', () => {
 
 			describe('et qu‘ils sont valides', () => {
 				it('fait une recherche avec les query params', async () => {
-					vi.spyOn(dependencies.formationDependencies.rechercherFormation, 'handle').mockResolvedValue(createSuccess(aRésultatRechercheFormationList()));
+					vi.spyOn(dependencies.formationDependencies.rechercherFormation, 'handle').mockResolvedValue(createSuccess(aResultatRechercheFormationList()));
 
 					const context = aGetServerSidePropsContext({
 						query: {
@@ -210,14 +210,14 @@ describe('Page Formations en Apprentissage', () => {
 				});
 
 				it('lorsque la recherche retourne un résultat, renvoie les formations en apprentissage', async () => {
-					vi.spyOn(dependencies.formationDependencies.rechercherFormation, 'handle').mockResolvedValue(createSuccess(aRésultatRechercheFormationList()));
+					vi.spyOn(dependencies.formationDependencies.rechercherFormation, 'handle').mockResolvedValue(createSuccess(aResultatRechercheFormationList()));
 					const context = aGetServerSidePropsContext({
 						query: rechercheFormationAlternanceQuery(),
 					});
 
 					const result = await getServerSideProps(context);
 
-					expect(result).toEqual({ props: { resultats: aRésultatRechercheFormationList() } });
+					expect(result).toEqual({ props: { resultats: aResultatRechercheFormationList() } });
 				});
 			});
 		});

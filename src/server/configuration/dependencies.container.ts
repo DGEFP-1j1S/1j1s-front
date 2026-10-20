@@ -91,7 +91,7 @@ import {
 	formationsDependenciesContainer,
 } from '~/server/formations/configuration/dependencies.container';
 import {
-	ApiLaBonneAlternanceFormationRepository,
+	ApiAlternanceFormationRepository,
 } from '~/server/formations/infra/repositories/apiLaBonneAlternanceFormation.repository';
 import {
 	ApiTrajectoiresProStatistiqueRepository,
@@ -122,10 +122,10 @@ import {
 import {
 	jobsÉtudiantsDependenciesContainer,
 	OffresJobÉtudiantDependencies,
-} from '~/server/jobs-étudiants/configuration/dependencies.container';
+} from '~/server/jobs-etudiants/configuration/dependencies.container';
 import {
 	ApiFranceTravailJobEtudiantRepository,
-} from '~/server/jobs-étudiants/infra/repositories/apiFranceTravailJobEtudiant.repository';
+} from '~/server/jobs-etudiants/infra/repositories/apiFranceTravailJobEtudiant.repository';
 import { getApiAdresseConfig } from '~/server/localisations/configuration/adresse/adresseHttpClient.config';
 import {
 	LocalisationDependencies,
@@ -163,7 +163,7 @@ import {
 	MétierDependencies,
 	métiersDependenciesContainer,
 } from '~/server/metiers/configuration/dependencies.container';
-import { ApiLaBonneAlternanceMétierRepository } from '~/server/metiers/infra/apiLaBonneAlternanceMétier.repository';
+import { ApiLaBonneAlternanceMétierRepository } from '~/server/metiers/infra/apiLaBonneAlternanceMetier.repository';
 import {
 	getApiFranceTravailOffresConfig,
 	getApiFranceTravailReferentielsConfig,
@@ -303,11 +303,10 @@ export function dependenciesContainer(): Dependencies {
 		: jobsEteDependenciesContainer(apiFranceTravailJobEteRepository);
 
 	const laBonneAlternanceClientService = new PublicHttpClientService(getApiLaBonneAlternanceConfig(serverConfigurationService));
-	const apiLaBonneAlternanceCaller = serverConfigurationService.getConfiguration().API_LA_BONNE_ALTERNANCE_CALLER;
-	const apiLaBonneAlternanceFormationRepository = new ApiLaBonneAlternanceFormationRepository(laBonneAlternanceClientService, apiLaBonneAlternanceCaller, defaultErrorManagementService);
 	const apiLaBonneAlternanceMétierRepository = new ApiLaBonneAlternanceMétierRepository(laBonneAlternanceClientService, defaultErrorManagementService);
 	const apiAlternanceClient = new AuthenticatedHttpClientService(getApiAlternanceConfig(serverConfigurationService), loggerService);
 	const apiAlternanceRepository = new ApiAlternanceRepository(apiAlternanceClient, new DefaultErrorManagementService(loggerService));
+	const apiAlternanceFormationRepository = new ApiAlternanceFormationRepository(apiAlternanceClient, laBonneAlternanceClientService, defaultErrorManagementService);
 
 	const alternanceDependencies = serverConfigurationService.getConfiguration().API_LA_BONNE_ALTERNANCE_IS_ALTERNANCE_MOCK_ACTIVE // todo devrait se baser sur si c'est environnement de test non ?
 	  ? alternancesDependenciesContainer(new MockAlternanceRepository())
@@ -320,7 +319,7 @@ export function dependenciesContainer(): Dependencies {
 	const apiTrajectoiresProStatistiqueErrorManagementService = new ApiTrajectoiresProStatistiqueErrorManagementService(loggerService);
 	const apiTrajectoiresProStatistiqueRepository = new ApiTrajectoiresProStatistiqueRepository(trajectoiresProHttpClientService, apiGeoLocalisationRepository, apiTrajectoiresProStatistiqueErrorManagementService);
 
-	const formationDependencies = formationsDependenciesContainer(apiLaBonneAlternanceFormationRepository, apiTrajectoiresProStatistiqueRepository);
+	const formationDependencies = formationsDependenciesContainer(apiAlternanceFormationRepository, apiTrajectoiresProStatistiqueRepository);
 
 	const métierDependencies = métiersDependenciesContainer(apiLaBonneAlternanceMétierRepository);
 

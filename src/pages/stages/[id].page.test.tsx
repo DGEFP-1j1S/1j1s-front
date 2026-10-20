@@ -54,7 +54,7 @@ describe('<ConsulterOffreStagePage />', () => {
 		);
 
 		const textDonnerMonAvis = screen.getByText('Aidez-nous à améliorer la recherche de stage ! Donnez-nous votre avis sur cette démarche, cela ne prend que 2 minutes');
-		const linkDonnerMonAvis = screen.getByRole('link', { name: 'Je donne mon avis' });
+		const linkDonnerMonAvis = screen.getByRole('link', { name: 'Je donne mon avis - nouvelle fenêtre' });
 
 		expect(textDonnerMonAvis).toBeVisible();
 		expect(linkDonnerMonAvis).toHaveAttribute('href', 'https://jedonnemonavis.numerique.gouv.fr/Demarches/3639?&view-mode=formulaire-avis&nd_source=button&key=8ff5d31556dab600903ec418c6079a86');

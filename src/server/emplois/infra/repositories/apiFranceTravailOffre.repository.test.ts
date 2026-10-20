@@ -1,7 +1,7 @@
 import { ApiFranceTravailOffreRepository } from '~/server/emplois/infra/repositories/apiFranceTravailOffre.repository';
 import { createFailure, Failure, Success } from '~/server/errors/either';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
-import { Offre, RésultatsRechercheOffre } from '~/server/offres/domain/offre';
+import { Offre, ResultatsRechercheOffre } from '~/server/offres/domain/offre';
 import {
 	anOffreÉchantillonAvecLocalisationEtMotCléFiltre,
 	anOffreÉchantillonFiltre,
@@ -126,7 +126,7 @@ describe('ApiFranceTravailOffreRepository', () => {
 
 					const offreFiltre = anOffreÉchantillonFiltre();
 
-					const { result } = await apiFranceTravailOffreRepository.search(offreFiltre) as Success<RésultatsRechercheOffre>;
+					const { result } = await apiFranceTravailOffreRepository.search(offreFiltre) as Success<ResultatsRechercheOffre>;
 
 					expect(cacheService.get).toHaveBeenCalledWith('ECHANTILLON_OFFRE_EMPLOI_KEY');
 
@@ -164,7 +164,7 @@ describe('ApiFranceTravailOffreRepository', () => {
 
 					const offreFiltre = anOffreÉchantillonFiltre();
 
-					const { result } = await apiFranceTravailOffreRepository.search(offreFiltre) as Success<RésultatsRechercheOffre>;
+					const { result } = await apiFranceTravailOffreRepository.search(offreFiltre) as Success<ResultatsRechercheOffre>;
 
 					expect(cacheService.get).toHaveBeenCalledWith('ECHANTILLON_OFFRE_EMPLOI_KEY');
 
@@ -188,7 +188,7 @@ describe('ApiFranceTravailOffreRepository', () => {
 
 				const offreFiltre = anOffreEmploiFiltre();
 
-				const { result } = await apiFranceTravailOffreRepository.search(offreFiltre) as Success<RésultatsRechercheOffre>;
+				const { result } = await apiFranceTravailOffreRepository.search(offreFiltre) as Success<ResultatsRechercheOffre>;
 
 				expect(cacheService.get).not.toHaveBeenCalled();
 
@@ -209,7 +209,7 @@ describe('ApiFranceTravailOffreRepository', () => {
 					.mockResolvedValue('region=34&motsCles=boulanger&range=0-14');
 				const offreEmploiFiltre = anOffreEmploiFiltre();
 
-				const { result } = await apiFranceTravailOffreRepository.search(offreEmploiFiltre) as Success<RésultatsRechercheOffre>;
+				const { result } = await apiFranceTravailOffreRepository.search(offreEmploiFiltre) as Success<ResultatsRechercheOffre>;
 
 				expect(result).toEqual(aRésultatsRechercheOffre());
 				expect(httpClientServiceWithAuthentification.get).toHaveBeenCalledWith(
@@ -224,7 +224,7 @@ describe('ApiFranceTravailOffreRepository', () => {
 					.spyOn(httpClientServiceWithAuthentification, 'get')
 					.mockResolvedValue(anAxiosResponse({}, 204));
 
-				const { result } = await apiFranceTravailOffreRepository.search(anOffreÉchantillonAvecLocalisationEtMotCléFiltre()) as Success<RésultatsRechercheOffre>;
+				const { result } = await apiFranceTravailOffreRepository.search(anOffreÉchantillonAvecLocalisationEtMotCléFiltre()) as Success<ResultatsRechercheOffre>;
 
 				expect(result).toEqual({ nombreRésultats: 0, résultats: [] });
 			});

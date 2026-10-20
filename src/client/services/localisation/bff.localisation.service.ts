@@ -1,7 +1,7 @@
 import { HttpClientService } from '~/client/services/httpClient.service';
 import { LocalisationService } from '~/client/services/localisation/localisation.service';
 import { Either } from '~/server/errors/either';
-import { RésultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnées';
+import { ResultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnees';
 import {
 	RechercheLocalisationApiResponse,
 } from '~/server/localisations/infra/controllers/RechercheLocalisationApiResponse';
@@ -40,7 +40,7 @@ export class BffLocalisationService implements LocalisationService {
 		return this.httpClientService.get<RechercheLocalisationApiResponse>(`localisations?recherche=${recherche.trim()}`);
 	}
 
-	async rechercherCommune(recherche:string): Promise<Either<RésultatsRechercheCommune>> {
-		return this.httpClientService.get<RésultatsRechercheCommune>(`communes?q=${recherche}`);
+	async rechercherCommune(recherche:string): Promise<Either<ResultatsRechercheCommune>> {
+		return this.httpClientService.get<ResultatsRechercheCommune>(`communes?q=${recherche}`);
 	}
 }

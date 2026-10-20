@@ -1,121 +1,21 @@
-@use "@styles/utilities-deprecated";
-@use "@styles/utilities";
-@use "@styles/components/link/_placeholders.scss";
+.serviceCardList {
+  padding: 2.5rem 0;
+  background-image: url("/images/background/services.svg");
+  background-repeat: no-repeat;
+  background-color: #FEF3FD;
+  background-size: cover;
+  background-position: center;
 
-$cards-list-background-color: utilities.$color-background-primary-alternative;
-$card-border-color: utilities.$color-background-border;
-
-
-.services {
-  background-color: $cards-list-background-color;
-
-  & > ul {
-    @extend %max-container;
-    padding: utilities.pixel-to-rem(32) utilities.pixel-to-rem(16);
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: utilities.pixel-to-rem(24);
-
-    @include utilities.media(small) {
-      padding: utilities.pixel-to-rem(40) utilities.pixel-to-rem(16);
-      gap: utilities.pixel-to-rem(32);
-    }
-
-    @include utilities.media(xlarge) {
-      margin: auto;
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-}
-
-.serviceCard {
-  position: relative;
-  border: 1px solid $card-border-color;
-  border-radius: 20px;
-  display: grid;
-  grid-template-rows: 7.75rem 1fr;
-
-  @include utilities.media(small) {
-    grid-template-rows: unset;
-    grid-template-columns: 18.875rem 1fr;
-    grid-auto-flow: column;
+  h2 {
+    font-weight: 800;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2.5rem;
+    color: #502E4D;
   }
 
-  & .cardLogo {
-    align-self: center;
-    justify-self: center;
-    min-height: 92px;
-    min-width: min(310px, 100%);
-
-    @include utilities.media(small) {
-      width: 100%;
-      min-width: 140px;
-      border: 0;
-    }
-  }
-
-  img {
-    object-fit: contain;
-    @include utilities.media(small) {
-      padding: 0 64px;
-    }
-  }
-
-  a {
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-color: transparent;
-    }
-  }
-
-  & .cardCover {
-    grid-template-rows: 11.25rem 1fr;
-
-    @include utilities.media(small) {
-      grid-template-rows: revert;
-    }
-
-    & .cardLogo {
-      align-self: flex-end;
-      width: 100%;
-      height: 100%;
-
-      > img {
-        object-fit: cover;
-        @include utilities.media(small) {
-          border-radius: 0;
-          padding: 0;
-        }
-      }
-    }
-  }
-
-  & .cardBody {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-
-    @include utilities.media(large) {
-      width: 100%;
-    }
-
-    > p {
-      margin-bottom: 20px;
-      @extend %text-regular;
-    }
-
-    & .cardTitle {
-      @include utilities.text-medium;
-      @extend %bold;
-      margin-bottom: 0.5rem;
-    }
-
-    & .cardAction {
-      align-self: flex-end;
-    }
+ img {
+    object-fit: contain !important;
+    padding: 1rem;
   }
 }

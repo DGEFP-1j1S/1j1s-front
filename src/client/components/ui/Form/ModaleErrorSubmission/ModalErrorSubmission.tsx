@@ -28,10 +28,9 @@ export function ModalErrorSubmission({ isOpen, onClose, description, onBackToFor
 					)
 				}
 				<span className={styles.redirections}>
-					<ButtonComponent appearance={'primary'} onClick={onBackToForm} label={'Retour au formulaire'} />
-					<Link appearance={'asSecondaryButton'} href="/">
-					Aller à l‘accueil
-						<Link.Icon />
+					<ButtonComponent onClick={onBackToForm} label={'Retour au formulaire'} />
+					<Link className="fr-btn fr-btn--secondary" href="/">
+						Aller à l‘accueil
 					</Link>
 				</span>
 			</ModalComponent.Content>

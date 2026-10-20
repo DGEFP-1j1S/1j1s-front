@@ -4,18 +4,10 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
 	FormulaireRechercheFormationInitiale,
 } from '~/client/components/features/FormationInitiale/Rechercher/FormulaireRecherche/FormulaireRechercheFormationInitiale';
-import {
-	ListeDesServicesInteressants,
-} from '~/client/components/features/FormationInitiale/Rechercher/ServicesInteressants/ListeDesServicesInteressants';
 import { Head } from '~/client/components/head/Head';
-import {
-	ListeRésultatsRechercherSolution,
-} from '~/client/components/layouts/RechercherSolution/ListeRésultats/ListeRésultatsRechercherSolution';
 import { RechercherSolutionLayout } from '~/client/components/layouts/RechercherSolution/RechercherSolutionLayout';
-import {
-	ResultatRechercherSolution,
-} from '~/client/components/layouts/RechercherSolution/Resultat/ResultatRechercherSolution';
-import { LightHero, LightHeroPrimaryText, LightHeroSecondaryText } from '~/client/components/ui/Hero/LightHero';
+import { Carte } from '~/client/dsfr';
+import { Banner } from '~/client/components/ui/Hero/Hero';
 import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { useFormationInitialeQuery } from '~/client/hooks/useFormationInitialeQuery';
 import { FormationInitialeService } from '~/client/services/formationInitiale/formationInitiale.service';
@@ -27,6 +19,12 @@ import {
 	FormationInitiale,
 	NOMBRE_RÉSULTATS_FORMATIONS_INITIALES_PAR_PAGE,
 } from '~/server/formations-initiales/domain/formationInitiale';
+import { ServiceCardList } from '~/client/components/features/ServiceCard/Card/ServiceCard';
+import { CarifOrefPartner } from '~/client/components/features/ServiceCard/CarifOrefPartner';
+import { FormationsEnApprentissageCard } from '~/client/components/features/ServiceCard/FormationsEnApprentissageCard';
+import { MonCompteFormationPartner } from '~/client/components/features/ServiceCard/MonCompteFormationPartner';
+import { ParcourSupPartner } from '~/client/components/features/ServiceCard/ParcourSupPartner';
+import { PixPartner } from '~/client/components/features/ServiceCard/PixPartner';
 
 const PREFIX_TITRE_PAGE = 'Rechercher une formation initiale';
 
@@ -85,7 +83,7 @@ export function RechercherFormationInitiale() {
 				robots="index,follow" />
 			<main id="contenu">
 				<RechercherSolutionLayout
-					banniere={banniere()}
+					banniere={<BanniereFormationInitiale />}
 					erreurRecherche={erreurRecherche}
 					formulaireRecherche={<FormulaireRechercheFormationInitiale />}
 					isChargement={isLoading}
@@ -93,23 +91,28 @@ export function RechercherFormationInitiale() {
 					messageResultatRecherche={messageResultatRecherche}
 					nombreTotalSolutions={nombreDeResultat}
 					paginationOffset={NOMBRE_RÉSULTATS_FORMATIONS_INITIALES_PAR_PAGE}
-					listeSolutionElement={<ListeFormationInitiale resultatList={resultatList} />} />
-
-				<ListeDesServicesInteressants />
+					listeSolutionElement={<ListeFormationInitiale resultatList={resultatList} />}
+				/>
+				<ServiceCardList>
+					<CarifOrefPartner />
+					<FormationsEnApprentissageCard />
+					<ParcourSupPartner />
+					<MonCompteFormationPartner />
+					<PixPartner />
+				</ServiceCardList>
 			</main>
 		</>
 	);
 }
 
 
-function banniere() {
+function BanniereFormationInitiale() {
 	return (
-		<LightHero>
-			<h1>
-				<LightHeroPrimaryText>Des milliers de formations pour vous permettre</LightHeroPrimaryText>
-				<LightHeroSecondaryText>de réaliser votre projet professionnel</LightHeroSecondaryText>
+		<Banner>
+			<h1 className="fr-h1 fr-mb-0">
+				Des milliers de formations pour vous permettre de réaliser votre projet professionnel
 			</h1>
-		</LightHero>
+		</Banner>
 	);
 }
 
@@ -118,9 +121,7 @@ interface ListResultatProps {
 }
 
 function ListeFormationInitiale({ resultatList }: ListResultatProps) {
-	if (!resultatList) {
-		return undefined;
-	}
+	if (!resultatList.length) return null;
 
 	function getLienOffre(identifiant?: string) {
 		return identifiant ? `/formations-initiales/${encodeURIComponent(identifiant)}` : undefined;
@@ -135,16 +136,17 @@ function ListeFormationInitiale({ resultatList }: ListResultatProps) {
 	}
 
 	return (
-		<ListeRésultatsRechercherSolution aria-label="Formations Initiales">
-			{resultatList.map((formation: FormationInitiale) => (
-				<li key={formation.libelle}>
-					<ResultatRechercherSolution
-						étiquetteOffreList={getTags(formation)}
-						intituléOffre={formation.libelle}
-						logo={'/images/logos/fallback.svg'}
-						lienOffre={getLienOffre(formation.identifiant)} />
-				</li>
-			))}
-		</ListeRésultatsRechercherSolution>
+		<ul className="fr-grid-row fr-grid-row--gutters" aria-label="Formations Initiales">
+			{resultatList
+				.filter((formation) => formation.identifiant)
+				.map((formation: FormationInitiale) => (
+					<li key={formation.libelle} className="fr-col-lg-4 fr-col-md-6 fr-col-12">
+						<Carte
+							titre={formation.libelle}
+							lien={getLienOffre(formation.identifiant)}
+							tags={getTags(formation)} />
+					</li>
+				))}
+		</ul>
 	);
 }

@@ -1,12 +1,11 @@
 import React from 'react';
 
-import commonStyles from '~/client/components/features/ConsulterOffre.module.scss';
 import { ConsulterOffreLayout } from '~/client/components/layouts/ConsulterOffre/ConsulterOffreLayout';
 import { Link } from '~/client/components/ui/Link/Link';
-import { TagList } from '~/client/components/ui/Tag/TagList';
 import useSanitize from '~/client/hooks/useSanitize';
 import { formatCarriageReturnToHtml } from '~/client/utils/formatCarriageReturnToHtml';
 import { Mission } from '~/server/engagement/domain/engagement';
+import { BadgeList } from "~/client/components/ui/Badge/BadgeList";
 
 interface ConsulterMissionEngagementProps {
   missionEngagement: Mission;
@@ -24,54 +23,46 @@ export function ConsulterMissionEngagement({
 
 	return (
 		<ConsulterOffreLayout>
-			<header className={commonStyles.titre}>
+			<header className="fr-my-5w">
 				<h1>{missionEngagement.titre}</h1>
 				{missionEngagement.nomEntreprise && (
-					<h2>{missionEngagement.nomEntreprise}</h2>
+					<p className="fr-h4">{missionEngagement.nomEntreprise}</p>
 				)}
-				<TagList
-					list={missionEngagement.étiquetteList}
+				<BadgeList
+					list={missionEngagement.etiquetteList}
+					colorClass="fr-badge--blue-cumulus"
 					aria-label="Caractéristiques de la mission" />
-				<div className={commonStyles.buttonAsLinkWrapper}>
-					<div className={commonStyles.buttonAsLink}>
-						{missionEngagement.url && (
-							<Link
-								href={missionEngagement.url}
-								appearance="asPrimaryButton">
-								S’engager
-								<Link.Icon />
-							</Link>
-						)}
-					</div>
-				</div>
+				{missionEngagement.url && (
+					<Link
+						href={missionEngagement.url}
+						className="fr-btn fr-mt-2w">
+						S’engager
+					</Link>
+				)}
 			</header>
-			<section className={commonStyles.contenu}>
+			<section className="fr-mb-5w">
 				{missionEngagement.localisation && (
-					<div className={commonStyles.contenuAdaptatif}>
-						<h3>Où ? </h3>
-						<p
-							dangerouslySetInnerHTML={{
-								__html: localisationMissionEngagement,
-							}} />
-					</div>
+					<>
+						<h2 className="fr-h5">Où ? </h2>
+						<p dangerouslySetInnerHTML={{ __html: localisationMissionEngagement }} />
+					</>
 				)}
 				{missionEngagement.description && (
-					<div className={commonStyles.contenuAdaptatif}>
-						<h3>Quoi ? </h3>
-						<p
-							dangerouslySetInnerHTML={{ __html: descriptionMissionEngagement }} />
-					</div>
+					<>
+						<h2 className="fr-h5">Quoi ? </h2>
+						<p dangerouslySetInnerHTML={{ __html: descriptionMissionEngagement }} />
+					</>
 				)}
-				{missionEngagement.débutContrat && (
-					<div className={commonStyles.contenuAdaptatif}>
-						<h3>Quand ? </h3>
+				{missionEngagement.debutContrat && (
+					<>
+						<h2 className="fr-h5">Quand ? </h2>
 						<p>
-              À partir du {missionEngagement.débutContrat}{' '}
-							{missionEngagement.duréeContrat
-								? `(${missionEngagement.duréeContrat} Mois)`
+              À partir du {missionEngagement.debutContrat}{' '}
+							{missionEngagement.dureeContrat
+								? `(${missionEngagement.dureeContrat} Mois)`
 								: ''}
 						</p>
-					</div>
+					</>
 				)}
 			</section>
 		</ConsulterOffreLayout>

@@ -1,121 +1,22 @@
-@use "@styles/utilities-deprecated";
-@use "@styles/utilities";
-
-$colorHeroButtonOutline: utilities.$color-cta-background-secondary;
-$gap-between-sections: 1.5rem;
-
-.accueil > :not(:last-child)  {
-  margin-bottom: $gap-between-sections;
-}
-
-.hero {
-
-  &Button {
-    margin-top: 1.5rem;
-    outline-color: $colorHeroButtonOutline;
-    width: 100%;
-    @include utilities-deprecated.media(medium) {
-      width: fit-content;
-    }
-
-    &LargeScreenText {
-      display: none;
-
-      @include utilities.media(large) {
-        display: unset;
-      }
-    }
-
-    &SmallMediumScreenText {
-      @include utilities.media(large) {
-        display: none;
-      }
-    }
+.homeBanner {
+  h1 {
+    font-size: 4rem;
+    line-height: 4rem;
+    font-weight: 800;
   }
 
-  &Title {
-    @extend %bold;
-  }
-}
-
-.card {
-  max-width: 22.5rem;
-  width: 100%;
-
-  img {
-    object-fit: cover;
-  }
-}
-
-.section {
-  padding: 1.5rem;
-
-  &Header {
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 2rem;
+  p {
     font-size: 1.5rem;
-    @extend %bold;
-
-    > svg, h2 {
-      display: block;
-      margin: auto;
-    }
-  }
-
-  &:nth-of-type(4n+1) {
-    background-color: utilities-deprecated.$color-lighten-blue-navy;
-
-    .headerIcon {
-      color: utilities-deprecated.$color-blue-navy;
-    }
-  }
-  &:nth-of-type(4n+2) {
-    background-color: utilities-deprecated.$color-lighten-tapestry;
-
-    .headerIcon {
-      color: utilities-deprecated.$color-tapestry;
-    }
-  }
-  &:nth-of-type(4n+3) {
-    background-color: utilities-deprecated.$color-lighten-smalt-blue;
-
-    .headerIcon {
-      color: utilities-deprecated.$color-smalt-blue;
-    }
-  }
-  &:nth-of-type(4n) {
-    background-color: utilities-deprecated.$color-lighten-coral;
-
-    .headerIcon {
-      color: utilities-deprecated.$color-coral;
-    }
-  }
-
-  &ListeActualites {
-    ul {
-      scroll-margin-top: 4rem;
-      display: flex;
-      gap: 2rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 1rem;
-
-      @include utilities-deprecated.media(medium) {
-        margin-bottom: 2rem;
-      }
-    }
-
-    a {
-      margin: auto;
-    }
+    line-height: 2rem;
+    font-weight: 700;
   }
 }
 
-@include utilities-deprecated.media(medium) {
-  .sectionHeader {
-    margin-bottom: 3rem;
-    margin-top: 1rem;
-    font-size: 2rem;
-  }
+.bgConsultation {
+  height: 100%;
+  min-height: 330px;
+  background-image: url("/images/banner-alternance-home.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }

@@ -26,13 +26,13 @@ describe('TarteAuCitronCookiesService', () => {
 			mandatory: true,
 			mandatoryCta: true,
 			moreInfoLink: true,
-			orientation: 'middle',
+			orientation: 'bottom',
 			privacyUrl: '/confidentialite',
 			readmoreLink: '/confidentialite',
 			removeCredit: true,
 			serviceDefaultState: 'wait',
 			showAlertSmall: false,
-			showIcon: true,
+			showIcon: false,
 			useExternalCss: false,
 			useExternalJs: false,
 		});
@@ -147,7 +147,7 @@ describe('TarteAuCitronCookiesService', () => {
 
 	describe('openPanel', () => {
 		it('ouvre le panel', () => {
-			const tarteaucitron = aTarteAuCitron({ userInterface: { openPanel: vi.fn(), respond: vi.fn() } });
+			const tarteaucitron = aTarteAuCitron();
 			const service = new TarteAuCitronCookiesService(tarteaucitron);
 
 			service.openPanel();
@@ -164,6 +164,142 @@ describe('TarteAuCitronCookiesService', () => {
 			cookiesService.triggerServices();
 
 			expect(tarteaucitron.triggerJobsAfterAjaxCall).toHaveBeenCalled();
+		});
+	});
+
+	describe('getEtat', () => {
+		it('est fermé par défaut', () => {
+			const service = new TarteAuCitronCookiesService(aTarteAuCitron());
+
+			expect(service.getEtat()).toEqual({ banniereOuverte: false, panneauOuvert: false });
+		});
+		it('suit l’ouverture et la fermeture de la bannière et du panneau tarteaucitron', () => {
+			const service = new TarteAuCitronCookiesService(aTarteAuCitron());
+
+			window.dispatchEvent(new Event('tac.open_alert'));
+			window.dispatchEvent(new Event('tac.open_panel'));
+			expect(service.getEtat()).toEqual({ banniereOuverte: true, panneauOuvert: true });
+
+			window.dispatchEvent(new Event('tac.close_alert'));
+			window.dispatchEvent(new Event('tac.close_panel'));
+			expect(service.getEtat()).toEqual({ banniereOuverte: false, panneauOuvert: false });
+		});
+		it('prévient les abonnés quand l’état change, jusqu’à leur désabonnement', () => {
+			const service = new TarteAuCitronCookiesService(aTarteAuCitron());
+			const listener = vi.fn();
+
+			const unsubscribe = service.subscribe(listener);
+			window.dispatchEvent(new Event('tac.open_panel'));
+			unsubscribe();
+			window.dispatchEvent(new Event('tac.close_panel'));
+
+			expect(listener).toHaveBeenCalledTimes(1);
+		});
+	});
+
+	describe('getFinalites', () => {
+		it('regroupe les services ajoutés par catégorie, après les cookies obligatoires', () => {
+			const tarteaucitron = aTarteAuCitron({
+				job: ['youtube', 'eulerian', 'matomo'],
+				lang: {
+					analytic: { details: 'Statistiques de fréquentation', title: 'Mesure d’audience' },
+					eulerian: '<p>Description Eulerian</p>',
+					mandatoryText: '<p>Nécessaires au fonctionnement</p>',
+					mandatoryTitle: 'Cookies techniques',
+					video: { details: 'Contenus multimédia', title: 'Vidéos' },
+				},
+				services: {
+					eulerian: { name: 'Eulerian', type: 'analytic' },
+					matomo: { name: 'Matomo', type: 'analytic' },
+					youtube: { name: 'YouTube', type: 'video' },
+				},
+				state: { eulerian: false, matomo: 'wait', youtube: true },
+			});
+			const service = new TarteAuCitronCookiesService(tarteaucitron);
+
+			const finalites = service.getFinalites();
+
+			expect(finalites).toEqual([
+				{
+					description: '<p>Nécessaires au fonctionnement</p>',
+					id: 'obligatoire',
+					obligatoire: true,
+					services: [],
+					titre: 'Cookies techniques',
+				},
+				{
+					description: 'Contenus multimédia',
+					id: 'video',
+					obligatoire: false,
+					services: [{ autorise: true, description: undefined, id: 'youtube', nom: 'YouTube' }],
+					titre: 'Vidéos',
+				},
+				{
+					description: 'Statistiques de fréquentation',
+					id: 'analytic',
+					obligatoire: false,
+					services: [
+						{ autorise: false, description: '<p>Description Eulerian</p>', id: 'eulerian', nom: 'Eulerian' },
+						{ autorise: undefined, description: undefined, id: 'matomo', nom: 'Matomo' },
+					],
+					titre: 'Mesure d’audience',
+				},
+			]);
+		});
+		it('ignore les services dont la définition n’est pas encore chargée', () => {
+			const tarteaucitron = aTarteAuCitron({ job: ['youtube'], services: {} });
+			const service = new TarteAuCitronCookiesService(tarteaucitron);
+
+			const finalites = service.getFinalites();
+
+			expect(finalites.map((finalite) => finalite.id)).toEqual(['obligatoire']);
+		});
+	});
+
+	describe('acceptAll', () => {
+		it('accepte tous les services', () => {
+			const tarteaucitron = aTarteAuCitron();
+			const service = new TarteAuCitronCookiesService(tarteaucitron);
+
+			service.acceptAll();
+
+			expect(tarteaucitron.userInterface.respondAll).toHaveBeenCalledWith(true);
+		});
+	});
+
+	describe('denyAll', () => {
+		it('refuse tous les services, sauf la mesure d’audience exemptée de consentement', () => {
+			const tarteaucitron = aTarteAuCitron();
+			const service = new TarteAuCitronCookiesService(tarteaucitron);
+
+			service.denyAll();
+
+			expect(tarteaucitron.userInterface.respondAll).toHaveBeenCalledWith(false, '', true);
+		});
+	});
+
+	describe('saveChoices', () => {
+		it('enregistre le choix de chaque service puis ferme le panneau', () => {
+			const tarteaucitron = aTarteAuCitron();
+			const service = new TarteAuCitronCookiesService(tarteaucitron);
+			document.body.innerHTML = '<button id="youtubeAllowed"></button><button id="eulerianAllowed"></button>';
+
+			service.saveChoices({ eulerian: false, youtube: true });
+
+			expect(tarteaucitron.userInterface.respond).toHaveBeenCalledWith(document.getElementById('eulerianAllowed'), false);
+			expect(tarteaucitron.userInterface.respond).toHaveBeenCalledWith(document.getElementById('youtubeAllowed'), true);
+			expect(tarteaucitron.userInterface.closePanel).toHaveBeenCalledTimes(1);
+		});
+	});
+
+	describe('closePanel', () => {
+		it('ferme le panneau tarteaucitron', () => {
+			const tarteaucitron = aTarteAuCitron();
+			const service = new TarteAuCitronCookiesService(tarteaucitron);
+
+			service.closePanel();
+
+			expect(tarteaucitron.userInterface.closePanel).toHaveBeenCalledTimes(1);
 		});
 	});
 });

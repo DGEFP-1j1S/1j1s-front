@@ -66,7 +66,7 @@
 
   &Container {
     max-width: 35rem;
-    margin: 0 auto;
+    margin: auto;
 
     &__Title {
       @extend %headline;
@@ -109,15 +109,6 @@
   justify-content: center;
 }
 
-.linkAsButtonSecondary {
-  margin-top: 1.25rem;
-}
-
-.linkAsButtonContainer {
-  display: flex;
-  flex-direction: column;
-}
-
 @include utilities-deprecated.media(large) {
   .heading {
     padding: 0;
@@ -129,10 +120,10 @@
     &Container {
       max-width: 32.5rem;
       margin-right: calc(#{utilities-deprecated.$breakpoint-xl}/2 - 32.5rem);
-      padding: 4rem 1rem;
+      padding: 2rem 1rem;
 
       &__TextContent {
-        margin-bottom: 56px;
+        margin-bottom: 2rem;
       }
     }
 

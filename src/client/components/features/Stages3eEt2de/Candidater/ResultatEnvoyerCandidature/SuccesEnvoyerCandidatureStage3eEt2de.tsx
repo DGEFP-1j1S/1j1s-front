@@ -33,8 +33,7 @@ export function SuccesEnvoyerCandidatureStage3eEt2de() {
 					label="Continuer la recherche"
 					aria-label="Continuer la recherche"
 					icon={undefined}
-					className={styles.boutonContinuerRecherche}
-					appearance="primary" />
+					className={styles.boutonContinuerRecherche} />
 				<Link
 					href={'/'}
 					appearance="asSecondaryButton"

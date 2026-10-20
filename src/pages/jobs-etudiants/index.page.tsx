@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { stringify } from 'querystring';
 import React, { useEffect } from 'react';
 
-import { RechercherJobÉtudiant } from '~/client/components/features/JobÉtudiant/Rechercher/RechercherJobÉtudiant';
+import { RechercherJobÉtudiant } from '~/client/components/features/JobEtudiant/Rechercher/RechercherJobEtudiant';
 import useAnalytics from '~/client/hooks/useAnalytics';
 import empty from '~/client/utils/empty';
 import { transformQueryToArray } from '~/pages/api/utils/joi/joi.util';
@@ -17,14 +17,14 @@ import { isFailure } from '~/server/errors/either';
 import { Erreur } from '~/server/errors/erreur.types';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { changeStatusCodeWhenErrorOcurred } from '~/server/errors/handleGetServerSidePropsError';
-import { JobÉtudiantFiltre } from '~/server/jobs-étudiants/domain/jobÉtudiant';
-import { DomaineCode, MAX_PAGE_ALLOWED_BY_FRANCE_TRAVAIL, RésultatsRechercheOffre } from '~/server/offres/domain/offre';
+import { JobEtudiantFiltre } from '~/server/jobs-etudiants/domain/jobEtudiant';
+import { DomaineCode, MAX_PAGE_ALLOWED_BY_FRANCE_TRAVAIL, ResultatsRechercheOffre } from '~/server/offres/domain/offre';
 import { mapLocalisation } from '~/server/offres/infra/controller/offreFiltre.mapper';
 import { dependencies } from '~/server/start';
 
 interface RechercherJobEtudiantPageProps {
 	erreurRecherche?: Erreur
-	resultats?: RésultatsRechercheOffre
+	resultats?: ResultatsRechercheOffre
 }
 
 export default function RechercherJobÉtudiantPage(props: RechercherJobEtudiantPageProps) {
@@ -52,7 +52,7 @@ const jobsEtudiantsQuerySchema = Joi.object({
 
 type RequestQuery = Partial<{[p: string]: string | string[]}>;
 
-function jobÉtudiantFiltreMapper(query: RequestQuery): JobÉtudiantFiltre {
+function jobÉtudiantFiltreMapper(query: RequestQuery): JobEtudiantFiltre {
 	return {
 		grandDomaineList: query.grandDomaine ? queryToArray(query.grandDomaine) : undefined,
 		localisation: mapLocalisation(query),

@@ -1,13 +1,12 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
-import { Container } from '~/client/components/layouts/Container/Container';
 import {
 	ButtonComponent,
 } from '~/client/components/ui/Button/ButtonComponent';
-import { Icon } from '~/client/components/ui/Icon/Icon';
 import { IS_PREVIOUS_PAGE_LOCAL } from '~/client/hooks/usePageHistory';
 import useSessionStorage from '~/client/hooks/useSessionStorage';
+import { Button } from "~/client/dsfr";
 
 type BackButtonProps = Omit<React.ComponentPropsWithoutRef<typeof ButtonComponent>,'label'> & {
 	label: string
@@ -16,7 +15,7 @@ type BackButtonProps = Omit<React.ComponentPropsWithoutRef<typeof ButtonComponen
 	label?: never
 }
 
-export function BackButton({ className, label= 'Retour', ...rest }: BackButtonProps) {
+export function BackButton({ label= 'Retour', ...rest }: BackButtonProps) {
 	const router = useRouter();
 	const isPreviousPageLocal = useSessionStorage<boolean>(IS_PREVIOUS_PAGE_LOCAL);
 	// Le sessionStorage n’existe pas côté serveur : le lire pendant le rendu désapparie l’hydratation
@@ -32,19 +31,16 @@ export function BackButton({ className, label= 'Retour', ...rest }: BackButtonPr
 
 	return (
 		displayBackButton && (
-			<div className={className}>
-				<Container>
-					<ButtonComponent
-						role="link"
-						appearance="secondary"
-						aria-label={'Retour vers la page précédente'}
-						icon={<Icon name="angle-left" />}
-						iconPosition="left"
-						label={label}
-						onClick={() => router.back()}
-						{...rest} />
-				</Container>
-			</div>
+			<Button
+				role="link"
+				aria-label={'Retour vers la page précédente'}
+				appearance="tertiary-no-outline"
+				iconPosition="left"
+				className="fr-icon-arrow-go-back-line"
+				label={label}
+				onClick={() => router.back()}
+				{...rest}
+			/>
 		)
 	);
 }

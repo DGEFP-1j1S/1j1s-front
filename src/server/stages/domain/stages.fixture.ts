@@ -1,6 +1,6 @@
 import { RemunerationPeriode } from '~/server/stages/domain/remunerationPeriode';
 import { OffreDeStage, OffreDeStageLocalisation } from '~/server/stages/domain/stages';
-import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonnéesStage';
+import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonneesStage';
 
 export function anOffreDeStage(overrides?: Partial<OffreDeStage>): OffreDeStage {
 	return {

@@ -3,7 +3,7 @@ import {
 	aLocalisationList,
 	aLocalisationListWithEmptyValue,
 } from '~/server/localisations/domain/localisation.fixture';
-import { aCommuneList } from '~/server/localisations/domain/localisationAvecCoordonnées.fixture';
+import { aCommuneList } from '~/server/localisations/domain/localisationAvecCoordonnees.fixture';
 
 import { LocalisationService } from './localisation.service';
 

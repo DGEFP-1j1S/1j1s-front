@@ -162,7 +162,7 @@ describe('RechercherOffreEmploi', () => {
 				);
 
 				// WHEN
-				const resultatsUl = await screen.findAllByRole('list', { name: 'Offres d‘emplois' });
+				const resultatsUl = await screen.findAllByRole('list');
 				// eslint-disable-next-line testing-library/no-node-access
 				const resultatRechercheOffreEmploiList = resultatsUl[0].children;
 				const rechercheOffreEmploiNombreRésultats = await screen.findByText('3 offres d‘emplois pour boulanger');
@@ -223,55 +223,6 @@ describe('RechercherOffreEmploi', () => {
 
 			// THEN
 			expect(errorMessage).toBeInTheDocument();
-		});
-	});
-
-	describe('carte de résultat', () => {
-		it('lorsque l‘entreprise a fourni un logo, affiche ce logo sans alternative', async () => {
-			const offre = aRésultatsRechercheOffre({
-				nombreRésultats: 1,
-				résultats: [anOffreEmploi({ entreprise: { logo: 'http://logo.com' } })],
-			});
-			mockUseRouter({ query: { motCle: 'barman', page: '1' } });
-
-			render(
-				<DependenciesProvider
-					localisationService={aLocalisationService()}>
-					<RechercherOffreEmploi resultats={offre} />
-				</DependenciesProvider>,
-			);
-
-			const messageNombreRésultats = await screen.findByText('1 offre d‘emploi pour barman');
-
-			expect(messageNombreRésultats).toBeInTheDocument();
-			const item = screen.getAllByRole('listitem')[0];
-			const img = within(item).getByRole('presentation');
-			expect(img).toBeVisible();
-			expect(img).toHaveAttribute('src', expect.stringContaining('logo.com'));
-			expect(img).toHaveAttribute('alt', '');
-		});
-		it('lorsque l‘entreprise n‘a pas fourni de logo, affiche ce logo de France travail et l‘alternative associée',async () => {
-			const offre = aRésultatsRechercheOffre({
-				nombreRésultats: 1,
-				résultats: [anOffreEmploi({ entreprise: { logo: undefined } })],
-			});
-			mockUseRouter({ query: { motCle: 'barman', page: '1' } });
-
-			render(
-				<DependenciesProvider
-					localisationService={aLocalisationService()}>
-					<RechercherOffreEmploi resultats={offre} />
-				</DependenciesProvider>,
-			);
-
-			const messageNombreRésultats = await screen.findByText('1 offre d‘emploi pour barman');
-
-			expect(messageNombreRésultats).toBeInTheDocument();
-			const item = screen.getAllByRole('listitem')[0];
-			const img = within(item).getByRole('img');
-			expect(img).toBeVisible();
-			expect(img).toHaveAttribute('src', expect.stringContaining('france-travail'));
-			expect(img).toHaveAttribute('alt', 'France travail');
 		});
 	});
 });

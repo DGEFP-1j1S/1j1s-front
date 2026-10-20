@@ -1,11 +1,8 @@
 import Script from 'next/script';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { Head } from '~/client/components/head/Head';
-import { Container } from '~/client/components/layouts/Container/Container';
-import { LightHero, LightHeroPrimaryText, LightHeroSecondaryText } from '~/client/components/ui/Hero/LightHero';
-
-import styles from './index.module.scss';
+import { Banner } from '~/client/components/ui/Hero/Hero';
 
 export default function MyJobGlassesPage() {
 	const [rerender] = useState(() => Date.now());
@@ -17,14 +14,13 @@ export default function MyJobGlassesPage() {
 				description="Échanger avec des professionels du métier de votre choix"
 				robots="index,follow" />
 			<main id="contenu">
-				<LightHero>
-					<h1>
-						<LightHeroPrimaryText>Échangez avec des professionnels</LightHeroPrimaryText>
-						<LightHeroSecondaryText>avec <i>My Job Glasses</i></LightHeroSecondaryText>
+				<Banner>
+					<h1 className="fr-h1 fr-mb-0">
+						Échangez avec des professionnels avec <i>My Job Glasses</i>
 					</h1>
-				</LightHero>
-				<Container>
-					<p className={styles.description}>
+				</Banner>
+				<div className='fr-container fr-mb-5w'>
+					<p>
 						Un réseau professionnel à votre disposition&nbsp;: <b><i>1Jeune1Solution</i></b> s&apos;est associé à <b><i>My Job Glasses</i></b> pour
 						vous permettre de découvrir les métiers grâce à un réseau de <strong>plus de 82&nbsp;000
 						professionnels</strong> qui se rendent disponibles pour répondre à toutes vos questions sur leur métier. Ce service
@@ -32,7 +28,7 @@ export default function MyJobGlassesPage() {
 						personne qui vous présentera son métier, son environnement professionnel et son parcours pour vous aider
 						dans votre choix d&apos;orientation !
 					</p>
-				</Container>
+				</div>
 				<div suppressHydrationWarning id="widget-my-job-glasses"></div>
 
 				<Script async

@@ -7,7 +7,7 @@ import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { LocalisationService } from '~/client/services/localisation/localisation.service';
 import { isSuccess } from '~/server/errors/either';
 import { radiusList } from '~/server/localisations/domain/localisation';
-import { Commune } from '~/server/localisations/domain/localisationAvecCoordonnées';
+import { Commune } from '~/server/localisations/domain/localisationAvecCoordonnees';
 
 import { Combobox } from '../index';
 
@@ -106,65 +106,59 @@ export const ComboboxCommune = React.forwardRef<ComboboxRef, ComboboxCommuneProp
 	const isCommuneValid = matchingOption?.code;
 	return (
 		<>
-			<div>
-				<Champ>
-					<Champ.Label>
-						{label}
-						<Champ.Label.Complement>Exemples : Paris, Béziers…</Champ.Label.Complement>
-					</Champ.Label>
-					<Champ.Input render={Combobox}
-											 ref={ref}
-											 filter={Combobox.noFilter}
-											 valueName="codeCommune"
-											 autoComplete="off"
-											 value={userInput}
-											 optionsAriaLabel="communes"
-											 onChange={(event, newValue) => {
-												 rechercherCommunes(newValue);
-												 setUserInput(newValue);
-												 onChangeProps(event, newValue);
-											 }}
-											 requireValidOption
-											 {...rest}>
+			<Champ className="fr-select-group">
+				<Champ.Label>
+					{label}
+					<Champ.Label.Complement>Exemples : Paris, Béziers…</Champ.Label.Complement>
+				</Champ.Label>
+				<Champ.Input render={Combobox}
+										 ref={ref}
+										 filter={Combobox.noFilter}
+										 valueName="codeCommune"
+										 autoComplete="off"
+										 value={userInput}
+										 optionsAriaLabel="communes"
+										 onChange={(event, newValue) => {
+											 rechercherCommunes(newValue);
+											 setUserInput(newValue);
+											 onChangeProps(event, newValue);
+										 }}
+										 requireValidOption
+										 {...rest}>
+					{
+						(communeOptions.map((commune: Commune) => (
+							<Combobox.Option key={commune.code} value={commune.code}>
+								{formatLibelle(commune.ville, commune.codePostal)}
+							</Combobox.Option>
+						)))
+					}
+					<Combobox.AsyncMessage>
 						{
-							(communeOptions.map((commune: Commune) => (
-								<Combobox.Option key={commune.code} value={commune.code}>
-									{formatLibelle(commune.ville, commune.codePostal)}
-								</Combobox.Option>
-							)))
+							!isUserInputValid(userInput) && MESSAGE_CHAMP_VIDE
+							|| status === 'failure' && MESSAGE_ERREUR_FETCH
+							|| status === 'pending' && MESSAGE_CHARGEMENT
+							|| isListeDeResultatEmpty && MESSAGE_PAS_DE_RESULTAT
+							|| ''
 						}
-						<Combobox.AsyncMessage>
-							{
-								!isUserInputValid(userInput) && MESSAGE_CHAMP_VIDE
-								|| status === 'failure' && MESSAGE_ERREUR_FETCH
-								|| status === 'pending' && MESSAGE_CHARGEMENT
-								|| isListeDeResultatEmpty && MESSAGE_PAS_DE_RESULTAT
-								|| ''
-							}
-						</Combobox.AsyncMessage>
-					</Champ.Input>
-					<Champ.Error />
-				</Champ>
-				<input type="hidden" name="ville" value={matchingOption?.ville ?? ''} />
-				<input type="hidden" name="latitudeCommune" value={matchingOption?.coordonnées.latitude ?? ''} />
-				<input type="hidden" name="longitudeCommune" value={matchingOption?.coordonnées.longitude ?? ''} />
-				<input type="hidden" name="codePostal" value={matchingOption?.codePostal ?? ''} />
-			</div>
+					</Combobox.AsyncMessage>
+				</Champ.Input>
+				<Champ.Error />
+			</Champ>
+			<input type="hidden" name="ville" value={matchingOption?.ville ?? ''} />
+			<input type="hidden" name="latitudeCommune" value={matchingOption?.coordonnées.latitude ?? ''} />
+			<input type="hidden" name="longitudeCommune" value={matchingOption?.coordonnées.longitude ?? ''} />
+			<input type="hidden" name="codePostal" value={matchingOption?.codePostal ?? ''} />
 			{showRadiusInput && isCommuneValid && userInput && 	(
-				<Champ>
+				<Champ className="fr-select-group">
 					<Champ.Label>
 					Rayon
 						<Champ.Label.Complement>Exemple : 30 km</Champ.Label.Complement>
 					</Champ.Label>
 					<Champ.Input
 						render={SelectSimple}
-						optionsAriaLabel={'Rayons'}
+						optionsList={radiusList}
 						name={'distanceCommune'}
-						defaultValue={defaultDistanceProps || DEFAULT_RADIUS_VALUE}>
-						{radiusList.map((option) =>
-							<SelectSimple.Option key={option.libellé} value={option.valeur}>{option.libellé}</SelectSimple.Option>,
-						)}
-					</Champ.Input>
+						defaultValue={defaultDistanceProps || DEFAULT_RADIUS_VALUE} />
 					<Champ.Error />
 				</Champ>
 			)}

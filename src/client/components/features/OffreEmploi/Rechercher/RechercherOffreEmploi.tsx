@@ -9,15 +9,8 @@ import { LaBonneBoitePartner } from '~/client/components/features/ServiceCard/La
 import { OnisepMetierPartner } from '~/client/components/features/ServiceCard/OnisepMetierPartner';
 import { ServiceCiviquePartner } from '~/client/components/features/ServiceCard/ServiceCiviquePartner';
 import { Head } from '~/client/components/head/Head';
-import {
-	ListeRésultatsRechercherSolution,
-} from '~/client/components/layouts/RechercherSolution/ListeRésultats/ListeRésultatsRechercherSolution';
 import { RechercherSolutionLayout } from '~/client/components/layouts/RechercherSolution/RechercherSolutionLayout';
-import {
-	ResultatRechercherSolution,
-} from '~/client/components/layouts/RechercherSolution/Resultat/ResultatRechercherSolution';
-import { EnTete } from '~/client/components/ui/EnTete/EnTete';
-import { LightHero, LightHeroPrimaryText, LightHeroSecondaryText } from '~/client/components/ui/Hero/LightHero';
+import { Carte } from '~/client/dsfr';
 import { useOffreQuery } from '~/client/hooks/useOffreQuery';
 import empty from '~/client/utils/empty';
 import { formatRechercherSolutionDocumentTitle } from '~/client/utils/formatRechercherSolutionDocumentTitle.util';
@@ -26,18 +19,18 @@ import {
 	MAX_PAGE_ALLOWED_BY_FRANCE_TRAVAIL,
 	NOMBRE_RÉSULTATS_OFFRE_PAR_PAGE,
 	Offre,
-	RésultatsRechercheOffre,
+	ResultatsRechercheOffre,
 } from '~/server/offres/domain/offre';
+import {BannerWithIllustration} from '~/client/components/ui/Hero/Hero';
 
 // NOTE (BRUJ 06/05/2024): Pour éviter les hydratation mismatch lié au usebreakpoint on désactive le srr sur des composants spécifiques cf https://nextjs.org/docs/messages/react-hydration-error#solution-2-disabling-ssr-on-specific-components
 const FormulaireRechercheOffreEmploi = dynamic(() => import('../FormulaireRecherche/FormulaireRechercheOffreEmploi').then((mod) => mod.FormulaireRechercheOffreEmploi), { ssr: false });
 
 const PREFIX_TITRE_PAGE = 'Rechercher un emploi';
-const LOGO_FRANCE_TRAVAIL = '/images/logos/france-travail.svg';
 
 interface RechercherOffreEmploiProps {
 	erreurRecherche?: Erreur
-	resultats?: RésultatsRechercheOffre
+	resultats?: ResultatsRechercheOffre
 }
 
 export function RechercherOffreEmploi(props: RechercherOffreEmploiProps) {
@@ -80,12 +73,12 @@ export function RechercherOffreEmploi(props: RechercherOffreEmploiProps) {
 					paginationOffset={NOMBRE_RÉSULTATS_OFFRE_PAR_PAGE}
 					maxPage={MAX_PAGE_ALLOWED_BY_FRANCE_TRAVAIL - 1}
 					listeSolutionElement={<ListeOffreEmploi résultatList={offreEmploiList} />} />
-				<EnTete heading="Découvrez des services faits pour vous" />
-				<ServiceCardList>
-					<LaBonneBoitePartner />
-					<OnisepMetierPartner />
-					<ServiceCiviquePartner />
-				</ServiceCardList>
+					
+						<ServiceCardList>
+							<LaBonneBoitePartner />
+							<OnisepMetierPartner />
+							<ServiceCiviquePartner />
+						</ServiceCardList>
 			</main>
 		</>
 	);
@@ -96,34 +89,30 @@ interface ListeRésultatProps {
 }
 
 function ListeOffreEmploi({ résultatList }: ListeRésultatProps) {
-	if (!résultatList.length) {
-		return undefined;
-	}
+	if (!résultatList.length) return null;
 
 	return (
-		<ListeRésultatsRechercherSolution aria-label="Offres d‘emplois">
+		<ul className="fr-grid-row fr-grid-row--gutters" aria-label="Offres d’emplois">
 			{résultatList.map((offreEmploi: Offre) => (
-				<li key={offreEmploi.id}>
-					<ResultatRechercherSolution
-						étiquetteOffreList={offreEmploi.étiquetteList}
-						intituléOffre={offreEmploi.intitulé}
-						lienOffre={`/emplois/${offreEmploi.id}`}
-						logo={offreEmploi.entreprise.logo || LOGO_FRANCE_TRAVAIL}
-						logoAlt={offreEmploi.entreprise.logo ? '' : 'France travail'}
-						sousTitreOffre={offreEmploi.entreprise.nom} />
+				<li key={offreEmploi.id} className="fr-col-lg-4 fr-col-md-6 fr-col-12">
+					<Carte
+						titre={offreEmploi.intitulé}
+						lien={`/emplois/${offreEmploi.id}`}
+						tags={offreEmploi.étiquetteList.map((tag) => <>{tag}</>)}>
+						{offreEmploi.entreprise.nom}
+					</Carte>
 				</li>
 			))}
-		</ListeRésultatsRechercherSolution>
+		</ul>
 	);
 }
 
 function BannièreOffreEmploi() {
 	return (
-		<LightHero>
-			<h1>
-				<LightHeroPrimaryText>Des milliers d‘offres d‘emplois</LightHeroPrimaryText>
-				<LightHeroSecondaryText>sélectionnées pour vous par France Travail</LightHeroSecondaryText>
+		<BannerWithIllustration image="/images/offres-emploi-banner.png">
+			<h1 className="fr-h1 fr-mb-0">
+				Des milliers d‘offres d‘emplois sélectionnées pour vous par France Travail
 			</h1>
-		</LightHero>
+		</BannerWithIllustration>
 	);
 }

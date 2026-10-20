@@ -1,10 +1,36 @@
-import { render, screen, within } from '@testing-library/react';
+import "~/test-utils";
+
+import { render, screen } from '@testing-library/react';
 
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
 import { aManualAnalyticsService } from '~/client/services/analytics/analytics.service.fixture';
-import PlanDuSite from '~/pages/plan-du-site/index.page';
+import PagePlanDuSite from "~/pages/plan-du-site/index.page";
 
 describe('Plan du site', () => {
+	it("doit rendre du HTML respectant la spécification", () => {
+		// GIVEN
+		const { container } = render(
+			<DependenciesProvider analyticsService={aManualAnalyticsService()}>
+				<PagePlanDuSite />
+			</DependenciesProvider>,
+		);
+
+		// THEN
+		expect(container.outerHTML).toHTMLValidate();
+	});
+
+	it("doit être accessible", async () => {
+		// GIVEN
+		const { container } = render(
+			<DependenciesProvider analyticsService={aManualAnalyticsService()}>
+				<PagePlanDuSite />
+			</DependenciesProvider>,
+		);
+
+		// THEN
+		await expect(container).toBeAccessible();
+	});
+
 	describe('quand toutes les features sont activées', () => {
 		beforeEach(() => {
 			process.env.NEXT_PUBLIC_FORMATIONS_INITIALES_FEATURE = '1';
@@ -77,12 +103,14 @@ describe('Plan du site', () => {
 				render(
 					<DependenciesProvider
 						analyticsService={analyticsService}>
-						<PlanDuSite />
+						<PagePlanDuSite />
 					</DependenciesProvider>,
 				);
 
-				const plan = screen.getByRole('list', { name: /Plan du site/i });
-				const lien = within(plan).getByRole('link', { name: nom });
+				// les liens externes annoncent l'ouverture dans un nouvel onglet
+				const nomAccessible = path.startsWith('http') ? `${nom} - nouvelle fenêtre` : nom;
+
+				const lien = screen.getByRole('link', { name: nomAccessible });
 				expect(lien).toBeVisible();
 				expect(lien).toHaveAttribute('href', path);
 			});
@@ -115,12 +143,11 @@ describe('Plan du site', () => {
 			render(
 				<DependenciesProvider
 					analyticsService={analyticsService}>
-					<PlanDuSite />
+					<PagePlanDuSite />
 				</DependenciesProvider>,
 			);
 
-			const plan = screen.getByRole('list', { name: /Plan du site/i });
-			const lien = within(plan).queryByRole('link', { name: nom });
+			const lien = screen.queryByRole('link', { name: nom });
 			expect(lien).not.toBeInTheDocument();
 		});
 	});
@@ -131,7 +158,7 @@ describe('Plan du site', () => {
 		render(
 			<DependenciesProvider
 				analyticsService={analyticsService}>
-				<PlanDuSite />
+				<PagePlanDuSite />
 			</DependenciesProvider>,
 		);
 

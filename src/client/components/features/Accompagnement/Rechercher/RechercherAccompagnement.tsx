@@ -4,51 +4,47 @@ import {
 	FormulaireRechercheAccompagnement,
 } from '~/client/components/features/Accompagnement/FormulaireRecherche/FormulaireRechercheAccompagnement';
 import {
-	RésultatRechercherAccompagnement,
-} from '~/client/components/features/Accompagnement/Rechercher/Résultat/RésultatRechercherAccompagnement';
+	ResultatRechercherAccompagnement,
+} from '~/client/components/features/Accompagnement/Rechercher/Resultat/ResultatRechercherAccompagnement';
 import { ServiceCardList } from '~/client/components/features/ServiceCard/Card/ServiceCard';
 import { FranceTravailPartner } from '~/client/components/features/ServiceCard/FranceTravailPartner';
 import { InfoJeunesPartner } from '~/client/components/features/ServiceCard/InfoJeunesPartner';
 import { MissionsLocalesPartner } from '~/client/components/features/ServiceCard/MissionsLocalesPartner';
 import { Head } from '~/client/components/head/Head';
-import {
-	ListeRésultatsRechercherSolution,
-} from '~/client/components/layouts/RechercherSolution/ListeRésultats/ListeRésultatsRechercherSolution';
 import { RechercherSolutionLayout } from '~/client/components/layouts/RechercherSolution/RechercherSolutionLayout';
-import { EnTete } from '~/client/components/ui/EnTete/EnTete';
-import { LightHero, LightHeroPrimaryText, LightHeroSecondaryText } from '~/client/components/ui/Hero/LightHero';
 import { TagList } from '~/client/components/ui/Tag/TagList';
 import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { useAccompagnementQuery } from '~/client/hooks/useAccompagnementQuery';
 import {
 	EtablissementAccompagnementService,
-} from '~/client/services/établissementAccompagnement/etablissementAccompagnement.service';
+} from '~/client/services/etablissementAccompagnement/etablissementAccompagnement.service';
 import empty from '~/client/utils/empty';
 import { formatRechercherSolutionDocumentTitle } from '~/client/utils/formatRechercherSolutionDocumentTitle.util';
 import { isSuccess } from '~/server/errors/either';
 import { Erreur } from '~/server/errors/erreur.types';
 import {
 	EtablissementAccompagnement,
-	TypeÉtablissement,
+	TypeEtablissement,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
+import {Banner} from "~/client/components/ui/Hero/Hero";
 
 export function RechercherAccompagnement() {
 	const accompagnementQuery = useAccompagnementQuery();
-	const établissementAccompagnementService = useDependency<EtablissementAccompagnementService>('établissementAccompagnementService');
+	const etablissementAccompagnementService = useDependency<EtablissementAccompagnementService>('établissementAccompagnementService');
 
-	const [établissementAccompagnementList, setÉtablissementAccompagnementList] = useState<EtablissementAccompagnement[]>([]);
+	const [etablissementAccompagnementList, setEtablissementAccompagnementList] = useState<EtablissementAccompagnement[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [erreurRecherche, setErreurRecherche] = useState<Erreur | undefined>(undefined);
 	const [title, setTitle] = useState<string | undefined>();
 
-	const rechercherÉtablissementAccompagnement = useCallback(async () => {
+	const rechercherEtablissementAccompagnement = useCallback(async () => {
 		setIsLoading(true);
 		setErreurRecherche(undefined);
 		try {
-			const response = await établissementAccompagnementService.rechercher(accompagnementQuery);
+			const response = await etablissementAccompagnementService.rechercher(accompagnementQuery);
 			if (isSuccess(response)) {
 				setTitle(formatRechercherSolutionDocumentTitle(`Rechercher un établissement d‘accompagnement ${response.result.length === 0 ? ' - Aucun résultat' : ''}`));
-				setÉtablissementAccompagnementList(response.result);
+				setEtablissementAccompagnementList(response.result);
 			} else {
 				setTitle(formatRechercherSolutionDocumentTitle('Rechercher un établissement d‘accompagnement', response.errorType));
 				setErreurRecherche(response.errorType);
@@ -56,39 +52,39 @@ export function RechercherAccompagnement() {
 		} finally {
 			setIsLoading(false);
 		}
-	}, [accompagnementQuery, établissementAccompagnementService]);
+	}, [accompagnementQuery, etablissementAccompagnementService]);
 
-	useEffect(function rechercherÉtablissementAccompagnementEffect() {
+	useEffect(function rechercherEtablissementAccompagnementEffect() {
 		if (empty(accompagnementQuery)) {
 			return;
 		}
-		rechercherÉtablissementAccompagnement();
-	}, [accompagnementQuery, rechercherÉtablissementAccompagnement]);
+		rechercherEtablissementAccompagnement();
+	}, [accompagnementQuery, rechercherEtablissementAccompagnement]);
 
-	const messageRésultatRecherche: string = useMemo(() => {
-		const messageRésultatRechercheSplit: string[] = [`${établissementAccompagnementList.length}`];
-		if (établissementAccompagnementList.length > 1) {
-			messageRésultatRechercheSplit.push('établissements');
+	const messageResultatRecherche: string = useMemo(() => {
+		const messageResultatRechercheSplit: string[] = [`${etablissementAccompagnementList.length}`];
+		if (etablissementAccompagnementList.length > 1) {
+			messageResultatRechercheSplit.push('établissements');
 		} else {
-			messageRésultatRechercheSplit.push('établissement');
+			messageResultatRechercheSplit.push('établissement');
 		}
 
 		switch (accompagnementQuery.typeAccompagnement) {
-			case TypeÉtablissement.FRANCE_TRAVAIL:
-				messageRésultatRechercheSplit.push('d‘accompagnement pour les Agences France Travail');
+			case TypeEtablissement.FRANCE_TRAVAIL:
+				messageResultatRechercheSplit.push('d‘accompagnement pour les Agences France Travail');
 				break;
-			case TypeÉtablissement.INFO_JEUNE:
-				messageRésultatRechercheSplit.push('d‘accompagnement pour les structures Infos Jeunes');
+			case TypeEtablissement.INFO_JEUNE:
+				messageResultatRechercheSplit.push('d‘accompagnement pour les structures Infos Jeunes');
 				break;
-			case TypeÉtablissement.MISSION_LOCALE:
-				messageRésultatRechercheSplit.push('d‘accompagnement pour les structures Missions Locales');
+			case TypeEtablissement.MISSION_LOCALE:
+				messageResultatRechercheSplit.push('d‘accompagnement pour les structures Missions Locales');
 				break;
 		}
 
-		return messageRésultatRechercheSplit.join(' ');
-	}, [accompagnementQuery.typeAccompagnement, établissementAccompagnementList.length]);
+		return messageResultatRechercheSplit.join(' ');
+	}, [accompagnementQuery.typeAccompagnement, etablissementAccompagnementList.length]);
 
-	const étiquettesRecherche = useMemo(() => {
+	const etiquettesRecherche = useMemo(() => {
 		if (accompagnementQuery.ville && accompagnementQuery.codePostal) {
 			return <TagList list={[`${accompagnementQuery.ville} (${accompagnementQuery.codePostal})`]} aria-label="Filtres de la recherche" />;
 		} else {
@@ -104,17 +100,17 @@ export function RechercherAccompagnement() {
 				robots="index,follow" />
 			<main id="contenu">
 				<RechercherSolutionLayout
-					banniere={<BannièreAccompagnement />}
+					banniere={<BanniereAccompagnement />}
 					erreurRecherche={erreurRecherche}
-					etiquettesRecherche={étiquettesRecherche}
+					etiquettesRecherche={etiquettesRecherche}
 					formulaireRecherche={<FormulaireRechercheAccompagnement />}
 					isChargement={isLoading}
 					isEtatInitial={empty(accompagnementQuery)}
-					messageResultatRecherche={messageRésultatRecherche}
-					nombreTotalSolutions={établissementAccompagnementList?.length || 0}
-					listeSolutionElement={<ListeÉtablissementAccompagnement résultatList={établissementAccompagnementList} />} />
-				<EnTete heading="Découvrez d’autres services faits pour vous" />
-				<ServiceCardList>
+					messageResultatRecherche={messageResultatRecherche}
+					nombreTotalSolutions={etablissementAccompagnementList?.length || 0}
+					listeSolutionElement={<ListeEtablissementAccompagnement resultatList={etablissementAccompagnementList} />}
+				/>
+				<ServiceCardList heading="Découvrez d’autres services faits pour vous">
 					<MissionsLocalesPartner />
 					<InfoJeunesPartner />
 					<FranceTravailPartner />
@@ -124,36 +120,31 @@ export function RechercherAccompagnement() {
 	);
 }
 
-function BannièreAccompagnement() {
+function BanniereAccompagnement() {
 	return (
-		<LightHero>
-			<h1>
-				<LightHeroPrimaryText>
-					Je recherche un accompagnement proche de chez moi
-				</LightHeroPrimaryText>
+		<Banner>
+			<h1 className="fr-h1 fr-mb-0">
+				Je recherche un accompagnement proche de chez moi pour être aidé dans mes démarches et mon parcours
 			</h1>
-			<LightHeroSecondaryText>je veux être aidé dans mes démarches et mon parcours</LightHeroSecondaryText>
-		</LightHero>
+		</Banner>
 	);
 }
 
-interface ListeRésultatProps {
-  résultatList: EtablissementAccompagnement[]
+interface ListeResultatProps {
+  resultatList: EtablissementAccompagnement[]
 }
 
-function ListeÉtablissementAccompagnement({ résultatList }: ListeRésultatProps) {
-	if (!résultatList.length) {
-		return undefined;
-	}
+function ListeEtablissementAccompagnement({ resultatList: resultatList }: ListeResultatProps) {
+	if (!resultatList.length) return null;
 
 	return (
-		<ListeRésultatsRechercherSolution aria-label="Établissements d‘accompagnement">
-			{résultatList.map((établissementAccompagnement: EtablissementAccompagnement) => (
-				<li key={établissementAccompagnement.id}>
-					<RésultatRechercherAccompagnement etablissement={établissementAccompagnement} />
+		<ul className="fr-grid-row fr-grid-row--gutters" aria-label="Établissements d’accompagnement">
+			{resultatList.map((etablissementAccompagnement: EtablissementAccompagnement) => (
+				<li key={etablissementAccompagnement.id} className="fr-col-12">
+					<ResultatRechercherAccompagnement etablissement={etablissementAccompagnement} />
 				</li>
 			))}
-		</ListeRésultatsRechercherSolution>
+		</ul>
 	);
 }
 

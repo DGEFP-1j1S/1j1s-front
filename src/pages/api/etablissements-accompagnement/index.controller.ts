@@ -7,13 +7,13 @@ import { ErrorHttpResponse } from '~/pages/api/utils/response/response.type';
 import { handleResponse } from '~/pages/api/utils/response/response.util';
 import {
 	EtablissementAccompagnement,
-	TypeÉtablissement,
+	TypeEtablissement,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 import { dependencies } from '~/server/start';
 
 export const querySchema = Joi.object({
 	codeCommune: Joi.string().alphanum().max(5).required(),
-	typeAccompagnement: Joi.string().valid(...Object.values(TypeÉtablissement)).required(),
+	typeAccompagnement: Joi.string().valid(...Object.values(TypeEtablissement)).required(),
 }).options({ allowUnknown: true });
 
 export async function rechercherÉtablissementAccompagnementHandler(

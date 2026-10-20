@@ -153,7 +153,7 @@ describe('ListeDesResultats Component', () => {
 				const skeletonList = screen.queryByLabelText('...En cours de chargement');
 				expect(skeletonList).not.toBeInTheDocument();
 
-				const pagination = screen.getByRole('navigation', { name: 'pagination' });
+				const pagination = screen.getByRole('navigation', { name: 'Pagination' });
 				expect(pagination).toBeVisible();
 			});
 		});

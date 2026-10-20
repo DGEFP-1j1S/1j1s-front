@@ -92,8 +92,8 @@ describe('RechercherFormation', () => {
 
 			const firstCard = formationsAlternancesListCards[0];
 			expect(within(firstCard).getByRole('heading', { name: 'Glacier' })).toBeVisible();
-			expect(within(firstCard).getByText('Glacier Poul')).toBeVisible();
-			expect(within(firstCard).getByText('Adresse : 1 rue de la République')).toBeVisible();
+			expect(within(firstCard).getByText(/Glacier Poul/i)).toBeVisible();
+			expect(within(firstCard).getByText(/Adresse : 1 rue de la République/i)).toBeVisible();
 			expect(within(firstCard).getByRole('list')).toBeVisible();
 
 			const formationLienCandidature = within(firstCard).getByRole('link');

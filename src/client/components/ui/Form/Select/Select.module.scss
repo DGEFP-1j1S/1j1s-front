@@ -7,6 +7,7 @@
 
 .container {
   @extend %comboboxes;
+  margin-top: .5rem;
 
   & [role="combobox"] {
     width: 100%;
@@ -16,20 +17,24 @@
     font-size: inherit;
     line-height: inherit;
     display: grid;
-
     grid-template-columns: 1fr auto;
+    align-items: center;
+
+    &:focus-within {
+      outline: #0a76f6 solid 2px;
+      outline-offset: 2px;
+    }
+
     & > svg {
       @extend %chevron;
+      width: 1rem;
+      height: 1rem;
     }
     &[aria-expanded="true"] > svg {
       @extend %chevron-expanded;
     }
   }
 
-  input:valid + [role="combobox"],
-  [role="combobox"]:not([data-touched="true"]) {
-    @extend %border-no-error;
-  }
   input:invalid + [role="combobox"][data-touched="true"] {
     @extend %error;
   }

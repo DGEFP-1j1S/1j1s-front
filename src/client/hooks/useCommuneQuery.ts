@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 
 import { getSingleQueryParam } from '~/client/utils/queryParams.utils';
-import { Commune } from '~/server/localisations/domain/localisationAvecCoordonnées';
+import { Commune } from '~/server/localisations/domain/localisationAvecCoordonnees';
 
 export type CommuneQueryParams = {
 	codeCommune: string | undefined

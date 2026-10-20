@@ -27,7 +27,7 @@ describe('MeilisearchComboboxLocalisation', () => {
 		const user = userEvent.setup();
 
 		render(<MeilisearchComboboxLocalisation attribute={'test'} />);
-		const combobox = screen.getByRole('combobox', { name: 'Localisation' });
+		const combobox = screen.getByRole('combobox', { name: /Localisation/ });
 		await user.type(combobox, 'p');
 
 		expect(combobox).toHaveValue('p');
@@ -68,7 +68,7 @@ describe('MeilisearchComboboxLocalisation', () => {
 		const user = userEvent.setup();
 
 		render(<MeilisearchComboboxLocalisation attribute={'test'} />);
-		const combobox = screen.getByRole('combobox', { name: 'Localisation' });
+		const combobox = screen.getByRole('combobox', { name: /Localisation/ });
 		await user.type(combobox, 'a');
 
 		const options = screen.getAllByRole('option');
@@ -84,7 +84,7 @@ describe('MeilisearchComboboxLocalisation', () => {
 		const user = userEvent.setup();
 
 		render(<MeilisearchComboboxLocalisation attribute={'test'} />);
-		const combobox = screen.getByRole('combobox', { name: 'Localisation' });
+		const combobox = screen.getByRole('combobox', { name: /Localisation/ });
 		await user.type(combobox, 'p');
 
 		const statusPasDeResultat = screen.getByRole('status');
@@ -105,7 +105,7 @@ describe('MeilisearchComboboxLocalisation', () => {
 		const user = userEvent.setup();
 
 		render(<MeilisearchComboboxLocalisation attribute={'test'} />);
-		const combobox = screen.getByRole('combobox', { name: 'Localisation' });
+		const combobox = screen.getByRole('combobox', { name: /Localisation/ });
 
 		await user.type(combobox, 'p');
 		const option = screen.getByRole('option', { name: 'Paris' });
@@ -131,7 +131,7 @@ describe('MeilisearchComboboxLocalisation', () => {
 		const user = userEvent.setup();
 
 		render(<MeilisearchComboboxLocalisation attribute={'test'} />);
-		const combobox = screen.getByRole('combobox', { name: 'Localisation' });
+		const combobox = screen.getByRole('combobox', { name: /Localisation/ });
 
 		await user.type(combobox, 'P');
 		await user.keyboard(`{${KeyBoard.ARROW_DOWN}}`);
@@ -157,7 +157,7 @@ describe('MeilisearchComboboxLocalisation', () => {
 		const user = userEvent.setup();
 
 		render(<MeilisearchComboboxLocalisation attribute={'test'} />);
-		const combobox = screen.getByRole('combobox', { name: 'Localisation' });
+		const combobox = screen.getByRole('combobox', { name: /Localisation/ });
 
 		await user.type(combobox, 'Paris');
 		await user.keyboard(`{${KeyBoard.ENTER}}`);
@@ -180,7 +180,7 @@ describe('MeilisearchComboboxLocalisation', () => {
 		const user = userEvent.setup();
 
 		render(<MeilisearchComboboxLocalisation attribute={'test'} />);
-		const combobox = screen.getByRole('combobox', { name: 'Localisation' });
+		const combobox = screen.getByRole('combobox', { name: /Localisation/ });
 
 		await user.type(combobox, 'Paris');
 

@@ -1,19 +1,19 @@
 import { createSuccess, Either } from '~/server/errors/either';
-import { RésultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnées';
+import { ResultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnees';
 import {
-	LocalisationAvecCoordonnéesRepository,
-} from '~/server/localisations/domain/localisationAvecCoordonnées.repository';
+	LocalisationAvecCoordonneesRepository,
+} from '~/server/localisations/domain/localisationAvecCoordonnees.repository';
 import { mapRésultatsRechercheCommune } from '~/server/localisations/infra/repositories/apiAdresse.mapper';
 import { ApiAdresseResponse } from '~/server/localisations/infra/repositories/apiAdresse.response';
 import { removeParenthesis } from '~/server/localisations/infra/repositories/removeParenthesis';
 import { ErrorManagementService } from '~/server/services/error/errorManagement.service';
 import { CachedHttpClientService } from '~/server/services/http/cachedHttpClient.service';
 
-export class ApiAdresseRepository implements LocalisationAvecCoordonnéesRepository {
+export class ApiAdresseRepository implements LocalisationAvecCoordonneesRepository {
 	constructor(private readonly httpClientService: CachedHttpClientService, private readonly errorManagementService: ErrorManagementService) {
 	}
 
-	async getCommuneList(adresseRecherchee: string): Promise<Either<RésultatsRechercheCommune>> {
+	async getCommuneList(adresseRecherchee: string): Promise<Either<ResultatsRechercheCommune>> {
 		try {
 			const adresseRechercheeWithoutParenthesis = removeParenthesis(adresseRecherchee);
 			const cityOnly = 'type=municipality';

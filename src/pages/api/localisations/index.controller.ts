@@ -5,7 +5,7 @@ import { ErrorHttpResponse } from '~/pages/api/utils/response/response.type';
 import { isSuccess } from '~/server/errors/either';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { Localisation, RechercheLocalisation } from '~/server/localisations/domain/localisation';
-import { Commune } from '~/server/localisations/domain/localisationAvecCoordonnées';
+import { Commune } from '~/server/localisations/domain/localisationAvecCoordonnees';
 import {
 	LocalisationApiResponse,
 	LocalisationCommuneApiResponse,

@@ -2,7 +2,7 @@ import { CacheAxiosResponse } from 'axios-cache-interceptor';
 
 import { createFailure, Failure, Success } from '~/server/errors/either';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
-import { RésultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnées';
+import { ResultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnees';
 import { ApiAdresseRepository } from '~/server/localisations/infra/repositories/apiAdresse.repository';
 import { aLogInformation, anErrorManagementService } from '~/server/services/error/errorManagement.fixture';
 import { ErrorManagementService } from '~/server/services/error/errorManagement.service';
@@ -120,7 +120,7 @@ describe('ApiAdresseRepository', () => {
 					],
 				};
 
-				const { result } = await apiAdresseRepository.getCommuneList(recherche) as Success<RésultatsRechercheCommune>;
+				const { result } = await apiAdresseRepository.getCommuneList(recherche) as Success<ResultatsRechercheCommune>;
 
 				expect(result).toEqual(expected);
 			});

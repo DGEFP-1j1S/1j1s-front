@@ -3,41 +3,120 @@
     {
       "indexUid": "offre-de-stage",
       "hits": [
-        {
-          "titre": "Développeur",
-          "domaines": [
-            "développement informatique"
-          ],
-          "nomEmployeur": "OCTO Technology",
-          "dateDeDebutMin": "2023-03-01",
-          "dateDeDebutMax": "2023-03-03",
-          "source": "interne",
-          "dureeCategorisee": "1 mois",
-          "localisationFiltree": [
-            "Paris",
-            "Ile de France",
-            "Paris"
-          ],
-          "slug": "developpeur-48729ede-ae06-4268-9589-bafc8dd171b8",
-          "_formatted": {
-            "titre": "Développeur",
-            "domaines": [
-              "développement informatique"
-            ],
-            "nomEmployeur": "OCTO Technology",
-            "dateDeDebutMin": "2023-03-01",
-            "dateDeDebutMax": "2023-03-03",
-            "source": "interne",
-            "dureeCategorisee": "1 mois",
-            "localisationFiltree": [
-              "Paris",
-              "Ile de France",
-              "Paris"
-            ],
-            "slug": "developpeur-48729ede-ae06-4268-9589-bafc8dd171b8"
-          }
-        }
-      ],
+      {
+        "titre": "Test mise en page description 2",
+        "domaines": [
+          "achats"
+        ],
+        "nomEmployeur": "DNUM",
+        "dateDeDebutMin": "2023-02-18",
+        "dateDeDebutMax": "2023-02-18",
+        "source": "interne",
+        "dureeCategorisee": "1 mois",
+        "localisationFiltree": [
+          "Paris",
+          null,
+          null
+        ],
+        "slug": "test-mise-en-page-description-2-7efe1551-efac-4ba8-8d34-a5786875f426"
+      },
+      {
+        "titre": "Test avec Dorian",
+        "domaines": [],
+        "nomEmployeur": "Direction du Numérique du Ministère de l’Intérieur",
+        "dateDeDebutMin": "2023-02-26",
+        "dateDeDebutMax": "2023-02-26",
+        "source": "interne",
+        "dureeCategorisee": "1 mois",
+        "localisationFiltree": [
+          "Paris",
+          null,
+          null
+        ],
+        "slug": "test-avec-dorian-842e4c7f-c6ae-44fc-a315-a065607ba845"
+      },
+      {
+        "titre": "Assistant de recherche",
+        "domaines": [],
+        "nomEmployeur": "Direction du Numérique du Ministère du travail ",
+        "dateDeDebutMin": "2023-03-03",
+        "dateDeDebutMax": "2023-03-03",
+        "source": "interne",
+        "dureeCategorisee": "3 mois",
+        "localisationFiltree": [
+          "Paris",
+          null,
+          null
+        ],
+        "slug": "assistant-de-recherche-36b3ad63-3787-4c0d-9e47-4b1a352d883c"
+      },
+      {
+        "titre": "Assistant Administratif",
+        "domaines": [
+          "activités sociales et culturelles"
+        ],
+        "nomEmployeur": "Direction du Numérique du Ministère du travail ",
+        "dateDeDebutMin": "2023-03-12",
+        "dateDeDebutMax": "2023-03-12",
+        "source": "interne",
+        "dureeCategorisee": "1 mois",
+        "localisationFiltree": [
+          "Paris",
+          null,
+          null
+        ],
+        "slug": "assistant-administratif-9a0a731d-d520-41e3-8d57-17ec9034b77d"
+      },
+      {
+        "titre": "Développeur fullStack test",
+        "domaines": [],
+        "nomEmployeur": "Nom de l entrepriseNom de l entrepriseNom de l entrepriseNom de l entrepriseNom de l entrepriseNom de l entrepriseNom de l entrepriseNom de l entrepriseNom de l entrepriseNom de l entrepriseNom de l entrepriseNom de l entrepreeeeeeeeeeeeeeee",
+        "dateDeDebutMin": "2023-09-01",
+        "dateDeDebutMax": "2023-09-01",
+        "source": "interne",
+        "dureeCategorisee": "2 mois",
+        "localisationFiltree": [
+          "Marseille",
+          null,
+          null
+        ],
+        "slug": "developpeur-full-stack-0-20"
+      },
+      {
+        "titre": "Stage - Technicien de Laboratoire - Quimper 29 H/F",
+        "domaines": [
+          "chimie / biologie / agronomie"
+        ],
+        "nomEmployeur": "Saur Europe",
+        "dateDeDebutMin": null,
+        "dateDeDebutMax": null,
+        "source": "hellowork",
+        "dureeCategorisee": "Non renseigné",
+        "localisationFiltree": [
+          "Quimper",
+          null,
+          null
+        ],
+        "slug": "stage-technicien-de-laboratoire-quimper-29-h-f-108427261"
+      },
+      {
+        "titre": "Stage PPI - Juriste en droit social",
+        "domaines": [
+          "non renseigné"
+        ],
+        "nomEmployeur": "Sopra Steria",
+        "dateDeDebutMin": "2026-09-22",
+        "dateDeDebutMax": "2026-09-22",
+        "source": "stagefr-compresse",
+        "dureeCategorisee": "Non renseigné",
+        "localisationFiltree": [
+          "Paris",
+          null,
+          null
+        ],
+        "slug": "stage-ppi-juriste-en-droit-social-5827057597"
+      }
+    ],
       "query": "",
       "processingTimeMs": 0,
       "limit": 16,

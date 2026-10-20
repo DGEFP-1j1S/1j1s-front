@@ -1,10 +1,7 @@
-import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
-import React, { useMemo, useState } from 'react';
+import { useRouter } from "next/router";
+import React, { useMemo, useState } from "react";
 
-
-// NOTE (BRUJ 06/05/2024): Pour éviter les hydratation mismatch lié au usebreakpoint on désactive le srr sur des composants spécifiques cf https://nextjs.org/docs/messages/react-hydration-error#solution-2-disabling-ssr-on-specific-components
-const CommonPagination = dynamic(() => import('./CommonPagination').then((mod) => mod.CommonPagination), { ssr: false });
+import { Pagination as DSFRPagination } from "~/client/dsfr";
 
 interface PaginationProps {
 	numberOfResult: number
@@ -42,7 +39,7 @@ export function Pagination({ numberOfResult, numberOfResultPerPage, maxPage }: P
 	const lastPage = useMemo(() => Math.max((Math.ceil(numberOfResult / numberOfResultPerPage) - 1), 0), [numberOfResult, numberOfResultPerPage]);
 
 	return (
-		<CommonPagination
+		<DSFRPagination
 			currentPage={currentPage}
 			onPageClick={setCurrentPageAndQueryUrl}
 			isLastPage={isLastPage}

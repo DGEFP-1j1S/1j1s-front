@@ -6,7 +6,7 @@ import AutresBesoins
 import BesoinAide from '~/client/components/features/ContratEngagementJeune/Accompagnement/Formulaires/BesoinAide';
 import BesoinAide26ans
 	from '~/client/components/features/ContratEngagementJeune/Accompagnement/Formulaires/BesoinAide26ans';
-import Démarrage from '~/client/components/features/ContratEngagementJeune/Accompagnement/Formulaires/Démarrage';
+import Démarrage from '~/client/components/features/ContratEngagementJeune/Accompagnement/Formulaires/Demarrage';
 import Handicap from '~/client/components/features/ContratEngagementJeune/Accompagnement/Formulaires/Handicap';
 import PasDAccompagnement
 	from '~/client/components/features/ContratEngagementJeune/Accompagnement/Formulaires/PasDAccompagnement';

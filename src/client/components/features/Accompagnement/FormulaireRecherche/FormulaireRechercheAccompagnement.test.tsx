@@ -38,8 +38,8 @@ describe('FormulaireRechercheAccompagnement', () => {
 			const user = userEvent.setup();
 			const comboboxCommune = screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' });
 			await user.type(comboboxCommune, 'Pari');
-			const resultListCommune = await screen.findAllByRole('option');
-			await user.click(resultListCommune[0]);
+			const communeOption = await screen.findByRole('option', { name: 'Paris (75006)' });
+			await user.click(communeOption);
 			const submitButton = screen.getByRole('button', { name: 'Rechercher' });
 
 			// WHEN
@@ -93,6 +93,6 @@ describe('FormulaireRechercheAccompagnement', () => {
 		expect(localisation).toHaveValue('Paris (75001)');
 		const selectTypeAccompagnement = screen.getByRole('combobox', { name:'Type d‘accompagnement Exemple : Missions locales' });
 		expect(selectTypeAccompagnement).toHaveTextContent('Missions locales');
-		expect(screen.getByDisplayValue('mission_locale')).toBeInTheDocument();
+		expect(screen.getByDisplayValue('Missions locales')).toBeInTheDocument();
 	});
 });

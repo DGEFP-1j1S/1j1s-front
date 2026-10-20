@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 
 import {
 	aFormulaireEtapeEntreprise,
-} from '~/client/components/features/OffreDeStage/Déposer/StageDeposerOffre.fixture';
+} from '~/client/components/features/OffreDeStage/Deposer/StageDeposerOffre.fixture';
 import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
 import { aManualAnalyticsService } from '~/client/services/analytics/analytics.service.fixture';

@@ -1,4 +1,4 @@
-import { GénérerRobotsUseCase } from '~/server/robots/useCases/générerRobots.useCase';
+import { GénérerRobotsUseCase } from '~/server/robots/useCases/genererRobots.useCase';
 import { ConfigurationService } from '~/server/services/configuration.service';
 
 export interface RobotsDependencies {

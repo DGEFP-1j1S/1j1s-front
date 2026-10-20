@@ -3,42 +3,35 @@
 
 .combobox {
   @extend %comboboxes;
-  & > button {
-    font-size: inherit;
-    line-height: 1;
-  }
-
   display: grid;
   grid-template-columns: 1fr auto;
+  border-radius: 6px 6px 0 0;
+  margin-top: .5rem;
+  
+  &:focus-within {
+    outline: #0a76f6 solid 2px;
+    outline-offset: 2px;
+  }
+  
+  & > button {
+    border-top-left-radius: 0;
+  }
+
+  & > input {
+    border-top-right-radius: 0;
+    
+    &:focus {
+      outline: none;
+    }
+  }
+
   & > button svg {
     @extend %chevron;
+    width: 1rem;
+    height: 1rem;
   }
   & > [aria-expanded="true"] + button > svg {
     @extend %chevron-expanded;
-  }
-
-  @extend %outlined;
-  border-radius: inputStyles.$border-radius;
-  & input,
-  & button {
-    @extend %no-outline;
-  }
-
-  // NOTE (GAFI 27-06-2023): Impossible de changer la couleur de la bordure quand disabled si elle est sur la div parent
-  & input[role="combobox"] {
-    border-right: none;
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-    padding-right: 0;
-  }
-  & input[role="combobox"] + button {
-    @extend %bordered;
-    border-left: none;
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-  }
-  & button:disabled {
-    @extend %disabled;
   }
 
   & input[role="combobox"][data-touched="true"]:invalid,
@@ -47,11 +40,9 @@
   }
   & input[role="combobox"]:valid,
   & input[role="combobox"]:not([data-touched="true"]) {
-    @extend %border-no-error;
     margin-right: 0;
 
     & ~ button {
-      @extend %border-no-error;
       margin-left: 0;
     }
   }

@@ -1,27 +1,26 @@
-import classNames from 'classnames';
 import React, { useId } from 'react';
 
-import styles from '~/client/components/ui/Checkbox/Checkbox.module.scss';
+import { Label } from "~/client/components/ui/Form/Label";
 
 type CheckboxProps = React.ComponentPropsWithoutRef<'input'> & {
   label: string
 }
 
 export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(function Checkbox(
-	{ id: idProps, label, className, ...rest  }
+	{ id: idProps, label, ...rest  }
 	, ref,
 ) {
 	const idState = useId();
 	const id = idProps ?? idState;
 
 	return (
-		<div className={classNames(styles.checkbox, className)}>
+		<div className="fr-checkbox-group">
 			<input
 				type="checkbox"
 				id={id}
 				ref={ref}
 				{...rest} />
-			<label className={styles.label} htmlFor={id}>{label}</label>
+			<Label htmlFor={id}>{label}</Label>
 		</div>
 	);
 });

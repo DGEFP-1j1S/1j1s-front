@@ -178,8 +178,7 @@ async function remplirFormulaireDeContactEtEnvoyer(data: ContactInputs) {
 	const paris15eOption = await screen.findByText('Paris 15e Arrondissement (75015)');
 	await user.click(paris15eOption);
 
-	await user.click(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }));
-	await user.click(screen.getByRole('option', { name: data.age }));
+	await user.selectOptions(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }), data.age);
 
 	await user.click(screen.getByRole('button', { name: 'Envoyer la demande' }));
 }

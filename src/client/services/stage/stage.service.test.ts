@@ -3,7 +3,7 @@ import {
 	aFormulaireEtapeEntreprise,
 	aFormulaireEtapeLocalisation,
 	aFormulaireEtapeStage,
-} from '~/client/components/features/OffreDeStage/Déposer/StageDeposerOffre.fixture';
+} from '~/client/components/features/OffreDeStage/Deposer/StageDeposerOffre.fixture';
 import { anHttpClientService } from '~/client/services/httpClientService.fixture';
 import { BffStageService } from '~/client/services/stage/bff.stage.service';
 import { createSuccess } from '~/server/errors/either';
