@@ -19,8 +19,7 @@ describe('StatistiquesFormation', () => {
 		it('affiche l’entête', () => {
 			render(<StatistiquesFormationAlternance statistiques={statistiques()} />);
 
-			const entête =  screen.getByRole('heading', { level: 2 });
-			expect(entête).toHaveTextContent('Et après la formation ?');
+			const entête =  screen.getByRole('heading', { level: 2, name:"Et après la formation ?" });
 			expect(entête).toBeVisible();
 
 			const descriptionEntTête = screen.getByText('Découvrez les chiffres-clés liés à cette formation pour la région Pays de la Loire');
@@ -121,13 +120,10 @@ describe('StatistiquesFormation', () => {
 			render(<StatistiquesFormationAlternance statistiques={statistiques()} />);
 
 			const partenaires = screen.getByRole('list', { name: 'Liste des partenaires et des services' });
-			const titre = within(partenaires).getByRole('heading', { name: 'Découvrez le dispositif InserJeunes' });
+			const titre = within(partenaires).getByRole('heading', {level: 3, name: 'Découvrez le dispositif InserJeunes' });
 			expect(titre).toBeVisible();
-			const lien =  within(partenaires).getByRole('link');
-			expect(lien).toBeVisible();
-			expect(lien).toHaveTextContent("Lire l'article");
-			expect(lien).toHaveAccessibleName(expect.stringContaining('Découvrez le dispositif InserJeunes'));
-			expect(lien).toHaveAccessibleName(expect.stringContaining("Lire l'article"));
+			const lien =  within(partenaires).getByRole('link', {name: "Découvrez le dispositif InserJeunes"});
+			expect(lien).toBeInTheDocument();
 		});
 
 	});

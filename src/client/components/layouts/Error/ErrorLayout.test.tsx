@@ -17,7 +17,12 @@ describe('ErrorLayout', () => {
 	it('affiche le bouton de retour à la page précédente', () => {
 		render(
 			<DependenciesProvider sessionStorageService={aStorageService({ get: vi.fn().mockReturnValue(true) })}>
-				<ErrorLayout><p>children</p></ErrorLayout>
+				<ErrorLayout
+					title="Page non trouvée"
+					errorCode="404"
+					subTitle="La page que vous cherchez est introuvable. Excusez-nous pour la gêne occasionnée."
+					content="Si vous avez tapé l’adresse web dans le navigateur, vérifiez qu’elle est correcte. La page n’est peut-être plus disponible. Dans ce cas, pour continuer votre visite vous pouvez consulter notre page d’accueil.">
+				</ErrorLayout>
 			</DependenciesProvider>,
 		);
 		expect(screen.getByRole('link', { name: 'Retourner à la page précédente' })).toBeVisible();
@@ -25,7 +30,12 @@ describe('ErrorLayout', () => {
 	it('affiche le bouton de retour vers la page d‘accueil', () => {
 		render(
 			<DependenciesProvider sessionStorageService={aStorageService()}>
-				<ErrorLayout><p>children</p></ErrorLayout>
+				<ErrorLayout
+					title="Page non trouvée"
+					errorCode="404"
+					subTitle="La page que vous cherchez est introuvable. Excusez-nous pour la gêne occasionnée."
+					content="Si vous avez tapé l’adresse web dans le navigateur, vérifiez qu’elle est correcte. La page n’est peut-être plus disponible. Dans ce cas, pour continuer votre visite vous pouvez consulter notre page d’accueil.">
+				</ErrorLayout>
 			</DependenciesProvider>,
 		);
 		expect(screen.getByRole('link', { name: 'Aller à l‘accueil' })).toBeVisible();

@@ -7,7 +7,7 @@ import { Input } from '~/client/components/ui/Form/Input';
 import { Champ } from './Champ';
 
 describe('<Champ/>', () => {
-	it('lorsqu‘on séléctionne un élément valide, le message d‘erreur se met bien à jour', async () => {
+	it('lorsqu‘on sélectionne un élément valide, le message d‘erreur se met bien à jour', async () => {
 		const user = userEvent.setup();
 		render(
 			<Champ>
@@ -28,15 +28,38 @@ describe('<Champ/>', () => {
 		expect(input).toHaveAccessibleDescription('');
 	});
 
-	it('accepte un className en plus du style "champ" déjà en place', () => {
+	it('accepte un className', () => {
 		const { container } = render(
 			<Champ className={'someStyle'}>
 				<Champ.Input render={Input} />
 			</Champ>,
 		);
 
-		// eslint-disable-next-line testing-library/no-node-access
-		expect(container.children[0]).toHaveAttribute('class', 'champ someStyle');
+		expect(container.children[0]).toHaveAttribute('class', 'someStyle');
+	});
+
+	it.each([
+		["fr-input-group", "fr-input-group--error"],
+		["fr-select-group", "fr-select-group--error"],
+	])("lorsque le champ %s est en erreur, ajoute la classe %s", async (groupClassName, errorClassName) => {
+		// GIVEN
+		const user = userEvent.setup();
+		const { container } = render(
+			<Champ className={groupClassName}>
+				<Champ.Input render={Input} required />
+				<Champ.Error />
+			</Champ>,
+		);
+		const input = screen.getByRole("textbox");
+		expect(container.children[0]).not.toHaveClass(errorClassName);
+
+		// WHEN
+		await user.type(input, "a");
+		await user.tab();
+		await user.clear(input);
+
+		// THEN
+		expect(container.children[0]).toHaveClass(groupClassName, errorClassName);
 	});
 
 	it('affiche son contenu', () => {

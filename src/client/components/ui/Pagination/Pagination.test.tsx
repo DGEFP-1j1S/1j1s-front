@@ -52,8 +52,8 @@ describe('Pagination', () => {
 					<Pagination numberOfResult={470} numberOfResultPerPage={30} />,
 				);
 
-				expect(screen.getByRole('link', { name: REVENIR_A_LA_PREMIERE_PAGE }).getAttribute('aria-disabled')).toBe('true');
-				expect(screen.getByRole('link', { name: REVENIR_A_LA_PAGE_PRECENDENTE }).getAttribute('aria-disabled')).toBe('true');
+				expect(screen.getByText("Première page").getAttribute('aria-disabled')).toBe('true');
+				expect(screen.getByText("Page précédente").getAttribute('aria-disabled')).toBe('true');
 				expect(screen.getByText('1')).toBeInTheDocument();
 				expect(screen.getByText('2')).toBeInTheDocument();
 				expect(screen.getByText('3')).toBeInTheDocument();
@@ -138,8 +138,8 @@ describe('Pagination', () => {
 				expect(screen.getByText('15')).toBeInTheDocument();
 				expect(screen.queryByText('…')).not.toBeInTheDocument();
 				expect(screen.getByText('16')).toBeInTheDocument();
-				expect(screen.getByRole('link', { name: ALLER_A_LA_PAGE_SUIVANTE }).getAttribute('aria-disabled')).toBe('true');
-				expect(screen.getByRole('link', { name: ALLER_A_LA_DERNIERE_PAGE }).getAttribute('aria-disabled')).toBe('true');
+				expect(screen.getByText("Page suivante").getAttribute('aria-disabled')).toBe('true');
+				expect(screen.getByText("Dernière page").getAttribute('aria-disabled')).toBe('true');
 			});
 		});
 

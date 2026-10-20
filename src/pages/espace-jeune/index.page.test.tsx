@@ -146,8 +146,9 @@ describe('Page Espace Jeune', () => {
 
 				// THEN
 				const mesuresJeunesSection = screen.getByRole('region', { name: 'les services jeunes' });
-				const servicesJeunesList = within(mesuresJeunesSection).getAllByRole('listitem');
-				expect(servicesJeunesList.length).toBe(6);
+				const servicesJeunesList = within(mesuresJeunesSection).getAllByRole('list');
+				const servicesJeunesListItems = within(servicesJeunesList[0]).getAllByRole('list');
+				expect(servicesJeunesListItems.length).toBe(6);
 			});
 
 			it('affiche un bouton voir plus quand il y a plus de 6 services', () => {

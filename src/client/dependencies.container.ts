@@ -1,12 +1,13 @@
 import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
-import { SearchClient } from 'algoliasearch-helper/types/algoliasearch';
+import { CompositionClient, SearchClient } from 'algoliasearch-helper/types/algoliasearch';
 
-import { ManualAnalyticsService } from '~/client/services/analytics/analytics.service';
+import { EvenementAnalyticsService, ManualAnalyticsService } from '~/client/services/analytics/analytics.service';
 import { EulerianAnalyticsService } from '~/client/services/analytics/eulerian/eulerian.analytics.service';
 import { MatomoAnalyticsService } from '~/client/services/analytics/matomo/matomo.analytics.service';
 import {
 	MatomoTagManagerAnalyticsService,
 } from '~/client/services/analytics/matomoTagManager/matomoTagManager.analytics.service';
+import { NullEvenementAnalyticsService } from "~/client/services/analytics/null/null.evenementAnalytics.service";
 import { BffHttpClientService } from '~/client/services/bff.httpClient.service';
 import { CookiesService } from '~/client/services/cookies/cookies.service';
 import { NullCookiesService } from '~/client/services/cookies/null/null.cookies.service';
@@ -17,10 +18,10 @@ import { BffDemandeDeContactService } from '~/client/services/demandeDeContact/b
 import { DemandeDeContactService } from '~/client/services/demandeDeContact/demandeDeContact.service';
 import {
 	BffEtablissementAccompagnementService,
-} from '~/client/services/établissementAccompagnement/bff.etablissementAccompagnement.service';
+} from '~/client/services/etablissementAccompagnement/bff.etablissementAccompagnement.service';
 import {
 	EtablissementAccompagnementService,
-} from '~/client/services/établissementAccompagnement/etablissementAccompagnement.service';
+} from '~/client/services/etablissementAccompagnement/etablissementAccompagnement.service';
 import { BffEmploiEuropeService } from '~/client/services/europe/bff.emploiEurope.service';
 import { EmploiEuropeService } from '~/client/services/europe/emploiEurope.service';
 import {
@@ -31,9 +32,10 @@ import { BffLocalisationService } from '~/client/services/localisation/bff.local
 import { LocalisationService } from '~/client/services/localisation/localisation.service';
 import { LoggerService } from '~/client/services/logger.service';
 import { AdformMarketingService } from '~/client/services/marketing/adform/adform.marketing.service';
-import { LinkedinMarketingService } from '~/client/services/marketing/linkedin/linkedin.marketing.service';
-import { MarketingService } from '~/client/services/marketing/marketing.service';
-import { NullMarketingService } from '~/client/services/marketing/null/null.marketing.service';
+import { FloodlightMarketingService } from "~/client/services/marketing/floodlight/floodlight.marketing.service";
+import { GoldenBeesMarketingService } from "~/client/services/marketing/goldenbees/goldenbees.marketing.service";
+import { SeedtagMarketingService } from "~/client/services/marketing/seedtag/seedtag.marketing.service";
+import { StackAdaptMarketingService } from "~/client/services/marketing/stackadapt/stackadapt.marketing.service";
 import { BffAlternanceMetierService } from '~/client/services/metiers/bff.alternance.metier.service';
 import { MetierService } from '~/client/services/metiers/metier.service';
 import { BffMissionEngagementService } from '~/client/services/missionEngagement/bff.missionEngagement.service';
@@ -68,22 +70,23 @@ import { StorageService } from '~/client/services/storage/storage.service';
 import { VideoService } from '~/client/services/video/video.service';
 import { YoutubeVideoService } from '~/client/services/video/youtube/youtube.video.service';
 
+export type RechercheClientService = SearchClient | CompositionClient;
+
 export type Dependency = Dependencies[keyof Dependencies];
 export type Dependencies = {
 	cookiesService: CookiesService
 	analyticsService: ManualAnalyticsService
+	evenementAnalyticsService: EvenementAnalyticsService
 	demandeDeContactService: DemandeDeContactService
 	formationInitialeService: FormationInitialeInterface
 	localisationService: LocalisationService
 	metierLbaService: MetierService
 	metierStage3eEt2deService: MetierService
 	missionEngagementService: MissionEngagementService
-	rechercheClientService: SearchClient
+	rechercheClientService: RechercheClientService
 	stageService: StageService
 	youtubeService: VideoService
 	établissementAccompagnementService: EtablissementAccompagnementService
-	marketingService: MarketingService
-	linkedinService: MarketingService
 	dateService: DateService
 	emploiEuropeService: EmploiEuropeService
 	stage3eEt2deService: Stage3eEt2deService
@@ -119,16 +122,17 @@ export default function dependenciesContainer(sessionId?: string): Dependencies 
 	const emploiEuropeService = new BffEmploiEuropeService(httpClientService);
 	const stageService = new BffStageService(httpClientService);
 	const cookiesService = getCookieService();
-	const marketingService = process.env.NEXT_PUBLIC_CAMPAGNE_ADFORM_FEATURE === '1'
-		? new AdformMarketingService(cookiesService)
-		: new NullMarketingService();
-	const linkedinService = process.env.NEXT_PUBLIC_CAMPAGNE_ADFORM_FEATURE === '1'
-		? new LinkedinMarketingService(cookiesService)
-		: new NullMarketingService();
-
-	if (process.env.NEXT_PUBLIC_ANALYTICS_MATOMO_FEATURE === '1') {
-		new MatomoAnalyticsService(cookiesService);
+	if (process.env.NEXT_PUBLIC_CAMPAGNE_2026_10_FEATURE === "1") {
+		new AdformMarketingService(cookiesService);
+		new SeedtagMarketingService(cookiesService);
+		new FloodlightMarketingService(cookiesService);
+		new StackAdaptMarketingService(cookiesService);
+		new GoldenBeesMarketingService(cookiesService);
 	}
+
+	const evenementAnalyticsService: EvenementAnalyticsService = process.env.NEXT_PUBLIC_ANALYTICS_MATOMO_FEATURE === "1"
+		? new MatomoAnalyticsService(cookiesService)
+		: new NullEvenementAnalyticsService();
 
 	if (process.env.NEXT_PUBLIC_ANALYTICS_MATOMO_TAG_MANAGER_FEATURE === '1') {
 		new MatomoTagManagerAnalyticsService(cookiesService);
@@ -175,11 +179,10 @@ export default function dependenciesContainer(sessionId?: string): Dependencies 
 		dateService,
 		demandeDeContactService,
 		emploiEuropeService,
+		evenementAnalyticsService,
 		formationInitialeService,
-		linkedinService,
 		localStorageService,
 		localisationService,
-		marketingService,
 		metierLbaService,
 		metierStage3eEt2deService,
 		missionEngagementService,

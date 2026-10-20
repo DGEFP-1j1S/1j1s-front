@@ -1,6 +1,6 @@
 import { RemunerationPeriode } from '~/server/stages/domain/remunerationPeriode';
 import { DomainesStage } from '~/server/stages/repository/domainesStage';
-import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonnéesStage';
+import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonneesStage';
 
 
 export interface OffreStageResponseStrapi {

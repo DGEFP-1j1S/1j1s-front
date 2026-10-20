@@ -142,7 +142,7 @@ describe('Page FAQ', () => {
 			</DependenciesProvider>,
 		);
 
-		const button = screen.getByRole('link', { name: 'Nous contacter' });
+		const button = screen.getByRole('link', { name: 'Nous contacter - nouvelle fenêtre' });
 		expect(button).toBeVisible();
 		expect(button).toHaveAttribute('href', 'mailto:contact-1j1s@sg.social.gouv.fr');
 	});

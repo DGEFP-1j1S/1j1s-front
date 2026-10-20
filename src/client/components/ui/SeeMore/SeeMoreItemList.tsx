@@ -1,9 +1,8 @@
 import classNames from 'classnames';
 import React, { useCallback, useId, useMemo, useRef, useState } from 'react';
 
-import { ButtonComponent } from '~/client/components/ui/Button/ButtonComponent';
+import { Button } from '~/client/dsfr';
 import { Icon } from '~/client/components/ui/Icon/Icon';
-import styles from '~/client/components/ui/SeeMore/SeeMoreItemList.module.scss';
 
 const SEE_MORE_LABEL_DEFAULT = 'Voir plus';
 const SEE_LESS_LABEL_DEFAULT = 'Voir moins';
@@ -27,8 +26,8 @@ export default function SeeMoreItemList(props: SeeMoreProps) {
 		seeMoreAriaLabel,
 		seeLessAriaLabel,
 		className,
-		...rest
 	} = props;
+
 	const ariaId = useId();
 	const listRef = useRef<HTMLUListElement>(null);
 	const [isOpen, setIsOpen] = useState(false);
@@ -61,28 +60,28 @@ export default function SeeMoreItemList(props: SeeMoreProps) {
 	return (
 		<>
 			{itemListToDisplay.length > 0 && (
-				<div
-					id={`section-${ariaId}`}
-					{...rest}>
-					<ul className={styles.itemList} ref={listRef} tabIndex={-1}>
+				
+					<ul id={`section-${ariaId}`} className='fr-grid-row fr-grid-row--gutters' ref={listRef} tabIndex={-1}>
 						{itemListToDisplay?.map((element, index) =>
-							<li key={index}>{element}</li>,
+							<li key={index} className="fr-col-lg-4 fr-col-md-6 fr-col-12">{element}</li>,
 						)}
 					</ul>
-				</div>
+				
 			)}
 			{itemList.length > numberOfVisibleItems && (
-				<ButtonComponent className={classNames(styles.seeMoreButton, className)}
-												 appearance={'quaternary'}
-												 label={buttonLabel}
-												 icon={isOpen ? <Icon name={'angle-up'} /> : <Icon name={'angle-down'} />}
-												 iconPosition={'right'}
-												 onClick={toggle}
-												 type="button"
-												 aria-expanded={isOpen}
-												 aria-controls={`section-${ariaId}`}
-												 aria-label={buttonAriaLabel}>
-				</ButtonComponent>
+				<div className='flex justify-center fr-mt-4w'>
+					<Button className={classNames(className)}
+						appearance="tertiary"
+						label={buttonLabel}
+						icon={isOpen ? <Icon name={'angle-up'} /> : <Icon name={'angle-down'} />}
+						iconPosition={'right'}
+						onClick={toggle}
+						type="button"
+						aria-expanded={isOpen}
+						aria-controls={`section-${ariaId}`}
+						aria-label={buttonAriaLabel} 
+					/>
+				</div>
 			)}
 		</>
 	);

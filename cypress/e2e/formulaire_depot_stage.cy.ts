@@ -5,7 +5,7 @@ import {
 	aFormulaireEtapeEntreprise,
 	aFormulaireEtapeLocalisation,
 	aFormulaireEtapeStage,
-} from '../../src/client/components/features/OffreDeStage/Déposer/StageDeposerOffre.fixture';
+} from '../../src/client/components/features/OffreDeStage/Deposer/StageDeposerOffre.fixture';
 import { interceptPost } from '../interceptPost';
 
 const FORMULAIRE_ETAPE_1_LABEL = 'formulaireEtape1';
@@ -59,8 +59,7 @@ describe('Dépôt de Stage', () => {
 				cy.findByRole('textbox', { name: /Lien sur lequel les candidats pourront postuler/i }).type('mauvaisemail');
 				cy.findByRole('textbox', { name: /Description de l’offre de stage/i }).type(aFormulaireEtapeStage().descriptionOffre);
 				cy.findByLabelText(/^Date précise du début de stage/i).type(aFormulaireEtapeStage().dateDeDebutMin);
-				cy.findByRole('combobox', { name: 'Durée du stage Exemple : 3 mois' }).click();
-				cy.findAllByRole('option').first().click();
+				cy.findByRole('combobox', { name: 'Durée du stage Exemple : 3 mois' }).select(1);
 
 				cy.findByRole('textbox', { name: /Lien sur lequel les candidats pourront postuler/i }).should('match', ':invalid');
 			});
@@ -75,8 +74,7 @@ describe('Dépôt de Stage', () => {
 				cy.findByRole('textbox', { name: /Lien sur lequel les candidats pourront postuler/i }).type(aFormulaireEtapeStage().lienCandidature);
 				cy.findByRole('textbox', { name: /Description de l’offre de stage/i }).type(aFormulaireEtapeStage().descriptionOffre);
 				cy.findByLabelText(/^Date précise du début de stage/i).type(aFormulaireEtapeStage().dateDeDebutMin);
-				cy.findByRole('combobox', { name: 'Durée du stage Exemple : 3 mois' }).click();
-				cy.findAllByRole('option').first().click();
+				cy.findByRole('combobox', { name: 'Durée du stage Exemple : 3 mois' }).select(1);
 				cy.findByRole('button', { name: /Suivant/i }).click();
 
 				cy.title().should('contain', 'Étape 3 sur 3');

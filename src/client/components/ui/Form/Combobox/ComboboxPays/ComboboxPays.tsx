@@ -84,7 +84,7 @@ export const ComboboxPays = React.forwardRef<ComboboxRef, ComboboxPaysProps>(fun
 
 	return (
 		<div className={className}>
-			<Champ>
+			<Champ className="fr-select-group">
 				<Champ.Label>
 					{label}
 					<Champ.Label.Complement>{labelComplement}</Champ.Label.Complement>
@@ -111,10 +111,15 @@ export const ComboboxPays = React.forwardRef<ComboboxRef, ComboboxPaysProps>(fun
 
 					{
 						(pays.map((suggestion) => (
-							<Combobox.Option key={suggestion.label} value={suggestion.code}>{suggestion.label}</Combobox.Option>
+							<Combobox.Option
+								className="fr-ml-0 fr-pl-2w"
+								key={suggestion.label}
+								value={suggestion.code}>
+								{suggestion.label}
+							</Combobox.Option>
 						)))
 					}
-					<li role='status'>
+					<li className="fr-ml-0 fr-pl-2w" role='status'>
 						{
 							isEmpty && MESSAGE_CHAMP_VIDE
 							|| status === 'failure' && MESSAGE_ERREUR_FETCH

@@ -76,3 +76,21 @@
 [data-fr-theme=dark] .fr-header__logo .fr-logo::after {
   background-position: -1.96875rem 100%;
 }
+
+/* ¯¯¯¯¯¯¯¯¯ *\
+  CONSENT
+\* ˍˍˍˍˍˍˍˍˍ */
+/* les descriptions issues de tarteaucitron sont du texte brut ou des <p> : la div porte l'espacement prévu pour un <p> */
+.fr-consent-service__desc {
+  margin: var(--text-spacing);
+}
+
+.fr-consent-service__desc p {
+  font-size: inherit;
+  line-height: inherit;
+  margin: 0 0 0.5rem;
+}
+
+.fr-consent-service__desc p:last-child {
+  margin-bottom: 0;
+}

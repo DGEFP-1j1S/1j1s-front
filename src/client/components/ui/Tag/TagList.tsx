@@ -1,24 +1,20 @@
-import classNames from 'classnames';
 import React, { ReactNode } from 'react';
 
-import { Tag } from '~/client/components/ui/Tag/Tag';
-import styles from '~/client/components/ui/Tag/TagList.module.scss';
+import { Tag } from '~/client/dsfr';
 
 interface TagListProps extends React.ComponentPropsWithoutRef<'ul'> {
   list: Array<ReactNode>
 }
 
-export function TagList({ className, list, ...rest }: TagListProps) {
-	const _classNames = classNames(styles.tagList, className);
-
+export function TagList({list, ...rest }: TagListProps) {
 	return (
-		<ul className={_classNames} {...rest}>
+		<ul className="fr-grid-row fr-grid-row--gutters fr-mb-2w" {...rest}>
 			{
 				list
 					.filter((tag) => !!tag)
 					.map((tag, index) => (
-						<li key={`${tag}-${index}`}>
-							<Tag>{tag}</Tag>
+						<li className="fr-col-auto" key={`${tag}-${index}`}>
+							<Tag className="background--blue-ecume text--blue" >{tag}</Tag>
 						</li>
 					))
 			}

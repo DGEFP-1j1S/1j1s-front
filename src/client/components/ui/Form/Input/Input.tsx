@@ -5,8 +5,6 @@ import { ChangeEvent } from '~/client/components/ui/Form/Combobox/ChangeEvent';
 import { useSynchronizedRef } from '~/client/hooks/useSynchronizedRef';
 import { useTouchedInput } from '~/client/hooks/useTouchedInput';
 
-import styles from './Input.module.scss';
-
 type ErrorMessage = string;
 
 type InputProps = ComponentPropsWithoutRef<'input'> & {
@@ -65,7 +63,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(function Inp
 			onChange={onChange}
 			onFocus={onFocus}
 			onBlur={onBlur}
-			className={classNames(styles.input, className)}
+			className={classNames('fr-input', className)}
 			{...props} />
 	);
 });

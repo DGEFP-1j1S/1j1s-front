@@ -9,7 +9,7 @@ import DemandeContactCEJ from '~/client/components/features/ContratEngagementJeu
 import PourquoiCEstFaitPourMoi from '~/client/components/features/ContratEngagementJeune/Pourquoi/PourquoiCEstFaitPourMoi';
 import QuEstCeQueCEst from '~/client/components/features/ContratEngagementJeune/QuEstCeQueCest/QuEstCeQueCEst';
 import QuEstCeQueJyGagne from '~/client/components/features/ContratEngagementJeune/QuEstCeQueJyGagne/QuEstCeQueJyGagne';
-import { Témoignages } from '~/client/components/features/ContratEngagementJeune/Témoignages/Témoignages';
+import { Témoignages } from '~/client/components/features/ContratEngagementJeune/Temoignages/Temoignages';
 import { Head } from '~/client/components/head/Head';
 import useAnalytics from '~/client/hooks/useAnalytics';
 import analytics from '~/pages/contrat-engagement-jeune/index.analytics';

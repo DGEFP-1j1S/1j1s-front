@@ -1,17 +1,15 @@
 import React from 'react';
 
-import { ServiceCard } from './Card/ServiceCard';
+import { Carte } from '~/client/dsfr';
 
 export function FormationsEnApprentissageCard() {
 	return (
-		<ServiceCard
-			linkLabel="Trouver ma formation"
-			link="/formations/apprentissage"
-			logo="/images/formations-apprentissage.webp"
-			title="Vous êtes à la recherche d’une formation en apprentissage ?"
-			titleAs={'h3'}
-			imageFit={'cover'}>
+		<Carte
+			horizontal
+			titre="Vous êtes à la recherche d'une formation en apprentissage ?"
+			imageSrc="/images/formations-apprentissage.webp"
+			lien="/formations/apprentissage">
 			Trouvez la formation qu’il vous faut pour réaliser votre projet avec La bonne alternance
-		</ServiceCard>
+		</Carte>
 	);
 }

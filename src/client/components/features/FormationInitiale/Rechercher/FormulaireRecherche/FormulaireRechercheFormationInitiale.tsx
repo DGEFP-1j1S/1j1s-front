@@ -1,14 +1,12 @@
 import { useRouter } from 'next/router';
 import React, { FormEvent } from 'react';
 
-import { ButtonComponent } from '~/client/components/ui/Button/ButtonComponent';
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 import { Input } from '~/client/components/ui/Form/Input';
-import { Icon } from '~/client/components/ui/Icon/Icon';
 import { useFormationInitialeQuery } from '~/client/hooks/useFormationInitialeQuery';
 import { getFormAsQuery } from '~/client/utils/form.util';
 
-import styles from './FormulaireRechercheFormationInitiale.module.scss';
+import { Button } from '~/client/dsfr';
 
 export function FormulaireRechercheFormationInitiale() {
 	const queryParams = useFormationInitialeQuery();
@@ -23,28 +21,29 @@ export function FormulaireRechercheFormationInitiale() {
 
 	return (
 		<form
-			className={styles.RechercheFormationInitialeForm}
 			role="search"
-			onSubmit={submitForm}>
-			<Champ>
-				<Champ.Label>Domaine, mot-clé…
-					<Champ.Label.Complement>Exemples: boulanger, informatique</Champ.Label.Complement>
-				</Champ.Label>
-				<Champ.Input
-					render={Input}
-					key={queryParams.motCle || ''}
-					defaultValue={queryParams.motCle || ''}
-					name="motCle"
-					autoFocus />
-				<Champ.Error />
-			</Champ>
-
-			<div className={styles.buttonWrapper}>
-				<ButtonComponent
-					label="Rechercher"
-					icon={<Icon name="magnifying-glass" />}
-					iconPosition="right"
-					type="submit" />
+			className="border--blue fr-p-5w"
+			onSubmit={submitForm}
+		>
+			<h2 className="fr-h4 fr-mb-5w">Trouvez une formation</h2>
+			<div className="fr-grid-row fr-grid-row--gutters">
+				<div className="fr-col-12">
+					<Champ className="fr-input-group">
+						<Champ.Label>Domaine, mot-clé…
+							<Champ.Label.Complement>Exemples: boulanger, informatique</Champ.Label.Complement>
+						</Champ.Label>
+						<Champ.Input
+							render={Input}
+							key={queryParams.motCle || ''}
+							defaultValue={queryParams.motCle || ''}
+							name="motCle"
+							autoFocus />
+						<Champ.Error />
+					</Champ>
+				</div>
+				<div className="fr-m-auto fr-mt-4w">
+					<Button label="Rechercher" type="submit" className="fr-btn--lg" />
+				</div>
 			</div>
 		</form>
 	);

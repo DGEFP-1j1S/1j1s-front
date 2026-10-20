@@ -51,7 +51,7 @@ export function RechercherSolutionLayout(props: RechercherSolutionLayoutProps) {
 		if (isChargement) {
 			return (
 				<>
-					<div className={'separator'}>
+					<div>
 						<Container className={styles.informationResultat}>
 							<Skeleton type="line" isLoading={true} className={styles.nombreResultats}>
 							</Skeleton>
@@ -83,28 +83,26 @@ export function RechercherSolutionLayout(props: RechercherSolutionLayoutProps) {
 		if (isRechercheEnCoursOuPlusieursResultats) {
 			return (
 				<>
-					<div className={'separator'}>
-						<Container className={styles.informationResultat}>
+					<div className="fr-container fr-py-5w">
 							{etiquettesRecherche}
-							<div role={'status'}>
-								<h2>{messageResultatRecherche}</h2>
+							<div role="status">
+								<h2 className="fr-mb-0">{messageResultatRecherche}</h2>
 							</div>
-						</Container>
 					</div>
 
-					<div className={classNames(styles.listeSolutionsWrapper, 'background-white-lilac')}>
-						<Container>
-							{listeSolutionElement}
-							{footnote && <div className={styles.footnote}>{footnote}</div>}
-							{paginationOffset && nombreTotalSolutions && nombreTotalSolutions > paginationOffset && (
-								<div className={styles.pagination}>
+					<div className="fr-container fr-pb-5w">
+						{listeSolutionElement}
+						{footnote && <div className={styles.footnote}>{footnote}</div>}
+						{paginationOffset && nombreTotalSolutions && nombreTotalSolutions > paginationOffset && (
+							<div className="fr-grid-row fr-mt-3w">
+								<div className="fr-m-auto">
 									<Pagination
 										numberOfResult={nombreTotalSolutions}
 										numberOfResultPerPage={paginationOffset}
 										maxPage={maxPage} />
 								</div>
-							)}
-						</Container>
+							</div>
+						)}
 					</div>
 				</>
 			);
@@ -114,11 +112,9 @@ export function RechercherSolutionLayout(props: RechercherSolutionLayoutProps) {
 	return (
 		<>
 			{banniere}
-			<div className={styles.rechercheSolution} aria-busy={isChargement} aria-live="polite">
-				<div className={'separator'}>
-					<Container className={styles.rechercheSolutionFormWrapper}>
-						{formulaireRecherche}
-					</Container>
+			<div className="fr-pb-5w" aria-busy={isChargement} aria-live="polite">
+				<div className="fr-container ">
+					{formulaireRecherche}
 				</div>
 				{getResultatsDeRecherche()}
 			</div>

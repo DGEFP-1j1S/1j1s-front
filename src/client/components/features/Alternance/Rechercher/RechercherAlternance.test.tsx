@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from "@testing-library/react";
 import { userEvent } from '@testing-library/user-event';
 
 import RechercherAlternance from '~/client/components/features/Alternance/Rechercher/RechercherAlternance';
@@ -9,7 +9,7 @@ import { LocalisationService } from '~/client/services/localisation/localisation
 import { aLocalisationService } from '~/client/services/localisation/localisation.service.fixture';
 import { aMetierService } from '~/client/services/metiers/metier.fixture';
 import { MetierService } from '~/client/services/metiers/metier.service';
-import { AlternanceSource } from '~/server/alternances/domain/alternance';
+import { AlternanceContrat, AlternanceSource } from '~/server/alternances/domain/alternance';
 import {
 	aRechercheAlternance,
 	aRechercheEntrepriseAlternance,
@@ -166,9 +166,10 @@ describe('RechercherAlternance', () => {
 			expect(messageResultats).toBeInTheDocument();
 
 
-			const resultatsUl = await screen.findAllByRole('list', { name: 'Offres d’alternances' });
+			const resultatsUl = await screen.findAllByRole('list');
+			
 			// eslint-disable-next-line testing-library/no-node-access
-			const resultListOffre = resultatsUl[0].children;
+			const resultListOffre = resultatsUl[1].children;
 			expect(resultListOffre).toHaveLength(alternanceFixture.length);
 			expect(await screen.findByText(alternanceFixture[0].titre)).toBeInTheDocument();
 			expect(await screen.findByText(alternanceFixture[1].titre)).toBeInTheDocument();
@@ -292,4 +293,243 @@ describe('RechercherAlternance', () => {
 			});
 		});
 	});
+
+	describe("les tags des entreprises", () => {
+		beforeEach(() => {
+			mockSmallScreen();
+			mockUseRouter({
+				query: {
+					codeCommune: "75056",
+					codePostal: "75001",
+					codeRomes: ["D1102"],
+					distanceCommune: "10",
+					latitudeCommune: "48.859",
+					libelleMetier: "Boulangerie",
+					longitudeCommune: "2.347",
+					ville: "Paris",
+				},
+			});
+		});
+
+		describe("nombre d‘employés", () => {
+			it('lorsque le nombre d‘employé min et max sont égaux, voit le nombre de salariés', async () => {
+				const user = userEvent.setup();
+				const entrepriseList = [
+					aRechercheEntrepriseAlternance({
+						nombreSalariés: { max: 9, min: 9 },
+					}),
+				];
+
+				render(
+					<DependenciesProvider
+						metierLbaService={aMetierService()}
+						localisationService={aLocalisationService()}>
+						<RechercherAlternance resultats={{ entrepriseList, offreList: [] }} />
+					</DependenciesProvider>,
+				);
+
+				const onglet = await screen.findByRole("tab", { name: "Entreprises" });
+				await user.click(onglet);
+
+				const tagsList = screen.getAllByRole('list')
+				const tags = within(tagsList[1]).getAllByRole('listitem');
+
+				expect(tags[0]).toHaveTextContent('9 salariés');
+			});
+
+			it("lorsque le nombre d‘employé min et max sont différents, voit le nombre de salariés", async () => {
+				const user = userEvent.setup();
+				const entrepriseList = [
+					aRechercheEntrepriseAlternance({
+						nombreSalariés: { max: 9, min: 2 },
+					}),
+				];
+
+				render(
+					<DependenciesProvider
+						metierLbaService={aMetierService()}
+						localisationService={aLocalisationService()}>
+						<RechercherAlternance resultats={{ entrepriseList, offreList: [] }} />
+					</DependenciesProvider>,
+				);
+
+				const onglet = await screen.findByRole("tab", { name: "Entreprises" });
+				await user.click(onglet);
+
+				const tagsList = screen.getAllByRole('list')
+				const tags = within(tagsList[1]).getAllByRole('listitem');
+
+				expect(tags[0]).toHaveTextContent('2 à 9 salariés');
+			});
+		});
+
+		it("lorsque la candidature est possible, je vois le tag de candidature spontanée", async () => {
+			const user = userEvent.setup();
+			const entrepriseList = [
+				aRechercheEntrepriseAlternance({
+					candidaturePossible: true,
+					nombreSalariés: { max: 9, min: 0 },
+				}),
+			];
+
+			render(
+				<DependenciesProvider
+					metierLbaService={aMetierService()}
+					localisationService={aLocalisationService()}>
+					<RechercherAlternance resultats={{ entrepriseList, offreList: [] }} />
+				</DependenciesProvider>,
+			);
+
+			const onglet = await screen.findByRole("tab", { name: "Entreprises" });
+			await user.click(onglet);
+
+			const tagsList = screen.getAllByRole('list')
+			const tags = within(tagsList[1]).getAllByRole('listitem');
+
+			expect(tags[0]).toHaveTextContent('Candidature spontanée');	
+		});
+
+		it("lorsque la candidature est impossible, je vois les tags pour contacter en direct l‘entreprise", async () => {
+			const user = userEvent.setup();
+			const entrepriseList = [
+				aRechercheEntrepriseAlternance({
+					candidaturePossible: false,
+					nombreSalariés: { max: 9, min: 0 },
+				}),
+			];
+
+			render(
+				<DependenciesProvider
+					metierLbaService={aMetierService()}
+					localisationService={aLocalisationService()}>
+					<RechercherAlternance resultats={{ entrepriseList, offreList: [] }} />
+				</DependenciesProvider>,
+			);
+
+			const onglet = await screen.findByRole("tab", { name: "Entreprises" });
+			await user.click(onglet);
+
+			expect(screen.getByText(/Rencontre au sein de l.entreprise/)).toBeVisible();
+		});
+
+		describe("lien vers entreprise", () => {
+			it("lorsque la candidature est possible, je vois le lien 'Candidater'", async () => {
+				const user = userEvent.setup();
+				const entrepriseList = [
+					aRechercheEntrepriseAlternance({
+						candidaturePossible: true,
+						nom: "Entreprise Test",
+					}),
+				];
+
+				render(
+					<DependenciesProvider
+						metierLbaService={aMetierService()}
+						localisationService={aLocalisationService()}>
+						<RechercherAlternance resultats={{ entrepriseList, offreList: [] }} />
+					</DependenciesProvider>,
+				);
+
+				const onglet = await screen.findByRole("tab", { name: "Entreprises" });
+				await user.click(onglet);
+
+				const link = screen.getByRole("link", { name: /Entreprise Test/ });
+				expect(link).toBeVisible();
+				expect(link).toHaveAttribute("href", expect.stringContaining("labonnealternance"));
+			});
+
+			it("lorsque la candidature n'est pas possible, je ne vois pas le lien 'Candidater'", async () => {
+				const user = userEvent.setup();
+				const entrepriseList = [
+					aRechercheEntrepriseAlternance({
+						candidaturePossible: false,
+						nom: "Entreprise Sans Lien",
+					}),
+				];
+
+				render(
+					<DependenciesProvider
+						metierLbaService={aMetierService()}
+						localisationService={aLocalisationService()}>
+						<RechercherAlternance resultats={{ entrepriseList, offreList: [] }} />
+					</DependenciesProvider>,
+				);
+
+				const onglet = await screen.findByRole("tab", { name: "Entreprises" });
+				await user.click(onglet);
+
+				expect(screen.queryByText('Candidater')).not.toBeInTheDocument();
+			});
+		});
+	});
+
+	describe("les tags de caractéristiques", () => {
+		beforeEach(() => {
+			mockSmallScreen();
+			mockUseRouter({
+				query: {
+					codeCommune: "75056",
+					codePostal: "75001",
+					codeRomes: ["D1102"],
+					distanceCommune: "10",
+					latitudeCommune: "48.859",
+					libelleMetier: "Boulangerie",
+					longitudeCommune: "2.347",
+					ville: "Paris",
+				},
+			});
+		});
+
+		it("lorsque l’offre est une offre matcha, je vois les tags", async () => {
+			const offreList = [
+				aRechercheMatchaAlternance({
+					localisation: "Paris",
+					niveauRequis: "debutant",
+					source: AlternanceSource.MATCHA,
+					typeDeContrat: ["Apprentissage", "CDI"],
+				}),
+			];
+
+			render(
+				<DependenciesProvider
+					metierLbaService={aMetierService()}
+					localisationService={aLocalisationService()}>
+					<RechercherAlternance resultats={{ entrepriseList: [], offreList }} />
+				</DependenciesProvider>,
+			);
+
+			const tagsList = screen.getAllByRole("list");
+			const tags = within(tagsList[2]).getAllByRole("listitem");
+			expect(tags).toHaveLength(4);
+			expect(tags[0]).toHaveTextContent("Paris");
+			expect(tags[1]).toHaveTextContent("Apprentissage");
+			expect(tags[2]).toHaveTextContent("CDI");
+			expect(tags[3]).toHaveTextContent("debutant");
+		});
+
+		it("lorsque l’offre est une offre france travail, je vois les tags", async () => {
+			const offreList = [
+				aRecherchePEJobAlternance({
+					localisation: "PARIS 4",
+					source: AlternanceSource.FRANCE_TRAVAIL,
+					typeDeContrat: ["CDD"],
+				}),
+			];
+
+			render(
+				<DependenciesProvider
+					metierLbaService={aMetierService()}
+					localisationService={aLocalisationService()}>
+					<RechercherAlternance resultats={{ entrepriseList: [], offreList }} />
+				</DependenciesProvider>,
+			);
+
+			const tagsList = screen.getAllByRole("list");
+			const tags = within(tagsList[2]).getAllByRole("listitem");
+			expect(tags).toHaveLength(3);
+			expect(tags[0]).toHaveTextContent("PARIS 4");
+			expect(tags[1]).toHaveTextContent(AlternanceContrat.ALTERNANCE);
+			expect(tags[2]).toHaveTextContent("CDD");
+		});
+	})
 });

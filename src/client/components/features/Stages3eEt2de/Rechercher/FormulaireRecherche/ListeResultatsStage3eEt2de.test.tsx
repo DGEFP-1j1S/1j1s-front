@@ -79,16 +79,13 @@ describe('<ListeResultatsStage3eEt2de />', () => {
 			render(<ListeResultatsStage3eEt2de resultatList={resultatRecherche} />);
 
 			// THEN
-			const resultatsUl = screen.getByRole('list', { name: 'Stages de 3e et 2de' });
+			const resultatsUl = screen.getByRole("list", { name: "Stages de 3e et 2de" });
 			expect(resultatsUl).toBeInTheDocument();
-			const resultatsLis = within(resultatsUl).getAllByRole('listitem');
-			const metiersPremiereOffreUl = within(resultatsLis[0]).getByRole('list', { name: 'Métiers proposés' });
-			expect(metiersPremiereOffreUl).toBeVisible();
-			const metiersPremiereOffre = within(metiersPremiereOffreUl).getAllByRole('listitem');
-			expect(metiersPremiereOffre).toHaveLength(3);
-			expect(metiersPremiereOffre[0]).toHaveTextContent('Métier 1');
-			expect(metiersPremiereOffre[1]).toHaveTextContent('Métier 2');
-			expect(metiersPremiereOffre[2]).toHaveTextContent('Métier 3');
+			const metiersUl = within(resultatsUl).getByRole('list', { name: "Métiers proposés"});
+			const metiersLi = within(metiersUl).getAllByRole('listitem');
+			expect(metiersLi[0]).toHaveTextContent('Métier 1');
+			expect(metiersLi[1]).toHaveTextContent('Métier 2');
+			expect(metiersLi[2]).toHaveTextContent('Métier 3');
 		});
 		it('de l’adresse', () => {
 			// GIVEN
@@ -128,28 +125,28 @@ describe('<ListeResultatsStage3eEt2de />', () => {
 			expect(resultats[1]).toHaveTextContent('2 rue de la Paix');
 			expect(resultats[1]).toHaveTextContent('75000 Paris');
 		});
-		it('un lien pour candidater', () => {
+		it("un lien pour candidater", () => {
 			// GIVEN
 			const resultatRecherche = aResultatRechercheStage3eEt2de({
 				nombreDeResultats: 3,
 				resultats: [
 					aStage3eEt2de({
-						appellationCodes: ['1234', '5679'],
+						appellationCodes: ["1234", "5679"],
 						modeDeContact: ModeDeContact.IN_PERSON,
-						nomEntreprise: 'Entreprise 1',
-						siret: '12345678912999',
+						nomEntreprise: "Entreprise 1",
+						siret: "12345678912999",
 					}),
 					aStage3eEt2de({
-						appellationCodes: ['1236', '5679'],
+						appellationCodes: ["1236", "5679"],
 						modeDeContact: ModeDeContact.EMAIL,
-						nomEntreprise: 'Entreprise 2',
-						siret: '12345678912346',
+						nomEntreprise: "Entreprise 2",
+						siret: "12345678912346",
 					}),
 					aStage3eEt2de({
-						appellationCodes: ['1235', '5679'],
+						appellationCodes: ["1235", "5679"],
 						modeDeContact: ModeDeContact.PHONE,
-						nomEntreprise: 'Entreprise 3',
-						siret: '12345678912346',
+						nomEntreprise: "Entreprise 3",
+						siret: "12345678912346",
 					}),
 				],
 			});
@@ -158,12 +155,17 @@ describe('<ListeResultatsStage3eEt2de />', () => {
 			render(<ListeResultatsStage3eEt2de resultatList={resultatRecherche} />);
 
 			// THEN
-			const lienCandidatureEnPersonne = screen.getByRole('link', { name: 'Candidater en personne' });
-			const lienCandidatureEmail = screen.getByRole('link', { name: 'Candidater par email' });
-			const lienCandidatureTelephone = screen.getByRole('link', { name: 'Candidater par téléphone' });
-			expect(lienCandidatureEnPersonne).toHaveAttribute('href', '/stages-3e-et-2de/candidater?appellationCodes=1234%2C5679&modeDeContact=IN_PERSON&nomEntreprise=Entreprise+1&siret=12345678912999');
-			expect(lienCandidatureEmail).toHaveAttribute('href', '/stages-3e-et-2de/candidater?appellationCodes=1236%2C5679&modeDeContact=EMAIL&nomEntreprise=Entreprise+2&siret=12345678912346');
-			expect(lienCandidatureTelephone).toHaveAttribute('href', '/stages-3e-et-2de/candidater?appellationCodes=1235%2C5679&modeDeContact=PHONE&nomEntreprise=Entreprise+3&siret=12345678912346');
+			const lienEntreprise1 = screen.getByRole("link", { name: "Entreprise 1" });
+			const lienEntreprise2 = screen.getByRole("link", { name: "Entreprise 2" });
+			const lienEntreprise3 = screen.getByRole("link", { name: "Entreprise 3" });
+			expect(lienEntreprise1).toHaveAttribute("href", "/stages-3e-et-2de/candidater?appellationCodes=1234%2C5679&modeDeContact=IN_PERSON&nomEntreprise=Entreprise+1&siret=12345678912999");
+			expect(lienEntreprise2).toHaveAttribute("href", "/stages-3e-et-2de/candidater?appellationCodes=1236%2C5679&modeDeContact=EMAIL&nomEntreprise=Entreprise+2&siret=12345678912346");
+			expect(lienEntreprise3).toHaveAttribute("href", "/stages-3e-et-2de/candidater?appellationCodes=1235%2C5679&modeDeContact=PHONE&nomEntreprise=Entreprise+3&siret=12345678912346");
+
+			// Verifie que les tags de mode de contact sont affiches
+			expect(screen.getByText("Contact en personne")).toBeVisible();
+			expect(screen.getByText("Contact par email")).toBeVisible();
+			expect(screen.getByText("Contact par téléphone")).toBeVisible();
 		});
 
 		describe('lorsque le mode de contact est inconnu', () => {
@@ -205,12 +207,12 @@ describe('<ListeResultatsStage3eEt2de />', () => {
 
 			// THEN
 			const resultatsUl = screen.getByRole('list', { name: 'Stages de 3e et 2de' });
-			const tagsList = within(resultatsUl).getByRole('list', { name: 'Caractéristiques de l‘offre' });
+			const tagsList = within(resultatsUl).getAllByRole('list')[0];
 			const tagNombreDeSalariés = within(tagsList).getByText('42 salariés');
 			expect(tagNombreDeSalariés).toBeVisible();
 		});
 
-		it('ajoute un tag correspond si l’offre est accessible aux personnes en situation de handicap', () => {
+		it('ajoute un tag correspondant si l’offre est accessible aux personnes en situation de handicap', () => {
 			// GIVEN
 			const resultatRecherche = aResultatRechercheStage3eEt2de({
 				nombreDeResultats: 1,
@@ -226,7 +228,7 @@ describe('<ListeResultatsStage3eEt2de />', () => {
 
 			// THEN
 			const resultatsUl = screen.getByRole('list', { name: 'Stages de 3e et 2de' });
-			const tagsList = within(resultatsUl).getByRole('list', { name: 'Caractéristiques de l‘offre' });
+			const tagsList = within(resultatsUl).getAllByRole('list')[0];
 			const tagHandiAccessible = within(tagsList).getByText('Handi-accessible');
 			expect(tagHandiAccessible).toBeVisible();
 		});
@@ -249,9 +251,9 @@ describe('<ListeResultatsStage3eEt2de />', () => {
 
 			// THEN
 			const resultatsUl = screen.getByRole('list', { name: 'Stages de 3e et 2de' });
-			const tagsList = within(resultatsUl).queryByRole('list', { name: 'Caractéristiques de l‘offre' });
+			const tagsList = within(resultatsUl).getAllByRole('list');
 
-			expect(tagsList).not.toBeInTheDocument();
+			expect(tagsList).toHaveLength(1);
 		});
 	});
 });

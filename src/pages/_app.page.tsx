@@ -1,3 +1,9 @@
+import '@gouvfr/dsfr/dist/dsfr.min.css';
+import "@gouvfr/dsfr/dist/utility/icons/icons-arrows/icons-arrows.min.css";
+import "@gouvfr/dsfr/dist/utility/icons/icons-system/icons-system.min.css";
+import "@gouvfr/dsfr/dist/utility/icons/icons-finance/icons-finance.min.css";
+import "@gouvfr/dsfr/dist/utility/icons/icons-business/icons-business.min.css";
+import "@gouvfr/dsfr/dist/utility/icons/icons-buildings/icons-buildings.min.css";
 import '~/styles/main.scss';
 import '../client/dsfr/styles.css';
 
@@ -11,6 +17,7 @@ import ErrorServer from '~/client/components/layouts/Error/ErrorServer';
 import { Layout } from '~/client/components/layouts/Layout';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
 import dependenciesContainer from '~/client/dependencies.container';
+import { GestionnaireConsentement } from '~/client/dsfr';
 import usePageHistory from '~/client/hooks/usePageHistory';
 import useSessionId from '~/client/hooks/useSessionId';
 import { CookiesService } from '~/client/services/cookies/cookies.service';
@@ -46,6 +53,12 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 	usePageHistory();
 	useTriggerServicesOnNavigation(dependenciesContainerInstance.cookiesService);
 
+	useEffect(function initDsfr() {
+		import('@gouvfr/dsfr/dist/dsfr.module').then(() => {
+			window.dsfr?.start();
+		});
+	}, []);
+
 	useEffect(function focusAnchor() {
 		const [/* full path */, targetId] = router.asPath.match(/^[^#]*#(.+)$/) ?? [];
 		if (targetId) {
@@ -53,7 +66,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 		}
 	}, [router.asPath]);
 
-	const getLayout = Component.getLayout ?? defaultLayout;
+	const getLayout = Component.getLayout ?? ((page: ReactElement) => defaultLayout(page, pageProps));
 	return (
 		<>
 			<Head>
@@ -63,6 +76,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 				<meta name="description" content="Toutes les solutions pour l‘avenir des jeunes" />
 			</Head>
 			<DependenciesProvider {...dependenciesContainerInstance}>
+				<GestionnaireConsentement />
 				{getLayout(
 					pageProps.error
 						? <ErrorServer error={pageProps.error} />
@@ -73,8 +87,8 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 	);
 }
 
-function defaultLayout(page: ReactElement) {
+function defaultLayout(page: ReactElement, pageProps: AppProps["pageProps"]) {
 	return (
-		<Layout>{page}</Layout>
+		<Layout pageProps={pageProps} afficherFilDAriane={!pageProps.error}>{page}</Layout>
 	);
 }

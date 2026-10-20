@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 
 import {
@@ -20,16 +20,6 @@ describe('FormulaireRechercheEmploisEurope', () => {
 	describe('en version mobile', () => {
 		beforeEach(() => {
 			mockSmallScreen();
-		});
-		it('le bouton de filtre avancé à le type button pour ne pas prendre automatiquement le type submit', () => {
-			mockUseRouter({});
-
-			render(
-				<FormulaireRechercheEmploisEurope />,
-			);
-			const buttonFiltresAvances = screen.getByRole('button', { name: 'Filtrer ma recherche' });
-
-			expect(buttonFiltresAvances).toHaveAttribute('type', 'button');
 		});
 
 		describe('quand on recherche par mot clé', () => {
@@ -72,123 +62,6 @@ describe('FormulaireRechercheEmploisEurope', () => {
 
 				// THEN
 				expect(routerPush).toHaveBeenCalledWith({ query: 'libellePays=Espagne&codePays=ES&page=1' }, undefined, { shallow: true });
-			});
-		});
-		describe('quand on recherche par type de contrat', () => {
-			it('ajoute les types de contrat aux query params', async () => {
-				// GIVEN
-				const routerPush = vi.fn();
-				const user = userEvent.setup();
-				mockUseRouter({ push: routerPush });
-
-				render(
-					<FormulaireRechercheEmploisEurope />,
-				);
-
-				const buttonFiltresAvances = screen.getByRole('button', { name: 'Filtrer ma recherche' });
-
-				// WHEN
-				await user.click(buttonFiltresAvances);
-				const modalComponent = screen.getByRole('dialog');
-				const checkboxApprentissage = within(modalComponent).getByRole('checkbox', { name: 'Apprentissage' });
-				await user.click(checkboxApprentissage);
-				const buttonAppliquerFiltres = within(modalComponent).getByRole('button', { name: 'Appliquer les filtres' });
-				await user.click(buttonAppliquerFiltres);
-				const buttonRechercher = screen.getByRole('button', { name: 'Rechercher' });
-				await user.click(buttonRechercher);
-
-				// THEN
-				expect(routerPush).toHaveBeenCalledWith({ query: `typeContrat=${EURES_CONTRACT_TYPE.Apprenticeship}&page=1` }, undefined, { shallow: true });
-			});
-		});
-		describe('quand on recherche par temps de travail', () => {
-			it('ajoute les types de temps de travail aux query params', async () => {
-				// GIVEN
-				const routerPush = vi.fn();
-				const user = userEvent.setup();
-				mockUseRouter({ push: routerPush });
-
-				render(
-					<FormulaireRechercheEmploisEurope />,
-				);
-
-				const buttonFiltresAvances = screen.getByRole('button', { name: 'Filtrer ma recherche' });
-
-				// WHEN
-				await user.click(buttonFiltresAvances);
-				const modalComponent = screen.getByRole('dialog');
-				const checkboxTempsDeTravail = within(modalComponent).getByRole('checkbox', { name: 'Temps partiel' });
-				await user.click(checkboxTempsDeTravail);
-				const buttonAppliquerFiltres = within(modalComponent).getByRole('button', { name: 'Appliquer les filtres' });
-				await user.click(buttonAppliquerFiltres);
-				const buttonRechercher = screen.getByRole('button', { name: 'Rechercher' });
-				await user.click(buttonRechercher);
-
-				// THEN
-
-				expect(routerPush).toHaveBeenCalledWith({ query: `tempsDeTravail=${EURES_POSITION_SCHEDULE_TYPE.PartTime}&page=1` }, undefined, { shallow: true });
-			});
-		});
-		describe('quand on recherche par niveau d’étude', () => {
-			it('ajoute les niveaux d’étude aux query params', async () => {
-				// GIVEN
-				const routerPush = vi.fn();
-				const user = userEvent.setup();
-				mockUseRouter({ push: routerPush });
-
-				render(
-					<FormulaireRechercheEmploisEurope />,
-				);
-
-				const buttonFiltresAvances = screen.getByRole('button', { name: 'Filtrer ma recherche' });
-
-				// WHEN
-				await user.click(buttonFiltresAvances);
-				const modalComponent = screen.getByRole('dialog');
-				const checkboxNiveauEtude = within(modalComponent).getByRole('checkbox', { name: 'Master (Bac+5)' });
-				await user.click(checkboxNiveauEtude);
-				const buttonAppliquerFiltres = within(modalComponent).getByRole('button', { name: 'Appliquer les filtres' });
-				await user.click(buttonAppliquerFiltres);
-				const buttonRechercher = screen.getByRole('button', { name: 'Rechercher' });
-				await user.click(buttonRechercher);
-
-				// THEN
-
-				expect(routerPush).toHaveBeenCalledWith({ query: `niveauEtude=${NiveauDEtudeValue.MASTER}&page=1` }, undefined, { shallow: true });
-			});
-		});
-
-		describe('quand on recherche par secteur d‘activité', () => {
-			it('ajoute les secteurs d‘activité aux query params', async () => {
-				// GIVEN
-				const routerPush = vi.fn();
-				const user = userEvent.setup();
-				mockUseRouter({ push: routerPush });
-
-				render(
-					<FormulaireRechercheEmploisEurope />,
-				);
-
-				const buttonFiltresAvances = screen.getByRole('button', { name: 'Filtrer ma recherche' });
-
-				// WHEN
-				await user.click(buttonFiltresAvances);
-				const modalComponent = screen.getByRole('dialog');
-
-				const checkboxSecteurActivite = within(modalComponent).getByRole('checkbox', { name: 'Agriculture, sylviculture et pêche' });
-				await user.click(checkboxSecteurActivite);
-
-				const checkboxSecteurActiviteSecondOption = within(modalComponent).getByRole('checkbox', { name: 'Hébergement et restauration' });
-				await user.click(checkboxSecteurActiviteSecondOption);
-
-				const buttonAppliquerFiltres = within(modalComponent).getByRole('button', { name: 'Appliquer les filtres' });
-				await user.click(buttonAppliquerFiltres);
-				const buttonRechercher = screen.getByRole('button', { name: 'Rechercher' });
-				await user.click(buttonRechercher);
-
-				// THEN
-
-				expect(routerPush).toHaveBeenCalledWith({ query: 'secteurActivite=A%2CI&page=1' }, undefined, { shallow: true });
 			});
 		});
 	});

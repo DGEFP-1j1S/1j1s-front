@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { LightHero, LightHeroPrimaryText, LightHeroSecondaryText } from '~/client/components/ui/Hero/LightHero';
+import { Banner } from "~/client/components/ui/Hero/Hero";
 
 interface BanniereMissionProps {
 	isServiceCivique: boolean;
@@ -9,11 +9,10 @@ interface BanniereMissionProps {
 export function BanniereMission({ isServiceCivique }: BanniereMissionProps) {
 	const primaryText = `Je découvre les missions de ${isServiceCivique ? 'Service Civique' : 'Bénévolat'}`;
 	return (
-		<LightHero>
-			<h1>
-				<LightHeroPrimaryText>{primaryText}</LightHeroPrimaryText>
-				<LightHeroSecondaryText>pour me rendre utile tout en préparant mon avenir</LightHeroSecondaryText>
+		<Banner>
+			<h1 className="fr-h1 fr-mb-0">
+				{primaryText} pour me rendre utile tout en préparant mon avenir
 			</h1>
-		</LightHero>
+		</Banner>
 	);
 }

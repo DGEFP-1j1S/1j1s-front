@@ -2,7 +2,7 @@ import React, { FormEvent, useState } from 'react';
 
 import {
 	DéchargeRGPD,
-} from '~/client/components/features/ContratEngagementJeune/FormulaireContactCEJ/DechargeRGPD/DéchargeRGPD';
+} from '~/client/components/features/ContratEngagementJeune/FormulaireContactCEJ/DechargeRGPD/DechargeRGPD';
 import { ButtonComponent } from '~/client/components/ui/Button/ButtonComponent';
 import { LoadingButton } from '~/client/components/ui/Button/LoadingButton';
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
@@ -54,7 +54,7 @@ export function FormulaireDeContactCEJ({ onSuccess, onFailure }: FormulaireDeCon
 			className={styles.formulaire}
 			onSubmit={envoyerFormulaireDeContact}
 			aria-label="formulaire cej">
-			<Champ>
+			<Champ className="fr-input-group">
 				<Champ.Label>
 					Prénom
 					<Champ.Label.Complement>Exemple : Jean</Champ.Label.Complement>
@@ -63,7 +63,7 @@ export function FormulaireDeContactCEJ({ onSuccess, onFailure }: FormulaireDeCon
 				<Champ.Error />
 			</Champ>
 
-			<Champ>
+			<Champ className="fr-input-group">
 				<Champ.Label>
 					Nom
 					<Champ.Label.Complement>Exemple : Dupont</Champ.Label.Complement>
@@ -72,7 +72,7 @@ export function FormulaireDeContactCEJ({ onSuccess, onFailure }: FormulaireDeCon
 				<Champ.Error />
 			</Champ>
 
-			<Champ>
+			<Champ className="fr-input-group">
 				<Champ.Label>
 					Adresse e-mail
 					<Champ.Label.Complement>Exemple : jean.dupont@gmail.com</Champ.Label.Complement>
@@ -81,7 +81,7 @@ export function FormulaireDeContactCEJ({ onSuccess, onFailure }: FormulaireDeCon
 				<Champ.Error />
 			</Champ>
 
-			<Champ>
+			<Champ className="fr-input-group">
 				<Champ.Label>
 					Téléphone
 					<Champ.Label.Complement>Exemple : 0606060606</Champ.Label.Complement>
@@ -90,17 +90,13 @@ export function FormulaireDeContactCEJ({ onSuccess, onFailure }: FormulaireDeCon
 				<Champ.Error />
 			</Champ>
 
-			<Champ>
+			<Champ className="fr-select-group">
 				<Champ.Label>Age<Champ.Label.Complement>Exemple : 16 ans</Champ.Label.Complement></Champ.Label>
 				<Champ.Input
 					render={SelectSimple}
 					required
-					optionsAriaLabel={'années'}
-					name="age">
-					{ageOptions.map((option) =>
-						<SelectSimple.Option key={option.libellé} value={option.valeur}>{option.libellé}</SelectSimple.Option>,
-					)}
-				</Champ.Input>
+					optionsList={ageOptions}
+					name="age" />
 				<Champ.Error />
 			</Champ>
 

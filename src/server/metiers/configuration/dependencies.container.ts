@@ -1,5 +1,5 @@
 import { MétierRepository } from '~/server/metiers/domain/metierAlternance.repository';
-import { RécupérerMétiersUseCase } from '~/server/metiers/useCases/récupererMétiersUseCase';
+import { RécupérerMétiersUseCase } from '~/server/metiers/useCases/recupererMetiersUseCase';
 
 export interface MétierDependencies {
 	récupérerMétiers: RécupérerMétiersUseCase

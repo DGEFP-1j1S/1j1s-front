@@ -1,8 +1,15 @@
 import { CookiesService } from '~/client/services/cookies/cookies.service';
 
-import { AnalyticsService } from '../analytics.service';
+import { EvenementAnalytics } from "../analytics";
+import { AnalyticsService, EvenementAnalyticsService } from "../analytics.service";
 
-export class MatomoAnalyticsService implements AnalyticsService {
+declare global {
+	interface Window {
+		_paq?: Array<Array<unknown>>
+	}
+}
+
+export class MatomoAnalyticsService implements AnalyticsService, EvenementAnalyticsService {
 	private static MATOMO_SERVICE = 'matomocloud';
 	private readonly cookiesService: CookiesService;
 
@@ -17,5 +24,11 @@ export class MatomoAnalyticsService implements AnalyticsService {
 
 	isAllowed(): boolean {
 		return this.cookiesService.isServiceAllowed(MatomoAnalyticsService.MATOMO_SERVICE);
+	}
+
+	envoyerEvenement({ categorie, action, nom }: EvenementAnalytics): void {
+		// NOTE : la file _paq est consommee par matomo.js une fois charge (avec ou sans consentement cookies)
+		window._paq = window._paq || [];
+		window._paq.push(["trackEvent", categorie, action, nom]);
 	}
 }

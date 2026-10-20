@@ -8,7 +8,7 @@ import { render } from '@testing-library/react';
 import {
 	aFormulaireEtapeEntreprise,
 	aFormulaireEtapeStage,
-} from '~/client/components/features/OffreDeStage/Déposer/StageDeposerOffre.fixture';
+} from '~/client/components/features/OffreDeStage/Deposer/StageDeposerOffre.fixture';
 import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { mockSessionStorage } from '~/client/components/window.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';

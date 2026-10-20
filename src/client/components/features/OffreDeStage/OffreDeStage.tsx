@@ -2,15 +2,11 @@ import React from 'react';
 
 import { OffreDeStageIndexée } from '~/client/components/features/OffreDeStage/OffreDeStageIndexee';
 import { HitProps } from '~/client/components/layouts/InstantSearch/InstantSearchLayout';
-import {
-	ResultatRechercherSolution,
-} from '~/client/components/layouts/RechercherSolution/Resultat/ResultatRechercherSolution';
+import { Carte } from '~/client/dsfr';
 import { getCapitalizedItems } from '~/client/components/ui/Meilisearch/getCapitalizedItems';
 import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { DateService } from '~/client/services/date/date.service';
 import { DomainesStage } from '~/server/stages/repository/domainesStage';
-
-const IMAGE_FIXE = '/images/logos/fallback.svg';
 
 export function OffreDeStage(props: HitProps<OffreDeStageIndexée>) {
 	const stage = props.hit;
@@ -33,23 +29,20 @@ export function OffreDeStage(props: HitProps<OffreDeStageIndexée>) {
 		listeEtiquettes.push(etiquetteLocalisation);
 	}
 
-	listeEtiquettes.push(
-		(stage.dureeCategorisee && stage.dureeCategorisee !== 'Non renseigné')
-			? stage.dureeCategorisee
-			: '',
-	);
+	if (stage.dureeCategorisee && stage.dureeCategorisee !== 'Non renseigné') {
+		listeEtiquettes.push(stage.dureeCategorisee);
+	}
 
 	if (stage.dateDeDebutMin) {
 		listeEtiquettes.push(formatDate(stage.dateDeDebutMin, stage.dateDeDebutMax));
 	}
 
 	return (
-		<ResultatRechercherSolution
-			lienOffre={`/stages/${stage.slug}`}
-			intituléOffre={stage.titre}
-			logo={IMAGE_FIXE}
-			sousTitreOffre={stage.nomEmployeur}
-			étiquetteOffreList={listeEtiquettes || []}
-			key={stage.slug} />
+		<Carte
+			lien={`/stages/${stage.slug}`}
+			titre={stage.titre}
+			tags={listeEtiquettes}>
+			{stage.nomEmployeur}
+		</Carte>
 	);
 }

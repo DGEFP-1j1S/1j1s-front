@@ -1,5 +1,5 @@
 import { DomainesStage } from '~/server/stages/repository/domainesStage';
-import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonnéesStage';
+import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonneesStage';
 
 export type LocalisationStageIndexée = {
 	ville?: string

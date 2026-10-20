@@ -17,7 +17,7 @@ describe('<MeilisearchInput/>', () => {
 	  <MeilisearchInput
 				label='Ville'
 				name="ville"
-				placeholder="Exemples : Paris, Toulouse" />,
+				labelComplement="Exemples : Paris, Toulouse" />,
 		);
 		const form = screen.queryByRole('form');
 		expect(form).not.toBeInTheDocument();
@@ -28,12 +28,11 @@ describe('<MeilisearchInput/>', () => {
 	  <MeilisearchInput
 				label='Ville'
 				name="ville"
-				placeholder="Exemples : Paris, Toulouse" />,
+				labelComplement="Exemples : Paris, Toulouse" />,
 		);
-		const input = screen.getByLabelText('Ville', { selector: 'input' });
-		expect(input).toBeInTheDocument();
-		expect(input).toHaveAttribute('name', 'ville');
-		expect(input).toHaveAttribute('placeholder', 'Exemples : Paris, Toulouse');
+		const textInput = screen.getByRole('textbox', { name: /Ville Exemples : Paris, Toulouse/ })
+		expect(textInput).toBeInTheDocument();
+		expect(textInput).toHaveAttribute('name', 'ville');
 	});
 
 	it('ne contient pas de button reset quand le champ est vide', () => {
@@ -41,7 +40,7 @@ describe('<MeilisearchInput/>', () => {
 	  <MeilisearchInput
 				label='Ville'
 				name="ville"
-				placeholder="Exemples : Paris, Toulouse" />,
+				labelComplement="Exemples : Paris, Toulouse" />,
 		);
 
 		const resetButton = screen.queryByRole('button');
@@ -54,10 +53,10 @@ describe('<MeilisearchInput/>', () => {
 	  <MeilisearchInput
 				label='Ville'
 				name="ville"
-				placeholder="Exemples : Paris, Toulouse" />,
+				labelComplement="Exemples : Paris, Toulouse" />,
 		);
 		const user = userEvent.setup();
-		const input = screen.getByLabelText('Ville', { selector: 'input' });
+		const input = screen.getByLabelText(/Ville/, { selector: 'input' });
 		await user.type(input, 'pa');
 
 		const resetButton = screen.queryByRole('button');
@@ -69,10 +68,10 @@ describe('<MeilisearchInput/>', () => {
 	  <MeilisearchInput
 				label='Ville'
 				name="ville"
-				placeholder="Exemples : Paris, Toulouse" />,
+				labelComplement="Exemples : Paris, Toulouse" />,
 		);
 		const user = userEvent.setup();
-		const input = screen.getByLabelText('Ville', { selector: 'input' });
+		const input = screen.getByLabelText(/Ville/, { selector: 'input' });
 		await user.type(input, 'pa');
 
 		const resetButton = screen.queryByRole('button');
@@ -84,11 +83,11 @@ describe('<MeilisearchInput/>', () => {
 	  <MeilisearchInput
 				label='Ville'
 				name="ville"
-				placeholder="Exemples : Paris, Toulouse"
+				labelComplement="Exemples : Paris, Toulouse"
 				resetTitle={'Vider le champ ville'} />,
 		);
 		const user = userEvent.setup();
-		const input = screen.getByLabelText('Ville', { selector: 'input' });
+		const input = screen.getByLabelText(/Ville/, { selector: 'input' });
 		await user.type(input, 'pa');
 
 		const resetButton = screen.queryByRole('button');

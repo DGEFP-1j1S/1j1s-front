@@ -1,11 +1,11 @@
 import { createFailure, createSuccess, Either } from '~/server/errors/either';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 
-import { Offre, OffreFiltre, RésultatsRechercheOffre } from '../../domain/offre';
+import { Offre, OffreFiltre, ResultatsRechercheOffre } from '../../domain/offre';
 import { anOffreEmploi, aRésultatEchantillonOffre, aRésultatsRechercheOffre } from '../../domain/offre.fixture';
 import { OffreRepository } from '../../domain/offre.repository';
 
-export function searchOffreRepositoryMockResults(filtre: OffreFiltre): Either<RésultatsRechercheOffre> {
+export function searchOffreRepositoryMockResults(filtre: OffreFiltre): Either<ResultatsRechercheOffre> {
 	if (filtre.page === 1 && !filtre.motClé) {
 		return createSuccess(aRésultatEchantillonOffre());
 	}
@@ -33,7 +33,7 @@ export class MockOffreRepository implements OffreRepository {
 		return getOffreRepositoryMockResults();
 	}
 
-	async search(filtre: OffreFiltre): Promise<Either<RésultatsRechercheOffre>> {
+	async search(filtre: OffreFiltre): Promise<Either<ResultatsRechercheOffre>> {
 		return searchOffreRepositoryMockResults(filtre);
 	}
 }

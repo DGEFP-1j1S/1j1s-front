@@ -179,3 +179,9 @@ type PageTemplate =
 	| 'reference_entreprise_etape_1'
 	| 'reference_entreprise_etape_intermediaire'
 	| 'service_civique';
+
+export interface EvenementAnalytics {
+	categorie: string;
+	action: string;
+	nom?: string;
+}

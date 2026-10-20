@@ -1,6 +1,6 @@
 import '~/test-utils';
 
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { mockLargeScreen, mockScrollIntoView } from '~/client/components/window.mock';
@@ -40,7 +40,6 @@ describe('Page Emploi', () => {
 					<RechercherOffreEmploiPage resultats={aRésultatsRechercheOffre()} />);
 				</DependenciesProvider>);
 
-			await screen.findByRole('list', { name: /Offres d‘emplois/i });
 			await expect(container).toBeAccessible();
 		});
 

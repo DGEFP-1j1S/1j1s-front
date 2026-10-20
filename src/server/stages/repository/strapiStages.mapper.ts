@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto';
 
 import { RemunerationPeriode } from '~/server/stages/domain/remunerationPeriode';
 import { OffreDeStage, OffreDeStageDepot } from '~/server/stages/domain/stages';
-import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonnéesStage';
+import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonneesStage';
 import { OffreStageDepotStrapi, OffreStageResponseStrapi } from '~/server/stages/repository/strapiStages';
 
 export function mapOffreStage(response: OffreStageResponseStrapi): OffreDeStage {

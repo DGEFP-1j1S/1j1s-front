@@ -52,7 +52,6 @@ export default function VideosCampagneApprentissage({
 								<li key={index}>
 									<ButtonComponent
 										label={video.titre}
-										appearance={'quaternary'}
 										onClick={() => {
 											selectVideo(video);
 										}}

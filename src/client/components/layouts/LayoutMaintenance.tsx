@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SkipLink from '~/client/components/ui/SkipLink/SkipLink';
+import { SkipLink } from '~/client/dsfr';
 
 
 export function LayoutMaintenance({ children }: React.PropsWithChildren) {

@@ -9,7 +9,7 @@ import {
 	OffreExpérience,
 	OffreFormation,
 	OffreTypeDeContrat,
-	RésultatsRechercheOffre,
+	ResultatsRechercheOffre,
 } from '~/server/offres/domain/offre';
 import {
 	OffreResponse,
@@ -28,7 +28,7 @@ import {
 	RésultatsRéférentielCommunesResponse,
 } from '~/server/offres/infra/repositories/france-travail/apiFranceTravailReferentiel.repository';
 
-export function mapRésultatsRechercheOffre(response: RésultatsRechercheOffreResponse): RésultatsRechercheOffre {
+export function mapRésultatsRechercheOffre(response: RésultatsRechercheOffreResponse): ResultatsRechercheOffre {
 	return {
 		nombreRésultats: getNombreRésultats(response.filtresPossibles),
 		résultats: response.resultats.map(mapOffre),

@@ -1,6 +1,6 @@
 import {
 	JourSemaine,
-	TypeÉtablissement,
+	TypeEtablissement,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 import {
 	anEtablissementAccompagnement, anEtablissementAccompagnementAdresse,
@@ -40,7 +40,7 @@ describe('mapÉtablissementAccompagnement', () => {
 
 			expect(result).toEqual([anEtablissementAccompagnement({
 				nom: 'un établissement avec un type correct',
-				type: TypeÉtablissement.INFO_JEUNE,
+				type: TypeEtablissement.INFO_JEUNE,
 			})]);
 		});
 
@@ -57,9 +57,9 @@ describe('mapÉtablissementAccompagnement', () => {
 			})];
 			const result = mapEtablissementPublicAccompagnement(resultatRechercheEtablissementPublicResponse);
 
-			expect(result).toEqual([anEtablissementAccompagnement({ nom: 'CIJ', type: TypeÉtablissement.INFO_JEUNE }),
-				anEtablissementAccompagnement({ nom: 'Mission locale', type: TypeÉtablissement.MISSION_LOCALE }),
-				anEtablissementAccompagnement({ nom: 'France Travail', type: TypeÉtablissement.FRANCE_TRAVAIL })]);
+			expect(result).toEqual([anEtablissementAccompagnement({ nom: 'CIJ', type: TypeEtablissement.INFO_JEUNE }),
+				anEtablissementAccompagnement({ nom: 'Mission locale', type: TypeEtablissement.MISSION_LOCALE }),
+				anEtablissementAccompagnement({ nom: 'France Travail', type: TypeEtablissement.FRANCE_TRAVAIL })]);
 		});
 	});
 

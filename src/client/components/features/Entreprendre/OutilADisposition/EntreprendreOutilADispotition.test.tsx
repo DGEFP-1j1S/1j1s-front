@@ -13,7 +13,8 @@ describe('<EntreprendreOutilADisposition />', () => {
 		};
 		render(<EntreprendreOutilADisposition {...props} />);
 
-		const link = screen.getByRole('link', { name: `${props.linkLabel} - nouvelle fenêtre` });
+		const link = screen.getByRole('link', { name: props.linkLabel });
 		expect(link).toBeVisible();
+		expect(link).toHaveAttribute("title", `${props.linkLabel} - nouvelle fenêtre`);
 	});
 });

@@ -1,22 +1,19 @@
 import { useRouter } from 'next/router';
 import React, { FormEvent, useRef } from 'react';
 
-import styles
-	from '~/client/components/features/Accompagnement/FormulaireRecherche/FormulaireRechercheAccompagnement.module.scss';
-import { ButtonComponent } from '~/client/components/ui/Button/ButtonComponent';
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 import { ComboboxCommune } from '~/client/components/ui/Form/Combobox/ComboboxCommune/ComboboxCommune';
 import { SelectSimple } from '~/client/components/ui/Form/Select/SelectSimple';
-import { Icon } from '~/client/components/ui/Icon/Icon';
 import { useAccompagnementQuery } from '~/client/hooks/useAccompagnementQuery';
 import { mapToCommune } from '~/client/hooks/useCommuneQuery';
 import { getFormAsQuery } from '~/client/utils/form.util';
-import { TypeÉtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
+import { TypeEtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
+import { Button } from "~/client/dsfr";
 
 const typeAccompagnementListe = [
-	{ libellé: 'Agences France Travail', valeur: TypeÉtablissement.FRANCE_TRAVAIL },
-	{ libellé: 'Missions locales', valeur: TypeÉtablissement.MISSION_LOCALE },
-	{ libellé: 'Info jeunes', valeur: TypeÉtablissement.INFO_JEUNE },
+	{libellé: 'Agences France Travail', valeur: TypeEtablissement.FRANCE_TRAVAIL},
+	{libellé: 'Missions locales', valeur: TypeEtablissement.MISSION_LOCALE},
+	{libellé: 'Info jeunes', valeur: TypeEtablissement.INFO_JEUNE},
 ];
 
 export function FormulaireRechercheAccompagnement() {
@@ -47,48 +44,41 @@ export function FormulaireRechercheAccompagnement() {
 	async function updateRechercheAccompagnementQueryParams(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 		const query = getFormAsQuery(event.currentTarget, accompagnementQueryParams, false);
-		return router.push({ query }, undefined, { shallow: true });
+		return router.push({query}, undefined, {shallow: true});
 	}
 
 	return (
 		<>
-			<div className={styles.rechercherAccompagnementHint}>Tous les champs sont obligatoires</div>
 			<form
 				ref={rechercheAccompagnementForm}
+				className="border--blue fr-p-5w"
 				aria-label="Rechercher un accompagnement"
-				className={styles.rechercheAccompagnementForm}
 				onSubmit={updateRechercheAccompagnementQueryParams}>
-				<div className={styles.filtresRecherche}>
-					<div className={styles.comboboxCommune}>
+				<h2 className="fr-h4 fr-mb-3w">Trouvez un accompagnement</h2>
+				<p className="fr-hint">Tous les champs sont obligatoires sauf mention contraire</p>
+				<div className="fr-grid-row fr-grid-row--gutters">
+					<div className="fr-col-12 fr-col-md-6">
 						<ComboboxCommune
 							defaultCommune={defaultCommuneValue}
-							required />
+							required/>
 					</div>
-
-					<Champ>
-						<Champ.Label>Type d‘accompagnement<Champ.Label.Complement>Exemple : Missions locales</Champ.Label.Complement></Champ.Label>
-						<Champ.Input
-							render={SelectSimple}
-							required
-							optionsAriaLabel={'type d‘accompagnement'}
-							name="typeAccompagnement"
-							defaultValue={typeAccompagnement}>
-							{typeAccompagnementListe.map((option) =>
-								<SelectSimple.Option key={option.libellé} value={option.valeur}>{option.libellé}</SelectSimple.Option>,
-							)}
-						</Champ.Input>
-						<Champ.Error />
-					</Champ>
-
+					<div className="fr-col-12 fr-col-md-6">
+						<Champ className="fr-input-group">
+							<Champ.Label>Type d‘accompagnement<Champ.Label.Complement>Exemple : Missions
+								locales</Champ.Label.Complement></Champ.Label>
+							<Champ.Input
+								render={SelectSimple}
+								required
+								optionsList={typeAccompagnementListe}
+								name="typeAccompagnement"
+								defaultValue={typeAccompagnement}/>
+							<Champ.Error/>
+						</Champ>
+					</div>
+					<div className="fr-m-auto fr-mt-4w">
+						<Button label="Rechercher" type="submit" className="fr-btn--lg"/>
+					</div>
 				</div>
-				<div className={styles.buttonRechercher}>
-					<ButtonComponent
-						label="Rechercher"
-						icon={<Icon name="magnifying-glass" />}
-						iconPosition="right"
-						type="submit" />
-				</div>
-				
 			</form>
 		</>
 	);

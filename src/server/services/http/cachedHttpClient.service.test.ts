@@ -16,6 +16,10 @@ let bodyWithSomeParams: { extra: string; info: string; status: string };
 let bodyWithSomeOtherParams: { extra: string; info: string; status: string };
 let httpClientServiceWithCache: CachedHttpClientService;
 
+function uneErreurReseau(): Error {
+	return Object.assign(new Error('socket hang up'), { code: 'ECONNRESET' });
+}
+
 describe('CachedHttpClientService', () => {
 	beforeEach(() => {
 		httpClientServiceWithCache = new CachedHttpClientService(clientConfig);
@@ -102,7 +106,7 @@ describe('CachedHttpClientService', () => {
 				// Given
 				nock('https://some.url.com')
 					.get('/some-unreachable-endpoint')
-					.replyWithError({ code: 'ECONNRESET' });
+					.replyWithError(uneErreurReseau());
 
 				// When
 				const result = httpClientServiceWithCache.get('some-unreachable-endpoint');
@@ -134,7 +138,7 @@ describe('CachedHttpClientService', () => {
 				// Given
 				nock('https://some.url.com')
 					.post('/some-unreachable-endpoint')
-					.replyWithError({ code: 'ECONNRESET' });
+					.replyWithError(uneErreurReseau());
 
 				// When
 				const result = httpClientServiceWithCache.post('some-unreachable-endpoint', { some: 'body' });
