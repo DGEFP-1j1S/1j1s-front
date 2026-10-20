@@ -20,7 +20,7 @@ module "front_app" {
   }
 
   github_integration = {
-    repo_url = "https://github.com/DNUM-SocialGouv/1j1s-front"
+    repo_url = "https://github.com/DGEFP-1j1S/1j1s-front"
     branch   = var.branche_git
     # Auto-deploy désactivé sur tous les environnements : le déclenchement
     # est désormais explicite via les workflows GitHub Actions
