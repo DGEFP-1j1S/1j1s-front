@@ -24,8 +24,8 @@ module "front_app" {
     branch   = var.branche_git
     # Auto-deploy désactivé sur tous les environnements : le déclenchement
     # est désormais explicite via les workflows GitHub Actions
-    # (terraform-recette.yml et mise-en-production.yml) qui appellent
-    # `scalingo integration-link-manual-deploy main` après le terraform apply.
+    # (terraform-recette.yml pour develop et mise-en-production.yml pour main)
+    # qui appellent `scalingo integration-link-manual-deploy` après le terraform apply.
     # Cela évite le blocage silencieux quand un check ancillaire (Docusaurus,
     # Storybook) tourne au rouge : Scalingo attendait alors tous les checks
     # verts pour déclencher l'auto-deploy via webhook.

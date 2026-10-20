@@ -1,6 +1,6 @@
 name: Déploiement en Recette
 
-# Déploie le code Terraform lors de chaque commit/merge sur la branche "main",
+# Déploie le code Terraform lors de chaque commit/merge sur la branche "develop",
 # puis déclenche explicitement un déploiement Scalingo via l'API.
 #
 # Historiquement on s'appuyait sur l'intégration Github<=>Scalingo automatique,
@@ -10,7 +10,7 @@ name: Déploiement en Recette
 # pour rendre le pipeline explicite et déterministe.
 on:
   push:
-    branches: [ main ]
+    branches: [ develop ]
 
 jobs:
   recette:
@@ -39,4 +39,4 @@ jobs:
           app_name: ${{ secrets.TF_VAR_NOM_DE_L_APPLICATION }}
       - name: Déployer le code sur Scalingo
         run: |
-          scalingo integration-link-manual-deploy main
+          scalingo integration-link-manual-deploy develop
