@@ -1,8 +1,7 @@
-import React, { useCallback, useMemo } from 'react';
+import React, {useCallback, useMemo} from 'react';
 
-import commonStyles from '~/client/components/features/ConsulterOffre.module.scss';
+import { BackButton } from '~/client/components/features/ButtonRetour/BackButton';
 import { dureeCategorisee } from '~/client/components/features/OffreDeStage/Consulter/getDureeCategorisee';
-import { ConsulterOffreLayout } from '~/client/components/layouts/ConsulterOffre/ConsulterOffreLayout';
 import { Link } from '~/client/components/ui/Link/Link';
 import { getHtmlFromMd } from '~/client/components/ui/MarkdownToHtml/getHtmlFromMd';
 import { TagList } from '~/client/components/ui/Tag/TagList';
@@ -35,7 +34,7 @@ const mapPeriodePaiementLabel = (remunerationPeriode?: RemunerationPeriode) => {
 const LABEL_AUCUNE_REMUNERATION = 'Aucune';
 const LABEL_REMUNERATION_NON_RENSEIGNEE = 'Non renseignée';
 
-export function ConsulterOffreDeStage({ offreDeStage }: ConsulterOffreDeStageProps) {
+export function ConsulterOffreDeStage({offreDeStage}: ConsulterOffreDeStageProps) {
 	const dateService = useDependency<DateService>('dateService');
 
 	const formatDate = useCallback((dateDebutMin: string, dateDebutMax?: string) => {
@@ -84,50 +83,37 @@ export function ConsulterOffreDeStage({ offreDeStage }: ConsulterOffreDeStagePro
 	const doitAfficherPeriodeDePaiment = remuneration !== LABEL_AUCUNE_REMUNERATION && remuneration !== LABEL_REMUNERATION_NON_RENSEIGNEE;
 
 	return (
-		<ConsulterOffreLayout>
-			<header className={commonStyles.titre}>
-				<h1>{offreDeStage.titre}</h1>
-				{offreDeStage.employeur?.nom && <h2>{offreDeStage.employeur?.nom}</h2>}
-				<TagList list={listeEtiquettes} aria-label="Caractéristiques de l‘offre de stage" />
-				<div className={commonStyles.buttonAsLinkWrapper}>
-					<div className={commonStyles.buttonAsLink}>
-						{offreDeStage.urlDeCandidature && (
-							<Link
-								href={offreDeStage.urlDeCandidature}
-								appearance="asPrimaryButton">
-								Postuler
-								<Link.Icon />
-							</Link>
-						)}
-					</div>
-				</div>
-			</header>
-			<section className={commonStyles.contenu}>
-				<dl>
-					{offreDeStage.employeur?.description && (
-						<div>
-							<dt>Description de l‘employeur :</dt>
-							<dd dangerouslySetInnerHTML={{ __html: descriptionEmployeurHtmlSanitiezd }} />
-						</div>
-					)}
-					{offreDeStage.description && (
-						<div>
-							<dt>Description du poste :</dt>
-							<dd dangerouslySetInnerHTML={{ __html: descriptionHtmlSanitized }} />
-						</div>
-					)}
+		<main id="contenu" className="fr-container">
+			<BackButton/>
+			<h1 className="fr-my-2w">{offreDeStage.titre}</h1>
+			{offreDeStage.employeur?.nom && <h2>{offreDeStage.employeur?.nom}</h2>}
+			<TagList list={listeEtiquettes} aria-label="Caractéristiques de l‘offre de stage"/>
+			{offreDeStage.urlDeCandidature && (
+				<Link className='fr-btn fr-btn--lg fr-mb-3w' href={offreDeStage.urlDeCandidature}>Postuler</Link>)}
+			<section>
+				{offreDeStage.employeur?.description && (
 					<div>
-						<dt>Rémunération :</dt>
-						<dd>{remuneration}</dd>
+						<h3>Description de l‘employeur</h3>
+						<div dangerouslySetInnerHTML={{__html: descriptionEmployeurHtmlSanitiezd}}/>
 					</div>
-					{doitAfficherPeriodeDePaiment && (
-						<div>
-							<dt>Période de paiement :</dt>
-							<dd>{periodeDePaiementLabel}</dd>
-						</div>
-					)}
-				</dl>
+				)}
+				{offreDeStage.description && (
+					<div>
+						<h3>Description du poste</h3>
+						<div dangerouslySetInnerHTML={{__html: descriptionHtmlSanitized}}/>
+					</div>
+				)}
+				<div>
+					<h3>Rémunération</h3>
+					<p>{remuneration}</p>
+				</div>
+				{doitAfficherPeriodeDePaiment && (
+					<div>
+						<h3>Période de paiement</h3>
+						<p>{periodeDePaiementLabel}</p>
+					</div>
+				)}
 			</section>
-		</ConsulterOffreLayout>
+		</main>
 	);
 }
