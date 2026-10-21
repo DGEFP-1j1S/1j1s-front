@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { BackButton } from "~/client/components/features/ButtonRetour/BackButton";
 import { Link } from '~/client/components/ui/Link/Link';
 import { TagList } from '~/client/components/ui/Tag/TagList';
 import useSanitize from '~/client/hooks/useSanitize';
@@ -13,16 +14,6 @@ export function ConsulterDetailFormationInitiale({ formationInitialeDetail }: {
 }) {
 	const isFormationInitialeWithCMSDetails = isFormationWithComplementaryInformation(formationInitialeDetail);
 
-	const descriptionDirty = isFormationInitialeWithCMSDetails ? formationInitialeDetail.description : undefined;
-	const attendusParcoursupDirty = isFormationInitialeWithCMSDetails ? formationInitialeDetail.attendusParcoursup : undefined;
-	const conditionsAccesDirty = isFormationInitialeWithCMSDetails ? formationInitialeDetail.conditionsAcces : undefined;
-	const poursuiteEtudesDirty = isFormationInitialeWithCMSDetails ? formationInitialeDetail.poursuiteEtudes : undefined;
-
-	const descriptionSanitized = useSanitize(descriptionDirty);
-	const attendusParcoursupSanitized = useSanitize(attendusParcoursupDirty);
-	const conditionsAccesSanitized = useSanitize(conditionsAccesDirty);
-	const poursuiteEtudesSanitized = useSanitize(poursuiteEtudesDirty);
-
 	function getTags() {
 		const tags = [];
 		if (formationInitialeDetail.isCertifiante) tags.push('Certifiante');
@@ -32,46 +23,39 @@ export function ConsulterDetailFormationInitiale({ formationInitialeDetail }: {
 	}
 
 	return (
-		<main id="contenu" className="fr-container">
+		<>
 			<BackButton/>
 			<h1 className="fr-my-2w">{formationInitialeDetail.libelle}</h1>
 			<TagList list={getTags()} aria-label="Caractéristiques de la formation" />
-			<Link className="fr-btn fr-btn--large fr-mb-3w" href={formationInitialeDetail.url_formation}>
+			<Link className="fr-btn fr-btn--lg fr-mb-3w" href={formationInitialeDetail.url_formation}>
 				Consulter les établissements
 			</Link>
 
 			{isFormationInitialeWithCMSDetails && (
-				<section>
-					{formationInitialeDetail.description && (
-						<div>
-							<h2 className="fr-h3">Description</h2>
-							<div dangerouslySetInnerHTML={{ __html: descriptionSanitized }} />
-						</div>
-					)}
-					{formationInitialeDetail.attendusParcoursup && (
-						<div>
-							<h2 className="fr-h3">Attendus Parcoursup</h2>
-							<div dangerouslySetInnerHTML={{ __html: attendusParcoursupSanitized }} />
-						</div>
-					)}
-					{formationInitialeDetail.conditionsAcces && (
-						<div>
-							<h2 className="fr-h3">Conditions d‘accès</h2>
-							<div dangerouslySetInnerHTML={{ __html: conditionsAccesSanitized }} />
-						</div>
-					)}
-					{formationInitialeDetail.poursuiteEtudes && (
-						<div>
-							<h2 className="fr-h3">Poursuite d‘études</h2>
-							<div dangerouslySetInnerHTML={{ __html: poursuiteEtudesSanitized }} />
-						</div>
-					)}
-				</section>
+				<>
+					<SectionDetail titre="Description" contenu={formationInitialeDetail.description} />
+					<SectionDetail titre="Attendus Parcoursup" contenu={formationInitialeDetail.attendusParcoursup} />
+					<SectionDetail titre="Conditions d‘accès" contenu={formationInitialeDetail.conditionsAcces} />
+					<SectionDetail titre="Poursuite d‘études" contenu={formationInitialeDetail.poursuiteEtudes} />
+				</>
 			)}
 			{!isFormationInitialeWithCMSDetails && (
 				<p className="fr-my-2w">L‘ONISEP ne fournit pas de description pour cette formation.
 					Vous pouvez consulter les établissements pour plus d‘informations.</p>
 			)}
-		</main>
+		</>
+	);
+}
+
+function SectionDetail({ titre, contenu }: { titre: string, contenu?: string }) {
+	const contenuSanitized = useSanitize(contenu);
+
+	if (!contenu) return null;
+
+	return (
+		<div>
+			<h2 className="fr-h3">{titre}</h2>
+			<div dangerouslySetInnerHTML={{ __html: contenuSanitized }} />
+		</div>
 	);
 }
