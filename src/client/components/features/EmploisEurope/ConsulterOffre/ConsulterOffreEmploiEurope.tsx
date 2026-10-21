@@ -26,7 +26,7 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 			<ul>
 				{detailCompetenceLanguistique?.map((specification, index) => {
 					return (
-						<li key={`${specification.nomCompetence}-${index}`} className="fr-ml-2w">
+						<li key={`${specification.nomCompetence}-${index}`} className="fr-ml-2w" lang={codeLangueDeLOffre}>
 							{capitalizeFirstLetter(specification.nomCompetence)} ({specification.codeDuNiveauDeLaCompetence} - {specification.nomDuNiveauDeLaCompetence})
 						</li>
 					);
@@ -38,7 +38,7 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 	function getCompetencesLinguistiquesRequises() {
 		return competencesLinguistiques?.map((competence) => {
 			return (
-				<div key={competence.langage} className="fr-mt-1w">
+				<div key={competence.langage} className="fr-mt-1w" lang={codeLangueDeLOffre}>
 					<strong>{capitalizeFirstLetter(competence.langage)}</strong> ({competence.codeDuNiveauDeLangue} - {competence.nomDuNiveauDeLangue})
 					{getDetailLanguageCompetence(competence.detailCompetenceLanguistique)}
 				</div>
@@ -59,7 +59,7 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 			return (
 				<ul>
 					{annonceEmploiEurope.localisations.map((localisation) => (
-						<li key={`${localisation.pays}-${localisation.ville}`}>
+						<li key={`${localisation.pays}-${localisation.ville}`} lang={codeLangueDeLOffre}>
 							{getLibelleLocalisation(localisation)}
 						</li>
 					))}
@@ -97,7 +97,7 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 				list={getTagsFromAnnonce(annonceEmploiEurope)}
 							 aria-label="Caractéristiques de l‘offre d‘emploi" />
 			{annonceEmploiEurope.urlCandidature && (
-				<Link className='fr-btn fr-btn--lg' href={annonceEmploiEurope.urlCandidature}>Postuler sur Eures</Link>
+				<Link className="fr-btn fr-btn--lg fr-mb-3w" href={annonceEmploiEurope.urlCandidature}>Postuler sur Eures</Link>
 			)}
 			<section>
 				<dl className="fr-p-0">
@@ -134,7 +134,7 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 					{annonceEmploiEurope.listePermis?.length > 0 && (
 						<div className="fr-mb-2w">
 							<dt className="fr-h3 fr-mb-1w">Type de permis requis</dt>
-							<dd>{annonceEmploiEurope.listePermis.join(', ')}</dd>
+							<dd lang={codeLangueDeLOffre}>{annonceEmploiEurope.listePermis.join(', ')}</dd>
 						</div>
 					)}
 				</dl>
