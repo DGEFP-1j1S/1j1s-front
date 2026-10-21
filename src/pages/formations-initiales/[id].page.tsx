@@ -7,7 +7,6 @@ import {
 import { OnisepGeneralPartner } from '~/client/components/features/ServiceCard/OnisepGeneralPartner';
 import { Head } from '~/client/components/head/Head';
 import { Container } from '~/client/components/layouts/Container/Container';
-import { Icon } from '~/client/components/ui/Icon/Icon';
 import { useDependency } from '~/client/context/dependenciesContainer.context';
 import useAnalytics from '~/client/hooks/useAnalytics';
 import { DateService } from '~/client/services/date/date.service';
@@ -76,8 +75,7 @@ export default function ConsulterFormationInitialePage({ formationInitialeDetail
 			<Container className={styles.container}>
 				<OnisepGeneralPartner headingLevel={'h2'} />
 				<div className={styles.partnerInfo}>
-					<Icon name="information" className={styles.icon} />
-					<span>{`Idéo-fiches formations, Onisep, ${dataUpdatedDate}, sous licence ODBL`}</span>
+					<span className="fr-icon-information-line fr-mr-1w" aria-hidden="true" />{`Idéo-fiches formations, Onisep, ${dataUpdatedDate}, sous licence ODBL`}
 				</div>
 			</Container>
 		</>
