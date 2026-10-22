@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { BackButton } from '~/client/components/features/ButtonRetour/BackButton';
 import { getTagsFromAnnonce } from '~/client/components/features/EmploisEurope/tags.utils';
 import { Link } from '~/client/components/ui/Link/Link';
 import { TagList } from '~/client/components/ui/Tag/TagList';
@@ -89,7 +90,8 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 	}
 
 	return (
-		<div className="fr-container">
+		<main id="contenu" className="fr-container">
+			<BackButton/>
 			{annonceEmploiEurope.titre ? <h1 className="fr-h1 fr-my-2w" lang={codeLangueDeLOffre}>{annonceEmploiEurope.titre}</h1>
 				: <h1 className="fr-h1 fr-my-2w">Offre d’emploi sans titre</h1>}
 			{annonceEmploiEurope.nomEntreprise && <p className="fr-text--lead">{annonceEmploiEurope.nomEntreprise}</p>}
@@ -99,46 +101,44 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 			{annonceEmploiEurope.urlCandidature && (
 				<Link className="fr-btn fr-btn--lg fr-mb-3w" href={annonceEmploiEurope.urlCandidature}>Postuler sur Eures</Link>
 			)}
-			<section>
-				<dl className="fr-p-0">
-					{annonceEmploiEurope.description && (
-						<div className="fr-mb-2w">
-							<dt className="fr-h3 fr-mb-1w">Description du poste</dt>
-							<dd style={{ whiteSpace: "pre-line" }} dangerouslySetInnerHTML={{ __html: descriptionSanitized }} lang={codeLangueDeLOffre} />
-						</div>
-					)}
-					{annonceEmploiEurope.localisations.length > 0 && (
-						<div className="fr-mb-2w">
-							<dt className="fr-h3 fr-mb-1w">{annonceEmploiEurope.localisations.length > 1 ? 'Localisations' : 'Localisation'}</dt>
-							<dd>{getLocalisations()}</dd>
-						</div>
-					)}
-					{annonceEmploiEurope.langueDeTravail.length > 0 && (
-						<div className="fr-mb-2w">
-							<dt className="fr-h3 fr-mb-1w">Langue de travail</dt>
-							<dd>{capitalizeFirstLetter(annonceEmploiEurope.langueDeTravail.join(', '))}</dd>
-						</div>
-					)}
-					{competencesLinguistiques?.length > 0 && (
-						<div className="fr-mb-2w">
-							<dt className="fr-h3 fr-mb-1w">Compétences linguistiques requises</dt>
-							<dd>{getCompetencesLinguistiquesRequises()}</dd>
-						</div>
-					)}
-					{annonceEmploiEurope.laPlusLongueExperienceNecessaire !== undefined && (
-						<div className="fr-mb-2w">
-							<dt className="fr-h3 fr-mb-1w">Expérience</dt>
-							<dd>{getExperienceRequired(annonceEmploiEurope.laPlusLongueExperienceNecessaire)}</dd>
-						</div>
-					)}
-					{annonceEmploiEurope.listePermis?.length > 0 && (
-						<div className="fr-mb-2w">
-							<dt className="fr-h3 fr-mb-1w">Type de permis requis</dt>
-							<dd lang={codeLangueDeLOffre}>{annonceEmploiEurope.listePermis.join(', ')}</dd>
-						</div>
-					)}
-				</dl>
+			<section className="fr-p-0">
+				{annonceEmploiEurope.description && (
+					<div className="fr-mb-2w">
+						<h2 className="fr-h3 fr-mb-1w">Description du poste</h2>
+						<div style={{ whiteSpace: "pre-line" }} dangerouslySetInnerHTML={{ __html: descriptionSanitized }} lang={codeLangueDeLOffre} />
+					</div>
+				)}
+				{annonceEmploiEurope.localisations.length > 0 && (
+					<div className="fr-mb-2w">
+						<h2 className="fr-h3 fr-mb-1w">{annonceEmploiEurope.localisations.length > 1 ? 'Localisations' : 'Localisation'}</h2>
+						<div>{getLocalisations()}</div>
+					</div>
+				)}
+				{annonceEmploiEurope.langueDeTravail.length > 0 && (
+					<div className="fr-mb-2w">
+						<h2 className="fr-h3 fr-mb-1w">Langue de travail</h2>
+						<div>{capitalizeFirstLetter(annonceEmploiEurope.langueDeTravail.join(', '))}</div>
+					</div>
+				)}
+				{competencesLinguistiques?.length > 0 && (
+					<div className="fr-mb-2w">
+						<h2 className="fr-h3 fr-mb-1w">Compétences linguistiques requises</h2>
+						<div>{getCompetencesLinguistiquesRequises()}</div>
+					</div>
+				)}
+				{annonceEmploiEurope.laPlusLongueExperienceNecessaire !== undefined && (
+					<div className="fr-mb-2w">
+						<h2 className="fr-h3 fr-mb-1w">Expérience</h2>
+						<div>{getExperienceRequired(annonceEmploiEurope.laPlusLongueExperienceNecessaire)}</div>
+					</div>
+				)}
+				{annonceEmploiEurope.listePermis?.length > 0 && (
+					<div className="fr-mb-2w">
+						<h2 className="fr-h3 fr-mb-1w">Type de permis requis</h2>
+						<div lang={codeLangueDeLOffre}>{annonceEmploiEurope.listePermis.join(', ')}</div>
+					</div>
+				)}
 			</section>
-		</div>
+		</main>
 	);
 }
