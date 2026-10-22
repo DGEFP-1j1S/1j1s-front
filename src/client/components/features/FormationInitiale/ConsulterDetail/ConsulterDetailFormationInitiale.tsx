@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ConsulterOffreLayout } from '~/client/components/layouts/ConsulterOffre/ConsulterOffreLayout';
+import { BackButton } from "~/client/components/features/ButtonRetour/BackButton";
 import { Link } from '~/client/components/ui/Link/Link';
 import { TagList } from '~/client/components/ui/Tag/TagList';
 import useSanitize from '~/client/hooks/useSanitize';
@@ -9,22 +9,10 @@ import {
 	isFormationWithComplementaryInformation,
 } from '~/server/formations-initiales/domain/formationInitiale';
 
-import styles from './ConsulterDetailFormationInitiale.module.scss';
-
 export function ConsulterDetailFormationInitiale({ formationInitialeDetail }: {
 	formationInitialeDetail: FormationInitialeDetailAvecInformationsComplementaires
 }) {
 	const isFormationInitialeWithCMSDetails = isFormationWithComplementaryInformation(formationInitialeDetail);
-
-	const descriptionDirty = isFormationInitialeWithCMSDetails ? formationInitialeDetail.description : undefined;
-	const attendusParcoursupDirty = isFormationInitialeWithCMSDetails ? formationInitialeDetail.attendusParcoursup : undefined;
-	const conditionsAccesDirty = isFormationInitialeWithCMSDetails ? formationInitialeDetail.conditionsAcces : undefined;
-	const poursuiteEtudesDirty = isFormationInitialeWithCMSDetails ? formationInitialeDetail.poursuiteEtudes : undefined;
-
-	const descriptionSanitized = useSanitize(descriptionDirty);
-	const attendusParcoursupSanitized = useSanitize(attendusParcoursupDirty);
-	const conditionsAccesSanitized = useSanitize(conditionsAccesDirty);
-	const poursuiteEtudesSanitized = useSanitize(poursuiteEtudesDirty);
 
 	function getTags() {
 		const tags = [];
@@ -35,51 +23,39 @@ export function ConsulterDetailFormationInitiale({ formationInitialeDetail }: {
 	}
 
 	return (
-		<ConsulterOffreLayout>
-			<header className={styles.entete}>
-				<h1>{formationInitialeDetail.libelle}</h1>
-				<TagList list={getTags()} className={styles.tags} />
-			</header>
-
-			<Link href={formationInitialeDetail.url_formation} appearance="asPrimaryButton">
+		<>
+			<BackButton/>
+			<h1 className="fr-my-2w">{formationInitialeDetail.libelle}</h1>
+			<TagList list={getTags()} aria-label="Caractéristiques de la formation" />
+			<Link className="fr-btn fr-btn--lg fr-mb-3w" href={formationInitialeDetail.url_formation}>
 				Consulter les établissements
-				<Link.Icon />
 			</Link>
 
 			{isFormationInitialeWithCMSDetails && (
-				<section>
-					<dl className={styles.contenu}>
-						{formationInitialeDetail.description && (
-							<div>
-								<dt>Description</dt>
-								<dd dangerouslySetInnerHTML={{ __html: descriptionSanitized }} />
-							</div>
-						)}
-						{formationInitialeDetail.attendusParcoursup && (
-							<div>
-								<dt>Attendus Parcoursup</dt>
-								<dd dangerouslySetInnerHTML={{ __html: attendusParcoursupSanitized }} />
-							</div>
-						)}
-						{formationInitialeDetail.conditionsAcces && (
-							<div>
-								<dt>Conditions d‘accès</dt>
-								<dd dangerouslySetInnerHTML={{ __html: conditionsAccesSanitized }} />
-							</div>
-						)}
-						{formationInitialeDetail.poursuiteEtudes && (
-							<div>
-								<dt>Poursuite d‘études</dt>
-								<dd dangerouslySetInnerHTML={{ __html: poursuiteEtudesSanitized }} />
-							</div>
-						)}
-					</dl>
-				</section>
+				<>
+					<SectionDetail titre="Description" contenu={formationInitialeDetail.description} />
+					<SectionDetail titre="Attendus Parcoursup" contenu={formationInitialeDetail.attendusParcoursup} />
+					<SectionDetail titre="Conditions d‘accès" contenu={formationInitialeDetail.conditionsAcces} />
+					<SectionDetail titre="Poursuite d‘études" contenu={formationInitialeDetail.poursuiteEtudes} />
+				</>
 			)}
 			{!isFormationInitialeWithCMSDetails && (
-				<p className={styles.mentionFormationNonDocumentee}>L‘ONISEP ne fournit pas de description pour cette formation.
+				<p className="fr-my-2w">L‘ONISEP ne fournit pas de description pour cette formation.
 					Vous pouvez consulter les établissements pour plus d‘informations.</p>
 			)}
-		</ConsulterOffreLayout>
+		</>
+	);
+}
+
+function SectionDetail({ titre, contenu }: { titre: string, contenu?: string }) {
+	const contenuSanitized = useSanitize(contenu);
+
+	if (!contenu) return null;
+
+	return (
+		<div>
+			<h2 className="fr-h3">{titre}</h2>
+			<div dangerouslySetInnerHTML={{ __html: contenuSanitized }} />
+		</div>
 	);
 }

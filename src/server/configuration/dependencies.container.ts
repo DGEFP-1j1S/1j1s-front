@@ -109,6 +109,7 @@ import {
 import {
 	getApiOnisepPublicConfig,
 } from '~/server/formations-initiales/configuration/httpClient/apiOnisepPublicHttpClient.config';
+import { MockFormationInitialeRepository } from "~/server/formations-initiales/infra/mockFormationInitiale.repository";
 import {
 	OnisepFormationInitialeRepository,
 } from '~/server/formations-initiales/infra/onisepFormationInitiale.repository';
@@ -325,11 +326,15 @@ export function dependenciesContainer(): Dependencies {
 
 	const isProd = serverConfigurationService.getConfiguration().ENVIRONMENT === 'production';
 
-	const apiOnisepHttpClient = isProd
-		? new AuthenticatedHttpClientService(getApiOnisepAuthenticatedConfig(serverConfigurationService), loggerService)
-		: new PublicHttpClientService(getApiOnisepPublicConfig(serverConfigurationService));
-	const onisepFormationInitialeRepository = new OnisepFormationInitialeRepository(apiOnisepHttpClient, defaultErrorManagementService, cmsService);
-	const formationInitialeDependencies = formationInitialeDependenciesContainer(onisepFormationInitialeRepository);
+	function getOnisepFormationInitialeRepository() {
+		const apiOnisepHttpClient = isProd
+			? new AuthenticatedHttpClientService(getApiOnisepAuthenticatedConfig(serverConfigurationService), loggerService)
+			: new PublicHttpClientService(getApiOnisepPublicConfig(serverConfigurationService));
+		return new OnisepFormationInitialeRepository(apiOnisepHttpClient, defaultErrorManagementService, cmsService);
+	}
+	const formationInitialeDependencies = formationInitialeDependenciesContainer(serverConfigurationService.getConfiguration().API_ONISEP_IS_MOCK_ACTIVE
+		? new MockFormationInitialeRepository()
+		: getOnisepFormationInitialeRepository());
 
 
 	const engagementHttpClientService = new PublicHttpClientService(getApiEngagementConfig(serverConfigurationService));

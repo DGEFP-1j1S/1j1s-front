@@ -31,6 +31,7 @@ export class ConfigurationServiceFixture implements ConfigurationService {
 			API_ONISEP_ACCOUNT_PASSWORD: 'password-test',
 			API_ONISEP_APPLICATION_ID: '123456789',
 			API_ONISEP_BASE_URL: 'https://fake-onisep.fr',
+			API_ONISEP_IS_MOCK_ACTIVE: false,
 			API_TRAJECTOIRES_PRO_API_KEY: 'api-key',
 			API_TRAJECTOIRES_PRO_CLIENT_ID: 'client-id',
 			API_TRAJECTOIRES_PRO_CLIENT_SECRET: 'client-secret',
