@@ -10,7 +10,14 @@ import { anEmploiEurope } from '~/server/emplois-europe/domain/emploiEurope.fixt
 import { NiveauDEtudesLibelle } from '~/server/emplois-europe/domain/niveauDEtudes';
 import { LEVEL_CODE, LEVEL_NAME } from '~/server/emplois-europe/infra/langageEures';
 import { UNITE_EXPERIENCE_NECESSAIRE } from '~/server/emplois-europe/infra/uniteExperienceNecessaire';
-import { queries } from '~/test-utils';
+
+function getSection(name: string): HTMLElement {
+	return screen.getByRole("heading", { level: 2, name }).parentElement as HTMLElement;
+}
+
+function querySection(name: string) {
+	return screen.queryByRole("heading", { level: 2, name });
+}
 
 describe('DetailOffreEmploiEurope', () => {
 
@@ -287,14 +294,13 @@ describe('DetailOffreEmploiEurope', () => {
 			it('affiche la description de l‘offre si elle est disponible avec l‘attribut langue associée', () => {
 				const offreEmploiEurope = anEmploiEurope({ codeLangueDeLOffre: 'lb', description: 'Je suis la description' });
 
-				const { getByDescriptionTerm } = render(
+				render(
 					<DependenciesProvider sessionStorageService={aStorageService()}>
 						<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 					</DependenciesProvider>,
-					{ queries },
 				);
 
-				expect(getByDescriptionTerm('Description du poste')).toHaveTextContent('Je suis la description');
+				expect(getSection('Description du poste')).toHaveTextContent('Je suis la description');
 				expect(screen.getByText('Je suis la description')).toHaveAttribute('lang', 'lb');
 			});
 
@@ -316,28 +322,26 @@ describe('DetailOffreEmploiEurope', () => {
 			it('sanitize la description de l‘offre', () => {
 				const offreEmploiEurope = anEmploiEurope({ description: '<a href=\'javascript:alert(1)\'>Je suis la description</a>' });
 
-				const { getByDescriptionTerm } = render(
+				render(
 					<DependenciesProvider sessionStorageService={aStorageService()}>
 						<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 					</DependenciesProvider>,
-					{ queries },
 				);
 
-				expect(within(getByDescriptionTerm('Description du poste')).getByText('Je suis la description')).not.toHaveAttribute('href');
+				expect(within(getSection('Description du poste')).getByText('Je suis la description')).not.toHaveAttribute('href');
 			});
 		});
 
 		it('n‘affiche pas la description de l‘offre si elle n‘est pas disponible', () => {
 			const offreEmploiEurope = anEmploiEurope({ description: undefined });
 
-			const { queryByDescriptionTerm } = render(
+			render(
 				<DependenciesProvider sessionStorageService={aStorageService()}>
 					<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 				</DependenciesProvider>,
-				{ queries },
 			);
 
-			expect(queryByDescriptionTerm('Description du poste')).not.toBeInTheDocument();
+			expect(querySection('Description du poste')).not.toBeInTheDocument();
 		});
 	});
 
@@ -345,27 +349,25 @@ describe('DetailOffreEmploiEurope', () => {
 		it('affiche les permis requis si ils sont disponibles', () => {
 			const offreEmploiEurope = anEmploiEurope({ listePermis: ['B', 'C'] });
 
-			const { getByDescriptionTerm } = render(
+			render(
 				<DependenciesProvider sessionStorageService={aStorageService()}>
 					<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 				</DependenciesProvider>,
-				{ queries },
 			);
 
-			expect(getByDescriptionTerm('Type de permis requis')).toHaveTextContent('B, C');
+			expect(getSection('Type de permis requis')).toHaveTextContent('B, C');
 		});
 
 		it('n‘affiche pas le permis requis si il n‘est pas disponible', () => {
 			const offreEmploiEurope = anEmploiEurope({ listePermis: [] });
 
-			const { queryByDescriptionTerm } = render(
+			render(
 				<DependenciesProvider sessionStorageService={aStorageService()}>
 					<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 				</DependenciesProvider>,
-				{ queries },
 			);
 
-			expect(queryByDescriptionTerm('Type de permis requis')).not.toBeInTheDocument();
+			expect(querySection('Type de permis requis')).not.toBeInTheDocument();
 		});
 	});
 
@@ -375,40 +377,37 @@ describe('DetailOffreEmploiEurope', () => {
 			it('affiche la ville et le pays si ils sont présents', () => {
 				const offreEmploiEurope = anEmploiEurope({ localisations: [{ pays: 'France', ville: 'La Rochelle' }] });
 
-				const { getByDescriptionTerm } = render(
+				render(
 					<DependenciesProvider sessionStorageService={aStorageService()}>
 						<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 					</DependenciesProvider>,
-					{ queries },
 				);
 
-				expect(getByDescriptionTerm('Localisation')).toHaveTextContent('France, La Rochelle');
+				expect(getSection('Localisation')).toHaveTextContent('France, La Rochelle');
 			});
 
 			it('affiche seulement la ville si le pays n‘est pas renseigné' , () => {
 				const offreEmploiEurope = anEmploiEurope({ localisations: [{ ville: 'La Rochelle' }] });
 
-				const { getByDescriptionTerm } = render(
+				render(
 					<DependenciesProvider sessionStorageService={aStorageService()}>
 						<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 					</DependenciesProvider>,
-					{ queries },
 				);
 
-				expect(getByDescriptionTerm('Localisation')).toHaveTextContent('La Rochelle');
+				expect(getSection('Localisation')).toHaveTextContent('La Rochelle');
 			});
 
 			it('affiche seulement le pays si la ville n‘est pas renseignée' , () => {
 				const offreEmploiEurope = anEmploiEurope({ localisations: [{ pays: 'France' }] });
 
-				const { getByDescriptionTerm } = render(
+				render(
 					<DependenciesProvider sessionStorageService={aStorageService()}>
 						<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 					</DependenciesProvider>,
-					{ queries },
 				);
 
-				expect(getByDescriptionTerm('Localisation')).toHaveTextContent('France');
+				expect(getSection('Localisation')).toHaveTextContent('France');
 			});
 
 		});
@@ -423,16 +422,15 @@ describe('DetailOffreEmploiEurope', () => {
 				});
 
 				// When
-				const { getByDescriptionTerm } = render(
+				render(
 					<DependenciesProvider sessionStorageService={aStorageService()}>
 						<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 					</DependenciesProvider>,
-					{ queries },
 				);
 
 
 				// Then
-				const localisations = getByDescriptionTerm('Localisations');
+				const localisations = getSection('Localisations');
 				const listeLocalisation = within(localisations).getByRole('list');
 
 				const LaRochelle = within(listeLocalisation).getByText('France, La Rochelle');
@@ -447,15 +445,14 @@ describe('DetailOffreEmploiEurope', () => {
 		it('n‘affiche pas la localisation si elle n‘est pas disponible', () => {
 			const offreEmploiEurope = anEmploiEurope({ localisations: [] });
 
-			const { queryByDescriptionTerm } = render(
+			render(
 				<DependenciesProvider sessionStorageService={aStorageService()}>
 					<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 				</DependenciesProvider>,
-				{ queries },
 			);
 
-			expect(queryByDescriptionTerm('Localisation')).not.toBeInTheDocument();
-			expect(queryByDescriptionTerm('Localisations')).not.toBeInTheDocument();
+			expect(querySection('Localisation')).not.toBeInTheDocument();
+			expect(querySection('Localisations')).not.toBeInTheDocument();
 		});
 	});
 
@@ -463,27 +460,25 @@ describe('DetailOffreEmploiEurope', () => {
 		it('affiche les langues si elles sont disponibles', () => {
 			const offreEmploiEurope = anEmploiEurope({ langueDeTravail: ['Anglais', 'Français'] });
 
-			const { getByDescriptionTerm } = render(
+			render(
 				<DependenciesProvider sessionStorageService={aStorageService()}>
 					<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 				</DependenciesProvider>,
-				{ queries },
 			);
 
-			expect(getByDescriptionTerm('Langue de travail')).toHaveTextContent('Anglais, Français');
+			expect(getSection('Langue de travail')).toHaveTextContent('Anglais, Français');
 		});
 
 		it('n‘affiche pas la langue si elle n‘est pas disponible', () => {
 			const offreEmploiEurope = anEmploiEurope({ langueDeTravail: [] });
 
-			const { queryByDescriptionTerm } = render(
+			render(
 				<DependenciesProvider sessionStorageService={aStorageService()}>
 					<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 				</DependenciesProvider>,
-				{ queries },
 			);
 
-			expect(queryByDescriptionTerm('Langue de travail')).not.toBeInTheDocument();
+			expect(querySection('Langue de travail')).not.toBeInTheDocument();
 		});
 	});
 
@@ -509,14 +504,13 @@ describe('DetailOffreEmploiEurope', () => {
 				}],
 			});
 
-			const { getByDescriptionTerm } = render(
+			render(
 				<DependenciesProvider sessionStorageService={aStorageService()}>
 					<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 				</DependenciesProvider>,
-				{ queries },
 			);
 
-			const competencesLinguistiquesDescription = getByDescriptionTerm('Compétences linguistiques requises');
+			const competencesLinguistiquesDescription = getSection('Compétences linguistiques requises');
 			expect(competencesLinguistiquesDescription).toHaveTextContent('Français (B2 - avancé)');
 			expect(competencesLinguistiquesDescription).toHaveTextContent('Competence 1 (A1 - élémentaire)');
 			expect(competencesLinguistiquesDescription).toHaveTextContent('Competence 2 (C2 - maitrise)');
@@ -525,14 +519,13 @@ describe('DetailOffreEmploiEurope', () => {
 		it('n‘affiche pas les compétences s‘il n‘y en a pas', () => {
 			const offreEmploiEurope = anEmploiEurope({ competencesLinguistiques: [] });
 
-			const { queryByDescriptionTerm } = render(
+			render(
 				<DependenciesProvider sessionStorageService={aStorageService()}>
 					<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 				</DependenciesProvider>,
-				{ queries },
 			);
 
-			expect(queryByDescriptionTerm('Compétences linguistiques requises')).not.toBeInTheDocument();
+			expect(querySection('Compétences linguistiques requises')).not.toBeInTheDocument();
 		});
 	});
 
@@ -540,14 +533,13 @@ describe('DetailOffreEmploiEurope', () => {
 		it('lorsque le niveau d‘expérience n‘est pas fourni, n‘affiche pas de message', () => {
 			const offreEmploiEurope = anEmploiEurope({ laPlusLongueExperienceNecessaire: undefined });
 
-			const { queryByDescriptionTerm } = render(
+			render(
 				<DependenciesProvider sessionStorageService={aStorageService()}>
 					<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 				</DependenciesProvider>,
-				{ queries },
 			);
 
-			expect(queryByDescriptionTerm('Expérience')).not.toBeInTheDocument();
+			expect(querySection('Expérience')).not.toBeInTheDocument();
 		});
 
 		it('lorsque qu‘aucune expérience est requise', () => {
@@ -557,14 +549,13 @@ describe('DetailOffreEmploiEurope', () => {
 				},
 			});
 
-			const { getByDescriptionTerm } = render(
+			render(
 				<DependenciesProvider sessionStorageService={aStorageService()}>
 					<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 				</DependenciesProvider>,
-				{ queries },
 			);
 
-			expect(getByDescriptionTerm('Expérience')).toHaveTextContent('Aucune expérience requise');
+			expect(getSection('Expérience')).toHaveTextContent('Aucune expérience requise');
 		});
 
 		describe('lorsque l‘unité est en mois', () => {
@@ -575,14 +566,13 @@ describe('DetailOffreEmploiEurope', () => {
 					},
 				});
 
-				const { getByDescriptionTerm } = render(
+				render(
 					<DependenciesProvider sessionStorageService={aStorageService()}>
 						<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 					</DependenciesProvider>,
-					{ queries },
 				);
 
-				expect(getByDescriptionTerm('Expérience')).toHaveTextContent('1 mois');
+				expect(getSection('Expérience')).toHaveTextContent('1 mois');
 			});
 
 			it('lorsque plusieurs mois sont demandés', () => {
@@ -592,14 +582,13 @@ describe('DetailOffreEmploiEurope', () => {
 					},
 				});
 
-				const { getByDescriptionTerm } = render(
+				render(
 					<DependenciesProvider sessionStorageService={aStorageService()}>
 						<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 					</DependenciesProvider>,
-					{ queries },
 				);
 
-				expect(getByDescriptionTerm('Expérience')).toHaveTextContent('5 mois');
+				expect(getSection('Expérience')).toHaveTextContent('5 mois');
 			});
 		});
 
@@ -612,14 +601,13 @@ describe('DetailOffreEmploiEurope', () => {
 					},
 				});
 
-				const { getByDescriptionTerm } = render(
+				render(
 					<DependenciesProvider sessionStorageService={aStorageService()}>
 						<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 					</DependenciesProvider>,
-					{ queries },
 				);
 
-				expect(getByDescriptionTerm('Expérience')).toHaveTextContent('1 an');
+				expect(getSection('Expérience')).toHaveTextContent('1 an');
 			});
 
 			it('lorsque plusieurs mois sont demandées', () => {
@@ -630,14 +618,13 @@ describe('DetailOffreEmploiEurope', () => {
 					},
 				});
 
-				const { getByDescriptionTerm } = render(
+				render(
 					<DependenciesProvider sessionStorageService={aStorageService()}>
 						<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 					</DependenciesProvider>,
-					{ queries },
 				);
 
-				expect(getByDescriptionTerm('Expérience')).toHaveTextContent('5 ans');
+				expect(getSection('Expérience')).toHaveTextContent('5 ans');
 			});
 		});
 
@@ -650,14 +637,13 @@ describe('DetailOffreEmploiEurope', () => {
 					},
 				});
 
-				const { getByDescriptionTerm } = render(
+				render(
 					<DependenciesProvider sessionStorageService={aStorageService()}>
 						<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 					</DependenciesProvider>,
-					{ queries },
 				);
 
-				expect(getByDescriptionTerm('Expérience')).toHaveTextContent('1 semaine');
+				expect(getSection('Expérience')).toHaveTextContent('1 semaine');
 			});
 
 			it('lorsque plusieurs semaines sont demandées', () => {
@@ -668,14 +654,13 @@ describe('DetailOffreEmploiEurope', () => {
 					},
 				});
 
-				const { getByDescriptionTerm } = render(
+				render(
 					<DependenciesProvider sessionStorageService={aStorageService()}>
 						<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 					</DependenciesProvider>,
-					{ queries },
 				);
 
-				expect(getByDescriptionTerm('Expérience')).toHaveTextContent('5 semaines');
+				expect(getSection('Expérience')).toHaveTextContent('5 semaines');
 			});
 		});
 
@@ -688,14 +673,13 @@ describe('DetailOffreEmploiEurope', () => {
 					},
 				});
 
-				const { getByDescriptionTerm } = render(
+				render(
 					<DependenciesProvider sessionStorageService={aStorageService()}>
 						<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 					</DependenciesProvider>,
-					{ queries },
 				);
 
-				expect(getByDescriptionTerm('Expérience')).toHaveTextContent('1 jour');
+				expect(getSection('Expérience')).toHaveTextContent('1 jour');
 			});
 
 			it('lorsque plusieurs jours sont demandées', () => {
@@ -706,14 +690,13 @@ describe('DetailOffreEmploiEurope', () => {
 					},
 				});
 
-				const { getByDescriptionTerm } = render(
+				render(
 					<DependenciesProvider sessionStorageService={aStorageService()}>
 						<DetailEmploiEurope annonceEmploiEurope={offreEmploiEurope} />
 					</DependenciesProvider>,
-					{ queries },
 				);
 
-				expect(getByDescriptionTerm('Expérience')).toHaveTextContent('5 jours');
+				expect(getSection('Expérience')).toHaveTextContent('5 jours');
 			});
 		});
 	});
