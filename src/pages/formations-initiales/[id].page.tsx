@@ -74,9 +74,9 @@ export default function ConsulterFormationInitialePage({ formationInitialeDetail
 				<div className="fr-mt-4w">
 					<OnisepGeneralPartner headingLevel={'h2'} />
 				</div>
-				<div className="fr-my-2w">
-					<span className="fr-icon-information-line fr-mr-1w" aria-hidden="true" />{`Idéo-fiches formations, Onisep, ${dataUpdatedDate}, sous licence ODBL`}
-				</div>
+				<p className="fr-my-2w">
+					<span className="fr-icon-information-line fr-mr-1w" />{`Idéo-fiches formations, Onisep, ${dataUpdatedDate}, sous licence ODBL`}
+				</p>
 			</main>
 		</>
 	);
