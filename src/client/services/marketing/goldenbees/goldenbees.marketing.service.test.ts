@@ -53,4 +53,40 @@ describe("GoldenBeesMarketingService", () => {
 			expect(fire).toHaveBeenCalledTimes(1);
 		});
 	});
+
+	describe("lorsque le tag GoldenBees insère son iframe", () => {
+		it("ferme le document de l'iframe laissé ouvert par le tag", async () => {
+			// GIVEN
+			window.GbTagBuilder = gbTagBuilder;
+			lancerLeService();
+			const iframe = document.createElement("iframe");
+			iframe.title = "GoldenBees tag";
+
+			// WHEN
+			document.body.insertBefore(iframe, document.body.firstChild);
+			const close = vi.spyOn(iframe.contentDocument!, "close");
+			await new Promise((resolve) => setTimeout(resolve));
+
+			// THEN
+			expect(close).toHaveBeenCalledTimes(1);
+			iframe.remove();
+		});
+
+		it("ne touche pas aux autres iframes", async () => {
+			// GIVEN
+			window.GbTagBuilder = gbTagBuilder;
+			lancerLeService();
+			const iframe = document.createElement("iframe");
+			iframe.title = "Autre iframe";
+
+			// WHEN
+			document.body.appendChild(iframe);
+			const close = vi.spyOn(iframe.contentDocument!, "close");
+			await new Promise((resolve) => setTimeout(resolve));
+
+			// THEN
+			expect(close).not.toHaveBeenCalled();
+			iframe.remove();
+		});
+	});
 });
