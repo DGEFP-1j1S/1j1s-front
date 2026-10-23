@@ -105,13 +105,13 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 				{annonceEmploiEurope.description && (
 					<div className="fr-mb-2w">
 						<h2 className="fr-h3 fr-mb-1w">Description du poste</h2>
-						<p style={{ whiteSpace: "pre-line" }} dangerouslySetInnerHTML={{ __html: descriptionSanitized }} lang={codeLangueDeLOffre} />
+						<div style={{ whiteSpace: "pre-line" }} dangerouslySetInnerHTML={{ __html: descriptionSanitized }} lang={codeLangueDeLOffre} />
 					</div>
 				)}
 				{annonceEmploiEurope.localisations.length > 0 && (
 					<div className="fr-mb-2w">
 						<h2 className="fr-h3 fr-mb-1w">{annonceEmploiEurope.localisations.length > 1 ? 'Localisations' : 'Localisation'}</h2>
-						<p>{getLocalisations()}</p>
+						<div>{getLocalisations()}</div>
 					</div>
 				)}
 				{annonceEmploiEurope.langueDeTravail.length > 0 && (
@@ -123,7 +123,7 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 				{competencesLinguistiques?.length > 0 && (
 					<div className="fr-mb-2w">
 						<h2 className="fr-h3 fr-mb-1w">Compétences linguistiques requises</h2>
-						<p>{getCompetencesLinguistiquesRequises()}</p>
+						<div>{getCompetencesLinguistiquesRequises()}</div>
 					</div>
 				)}
 				{annonceEmploiEurope.laPlusLongueExperienceNecessaire !== undefined && (
