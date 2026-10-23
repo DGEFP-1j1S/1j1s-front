@@ -16,7 +16,7 @@ describe('BffLbaMetierService', () => {
 			const result = await metierService.rechercherMetier(metierQuery);
 
 			expect(result).toEqual(createSuccess(aMetiersList()));
-			expect(httpClientService.get).toHaveBeenCalledWith('metiers?motCle=boulang');
+			expect(httpClientService.get).toHaveBeenCalledWith('metiers-alternance?motCle=boulang');
 		});
 	});
 });
