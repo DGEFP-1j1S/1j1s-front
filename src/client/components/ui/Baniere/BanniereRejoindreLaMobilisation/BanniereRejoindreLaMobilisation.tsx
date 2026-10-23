@@ -1,16 +1,12 @@
-import styles
-	from '~/client/components/ui/Baniere/BanniereRejoindreLaMobilisation/BanniereRejoindreLaMobilisation.module.scss';
 import { Link } from '~/client/components/ui/Link/Link';
 
 export default function BanniereRejoindreLaMobilisation() {
 
 	return (
-		<section className={styles.aides}>
-			<div className={styles.aidesContainer}>
-				<h2 className={styles.aidesContainerTitre}>Les entreprises s’engagent,
-					<span className={styles.aidesContainerTitreAccroche}> une mobilisation des entreprises pour l’emploi des jeunes</span>
-				</h2>
-				<Link href="/les-entreprises-s-engagent" appearance='asSecondaryButton'>Rejoindre la mobilisation<Link.Icon /></Link>
+		<section className="fr-container fr-my-4w">
+			<div className="fr-grid-row fr-grid-row--center">
+				<h2>Les entreprises s’engagent, une mobilisation des entreprises pour l’emploi des jeunes</h2>
+				<Link className="fr-btn fr-btn--lg fr-btn--secondary" href="/les-entreprises-s-engagent">Rejoindre la mobilisation</Link>
 			</div>
 		</section>
 	);

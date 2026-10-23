@@ -94,13 +94,13 @@ export function ConsulterOffreDeStage({offreDeStage}: ConsulterOffreDeStageProps
 				{offreDeStage.employeur?.description && (
 					<div>
 						<h3>Description de l‘employeur</h3>
-						<div dangerouslySetInnerHTML={{__html: descriptionEmployeurHtmlSanitiezd}}/>
+						<p dangerouslySetInnerHTML={{__html: descriptionEmployeurHtmlSanitiezd}}/>
 					</div>
 				)}
 				{offreDeStage.description && (
 					<div>
 						<h3>Description du poste</h3>
-						<div dangerouslySetInnerHTML={{__html: descriptionHtmlSanitized}}/>
+						<p dangerouslySetInnerHTML={{__html: descriptionHtmlSanitized}}/>
 					</div>
 				)}
 				<div>
