@@ -105,37 +105,37 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 				{annonceEmploiEurope.description && (
 					<div className="fr-mb-2w">
 						<h2 className="fr-h3 fr-mb-1w">Description du poste</h2>
-						<div style={{ whiteSpace: "pre-line" }} dangerouslySetInnerHTML={{ __html: descriptionSanitized }} lang={codeLangueDeLOffre} />
+						<p style={{ whiteSpace: "pre-line" }} dangerouslySetInnerHTML={{ __html: descriptionSanitized }} lang={codeLangueDeLOffre} />
 					</div>
 				)}
 				{annonceEmploiEurope.localisations.length > 0 && (
 					<div className="fr-mb-2w">
 						<h2 className="fr-h3 fr-mb-1w">{annonceEmploiEurope.localisations.length > 1 ? 'Localisations' : 'Localisation'}</h2>
-						<div>{getLocalisations()}</div>
+						<p>{getLocalisations()}</p>
 					</div>
 				)}
 				{annonceEmploiEurope.langueDeTravail.length > 0 && (
 					<div className="fr-mb-2w">
 						<h2 className="fr-h3 fr-mb-1w">Langue de travail</h2>
-						<div>{capitalizeFirstLetter(annonceEmploiEurope.langueDeTravail.join(', '))}</div>
+						<p>{capitalizeFirstLetter(annonceEmploiEurope.langueDeTravail.join(', '))}</p>
 					</div>
 				)}
 				{competencesLinguistiques?.length > 0 && (
 					<div className="fr-mb-2w">
 						<h2 className="fr-h3 fr-mb-1w">Compétences linguistiques requises</h2>
-						<div>{getCompetencesLinguistiquesRequises()}</div>
+						<p>{getCompetencesLinguistiquesRequises()}</p>
 					</div>
 				)}
 				{annonceEmploiEurope.laPlusLongueExperienceNecessaire !== undefined && (
 					<div className="fr-mb-2w">
 						<h2 className="fr-h3 fr-mb-1w">Expérience</h2>
-						<div>{getExperienceRequired(annonceEmploiEurope.laPlusLongueExperienceNecessaire)}</div>
+						<p>{getExperienceRequired(annonceEmploiEurope.laPlusLongueExperienceNecessaire)}</p>
 					</div>
 				)}
 				{annonceEmploiEurope.listePermis?.length > 0 && (
 					<div className="fr-mb-2w">
 						<h2 className="fr-h3 fr-mb-1w">Type de permis requis</h2>
-						<div lang={codeLangueDeLOffre}>{annonceEmploiEurope.listePermis.join(', ')}</div>
+						<p lang={codeLangueDeLOffre}>{annonceEmploiEurope.listePermis.join(', ')}</p>
 					</div>
 				)}
 			</section>
