@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.362.1](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.362.0...v3.362.1) (2026-10-23)
+
+
+### Bug Fixes
+
+* **alternance:** renommer la route BFF métiers pour contourner le cache Cloudflare ([b17d176](https://github.com/DGEFP-1j1S/1j1s-front/commit/b17d1764d8863eb1917f80a32b6bfd9f95e75e5b))
+* display tarteaucitron ([2360c8f](https://github.com/DGEFP-1j1S/1j1s-front/commit/2360c8f4702583043c799317fbb82244490d38f3))
+* display tarteaucitron ([947afa6](https://github.com/DGEFP-1j1S/1j1s-front/commit/947afa6617b106c84c0515d0dec83dbeafc55a78))
+
 ## [3.362.0](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.361.0...v3.362.0) (2026-10-23)
 
 
