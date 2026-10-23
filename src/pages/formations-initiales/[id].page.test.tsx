@@ -82,7 +82,7 @@ describe('quand le feature flip est actif', () => {
 			);
 
 			// THEN
-			const onisepCardTitle = screen.getByRole('heading', { level: 2, name: /Onisep : l’information pour l’orientation/ });
+			const onisepCardTitle = screen.getByRole('heading', { level: 2, name: "Onisep : l’information pour l’orientation" });
 			expect(onisepCardTitle).toBeVisible();
 		});
 

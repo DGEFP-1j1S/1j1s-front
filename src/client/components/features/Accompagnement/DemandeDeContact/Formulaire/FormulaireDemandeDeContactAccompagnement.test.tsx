@@ -8,16 +8,16 @@ import { mockScrollIntoView, mockSmallScreen } from '~/client/components/window.
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
 import {
 	anEtablissementAccompagnementService,
-} from '~/client/services/établissementAccompagnement/etablissementAccompagnement.fixture';
+} from '~/client/services/etablissementAccompagnement/etablissementAccompagnement.fixture';
 import { aLocalisationService } from '~/client/services/localisation/localisation.service.fixture';
 import { aDemandeDeContactAccompagnement } from '~/server/demande-de-contact/domain/demandeDeContact.fixture';
 import { createFailure, createSuccess } from '~/server/errors/either';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
-import { TypeÉtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
+import { TypeEtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 import {
 	aContactÉtablissementAccompagnement,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement.fixture';
-import { aCommune } from '~/server/localisations/domain/localisationAvecCoordonnées.fixture';
+import { aCommune } from '~/server/localisations/domain/localisationAvecCoordonnees.fixture';
 
 describe('FormulaireDemandeDeContactAccompagnement', () => {
 	beforeAll(() => {
@@ -29,17 +29,17 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 	});
 
 	describe('champ email', () => {
-		it('a un champ Adresse e-mail facultatif', async () => {
+		it('a un champ Adresse e-mail optionnel', async () => {
 			render(<DependenciesProvider
 				localisationService={aLocalisationService()}
 				établissementAccompagnementService={anEtablissementAccompagnementService()}>
 				<FormulaireDemandeDeContactAccompagnement
-					contactÉtablissementAccompagnement={aContactÉtablissementAccompagnement()}
+					contactEtablissementAccompagnement={aContactÉtablissementAccompagnement()}
 					onSuccess={vi.fn()}
 					onFailure={vi.fn()} />
 			</DependenciesProvider>,
 			);
-			const inputEmail = screen.getByRole('textbox', { name: 'Adresse e-mail (facultatif) Exemple : jean.dupont@gmail.com' });
+			const inputEmail = screen.getByRole('textbox', { name: 'Adresse e-mail (optionnel) Exemple : jean.dupont@gmail.com' });
 
 			await userEvent.type(inputEmail, 's{backspace}');
 
@@ -53,14 +53,14 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 					localisationService={aLocalisationService()}
 					établissementAccompagnementService={anEtablissementAccompagnementService()}>
 					<FormulaireDemandeDeContactAccompagnement
-						contactÉtablissementAccompagnement={aContactÉtablissementAccompagnement()}
+						contactEtablissementAccompagnement={aContactÉtablissementAccompagnement()}
 						onSuccess={vi.fn()}
 						onFailure={vi.fn()} />
 				</DependenciesProvider>,
 			);
 
 			//When
-			const inputEmail = screen.getByRole('textbox', { name: 'Adresse e-mail (facultatif) Exemple : jean.dupont@gmail.com' });
+			const inputEmail = screen.getByRole('textbox', { name: 'Adresse e-mail (optionnel) Exemple : jean.dupont@gmail.com' });
 			await userEvent.type(inputEmail, '    mail@avecespace.com   ');
 
 			// Then
@@ -68,21 +68,21 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 		});
 	});
 
-	it('a un champ Commentaire facultatif', async () => {
+	it('a un champ Commentaire optionnel', async () => {
 		// Given
 		render(
 			<DependenciesProvider
 				localisationService={aLocalisationService()}
 				établissementAccompagnementService={anEtablissementAccompagnementService()}>
 				<FormulaireDemandeDeContactAccompagnement
-					contactÉtablissementAccompagnement={aContactÉtablissementAccompagnement()}
+					contactEtablissementAccompagnement={aContactÉtablissementAccompagnement()}
 					onSuccess={vi.fn()}
 					onFailure={vi.fn()} />
 			</DependenciesProvider>,
 		);
 
 		//When
-		const textarea = screen.getByRole('textbox', { name: 'Commentaires ou autres informations utiles (facultatif)' });
+		const textarea = screen.getByRole('textbox', { name: 'Commentaires ou autres informations utiles (optionnel)' });
 		await userEvent.type(textarea, 's{backspace}');
 
 		// Then
@@ -95,7 +95,7 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 				localisationService={aLocalisationService()}
 				établissementAccompagnementService={anEtablissementAccompagnementService()}>
 				<FormulaireDemandeDeContactAccompagnement
-					contactÉtablissementAccompagnement={aContactÉtablissementAccompagnement()}
+					contactEtablissementAccompagnement={aContactÉtablissementAccompagnement()}
 					onSuccess={vi.fn()}
 					onFailure={vi.fn()} />
 			</DependenciesProvider>,
@@ -124,20 +124,19 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 					localisationService={localisationService}
 					établissementAccompagnementService={établissementAccompagnementService}>
 					<FormulaireDemandeDeContactAccompagnement
-						contactÉtablissementAccompagnement={aContactÉtablissementAccompagnement()}
+						contactEtablissementAccompagnement={aContactÉtablissementAccompagnement()}
 						onSuccess={vi.fn()}
 						onFailure={vi.fn()} />
 				</DependenciesProvider>,
 			);
 
-			await user.type(screen.getByRole('textbox', { name: 'Adresse e-mail (facultatif) Exemple : jean.dupont@gmail.com' }), 'john.doe@email.com');
+			await user.type(screen.getByRole('textbox', { name: 'Adresse e-mail (optionnel) Exemple : jean.dupont@gmail.com' }), 'john.doe@email.com');
 			await user.type(screen.getByRole('textbox', { name: 'Nom Exemple : Dupont' }), 'Doe');
 			await user.type(screen.getByRole('textbox', { name: 'Prénom Exemple : Jean' }), 'John');
 			await user.type(screen.getByRole('textbox', { name: 'Téléphone Exemple : 0606060606' }), '0606060606');
-			await user.type(screen.getByRole('textbox', { name: 'Commentaires ou autres informations utiles (facultatif)' }), 'Merci de me recontacter');
+			await user.type(screen.getByRole('textbox', { name: 'Commentaires ou autres informations utiles (optionnel)' }), 'Merci de me recontacter');
 
-			await user.click(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }));
-			await user.click(screen.getByRole('option', { name: '23 ans' }));
+			await user.selectOptions(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }), '23 ans');
 
 			await user.type(screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' }), 'Paris');
 			await user.click(await screen.findByRole('option', { name: 'Paris (75006)' }));
@@ -155,7 +154,7 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 				établissement: {
 					email: 'email@missionlocaledeparis.fr',
 					nom: 'Mission locale pour l‘insertion professionnelle et sociale des jeunes (16-25 ans) - Paris - 1er 2e 3e 4e 9e 10e et 11e',
-					type: TypeÉtablissement.MISSION_LOCALE,
+					type: TypeEtablissement.MISSION_LOCALE,
 				},
 			}));
 		});
@@ -168,20 +167,19 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 					localisationService={aLocalisationService()}
 					établissementAccompagnementService={anEtablissementAccompagnementService()}>
 					<FormulaireDemandeDeContactAccompagnement
-						contactÉtablissementAccompagnement={aContactÉtablissementAccompagnement()}
+						contactEtablissementAccompagnement={aContactÉtablissementAccompagnement()}
 						onSuccess={onSuccess}
 						onFailure={vi.fn()} />
 				</DependenciesProvider>,
 			);
 
-			await user.type(screen.getByRole('textbox', { name: 'Adresse e-mail (facultatif) Exemple : jean.dupont@gmail.com' }), 'john.doe@email.com');
+			await user.type(screen.getByRole('textbox', { name: 'Adresse e-mail (optionnel) Exemple : jean.dupont@gmail.com' }), 'john.doe@email.com');
 			await user.type(screen.getByRole('textbox', { name: 'Nom Exemple : Dupont' }), 'Doe');
 			await user.type(screen.getByRole('textbox', { name: 'Prénom Exemple : Jean' }), 'John');
 			await user.type(screen.getByRole('textbox', { name: 'Téléphone Exemple : 0606060606' }), '0606060606');
-			await user.type(screen.getByRole('textbox', { name: 'Commentaires ou autres informations utiles (facultatif)' }), 'Merci de me recontacter');
+			await user.type(screen.getByRole('textbox', { name: 'Commentaires ou autres informations utiles (optionnel)' }), 'Merci de me recontacter');
 
-			await user.click(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }));
-			await user.click(screen.getByRole('option', { name: '23 ans' }));
+			await user.selectOptions(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }), '23 ans');
 
 			await user.type(screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' }), 'Paris');
 			await user.click(await screen.findByRole('option', { name: 'Paris (75006)' }));
@@ -200,7 +198,7 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 					localisationService={aLocalisationService()}
 					établissementAccompagnementService={établissementAccompagnementService}>
 					<FormulaireDemandeDeContactAccompagnement
-						contactÉtablissementAccompagnement={aContactÉtablissementAccompagnement()}
+						contactEtablissementAccompagnement={aContactÉtablissementAccompagnement()}
 						onSuccess={vi.fn()}
 						onFailure={onFailure} />
 				</DependenciesProvider>,
@@ -211,8 +209,7 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 			await user.type(screen.getByRole('textbox', { name: 'Prénom Exemple : Jean' }), 'John');
 			await user.type(screen.getByRole('textbox', { name: 'Téléphone Exemple : 0606060606' }), '0606060606');
 
-			await user.click(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }));
-			await user.click(screen.getByRole('option', { name: '23 ans' }));
+			await user.selectOptions(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }), '23 ans');
 
 			await user.type(screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' }), 'Paris');
 			await user.click(await screen.findByRole('option', { name: 'Paris (75006)' }));

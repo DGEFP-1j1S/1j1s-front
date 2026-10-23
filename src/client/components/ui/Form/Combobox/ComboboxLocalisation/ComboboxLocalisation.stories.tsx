@@ -4,7 +4,7 @@ import { DependenciesProvider } from '~/client/context/dependenciesContainer.con
 import { LocalisationService } from '~/client/services/localisation/localisation.service';
 import { createSuccess, Either } from '~/server/errors/either';
 import { aLocalisationList } from '~/server/localisations/domain/localisation.fixture';
-import { RésultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnées';
+import { RésultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnees';
 import {
 	RechercheLocalisationApiResponse,
 } from '~/server/localisations/infra/controllers/RechercheLocalisationApiResponse';

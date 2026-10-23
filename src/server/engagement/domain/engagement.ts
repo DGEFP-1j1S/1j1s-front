@@ -29,11 +29,11 @@ export interface Mission {
   description: string
   titre: string
   nomEntreprise?: string
-  étiquetteList: string[]
+  etiquetteList: string[]
   url?: string
   localisation?: string
-  débutContrat?: string
-  duréeContrat?: number
+  debutContrat?: string
+  dureeContrat?: number
   openToMinors?: string
 	logoUrl?: string
 }

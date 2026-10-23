@@ -1,4 +1,4 @@
-import { OffreDeStageDeposeeEntreprise } from '~/client/components/features/OffreDeStage/Déposer/StageDeposerOffre';
+import { OffreDeStageDeposeeEntreprise } from '~/client/components/features/OffreDeStage/Deposer/StageDeposerOffre';
 import { aStorageService } from '~/client/services/storage/storage.service.fixture';
 
 import { LocalStorageStageDeposerOffreEtape1PersistenceService } from './localStorageStageDeposerOffreEtape1Persistence.service';

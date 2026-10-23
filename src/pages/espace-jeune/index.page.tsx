@@ -1,13 +1,10 @@
-import classNames from 'classnames';
 import { GetStaticPropsResult } from 'next';
 import React, { useMemo } from 'react';
 
-import ActualiteCard from '~/client/components/features/Actualites/ActualiteCard';
 import { ServicesJeunes } from '~/client/components/features/ServicesJeunes/ServicesJeunes';
 import { Head } from '~/client/components/head/Head';
-import { Container } from '~/client/components/layouts/Container/Container';
-import { LightHero, LightHeroPrimaryText, LightHeroSecondaryText } from '~/client/components/ui/Hero/LightHero';
 import SeeMoreItemList from '~/client/components/ui/SeeMore/SeeMoreItemList';
+import { Carte } from "~/client/dsfr";
 import useAnalytics from '~/client/hooks/useAnalytics';
 import analytics from '~/pages/espace-jeune/index.analytics';
 import { Actualite } from '~/server/actualites/domain/actualite';
@@ -15,7 +12,7 @@ import { isFailure } from '~/server/errors/either';
 import { ServiceJeune } from '~/server/services-jeunes/domain/servicesJeunes';
 import { dependencies } from '~/server/start';
 
-import styles from './index.module.scss';
+import { Banner } from "~/client/components/ui/Hero/Hero";
 
 interface EspaceJeunePageProps {
 	cartesActualites: Actualite[]
@@ -28,8 +25,16 @@ export default function EspaceJeunePage({ cartesActualites, serviceJeuneList }: 
 	useAnalytics(analytics);
 
 	const articleCardList: React.ReactNode[] = useMemo(() => {
-		return cartesActualites.map((carte) => (
-			<ActualiteCard actualite={carte} headingLevel={'h3'} key={carte.titre} className={styles.carteActualite} />
+		return cartesActualites.map((carte, index) => (
+			<Carte
+				key={index}
+				titre={carte.titre}
+				lien={carte.link}
+				imageSrc={carte.bannière?.src}
+				imageAlt={carte.bannière?.alt}
+			>
+				{carte.extraitContenu}
+			</Carte>
 		));
 	}, [cartesActualites]);
 
@@ -39,32 +44,26 @@ export default function EspaceJeunePage({ cartesActualites, serviceJeuneList }: 
 				title="Actualités et services jeunes | 1jeune1solution"
 				robots="index,follow" />
 			<main id="contenu">
-
-				<h1 className={styles.title}>Actualités et services jeune</h1>
-				<section className={classNames(styles.section, styles.actualitesSection)} aria-label="les actualités">
-					<LightHero>
-						<h2>
-							<LightHeroPrimaryText>Actualités : retrouvez une sélection</LightHeroPrimaryText>
-							<LightHeroSecondaryText>des dernières actualités relatives aux jeunes</LightHeroSecondaryText>
-						</h2>
-					</LightHero>
-					<Container className={styles.cartesActualitesList}>
-						<SeeMoreItemList className={styles.seeMoreButton}
-														 seeLessAriaLabel={'Voir moins de résultats sur les actualités'}
+				<div className="fr-container">
+					<h1>Actualités et services jeune</h1>
+				</div>
+				<section aria-label="les actualités">
+					<Banner>
+						<h2>Retrouvez une sélection des dernières actualités relatives aux jeunes</h2>
+					</Banner>
+					<div className='fr-container'>
+						<SeeMoreItemList seeLessAriaLabel={'Voir moins de résultats sur les actualités'}
 														 seeMoreAriaLabel={'Voir plus de résultats sur les actualités'}
 														 numberOfVisibleItems={MAX_VISIBLE_ACTUALITES_LENGTH}
 														 itemList={articleCardList} />
-					</Container>
+					</div>
 				</section>
-				<section className={classNames(styles.section, styles.mesuresJeunesSection)} aria-label="les services jeunes">
-					<LightHero>
+				<section aria-label="les services jeunes">
+					<Banner>
 						<h2>
-							<LightHeroPrimaryText>Services jeunes, retrouvez les services conçus pour vous :</LightHeroPrimaryText>
-							<LightHeroSecondaryText>
-								entrée dans la vie professionnelle, orientation, formation, accompagnement
-							</LightHeroSecondaryText>
+							Services jeunes, retrouvez les services conçus pour vous : entrée dans la vie professionnelle, orientation, formation, accompagnement
 						</h2>
-					</LightHero>
+					</Banner>
 					<ServicesJeunes cardList={serviceJeuneList} />
 				</section>
 			</main>

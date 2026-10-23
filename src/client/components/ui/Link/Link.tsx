@@ -76,7 +76,10 @@ export function Link(props: PropsWithChildren<Link>) {
 			) : isInternalLink ? (
 				<LinkNext href={href} prefetch={prefetch} {...commonProps}>{children}</LinkNext>
 			) : (
-				<a href={href} target="_blank" rel="noreferrer" {...commonProps}>{children}</a>
+				<a href={href} target="_blank" rel="noreferrer" {...commonProps}>
+					{children}
+					<span className="fr-sr-only">- nouvelle fenêtre</span>
+				</a>
 			)}
 		</LinkContext.Provider>
 	);
@@ -116,7 +119,7 @@ function DefaultLinkIcon({ className, ...rest }: DefaultLinkIconProps) {
 
 	return (
 		<>{isInternalLink ? <Icon name="arrow-right" className={className} {...rest} /> :
-			<Icon className={className} name="external-redirection" aria-hidden="false" aria-label="- nouvelle fenêtre" {...rest} />}</>
+			<Icon className={className} name="external-redirection" {...rest} />}</>
 	);
 }
 

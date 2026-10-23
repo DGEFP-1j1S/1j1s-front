@@ -3,17 +3,18 @@
 
 $checkbox-width: 1rem;
 $checkbox-padding: .5rem;
+$checkbox-color: var(--border-action-high-blue-france);
 
 %checkbox {
   width: $checkbox-width;
   aspect-ratio: 1;
   border-radius: 0.25rem;
-  border: 1px solid utilities.$color-text-primary;
+  border: 1px solid $checkbox-color;
   vertical-align: baseline;
 }
 
 %checkbox-checked {
-  background-color: utilities.$color-primary;
+  background-color: $checkbox-color;
   background-image: url("data:image/svg+xml;charset=utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23fff' d='M10 15.17l9.2-9.2 1.4 1.42L10 18l-6.36-6.36 1.4-1.42z'/></svg>");
   background-size: 100%;
   background-position: center;

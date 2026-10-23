@@ -18,14 +18,14 @@ import {
 	FormationFiltre,
 	FORMATION_NIVEAU_INDIFFERENT,
 	NiveauRequisValeur,
-	RésultatRechercheFormation,
+	ResultatRechercheFormation,
 } from '~/server/formations/domain/formation';
 import { removeUndefinedKeys } from '~/server/removeUndefinedKeys.utils';
 import { dependencies } from '~/server/start';
 
 type RechercherFormationApprentissagePageProps = {
 	erreurRecherche?: never
-	resultats: Array<RésultatRechercheFormation>
+	resultats: Array<ResultatRechercheFormation>
 } | {
 	erreurRecherche: Erreur
 	resultats?: never

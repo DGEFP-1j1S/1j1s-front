@@ -1,15 +1,13 @@
 import classNames from 'classnames';
 import React, { ComponentPropsWithoutRef } from 'react';
 
-import styles from './Label.module.scss';
-
 type LabelProps = ComponentPropsWithoutRef<'label'> & {
 	label?: string
 }
 
 export function Label({ className, children, ...rest }: LabelProps) {
 	return (
-		<label className={classNames(styles.label, className)} {...rest}>
+		<label className={classNames('fr-label', className)} {...rest}>
 			{children}
 		</label>
 	);
@@ -18,7 +16,7 @@ export function Label({ className, children, ...rest }: LabelProps) {
 type ComplementProps = ComponentPropsWithoutRef<'small'>
 
 function Complement({ className, ...props }: ComplementProps) {
-	return <small className={classNames(styles.complement, className)} {...props} />;
+	return <small className={classNames('fr-hint-text', className)} {...props} />;
 }
 
 function Required() {
@@ -32,5 +30,3 @@ function Optional() {
 Label.Complement = Complement;
 Label.Required = Required;
 Label.Optional = Optional;
-
-

@@ -1,4 +1,4 @@
-export interface RésultatRechercheFormation {
+export interface ResultatRechercheFormation {
 	adresse?: string
 	titre: string
 	nomEntreprise?: string

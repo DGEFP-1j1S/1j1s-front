@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Bannière from '~/client/components/features/MesuresEmployeurs/Bannière/Bannière';
-import styles from '~/client/components/features/MesuresEmployeurs/MesuresEmployeurs.module.scss';
 import { Head } from '~/client/components/head/Head';
-import { FlippingCard } from '~/client/components/ui/Card/Flipping/FlippingCard';
 import useSanitize from '~/client/hooks/useSanitize';
 import { MesureEmployeur } from '~/server/mesures-employeurs/domain/mesureEmployeur';
+import { Carte } from "~/client/dsfr";
+import MarkdownToHtml from "~/client/components/ui/MarkdownToHtml/MarkdownToHtml";
+import { Banner } from "~/client/components/ui/Hero/Hero";
 
 export interface MesuresEmployeursProps {
 	mesureEmployeurList: Array<MesureEmployeur>;
@@ -19,12 +19,16 @@ export function MesuresEmployeursComponent({ mesureEmployeurList }: MesuresEmplo
 				description="Plus de 400 000 offres d‘emplois et d‘alternances sélectionnées pour vous"
 				robots="index,follow" />
 			<main id="contenu">
-				<Bannière />
-				<section className={styles.dispositifs}>
-					<ul className={styles.cartes}>
-						{mesureEmployeurList.map((carte) => (
-							<li key={carte.titre}>
-								<CarteMesureEmployeur carte={carte} />
+				<Banner>
+					<h1>
+						Je découvre toutes les mesures du plan 1 jeune 1 solution pour m‘aider à recruter plus facilement
+					</h1>
+				</Banner>
+				<section className='fr-container fr-mb-4w'>
+					<ul className='fr-grid-row fr-grid-row--gutters'>
+						{mesureEmployeurList.map((mesureEmployeur, index) => (
+							<li key={index} className="fr-col-lg-4 fr-col-md-6 fr-col-12">
+								<MesureEmployeurCard mesureEmployeur={mesureEmployeur} />
 							</li>
 						))}
 					</ul>
@@ -34,26 +38,29 @@ export function MesuresEmployeursComponent({ mesureEmployeurList }: MesuresEmplo
 	);
 }
 
-interface CarteMesureEmployeurProps {
-	carte: MesureEmployeur;
+interface MesureEmployeurCardProps {
+	mesureEmployeur: MesureEmployeur;
 }
 
-function CarteMesureEmployeur({ carte }: CarteMesureEmployeurProps) {
+function MesureEmployeurCard({ mesureEmployeur }: MesureEmployeurCardProps) {
 	const {
-		titre: dirtyTitre,
 		banniere,
 		link,
 		pourQui,
-	} = carte;
+		titre: dirtyTitre,
+	} = mesureEmployeur;
 	const titre = useSanitize(dirtyTitre);
 
 	return (
-		<FlippingCard
-			imageUrl={banniere?.src}
-			link={link}
-			titleAs={'h2'}
-			title={titre}
-			flippingCardContent={pourQui}
-			className={styles.carteMesureEmployeur} />
+		<Carte
+			titre={titre}
+			titreAs={'h2'}
+			imageSrc={banniere?.src ?? '/images/image-par-defaut-carte.webp'}
+			imageAlt={banniere?.alt ?? ""}
+			lien={link}
+			descriptionAs="div"
+		>
+			<MarkdownToHtml markdown={pourQui} />
+		</Carte>
 	);
 }

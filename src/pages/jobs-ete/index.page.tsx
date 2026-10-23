@@ -18,13 +18,13 @@ import { Erreur } from '~/server/errors/erreur.types';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { changeStatusCodeWhenErrorOcurred } from '~/server/errors/handleGetServerSidePropsError';
 import { JobEteFiltre } from '~/server/jobs-ete/domain/jobEte';
-import { DomaineCode, MAX_PAGE_ALLOWED_BY_FRANCE_TRAVAIL, RésultatsRechercheOffre } from '~/server/offres/domain/offre';
+import { DomaineCode, MAX_PAGE_ALLOWED_BY_FRANCE_TRAVAIL, ResultatsRechercheOffre } from '~/server/offres/domain/offre';
 import { mapLocalisation } from '~/server/offres/infra/controller/offreFiltre.mapper';
 import { dependencies } from '~/server/start';
 
 interface RechercherJobsEtePageProps {
 	erreurRecherche?: Erreur
-	resultats?: RésultatsRechercheOffre
+	resultats?: ResultatsRechercheOffre
 }
 
 export default function RechercherJobsEtePage(props: RechercherJobsEtePageProps) {

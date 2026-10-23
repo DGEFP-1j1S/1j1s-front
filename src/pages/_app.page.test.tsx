@@ -3,7 +3,7 @@ import { Router } from 'next/router';
 import React from 'react';
 
 import { createMockRouter, mockUseRouter } from '~/client/components/useRouter.mock';
-import { mockUUID } from '~/client/components/window.mock';
+import { mockSmallScreen, mockUUID } from '~/client/components/window.mock';
 import { Dependencies } from '~/client/dependencies.container';
 import { aCookiesService } from '~/client/services/cookies/cookies.service.fixture';
 
@@ -17,6 +17,7 @@ vi.mock('~/client/dependencies.container', () => ({ default: () => mockDependenc
 
 describe('<App />', () => {
 	beforeAll(() => {
+		mockSmallScreen();
 		mockUUID();
 	});
 	it('focus l’ancre au render', async () => {

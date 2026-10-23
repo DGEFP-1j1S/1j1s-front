@@ -1,8 +1,8 @@
 import { anHttpClientService } from '~/client/services/httpClientService.fixture';
 import { BffLocalisationService } from '~/client/services/localisation/bff.localisation.service';
 import { createSuccess } from '~/server/errors/either';
-import { RésultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnées';
-import { aRésultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnées.fixture';
+import { ResultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnees';
+import { aRésultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnees.fixture';
 
 describe('BffLocalisationService', () => {
 	describe('isInvalidLocalisationQuery', () => {
@@ -145,7 +145,7 @@ describe('BffLocalisationService', () => {
 			const httpClientService = anHttpClientService();
 			const bffLocalisationService = new BffLocalisationService(httpClientService);
 			const query = 'pari';
-			const expected: RésultatsRechercheCommune = {
+			const expected: ResultatsRechercheCommune = {
 				résultats: [
 					{
 						code: '75056',

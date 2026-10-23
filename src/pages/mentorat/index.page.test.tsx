@@ -62,9 +62,10 @@ describe('MentoratPage', () => {
 				<MentoratPage />
 			</DependenciesProvider>,
 		);
-		const linkAsButton = screen.getByRole('link', { name: 'Trouver mon mentor - nouvelle fenêtre' });
+		const linkAsButton = screen.getByRole('link', { name: "Trouver mon mentor - nouvelle fenêtre" });
 
 		expect(linkAsButton).toBeVisible();
 		expect(linkAsButton).toHaveAttribute('href', 'https://www.1jeune1mentor.fr/formulaire?1jeune1solution');
+		expect(linkAsButton).toHaveAttribute("title", "Trouver mon mentor - nouvelle fenêtre");
 	});
 });

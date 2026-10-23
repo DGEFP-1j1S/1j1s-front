@@ -24,6 +24,7 @@ export default class ServerConfigurationService implements ConfigurationService 
 			API_ONISEP_ACCOUNT_PASSWORD: ServerConfigurationService.getOrThrowError('API_ONISEP_ACCOUNT_PASSWORD'),
 			API_ONISEP_APPLICATION_ID: ServerConfigurationService.getOrThrowError('API_ONISEP_APPLICATION_ID'),
 			API_ONISEP_BASE_URL: ServerConfigurationService.getOrThrowError('API_ONISEP_BASE_URL'),
+			API_ONISEP_IS_MOCK_ACTIVE: Boolean(Number(ServerConfigurationService.getOrDefault('API_ONISEP_IS_MOCK_ACTIVE', '0'))),
 			API_TRAJECTOIRES_PRO_API_KEY: ServerConfigurationService.getOrThrowError('API_TRAJECTOIRES_PRO_API_KEY'),
 			API_TRAJECTOIRES_PRO_CLIENT_ID: ServerConfigurationService.getOrThrowError('API_TRAJECTOIRES_PRO_CLIENT_ID'),
 			API_TRAJECTOIRES_PRO_CLIENT_SECRET: ServerConfigurationService.getOrThrowError('API_TRAJECTOIRES_PRO_CLIENT_SECRET'),
@@ -114,6 +115,7 @@ export interface EnvironmentVariables {
 	readonly API_ONISEP_ACCOUNT_EMAIL: string
 	readonly API_ONISEP_ACCOUNT_PASSWORD: string
 	readonly API_ONISEP_APPLICATION_ID: string
+	readonly API_ONISEP_IS_MOCK_ACTIVE: boolean
 	readonly API_FRANCE_TRAVAIL_IS_MOCK_ACTIVE: boolean
 	readonly API_FRANCE_TRAVAIL_OFFRES_URL: string
 	readonly API_FRANCE_TRAVAIL_REFERENTIEL_URL: string

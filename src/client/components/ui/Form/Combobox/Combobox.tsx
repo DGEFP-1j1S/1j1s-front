@@ -224,6 +224,7 @@ export const Combobox = React.forwardRef<HTMLInputElement, ComboboxProps>(functi
 					required={required}
 					{...inputProps} />
 				<button
+					className='fr-input'
 					onClick={() => {
 						dispatch(new ComboboxActionToggleList());
 						inputRef.current?.focus();
@@ -237,6 +238,7 @@ export const Combobox = React.forwardRef<HTMLInputElement, ComboboxProps>(functi
 					<Icon name={'angle-down'} />
 				</button>
 				<ul
+					className="list-style-none fr-pl-0 fr-pt-1w"
 					role="listbox"
 					id={listboxId}
 					hidden={!open}

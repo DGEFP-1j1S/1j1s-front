@@ -46,8 +46,8 @@ describe('<MeilisearchPagination/>', () => {
 						<MeiliSearchPagination numberOfResultPerPage={15} onPageChange={mockFunctionScrollToTopOfListeDesResultats} />,
 					);
 					// THEN
-					expect(screen.getByRole('link', { name: REVENIR_A_LA_PREMIERE_PAGE }).getAttribute('aria-disabled')).toBe('true');
-					expect(screen.getByRole('link', { name: REVENIR_A_LA_PAGE_PRECEDENTE }).getAttribute('aria-disabled')).toBe('true');
+					expect(screen.getByText("Première page").getAttribute('aria-disabled')).toBe('true');
+					expect(screen.getByText("Page précédente").getAttribute('aria-disabled')).toBe('true');
 					expect(screen.getByRole('link', { name: ALLER_A_LA_PAGE_SUIVANTE }).getAttribute('aria-disabled')).toBe('false');
 					expect(screen.getByRole('link', { name: ALLER_A_LA_DERNIERE_PAGE }).getAttribute('aria-disabled')).toBe('false');
 				});
@@ -127,8 +127,8 @@ describe('<MeilisearchPagination/>', () => {
 					// THEN
 					expect(screen.getByRole('link', { name: REVENIR_A_LA_PREMIERE_PAGE }).getAttribute('aria-disabled')).toBe('false');
 					expect(screen.getByRole('link', { name: REVENIR_A_LA_PAGE_PRECEDENTE }).getAttribute('aria-disabled')).toBe('false');
-					expect(screen.getByRole('link', { name: ALLER_A_LA_PAGE_SUIVANTE }).getAttribute('aria-disabled')).toBe('true');
-					expect(screen.getByRole('link', { name: ALLER_A_LA_DERNIERE_PAGE }).getAttribute('aria-disabled')).toBe('true');
+					expect(screen.getByText("Page suivante" ).getAttribute('aria-disabled')).toBe('true');
+					expect(screen.getByText("Dernière page" ).getAttribute('aria-disabled')).toBe('true');
 				});
 
 				it('n’affiche pas "…" dans le document', async () => {

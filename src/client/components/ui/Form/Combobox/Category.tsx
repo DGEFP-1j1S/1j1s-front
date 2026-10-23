@@ -42,8 +42,8 @@ export const Category = React.forwardRef<HTMLUListElement, CategoryProps>(functi
 
 	return (
 		<li role="none" hidden={hidden}>
-			{name}
-			<ul role="group" aria-label={name} {...ulProps} ref={outerRef}>
+			<span className="fr-ml-1w fr-text--bold">{name}</span>
+			<ul role="group" className="list-style-none fr-pl-0" aria-label={name} {...ulProps} ref={outerRef}>
 				{children}
 			</ul>
 		</li>

@@ -33,7 +33,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 			</DependenciesProvider>,
 			);
 
-			const displayedTagsList = screen.getByRole('list', { name: 'Caractéristiques de l‘offre' });
+			const displayedTagsList = screen.getByRole('list');
 			const displayedTagsTextContents = within(displayedTagsList).queryAllByRole('listitem').map((listItem) => listItem.textContent);
 			expect(displayedTagsTextContents).toContain(displayedFormattedDomain);
 			expect(displayedTagsTextContents).not.toContain('Non Renseigné');
@@ -51,7 +51,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 			</DependenciesProvider>,
 			);
 
-			const displayedTagsList = screen.getByRole('list', { name: 'Caractéristiques de l‘offre' });
+			const displayedTagsList = screen.getByRole('list');
 			const displayedTagsTextContents = within(displayedTagsList).queryAllByRole('listitem').map((listItem) => listItem.textContent);
 			expect(displayedTagsTextContents).toContain(localisationWithCity.ville);
 		});
@@ -64,7 +64,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 				<OffreDeStage hit={offreStage} sendEvent={someDummy} />
 			</DependenciesProvider>);
 
-			const displayedTagsList = screen.getByRole('list', { name: 'Caractéristiques de l‘offre' });
+			const displayedTagsList = screen.getByRole('list');
 			const displayedTagsTextContents = within(displayedTagsList).queryAllByRole('listitem').map((listItem) =>
 				listItem.textContent);
 			expect(displayedTagsTextContents).toContain(localisationWithDepartment.departement);
@@ -82,7 +82,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 				<OffreDeStage hit={offreStage} sendEvent={someDummy} />
 			</DependenciesProvider>);
 
-			const displayedTagsList = screen.getByRole('list', { name: 'Caractéristiques de l‘offre' });
+			const displayedTagsList = screen.getByRole('list');
 			const displayedTagsTextContents = within(displayedTagsList).queryAllByRole('listitem').map((listItem) =>
 				listItem.textContent);
 			expect(displayedTagsTextContents).toContain(localisationWithRegion.region);
@@ -97,7 +97,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 				<OffreDeStage hit={offreStage} sendEvent={someDummy} />
 			</DependenciesProvider>);
 
-			const displayedTagsList = screen.getByRole('list', { name: 'Caractéristiques de l‘offre' });
+			const displayedTagsList = screen.getByRole('list');
 			const displayedTagsTextContents = within(displayedTagsList).queryAllByRole('listitem').map((listItem) =>
 				listItem.textContent);
 			expect(displayedTagsTextContents).not.toContain('Non renseigné');
@@ -116,7 +116,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 					<OffreDeStage hit={offreStage} sendEvent={someDummy} />
 				</DependenciesProvider>);
 
-				const tags = screen.getByRole('list', { name: 'Caractéristiques de l‘offre' });
+				const tags = screen.getByRole('list');
 				const tagDateDebut = within(tags).getAllByRole('listitem')
 					.find((listItem) => listItem.textContent === 'Débute le 1 septembre 2024');
 				expect(tagDateDebut).toBeVisible();
@@ -141,7 +141,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 					<OffreDeStage hit={offreStage} sendEvent={someDummy} />
 				</DependenciesProvider>);
 
-				const tags = screen.getByRole('list', { name: 'Caractéristiques de l‘offre' });
+				const tags = screen.getByRole('list');
 				const tagDateDebut = within(tags).getAllByRole('listitem')
 					.find((listItem) => listItem.textContent === 'Débute entre le 1 septembre 2024 et le 30 septembre 2024');
 				expect(tagDateDebut).toBeVisible();
@@ -156,7 +156,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 					<OffreDeStage hit={offreStage} sendEvent={someDummy} />
 				</DependenciesProvider>);
 
-				const tags = screen.getByRole('list', { name: 'Caractéristiques de l‘offre' });
+				const tags = screen.getByRole('list');
 				const tagDateDebut = within(tags).getAllByRole('listitem')
 					.find((listItem) => listItem.textContent?.includes('Débute le')) ?? null;
 				expect(tagDateDebut).not.toBeInTheDocument();
@@ -164,7 +164,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 		});
 	});
 
-	describe('quand il n’y a aucune information concernant les domaines, la localisation, la duréecategorisée', () => {
+	describe('quand il n’y a aucune information concernant les domaines, la localisation, la durée categorisée', () => {
 		it('n’affiche aucune étiquettes les concernant, seule la date de début est affichée', () => {
 			const offreStage = anOffreDeStageIndexee({
 				domaines: [],
@@ -182,7 +182,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 				<OffreDeStage hit={offreStage} sendEvent={someDummy} />
 			</DependenciesProvider>);
 
-			const displayedTagsList = screen.getByRole('list', { name: 'Caractéristiques de l‘offre' });
+			const displayedTagsList = screen.getByRole('list');
 			const displayedTagsTextContents = within(displayedTagsList).queryAllByRole('listitem').map((listItem) => listItem.textContent);
 			expect(displayedTagsTextContents).toHaveLength(1);
 			expect(displayedTagsTextContents[0]).toBe('Débute le 1 septembre 2024');

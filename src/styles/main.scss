@@ -1,6 +1,3 @@
-// Core
-@use "reset/styles";
-
 // Base
 @use "theme/styles" as theme-styles;
 @use "typography/styles" as typography-styles;
@@ -19,6 +16,10 @@ select,
 textarea,
 video[controls] {
   @extend %outlined;
+}
+
+* {
+  word-break: break-word;
 }
 
 .sr-only {
@@ -59,5 +60,88 @@ abbr[title] {
 
 input {
   font-family: inherit;
+}
+
+hr {
+  height: 8px;
+  background-color: var(--background-active-blue-france);
+}
+
+.height--full {
+  height: 100%;
+}
+
+.width--full {
+  width: 100%;
+}
+
+.width--fill-content {
+  width: fit-content;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-grow--1 {
+  flex-grow: 1;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.align-items--center {
+  align-items: center;
+}
+
+.align-self--start {
+  align-self: start;
+}
+
+.img-contain {
+  object-fit: contain !important;
+  width: 100%;
+}
+
+.img-cover {
+  object-fit: cover;
+  width: 100%;
+}
+
+.border--blue {
+  border: 1px solid var(--border-action-low-blue-france);
+}
+
+.list-style-none {
+  list-style: none !important;
+}
+
+.background--green {
+  background-color: var(--background-alt-green-bourgeon);
+}
+
+.background--employeur {
+  background-color: var(--background-action-low-green-bourgeon);
+}
+
+.border-top--employeur {
+  border-top: 8px solid var(--background-action-low-green-bourgeon);
+}
+
+.background--blue-light {
+  background-color: var(--background-alt-blue-france);
+}
+
+.background--blue-ecume {
+  background-color: var(--background-action-low-blue-ecume);
+}
+
+.background--blue-france {
+  background-color: var(--background-action-low-blue-france);
+}
+
+.text-align--right {
+  text-align: right;
 }
 

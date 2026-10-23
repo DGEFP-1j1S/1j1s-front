@@ -4,14 +4,16 @@ import { useRefinementList, UseRefinementListProps } from 'react-instantsearch';
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 import { SelectMultiple } from '~/client/components/ui/Form/Select/SelectMultiple';
 import { getCapitalizedItems } from '~/client/components/ui/Meilisearch/getCapitalizedItems';
+import { Label } from "~/client/components/ui/Form/Label";
 
 type MeilisearchSelectMultipleProps = Partial<Pick<HTMLElement, 'className'>> & {
 	label: string
+	labelComplement?: string
 }
 
 export function MeilisearchSelectMultiple(props: UseRefinementListProps & MeilisearchSelectMultipleProps) {
 	const { refine, items } = useRefinementList(props);
-	const { label, className } = props;
+	const { label, labelComplement } = props;
 
 	const valuesSelected = useMemo(() => {
 		return items.filter((item) => item.isRefined)
@@ -24,9 +26,10 @@ export function MeilisearchSelectMultiple(props: UseRefinementListProps & Meilis
 	}, [refine]);
 
 	return (
-		<Champ className={className}>
+		<Champ className='fr-select-group'>
 			<Champ.Label>
 				{label}
+				{labelComplement && <Label.Complement>{labelComplement}</Label.Complement>}
 			</Champ.Label>
 			<Champ.Input
 				render={SelectMultiple}

@@ -1,6 +1,6 @@
 import { EmploiFiltre } from '~/server/emplois/domain/emploi';
 import { createSuccess, Either } from '~/server/errors/either';
-import { isOffreÉchantillonFiltre, Offre, OffreId, RésultatsRechercheOffre } from '~/server/offres/domain/offre';
+import { isOffreÉchantillonFiltre, Offre, OffreId, ResultatsRechercheOffre } from '~/server/offres/domain/offre';
 import { OffreRepository } from '~/server/offres/domain/offre.repository';
 import {
 	mapOffre,
@@ -57,7 +57,7 @@ export class ApiFranceTravailOffreRepository implements OffreRepository {
 		}
 	}
 
-	async search(emploiFiltre: EmploiFiltre): Promise<Either<RésultatsRechercheOffre>> {
+	async search(emploiFiltre: EmploiFiltre): Promise<Either<ResultatsRechercheOffre>> {
 		if (isOffreÉchantillonFiltre(emploiFiltre)) return this.getÉchantillonOffreEmploi(emploiFiltre);
 		return this.getOffreEmploiRecherche(emploiFiltre);
 	}

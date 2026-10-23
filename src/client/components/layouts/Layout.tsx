@@ -1,20 +1,24 @@
 import React, { useRef } from 'react';
 
-import Footer from '~/client/components/layouts/Footer/Footer';
-import { Header } from '~/client/components/layouts/Header/Header';
-import Bouée from '~/client/components/ui/Bouée/Bouée';
-import SkipLink from '~/client/components/ui/SkipLink/SkipLink';
+import { FilDAriane } from "~/client/components/layouts/FilDAriane/FilDAriane";
+import { FilDArianePageProps } from "~/client/components/layouts/FilDAriane/filDAriane.config";
+import { Footer, Header, SkipLink } from '~/client/dsfr';
 
-export function Layout({ children }: React.PropsWithChildren) {
+interface LayoutProps {
+	pageProps?: FilDArianePageProps;
+	afficherFilDAriane?: boolean;
+}
+
+export function Layout({ children, pageProps, afficherFilDAriane = true }: React.PropsWithChildren<LayoutProps>) {
 	const surface = useRef<HTMLDivElement>(null);
 
 	return (
 		<div ref={ surface }>
 			<SkipLink />
 			<Header />
+			{afficherFilDAriane && <FilDAriane pageProps={pageProps} />}
 			{children}
 			<Footer />
-			<Bouée surface={ surface } />
 		</div>
 	);
 }

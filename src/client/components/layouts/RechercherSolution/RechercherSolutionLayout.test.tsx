@@ -167,7 +167,7 @@ describe('RechercherSolutionLayout', () => {
 
 					const footnote = screen.getByTestId('footnote');
 					expect(footnote).toBeVisible();
-					const pagination = screen.getByRole('navigation', { name: 'pagination' });
+					const pagination = screen.getByRole('navigation', { name: 'Pagination' });
 					expect(pagination).toBeVisible();
 				});
 			});

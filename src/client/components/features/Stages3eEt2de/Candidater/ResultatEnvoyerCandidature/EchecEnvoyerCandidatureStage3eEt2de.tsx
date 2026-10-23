@@ -19,7 +19,6 @@ export function EchecEnvoyerCandidatureStage3eEt2de(props: {
 			{props.etatSoumission === ErreurMetier.CONFLIT_D_IDENTIFIANT ? DESCRIPTION_ERREUR_CONFLIT_D_IDENTIFIANT : DESCRIPTION_ERREUR_AUTRE}
 			<div className={styles.boutonsCTA}>
 				<ButtonComponent
-					appearance="primary"
 					label="Retour au formulaire"
 					onClick={props.retourFormulaire}
 					className={styles.boutonRetourFormulaire} />
@@ -27,8 +26,7 @@ export function EchecEnvoyerCandidatureStage3eEt2de(props: {
 					label="Retour à la recherche"
 					aria-label="Retour à la recherche"
 					icon={undefined}
-					className={styles.boutonRetourRecherche}
-					appearance="secondary" />
+					className={styles.boutonRetourRecherche} />
 			</div>
 		</Container>
 	);

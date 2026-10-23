@@ -2,7 +2,7 @@ import { anOffreDeStageDepot } from '~/client/services/stage/stageService.fixtur
 import { RemunerationPeriode } from '~/server/stages/domain/remunerationPeriode';
 import { anOffreDeStage } from '~/server/stages/domain/stages.fixture';
 import { DomainesStage } from '~/server/stages/repository/domainesStage';
-import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonnéesStage';
+import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonneesStage';
 import { aStrapiOffreDeStage, aStrapiOffreDeStageDepot } from '~/server/stages/repository/strapiStages.fixture';
 import { mapOffreStage, mapToStrapiDepotOffreDeStage } from '~/server/stages/repository/strapiStages.mapper';
 

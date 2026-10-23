@@ -5,7 +5,7 @@ import nock from 'nock';
 
 import { rechercherCommuneHandler } from '~/pages/api/communes/index.controller';
 import { ErrorHttpResponse } from '~/pages/api/utils/response/response.type';
-import { RésultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnées';
+import { ResultatsRechercheCommune } from '~/server/localisations/domain/localisationAvecCoordonnees';
 import { aRechercheAdresseResponse } from '~/server/localisations/infra/repositories/apiAdresse.fixture';
 
 describe('rechercherCommuneHandler', () => {
@@ -15,7 +15,7 @@ describe('rechercherCommuneHandler', () => {
 				.get('/search/?type=municipality&q=paris&limit=21')
 				.reply(200, aRechercheAdresseResponse().data);
 
-			const expected: RésultatsRechercheCommune = {
+			const expected: ResultatsRechercheCommune = {
 				résultats: [
 					{
 						code: '93005',
@@ -38,7 +38,7 @@ describe('rechercherCommuneHandler', () => {
 				],
 			};
 
-			await testApiHandler<RésultatsRechercheCommune | ErrorHttpResponse>({
+			await testApiHandler<ResultatsRechercheCommune | ErrorHttpResponse>({
 				pagesHandler: (req, res) => rechercherCommuneHandler(req, res),
 				test: async ({ fetch }) => {
 					const res = await fetch({ method: 'GET' });

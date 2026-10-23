@@ -26,16 +26,8 @@ $border-width-compensation: calc($error-border-width - $border-width);
   border-color: $color-error;
   border-width: $error-border-width;
 }
-%border-no-error {
-  margin: $border-width-compensation;
-}
 
 %input {
-  color: $color-text;
-  background-color: transparent;
-  @extend %bordered;
-  @include utilities.text-interactive-medium;
-
   &:disabled,
   &:not(button):read-only {
     @extend %disabled;
@@ -44,20 +36,12 @@ $border-width-compensation: calc($error-border-width - $border-width);
   &[data-touched="true"]:invalid {
     @extend %error;
   }
-  &:valid,
-  &:not([data-touched="true"]) {
-    @extend %border-no-error;
-  }
 }
 
 %comboboxes {
   $color-list-border: $color-border;
   $color-list-background: utilities.$color-background-primary;
   $color-option-hover: utilities.$color-background-primary-alternative;
-  @include utilities.text-interactive-medium;
-  & [role="combobox"] {
-    @extend %input;
-  }
 
   position: relative;
   & [role="listbox"] {
@@ -65,12 +49,10 @@ $border-width-compensation: calc($error-border-width - $border-width);
     position: absolute;
     top: 100%;
     width: 100%;
-    margin-top: 2px;
   }
 
   & [role="listbox"] {
     border: 1px solid $color-list-border;
-    border-radius: $border-radius;
     background-color: $color-list-background;
   }
 
@@ -81,8 +63,6 @@ $border-width-compensation: calc($error-border-width - $border-width);
 
   & [role="option"] {
     padding: .5rem 1ch;
-  }
-  & [role="option"] {
     cursor: pointer;
   }
 

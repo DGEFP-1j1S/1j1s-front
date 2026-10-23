@@ -29,8 +29,7 @@ describe('Parcours formulaire cej', () => {
 			cy.findByRole('textbox', { name: /Adresse e-mail/i }).type('jean.dupont@mail.com');
 			cy.findByRole('textbox', { name: /Téléphone/i }).type('0688552233');
 			// FIXME (GAFI 23-10-2023): Manque un circonflèxe par ici ...
-			cy.findByRole('combobox', { name: 'Age Exemple : 16 ans' }).click();
-			cy.findAllByRole('option').first().click();
+			cy.findByRole('combobox', { name: 'Age Exemple : 16 ans' }).select(1);
 
 			cy.intercept(
 				'/api/communes*',
@@ -86,8 +85,7 @@ describe('Parcours formulaire cej', () => {
 			cy.findByRole('textbox', { name: /Nom/ }).type('dupont', { force: true });
 			cy.findByRole('textbox', { name: /Adresse e-mail/i }).type('mauvais-email@123ab.com');
 			cy.findByRole('textbox', { name: /Téléphone/i }).type('0688552233');
-			cy.findByRole('combobox', { name: 'Age Exemple : 16 ans' }).click();
-			cy.findAllByRole('option').first().click();
+			cy.findByRole('combobox', { name: 'Age Exemple : 16 ans' }).select(1);
 			cy.findByRole('combobox', { name: /Ville/i }).type('paris');
 			cy.intercept(
 				'/api/communes*',

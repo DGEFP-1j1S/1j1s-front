@@ -1,11 +1,13 @@
 import type { SearchResults } from 'algoliasearch-helper';
 import React from 'react';
 
-import styles
-	from '~/client/components/features/OffreDeStage/FormulaireRecherche/FormulaireRechercheOffreStage.module.scss';
-import { MeilisearchComboboxLocalisation } from '~/client/components/ui/Meilisearch/MeilisearchComboboxLocalisation/MeilisearchComboboxLocalisation';
+import {
+	MeilisearchComboboxLocalisation
+} from '~/client/components/ui/Meilisearch/MeilisearchComboboxLocalisation/MeilisearchComboboxLocalisation';
 import { MeilisearchInput } from '~/client/components/ui/Meilisearch/MeilisearchInput/MeilisearchInput';
-import { MeilisearchSelectMultiple } from '~/client/components/ui/Meilisearch/MeilisearchSelectMultiple/MeilisearchSelectMultiple';
+import {
+	MeilisearchSelectMultiple
+} from '~/client/components/ui/Meilisearch/MeilisearchSelectMultiple/MeilisearchSelectMultiple';
 import { DomainesStage } from '~/server/stages/repository/domainesStage';
 
 const LIMIT_MAX_DOMAINS = 100;
@@ -42,22 +44,32 @@ export function sortByDurationAscending(a: SearchResults.FacetValue, b: SearchRe
 
 export function FormulaireRechercheOffreStage() {
 	return (
-		<form className={styles.RechercherStageForm} onSubmit={(event) => event.preventDefault()}>
-			<MeilisearchInput
-				label="Métiers, mots clés, …"
-				name="motCle"
-				placeholder="Exemples : designer, juriste…" />
-			<MeilisearchComboboxLocalisation
-				attribute="localisationFiltree" />
-			<MeilisearchSelectMultiple
-				attribute="domaines"
-				limit={LIMIT_MAX_DOMAINS}
-				label="Domaines"
-				sortBy={sortWithNonRenseigneAtTheEnd} />
-			<MeilisearchSelectMultiple
-				attribute="dureeCategorisee"
-				label="Durée de stage"
-				sortBy={sortByDurationAscending} />
+		<form className="border--blue fr-p-5w" onSubmit={(event) => event.preventDefault()}>
+			<h2 className="fr-h4 fr-mb-3w">Trouvez un stage qui vous correspond</h2>
+			<div className="fr-grid-row fr-grid-row--gutters">
+				<div className="fr-col-12 fr-col-md-6">
+					<MeilisearchInput
+						label="Métiers, mots clés, …"
+						name="motCle"
+						labelComplement="Exemples : designer, juriste…"/>
+				</div>
+				<div className="fr-col-12 fr-col-md-6">
+					<MeilisearchComboboxLocalisation attribute="localisationFiltree"/>
+				</div>
+				<div className="fr-col-12 fr-col-md-6">
+					<MeilisearchSelectMultiple
+						attribute="domaines"
+						limit={LIMIT_MAX_DOMAINS}
+						label="Domaines"
+						sortBy={sortWithNonRenseigneAtTheEnd}/>
+				</div>
+				<div className="fr-col-12 fr-col-md-6">
+					<MeilisearchSelectMultiple
+						attribute="dureeCategorisee"
+						label="Durée de stage"
+						sortBy={sortByDurationAscending}/>
+				</div>
+			</div>
 		</form>
 	);
 }

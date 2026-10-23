@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React, {
 	ChangeEvent,
 	useId,
@@ -11,12 +10,13 @@ import {
 
 import { Icon } from '../../Icon/Icon';
 import styles from './MeilisearchInput.module.scss';
+import {Label} from "~/client/components/ui/Form/Label";
 
 interface MeilisearchCustomSearchBoxProps extends Pick<React.HTMLAttributes<unknown>, 'className'> {
 	id?: string
 	label: string
 	name: string
-	placeholder: string
+	labelComplement: string
 	resetTitle?: string
 }
 
@@ -25,9 +25,8 @@ export const MeilisearchInput = (props: MeilisearchCustomSearchBoxProps & UseSea
 		label,
 		name,
 		id: idProps,
-		placeholder,
+		labelComplement,
 		resetTitle,
-		className,
 	} = props;
 	const { refine, clear, query } = useSearchBox(props);
 	const internalId = useId();
@@ -47,29 +46,29 @@ export const MeilisearchInput = (props: MeilisearchCustomSearchBoxProps & UseSea
 	};
 
 	return (
-		<div className={classNames(className)}>
-			<label className={styles.label} htmlFor={inputId}>{label}</label>
-			<span className={styles.customSearchBoxInputWrapper}>
-				<input
-					id={inputId}
-					type="text"
-					name={name}
-					placeholder={placeholder}
-					value={value}
-					onChange={updateValue}
-					className={styles.customSearchBoxInput} />
-				{
-					!!value && (
-						<button
-							type="reset"
-							title={resetTitle || DEFAULT_RESET_TITLE}
-							onClick={() => resetValue()}
-							className={styles.customSearchBoxResetButton}>
-							<Icon name="close" />
-						</button>
-					)
-				}
-			</span>
+		<div className="fr-input-group">
+			<Label htmlFor={inputId}>
+				{label}
+				<Label.Complement>{labelComplement}</Label.Complement>
+			</Label>
+			<input
+				id={inputId}
+				type="text"
+				name={name}
+				value={value}
+				onChange={updateValue}
+				className="fr-input" />
+			{
+				!!value && (
+					<button
+						type="reset"
+						title={resetTitle || DEFAULT_RESET_TITLE}
+						onClick={() => resetValue()}
+						className={styles.customSearchBoxResetButton}>
+						<Icon name="close" />
+					</button>
+				)
+			}
 		</div>
 	);
 };

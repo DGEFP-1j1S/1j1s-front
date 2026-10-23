@@ -2,7 +2,7 @@ import {
 	OffreDeStageDeposeeEntreprise,
 	OffreDeStageDeposeeLocalisation,
 	OffreDeStageDeposeeStage,
-} from '~/client/components/features/OffreDeStage/Déposer/StageDeposerOffre';
+} from '~/client/components/features/OffreDeStage/Deposer/StageDeposerOffre';
 import { HttpClientService } from '~/client/services/httpClient.service';
 import { StageService } from '~/client/services/stage/stage.service';
 import { removeNullOrEmptyValue } from '~/client/utils/removeNullOrEmptyValue.util';

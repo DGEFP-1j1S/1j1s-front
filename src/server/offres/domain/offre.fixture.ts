@@ -8,10 +8,10 @@ import {
 	OffreDuréeTravail,
 	OffreExpérience,
 	OffreFiltre,
-	RésultatsRechercheOffre,
+	ResultatsRechercheOffre,
 } from '~/server/offres/domain/offre';
 
-export function aRésultatsRechercheOffre(override?: Partial<RésultatsRechercheOffre>): RésultatsRechercheOffre {
+export function aRésultatsRechercheOffre(override?: Partial<ResultatsRechercheOffre>): ResultatsRechercheOffre {
 	return {
 		nombreRésultats: 3,
 		résultats: [
@@ -23,7 +23,7 @@ export function aRésultatsRechercheOffre(override?: Partial<RésultatsRecherche
 	};
 }
 
-export function aRésultatEchantillonOffre(): RésultatsRechercheOffre {
+export function aRésultatEchantillonOffre(): ResultatsRechercheOffre {
 	return {
 		nombreRésultats: 15,
 		résultats: [

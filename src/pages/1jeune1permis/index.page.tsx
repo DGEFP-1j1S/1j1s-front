@@ -14,43 +14,66 @@ const DOMAINE_1JEUNE_1PERMIS = 'https://mes-aides.francetravail.fr';
 export async function getStaticProps(): Promise<GetServerSidePropsResult<Record<never, never>>> {
 	const isFeatureActive = process.env.NEXT_PUBLIC_1JEUNE1PERMIS_FEATURE === '1';
 
-	if (!isFeatureActive) {
-		return { notFound: true };
-	}
+	if (!isFeatureActive) return { notFound: true };
 
 	return {
 		props: {},
 	};
 }
-const ADDITIONAL_PIXEL_MARGIN = 40;
+const SIZE_REQUEST_INTERVAL_IN_MS = 500;
+const EXCESS_TOLERANCE_IN_PIXELS = 2;
+const MAX_HEIGHT_IN_PIXELS = 4000;
 interface MessageEventData { type: string; height: number }
+
+function heightFromMessage(event: MessageEvent<string>): number | undefined {
+	let data: MessageEventData;
+
+	if (event.origin !== DOMAINE_1JEUNE_1PERMIS) return undefined;
+
+	try {
+		data = JSON.parse(event.data);
+	} catch {
+		return undefined;
+	}
+
+	if (typeof data !== 'object' || data.type !== 'resize-iframe') return undefined;
+
+	return data.height;
+}
+
+/* NOTE (JUFE - 2026-10-07): le contenu distant est dans un conteneur en `min-height: 100vh` et il communique
+*  `document.body.offsetHeight + 50`. La hauteur reçue vaut donc `max(hauteur du contenu, hauteur de l'iframe) + une
+*  constante`, constante qui dépend de leur mise en page (142px mesurés en desktop, 224px en mobile).
+*  Tant que l'iframe est plus haute que son contenu, la hauteur reçue n'est que l'écho de la nôtre : l'appliquer fait
+*  grandir l'iframe à l'infini, un cran par aller-retour. */
+function isEchoOfRenderedHeight(excess: number, previousExcess: number | undefined) {
+	if (previousExcess === undefined) return false;
+
+	return excess <= previousExcess + EXCESS_TOLERANCE_IN_PIXELS;
+}
+
 export default function UnJeuneUnPermis() {
 
 	useAnalytics(analyticsPageConfig);
 	const [iframeHeight, setIframeHeight] = useState<number | undefined>(undefined);
 	const iRef = useRef<HTMLIFrameElement>(null);
-
-	const onMessage = (event: MessageEvent<string>) => {
-		let data: MessageEventData;
-
-		if (event.origin !== DOMAINE_1JEUNE_1PERMIS) {
-			return;
-		}
-
-		try {
-			data = JSON.parse(event.data);
-		} catch {
-			return;
-		}
-
-		if (typeof data !== 'object' || data.type !== 'resize-iframe') {
-			return;
-		}
-
-		setIframeHeight(data.height + ADDITIONAL_PIXEL_MARGIN);
-	};
+	const previousExcess = useRef<number | undefined>(undefined);
 
 	useEffect(() => {
+		const onMessage = (event: MessageEvent<string>) => {
+			const receivedHeight = heightFromMessage(event);
+
+			if (receivedHeight === undefined || iRef.current === null) return;
+
+			const excess = receivedHeight - iRef.current.offsetHeight;
+			const isEcho = isEchoOfRenderedHeight(excess, previousExcess.current);
+			previousExcess.current = excess;
+
+			if (isEcho) return;
+
+			setIframeHeight(Math.min(receivedHeight, MAX_HEIGHT_IN_PIXELS));
+		};
+
 		window.addEventListener(
 			'message',
 			onMessage,
@@ -59,13 +82,13 @@ export default function UnJeuneUnPermis() {
 		return () => {
 			window.removeEventListener('message', onMessage);
 		};
-	});
+	}, []);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
 			// Polling pour déclencher l'envoi de la taille de l'iframe
 			iRef.current?.contentWindow?.postMessage('size-request', '*');
-		}, 100);
+		}, SIZE_REQUEST_INTERVAL_IN_MS);
 		return () => clearInterval(interval);
 	}, []);
 

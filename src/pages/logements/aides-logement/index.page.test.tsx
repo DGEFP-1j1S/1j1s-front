@@ -62,11 +62,11 @@ describe('Les aides au logement', () => {
 				</DependenciesProvider>,
 			);
 
-			const link = screen.getByRole('link', { name: /Tester mon éligibilité pour les aides au logement de la CAF/ });
+			const link = screen.getByRole('link', { name: "Vous dépendez du régime général ? Demandez vos aides à la CAF !" });
 
 			expect(link).toHaveAttribute('href', 'https://wwwd.caf.fr/wps/portal/caffr/aidesetdemarches/mesdemarches/faireunesimulation/lelogement#/preparation');
 			expect(link).toHaveAttribute('target', '_blank');
-			expect(link).toHaveAttribute('title', 'Tester mon éligibilité pour les aides au logement de la CAF - nouvelle fenêtre');
+			expect(link).toHaveAttribute('title', 'Vous dépendez du régime général ? Demandez vos aides à la CAF ! - nouvelle fenêtre');
 		});
 	});
 });

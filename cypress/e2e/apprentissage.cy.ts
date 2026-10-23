@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 /// <reference types="@testing-library/cypress" />
 
-import { stringify } from 'querystring';
+import { toQueryString } from '../toQueryString';
 
 import { anAlternanceFiltre } from '~/server/alternances/domain/alternance.fixture';
 import {
@@ -73,7 +73,7 @@ describe.skip('Parcours alternance LBA', () => {
 			};
 			const expectedResult = mockedRepositoryReturnsASuccessWhenCodeCommuneIsNot12345(filtre);
 
-			cy.visit(`/apprentissage?${stringify(query)}`);
+			cy.visit(`/apprentissage?${toQueryString(query)}`);
 
 			cy.findByRole('list', { name: /Offres d’alternances/i })
 				.children()
@@ -89,7 +89,7 @@ describe.skip('Parcours alternance LBA', () => {
 				codeCommune: '12345',
 			};
 
-			cy.visit(`/apprentissage?${stringify(query)}`, { failOnStatusCode: false });
+			cy.visit(`/apprentissage?${toQueryString(query)}`, { failOnStatusCode: false });
 
 			cy.findByText(/Service Indisponible/i).should('be.visible');
 		});

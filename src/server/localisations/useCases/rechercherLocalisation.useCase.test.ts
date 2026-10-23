@@ -11,15 +11,15 @@ import {
 	aCommuneList,
 	aLocalisationAvecCoordonnéesRepository,
 	aRésultatsRechercheCommune,
-} from '~/server/localisations/domain/localisationAvecCoordonnées.fixture';
+} from '~/server/localisations/domain/localisationAvecCoordonnees.fixture';
 import {
-	LocalisationAvecCoordonnéesRepository,
-} from '~/server/localisations/domain/localisationAvecCoordonnées.repository';
+	LocalisationAvecCoordonneesRepository,
+} from '~/server/localisations/domain/localisationAvecCoordonnees.repository';
 import { RechercherLocalisationUseCase } from '~/server/localisations/useCases/rechercherLocalisation.useCase';
 
 describe('RechercherLocalisationUseCase', () => {
 	let localisationRepository: LocalisationRepository;
-	let localisationAvecCoordonneesRepository: LocalisationAvecCoordonnéesRepository;
+	let localisationAvecCoordonneesRepository: LocalisationAvecCoordonneesRepository;
 
 	beforeEach(() => {
 		localisationRepository = aLocalisationRepository();

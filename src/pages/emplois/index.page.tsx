@@ -18,13 +18,13 @@ import { isFailure } from '~/server/errors/either';
 import { Erreur } from '~/server/errors/erreur.types';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { changeStatusCodeWhenErrorOcurred } from '~/server/errors/handleGetServerSidePropsError';
-import { DomaineCode, MAX_PAGE_ALLOWED_BY_FRANCE_TRAVAIL, RésultatsRechercheOffre } from '~/server/offres/domain/offre';
+import { DomaineCode, MAX_PAGE_ALLOWED_BY_FRANCE_TRAVAIL, ResultatsRechercheOffre } from '~/server/offres/domain/offre';
 import { mapLocalisation } from '~/server/offres/infra/controller/offreFiltre.mapper';
 import { dependencies } from '~/server/start';
 
 interface RechercherOffreEmploiPageProps {
 	erreurRecherche?: Erreur
-	resultats?: RésultatsRechercheOffre
+	resultats?: ResultatsRechercheOffre
 }
 
 export default function RechercherOffreEmploiPage(props: RechercherOffreEmploiPageProps) {

@@ -10,7 +10,6 @@ import {
 	aFormationInitiale,
 	aFormationInitialeDetailComplete,
 } from '~/server/formations-initiales/domain/formationInitiale.fixture';
-import { queries } from '~/test-utils';
 
 describe('ConsulterDetailFormationInitiale', () => {
 	beforeEach(() => {
@@ -34,9 +33,7 @@ describe('ConsulterDetailFormationInitiale', () => {
 			});
 
 			render(
-				<DependenciesProvider sessionStorageService={aStorageService()}>
-					<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>
-				</DependenciesProvider>,
+				<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>,
 			);
 
 			const tagsList = within(screen.getByRole('list')).getAllByRole('listitem');
@@ -54,9 +51,7 @@ describe('ConsulterDetailFormationInitiale', () => {
 			});
 
 			render(
-				<DependenciesProvider sessionStorageService={aStorageService()}>
-					<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>
-				</DependenciesProvider>,
+				<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>,
 			);
 
 			const tagsList = within(screen.getByRole('list')).getAllByRole('listitem');
@@ -73,9 +68,7 @@ describe('ConsulterDetailFormationInitiale', () => {
 
 		// When
 		render(
-			<DependenciesProvider sessionStorageService={aStorageService()}>
-				<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>
-			</DependenciesProvider>,
+			<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>,
 		);
 
 		// Then
@@ -90,25 +83,21 @@ describe('ConsulterDetailFormationInitiale', () => {
 		it('si la description est disponible, je la vois', () => {
 			const formationInitialeDetail = aFormationInitialeDetailComplete({ description: descriptionText });
 
-			const { getByDescriptionTerm } = render(
-				<DependenciesProvider sessionStorageService={aStorageService()}>
-					<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>
-				</DependenciesProvider>,
-				{ queries },
+			render(
+				<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>,
 			);
 
-			const description = getByDescriptionTerm('Description');
-			expect(description).toBeVisible();
-			expect(description).toHaveTextContent(descriptionText);
+			expect(screen.getByRole("heading", { level: 2, name: 'Description' })).toBeVisible();
+			expect(screen.getByText(descriptionText)).toBeVisible();
 		});
 
 		it('si la description n‘est pas disponible, je ne la vois pas', () => {
 			const formationInitialeDetail = aFormationInitialeDetailComplete({ description: undefined });
 
-			const { queryByDescriptionTerm } = render(<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale
-				formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>, { queries });
+			render(<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale
+				formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>);
 
-			expect(queryByDescriptionTerm('Description')).not.toBeInTheDocument();
+			expect(screen.queryByRole("heading", { level: 2, name: 'Description' })).not.toBeInTheDocument();
 		});
 	});
 
@@ -117,21 +106,20 @@ describe('ConsulterDetailFormationInitiale', () => {
 		it('si les attendus Parcoursup sont disponibles, je les vois', () => {
 			const formationInitialeDetail = aFormationInitialeDetailComplete({ attendusParcoursup: attendusParcoursup });
 
-			const { getByDescriptionTerm } = render(<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale
-				formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>, { queries });
+			render(<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale
+				formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>);
 
-			const description = getByDescriptionTerm('Attendus Parcoursup');
-			expect(description).toBeVisible();
-			expect(description).toHaveTextContent(attendusParcoursup);
+			expect(screen.getByRole("heading", { level: 2, name: 'Attendus Parcoursup' })).toBeVisible();
+			expect(screen.getByText(attendusParcoursup)).toBeVisible();
 		});
 
 		it('si les attendus Parcoursup ne sont pas disponibles, je ne les vois pas', () => {
 			const formationInitialeDetail = aFormationInitialeDetailComplete({ attendusParcoursup: undefined });
 
-			const { queryByDescriptionTerm } = render(<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale
-				formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>, { queries });
+			render(<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale
+				formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>);
 
-			expect(queryByDescriptionTerm('Attendus Parcoursup')).not.toBeInTheDocument();
+			expect(screen.queryByRole("heading", { level: 2, name: 'Attendus Parcoursup' })).not.toBeInTheDocument();
 		});
 	});
 
@@ -140,21 +128,20 @@ describe('ConsulterDetailFormationInitiale', () => {
 		it('si les conditions d‘accès sont disponibles, je les vois', () => {
 			const formationInitialeDetail = aFormationInitialeDetailComplete({ conditionsAcces: conditionsAcces });
 
-			const { getByDescriptionTerm } = render(<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale
-				formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>, { queries });
+			render(<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale
+				formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>);
 
-			const description = getByDescriptionTerm('Conditions d‘accès');
-			expect(description).toBeVisible();
-			expect(description).toHaveTextContent(conditionsAcces);
+			expect(screen.getByRole("heading", { level: 2, name: 'Conditions d‘accès' })).toBeVisible();
+			expect(screen.getByText(conditionsAcces)).toBeVisible();
 		});
 
-		it('si les attendus Parcoursup ne sont pas disponibles, je ne les vois pas', () => {
+		it("si les conditions d'accès ne sont pas disponibles, je ne les vois pas", () => {
 			const formationInitialeDetail = aFormationInitialeDetailComplete({ conditionsAcces: undefined });
 
-			const { queryByDescriptionTerm } = render(<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale
-				formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>, { queries });
+			render(<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale
+				formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>);
 
-			expect(queryByDescriptionTerm('Conditions d‘accès')).not.toBeInTheDocument();
+			expect(screen.queryByRole("heading", { level: 2, name: 'Conditions d‘accès' })).not.toBeInTheDocument();
 		});
 	});
 
@@ -163,21 +150,20 @@ describe('ConsulterDetailFormationInitiale', () => {
 		it('si la poursuite d‘étude est disponible, je la vois', () => {
 			const formationInitialeDetail = aFormationInitialeDetailComplete({ poursuiteEtudes: poursuiteEtudes });
 
-			const { getByDescriptionTerm } = render(<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale
-				formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>, { queries });
+			render(<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale
+				formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>);
 
-			const description = getByDescriptionTerm('Poursuite d‘études');
-			expect(description).toBeVisible();
-			expect(description).toHaveTextContent(poursuiteEtudes);
+			expect(screen.getByRole("heading", { level: 2, name: 'Poursuite d‘études' })).toBeVisible();
+			expect(screen.getByText(poursuiteEtudes)).toBeVisible();
 		});
 
 		it('si la poursuite d‘étude n‘est pas disponible, je ne la vois pas', () => {
 			const formationInitialeDetail = aFormationInitialeDetailComplete({ poursuiteEtudes: undefined });
 
-			const { queryByDescriptionTerm } = render(<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale
-				formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>, { queries });
+			render(<DependenciesProvider sessionStorageService={aStorageService()}><ConsulterDetailFormationInitiale
+				formationInitialeDetail={formationInitialeDetail} /></DependenciesProvider>);
 
-			expect(queryByDescriptionTerm('Poursuite d‘études')).not.toBeInTheDocument();
+			expect(screen.queryByRole("heading", { level: 2, name: 'Poursuite d‘études' })).not.toBeInTheDocument();
 		});
 	});
 

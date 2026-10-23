@@ -20,7 +20,7 @@ describe('<MonEspaceEntreprise/>', () => {
 		expect(linkInscriptionLEE).toBeVisible();
 		expect(linkInscriptionLEE).toHaveAttribute('href', '/les-entreprises-s-engagent');
 
-		const linkInscriptionLBA = screen.getByRole('link', { name: 'Pas encore inscrit ? Inscrivez votre entreprise' });
+		const linkInscriptionLBA = screen.getByRole('link', { name: 'Pas encore inscrit ? Inscrivez votre entreprise - nouvelle fenêtre' });
 		expect(linkInscriptionLBA).toBeVisible();
 		expect(linkInscriptionLBA).toHaveAttribute('href', 'https://url-lba.com/espace-pro/creation/entreprise');
 	});
