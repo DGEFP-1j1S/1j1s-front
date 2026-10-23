@@ -1,54 +1,51 @@
 import React from 'react';
 
-import styles from '~/client/components/features/JeDeviensMentor/Pourquoi/Pourquoi.module.scss';
 import { Image } from '~/client/components/ui/Img';
 import SeeMoreMobileOnly from '~/client/components/ui/SeeMore/MobileOnly/SeeMoreMobileOnly';
 
 export function Pourquoi() {
 
 	return (
-		<div className={styles.pourquoi}>
-			<article>
-				<section>
+		<div className="fr-container">
+			<div className="fr-grid-row fr-grid-row--gutters">
+				<section className="fr-col-md-6 fr-col-12">
 					<Image
 						src="/illustrations/mentorat-employeur.svg"
 						alt=""
 						width={500}
-						height={300} />
+						height={300}/>
 					<h2>Pourquoi participer à l’aventure du mentorat en tant qu’employeur ?</h2>
 					<SeeMoreMobileOnly
 						seeLessAriaLabel="Voir plus de raisons de devenir mentor en tant qu‘employeur"
 						seeMoreAriaLabel="Voir moins de raisons de devenir mentor en tant qu‘employeur"
-						itemList={[<ListeEmployeur key={0} />]}
+						itemList={[<ListeEmployeur key={0}/>]}
 						numberOfVisibleItems={0}>
-						<ListeEmployeur />
+						<ListeEmployeur/>
 					</SeeMoreMobileOnly>
 				</section>
-				<section>
+				<section className="fr-col-md-6 fr-col-12">
 					<Image
 						src="/illustrations/mentorat-citoyen.svg"
 						alt=""
 						width={500}
-						height={300} />
+						height={300}/>
 					<h2>Vous êtes citoyen : vous pouvez devenir mentor !</h2>
 					<SeeMoreMobileOnly
 						seeLessAriaLabel="Voir plus de raisons de devenir mentor en tant que citoyen"
 						seeMoreAriaLabel="Voir moins de raisons de devenir mentor en tant que citoyen"
-						itemList={[<ListeCitoyen key={0} />]}
+						itemList={[<ListeCitoyen key={0}/>]}
 						numberOfVisibleItems={0}>
-						<ListeCitoyen />
+						<ListeCitoyen/>
 					</SeeMoreMobileOnly>
 				</section>
-			</article>
+			</div>
 		</div>
 	);
 }
 
 function ListeEmployeur() {
 	return (
-		<ul
-			aria-label="Liste pourquoi participer à l’aventure du mentorat en tant qu’employeur"
-			className={styles.listeEmployeur}>
+		<ul aria-label="Liste pourquoi participer à l’aventure du mentorat en tant qu’employeur">
 			<li>
 				Pour offrir la possibilité à ses collaborateurs de former un “binôme” avec un jeune, encadré par une structure
 				spécialisée dans le mentorat
@@ -64,7 +61,7 @@ function ListeEmployeur() {
 
 function ListeCitoyen() {
 	return (
-		<ul aria-label="Liste pourquoi vous pouvez devenir mentor" className={styles.listeCitoyen}>
+		<ul aria-label="Liste pourquoi vous pouvez devenir mentor">
 			<li>
 				Pour partager votre expérience. Vous contribuerez à la réussite de jeunes et les ferez bénéficier de votre
 				propre expérience

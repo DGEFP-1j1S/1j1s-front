@@ -4,9 +4,9 @@ import { Head } from '~/client/components/head/Head';
 import BanniereRejoindreLaMobilisation
 	from '~/client/components/ui/Baniere/BanniereRejoindreLaMobilisation/BanniereRejoindreLaMobilisation';
 
-import { PourQui } from './PourQui/PourQui';
-import { Pourquoi } from './Pourquoi/Pourquoi';
-import { QuEstCeQueLeMentorat } from './QuEstCeQueLeMentorat/QuEstCeQueLeMentorat';
+import { PourQui } from './PourQui';
+import { Pourquoi } from './Pourquoi';
+import { QuEstCeQueLeMentorat } from './QuEstCeQueLeMentorat';
 
 export default function JeDeviensMentor() {
 	return (
