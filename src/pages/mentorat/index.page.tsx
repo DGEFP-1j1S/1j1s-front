@@ -7,7 +7,7 @@ import { Link } from '~/client/components/ui/Link/Link';
 import { Carte } from '~/client/dsfr';
 import useAnalytics from '~/client/hooks/useAnalytics';
 import analytics from '~/pages/mentorat/index.analytics';
-import { QuEstCeQueLeMentorat } from "../../client/components/features/JeDeviensMentor/QuEstCeQueLeMentorat";
+import { QuEstCeQueLeMentorat } from "~/client/components/features/JeDeviensMentor/QuEstCeQueLeMentorat";
 
 export default function MentoratPage() {
 	useAnalytics(analytics);
