@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.362.3](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.362.2...v3.362.3) (2026-10-26)
+
+
+### Bug Fixes
+
+* url beandeau LBA ([b9bb5dd](https://github.com/DGEFP-1j1S/1j1s-front/commit/b9bb5dd5e1c303647bf3e66c4b025bb7b497ab36))
+* url beandeau LBA ([#3758](https://github.com/DGEFP-1j1S/1j1s-front/issues/3758)) ([5bdc165](https://github.com/DGEFP-1j1S/1j1s-front/commit/5bdc165e247437208e6bbd12348c1282ea4db2ea))
+
 ## [3.362.2](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.362.1...v3.362.2) (2026-10-26)
 
 
