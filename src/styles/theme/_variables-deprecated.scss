@@ -54,11 +54,11 @@ $color-disabled: $white;
 $color-on-disabled: $neutral-grey;
 
 $color-blue-navy: $blue-navy;
-$color-lighten-blue-navy: lighten($color-blue-navy, 67%);
+$color-lighten-blue-navy: color.scale($color-blue-navy, $lightness: 93.62%);
 $color-tapestry: $tapestry;
-$color-lighten-tapestry: lighten($color-tapestry, 45%);
+$color-lighten-tapestry: color.scale($color-tapestry, $lightness: 89.3%);
 $color-smalt-blue: $smalt-blue;
-$color-lighten-smalt-blue: lighten($color-smalt-blue, 48%);
+$color-lighten-smalt-blue: color.scale($color-smalt-blue, $lightness: 86.81%);
 $color-coral: $coral;
 $color-lighten-coral: $seashell-peach;
 
