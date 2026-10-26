@@ -10,7 +10,7 @@
     "prepare": "npm dedupe && ./setup.sh",
     "dev": "next dev",
     "build": "next build",
-    "scalingo-postbuild": "next build && npm prune --omit=dev && rm -rf .next/cache",
+    "scalingo-postbuild": "next build && npm prune --omit=dev && rm -rf .next/cache && (npm audit --omit=dev || true)",
     "start": "next start",
     "lint": "eslint ./src --max-warnings=0",
     "lint:fix": "eslint --fix ./src",
