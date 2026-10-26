@@ -2,7 +2,7 @@
 import { testApiHandler } from 'next-test-api-route-handler';
 import nock from 'nock';
 
-import { récupérerMétierAlternanceHandler } from '~/pages/api/metiers-alternance/index.controller';
+import { récupérerMétierAlternanceHandler } from '~/pages/api/metiers/index.controller';
 import { ErrorHttpResponse } from '~/pages/api/utils/response/response.type';
 import { MetierAlternance } from '~/server/metiers/domain/metierAlternance';
 import { aListeDeMetierLaBonneAlternance } from '~/server/metiers/domain/metierAlternance.fixture';
