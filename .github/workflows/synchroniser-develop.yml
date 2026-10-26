@@ -40,4 +40,4 @@ jobs:
             --base develop \
             --head main \
             --title "chore: synchronisation de develop avec main" \
-            --body "Pull request ouverte automatiquement pour ramener sur develop les changements de main (release, hotfix…). À merger avec un **merge commit**, pas en squash."
+            --body "Pull request ouverte automatiquement pour ramener sur develop les changements de main (release, hotfix…). À merger avec un **rebase**, pas en squash ni en merge."
