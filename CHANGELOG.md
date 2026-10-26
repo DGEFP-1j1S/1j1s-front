@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.362.2](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.362.1...v3.362.2) (2026-10-26)
+
+
+### Bug Fixes
+
+* **ci:** purger le cache Cloudflare avec les secrets de l'environnement de production ([1d9b495](https://github.com/DGEFP-1j1S/1j1s-front/commit/1d9b49594fcde52b4e4cb2d8f58c4d8289cdde30))
+* **ci:** purger le cache Cloudflare avec les secrets de prod ([#3748](https://github.com/DGEFP-1j1S/1j1s-front/issues/3748)) ([12d9e6d](https://github.com/DGEFP-1j1S/1j1s-front/commit/12d9e6d06d75afca5f95ae4288e95101d3c85014))
+
+
+### Reverts
+
+* (fix-alternance): renommer la route BFF métiers pour contourner le cache Cloudflare - this reverts commit b17d1764d8863eb1917f80a32b6bfd9f95e75e5b. ([0dcdae4](https://github.com/DGEFP-1j1S/1j1s-front/commit/0dcdae43325bbac1bb2c6b79c2590910460004ac))
+* **fix-alternance:** cache route métiers alternance ([#3754](https://github.com/DGEFP-1j1S/1j1s-front/issues/3754)) ([b66fbc4](https://github.com/DGEFP-1j1S/1j1s-front/commit/b66fbc4ce48cd2108ba19920c85f1ee69c776720))
+
 ## [3.362.1](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.362.0...v3.362.1) (2026-10-23)
 
 
