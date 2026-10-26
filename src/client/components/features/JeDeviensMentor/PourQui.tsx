@@ -28,23 +28,19 @@ export function PourQui() {
 					Permettez à votre entreprise d’apporter des solutions pour les jeunes, rejoignez des milliers d’entreprises
 					déjà engagées et bénéficiez de services inédits.
 				</p>
-				<h2 className="fr-h3">
-					Qu‘est-ce que le mentorat ?
-				</h2>
-				<p>
-					Le mentorat, c’est l’accompagnement individuel bénévole d’un jeune par un mentor, qui peut aussi bien être
-					lycéen qu’étudiant, actif ou retraité. Le « binôme » que forment le mentor et le jeune se rencontre plusieurs
-					fois par mois (pendant au moins 6 mois) pour répondre aux objectifs du mentoré selon son âge et ses besoins.
-					Le binôme est encadré par une structure, le plus souvent une association, qui offre un cadre sécurisé pour
-					chacun.
-				</p>
 			</section>
 			<div className="fr-grid-row fr-grid-row--center fr-pb-4w">
-				<Link className="fr-btn fr-btn--lg fr-mr-2w"
-							href="https://www.1jeune1mentor.fr/formulaire-mentor?1jeune1solution">Devenir
-					mentor</Link>
-				<Link className="fr-btn fr-btn--lg fr-btn--secondary" href="/les-entreprises-s-engagent">Engager mon
-					entreprise</Link>
+				<ul className="fr-btns-group fr-btns-group--inline">
+					<li>
+						<Link className="fr-btn fr-btn--lg fr-mr-2w"
+									href="https://www.1jeune1mentor.fr/formulaire-mentor?1jeune1solution">Devenir
+							mentor</Link>
+					</li>
+					<li>
+						<Link className="fr-btn fr-btn--lg fr-btn--secondary" href="/les-entreprises-s-engagent">Engager mon
+							entreprise</Link>
+					</li>
+				</ul>
 			</div>
 		</>
 	);

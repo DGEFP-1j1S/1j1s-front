@@ -10,6 +10,7 @@ export function Pourquoi() {
 			<div className="fr-grid-row fr-grid-row--gutters">
 				<section className="fr-col-md-6 fr-col-12">
 					<Image
+						className="fr-hidden fr-unhidden-lg"
 						src="/illustrations/mentorat-employeur.svg"
 						alt=""
 						width={500}
@@ -25,6 +26,7 @@ export function Pourquoi() {
 				</section>
 				<section className="fr-col-md-6 fr-col-12">
 					<Image
+						className="fr-hidden fr-unhidden-lg"
 						src="/illustrations/mentorat-citoyen.svg"
 						alt=""
 						width={500}
