@@ -1,5 +1,4 @@
-@import "src/styles/utilities-deprecated";
-
+@use "@styles/utilities-deprecated";
 
 .iframe {
   height: 73rem;
@@ -7,7 +6,7 @@
   width: 90vw;
   max-width: 30rem;
 
-  @include media(large) {
+  @include utilities-deprecated.media(large) {
     height: 56rem;
     width: 70vw;
     max-width: 58rem;
