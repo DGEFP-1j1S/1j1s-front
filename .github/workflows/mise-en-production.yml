@@ -61,6 +61,9 @@ jobs:
     needs: scalingo
     runs-on: ubuntu-latest
     if: ${{ inputs.purge_cloudflare_cache == true }}
+    environment:
+      name: scalingo-production
+      url: https://www.1jeune1solution.gouv.fr
 
     steps:
       - name: Purger le cache Cloudflare
