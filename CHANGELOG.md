@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.362.4](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.362.3...v3.362.4) (2026-10-26)
+
+
+### Bug Fixes
+
+* **deps:** passer à Node 22.23.4 (CVE-2026-111497) ([a8e2b89](https://github.com/DGEFP-1j1S/1j1s-front/commit/a8e2b896c8af62c746ec42cfc1ab6f8143ec119b))
+* **deps:** passer à Node 22.23.4 (CVE-2026-111497) ([#3761](https://github.com/DGEFP-1j1S/1j1s-front/issues/3761)) ([21b268c](https://github.com/DGEFP-1j1S/1j1s-front/commit/21b268c5cc9d873c0df1c5f51f08da59cd721bb0))
+
 ## [3.362.3](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.362.2...v3.362.3) (2026-10-26)
 
 
