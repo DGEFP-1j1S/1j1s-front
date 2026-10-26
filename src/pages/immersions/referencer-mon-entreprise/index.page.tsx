@@ -30,7 +30,7 @@ export default function ImmersionReferenceMonEntreprisePage() {
 					className="iframe"
 					src="https://immersion-facile.beta.gouv.fr/accueil-beneficiaires"
 					title="Formulaire recueil des entreprises volontaires pour l‘accueil des immersions professionnelles"/>
-				<p className="border--blue fr-p-2w fr-my-6w">
+				<p className="background--blue-light fr-p-2w fr-my-6w">
 					Vous êtes informé que vos données sont collectées et traitées par le Groupement d‘intérêt public de
 					plateforme de l‘inclusion pour traiter votre demande de référencement de votre entreprise. Pour en savoir plus
 					sur vos droits consultez la <a href={POLITIQUE_DE_CONFIDENTIALITÉ_URL}>Politique de Confidentialité</a> du

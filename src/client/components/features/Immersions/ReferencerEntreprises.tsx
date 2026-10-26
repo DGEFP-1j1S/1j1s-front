@@ -1,16 +1,19 @@
 import React from 'react';
 
-import {Banner} from '~/client/components/ui/Hero/Hero';
-import {Link} from '~/client/components/ui/Link/Link';
+import { Link } from '~/client/components/ui/Link/Link';
 
 export function RéférencerEntreprises() {
 	return (
 		<>
-			<Banner>
-				<h1 className="fr-h1">
-					Je référence mon entreprise afin de proposer des immersions</h1>
-				<p className="fr-text--lead fr-mb-0">Proposer une immersion c’est permettre à des jeunes :</p>
-			</Banner>
+			<div className="fr-container">
+				<div className="fr-grid-row fr-grid-row-gutters align-items--center">
+					<div className="fr-col-lg-7 fr-col-12">
+						<h1 className="fr-h1">
+							Je référence mon entreprise afin de proposer des immersions</h1>
+						<p className="fr-text--lead fr-mb-2w">Proposer une immersion c’est permettre à des jeunes :</p>
+					</div>
+				</div>
+			</div>
 			<div className="fr-container">
 				<ul>
 					<li>De découvrir un métier</li>
@@ -19,7 +22,7 @@ export function RéférencerEntreprises() {
 						reconversion
 					</li>
 				</ul>
-				<div className="fr-grid-row fr-grid-row--center fr-mt-4w">
+				<div className="fr-grid-row fr-mt-4w">
 					<Link
 						className="fr-btn fr-btn--lg"
 						href="/immersions/referencer-mon-entreprise">
