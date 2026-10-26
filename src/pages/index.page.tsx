@@ -270,7 +270,7 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 								<h2>Employeurs : Trouvez vos futurs apprentis sur 1jeune1solution</h2>
 								<p>Déposez gratuitement vos offres en apprentissage et gagnez en visibilité auprès des jeunes en recherche d’une opportunité</p>
 								<div className="fr-grid-row fr-grid-row--center">
-									<Link className="fr-btn " onClick={() => evenementAnalyticsService.envoyerEvenement({ action: "clic", categorie: "accueil", nom: "deposer_une_offre_lba" })} href="https://labonnealternance.apprentissage.beta.gouv.fr/espace-pro/creation/entreprise">Déposer une offre</Link>
+									<Link className="fr-btn " onClick={() => evenementAnalyticsService.envoyerEvenement({ action: "clic", categorie: "accueil", nom: "deposer_une_offre_lba" })} href="https://labonnealternance.apprentissage.beta.gouv.fr/1jeune1solution-recruteurs?utm_source=1j1s&utm_medium=website&utm_campaign=recruteurs_landinglba1j1s">Déposer une offre</Link>
 								</div>
 							</div>
 						</div>
