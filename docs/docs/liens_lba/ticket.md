@@ -111,7 +111,7 @@ Alors Plausible et Matomo côté LBA enregistrent la visite avec utm_source=1jeu
 Après bascule, tout le pan alternance candidats et recruteurs devient inaccessible et constitue du code mort à supprimer. Option « Nettoyage complet » validée. Cartographie exhaustive dans `contexte.md` :
 
 * **99 fichiers à supprimer** : pages, composants `Alternance/*` et `CampagneApprentissage/*`, ServiceCard `DecouvrirApprentissage`, serveur `alternances/*` et `campagne-apprentissage/*`, test Cypress, routes BFF `/api/alternances`, feature flag `NEXT_PUBLIC_ALTERNANCE_LBA_FEATURE` dans les `.env.*`.
-* **50+ fichiers à préserver** : tout le pan `/formations/apprentissage` (pages, composants `FormationAlternance/*`, serveur `formations/*`, serveur `metiers/*`, route BFF `/api/metiers-alternance`, `ComboboxMetiers`).
+* **50+ fichiers à préserver** : tout le pan `/formations/apprentissage` (pages, composants `FormationAlternance/*`, serveur `formations/*`, serveur `metiers/*`, route BFF `/api/metiers`, `ComboboxMetiers`).
 * **14 fichiers à mettre à jour** : navigation, sitemap, configuration serveur, liens résiduels dans les composants `JeRecrute/*`, cartes de la page d'accueil, tests du plan du site et du header.
 
 ### Points de vigilance

@@ -9,7 +9,7 @@ export class BffAlternanceMetierService implements MetierService {
 	}
 
 	async rechercherMetier(query: string): Promise<Either<Metier[]>> {
-		const metiersAlternanceResult = await this.httpClientService.get<MetierAlternance[]>(`metiers-alternance?motCle=${query}`);
+		const metiersAlternanceResult = await this.httpClientService.get<MetierAlternance[]>(`metiers?motCle=${query}`);
 		if (isFailure(metiersAlternanceResult)) {
 			return metiersAlternanceResult;
 		}

@@ -354,7 +354,7 @@ L'ordre d'évaluation est important : Next.js applique la première règle qui m
 * ServiceCard `src/client/components/features/ServiceCard/FormationsEnApprentissageCard.tsx`
 * Tout `src/server/formations/*` (notamment `apiLaBonneAlternanceFormation.repository.ts`, `apiTrajectoiresProStatistique.repository.ts`)
 * Tout `src/server/metiers/*` (utilisé par FormationAlternance via ComboboxMetiers)
-* Route BFF `src/pages/api/metiers-alternance/index.controller.ts`
+* Route BFF `src/pages/api/metiers/index.controller.ts`
 * Composant UI `src/client/components/ui/Form/Combobox/ComboboxMetiers/*`
 * Variable env `NEXT_PUBLIC_FORMATION_LBA_FEATURE`
 * Variables env partagées `NEXT_PUBLIC_LA_BONNE_ALTERNANCE_URL`, `API_LA_BONNE_ALTERNANCE_URL`, `API_LA_BONNE_ALTERNANCE_CALLER`

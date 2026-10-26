@@ -39,7 +39,7 @@ describe.skip('Parcours alternance LBA', () => {
 			cy.visit('/apprentissage');
 			cy.intercept(
 				'GET',
-				'/api/metiers-alternance*',
+				'/api/metiers*',
 				JSON.stringify(listeMetiers),
 			).as('recherche-mot-cle-alternances');
 
