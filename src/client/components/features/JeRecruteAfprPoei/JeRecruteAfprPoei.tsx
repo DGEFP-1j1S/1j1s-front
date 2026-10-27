@@ -6,11 +6,11 @@ import BanniereRejoindreLaMobilisation
 
 export default function JeRecruteAfprPoei() {
 	return (
-		<div>
+		<>
 			<RecrutementCandidatFranceTravail />
 			<Avantages />
 			<CommentCaMarche />
 			<BanniereRejoindreLaMobilisation />
-		</div>
+		</>
 	);
 }

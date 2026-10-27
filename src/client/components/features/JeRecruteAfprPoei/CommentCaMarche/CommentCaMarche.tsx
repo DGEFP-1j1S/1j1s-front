@@ -6,7 +6,7 @@ export function CommentCaMarche() {
 	return (
 		<section className="fr-container">
 			<div className="fr-grid-row fr-grid-row--gutters">
-				<div className="r-col-12 fr-col-lg-6">
+				<div className="fr-col-12 fr-col-lg-6">
 					<h2>Comment ça marche ?</h2>
 					<ol>
 						<li>Vous déposez votre offre d’emploi en ligne sur notre site ou en contactant votre conseiller</li>

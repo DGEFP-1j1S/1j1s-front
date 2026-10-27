@@ -11,7 +11,7 @@ export default function Avantages() {
 					width={500}
 					height={300}
 				/>
-				<div className="r-col-12 fr-col-lg-6">
+				<div className="fr-col-12 fr-col-lg-6">
 					<h2>Les avantages</h2>
 					<h3>Faites monter en compétences votre candidat</h3>
 					<ul>

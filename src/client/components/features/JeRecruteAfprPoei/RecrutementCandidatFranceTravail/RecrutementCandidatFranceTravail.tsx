@@ -5,7 +5,7 @@ import { Link } from '~/client/components/ui/Link/Link';
 
 export default function RecrutementCandidatFranceTravail() {
 	return (
-		<section className="fr-container fr-mb-2w">
+		<section className="fr-container fr-mb-4w">
 			<div className="fr-grid-row fr-grid-row-gutters align-items--center">
 				<div className="fr-col-lg-8 fr-col-12">
 					<h1>
