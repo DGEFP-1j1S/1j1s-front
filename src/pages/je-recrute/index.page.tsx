@@ -1,3 +1,4 @@
+import documentSvg from "public/images/dsfr/document.svg";
 import { Head } from "~/client/components/head/Head";
 import { Banner } from "~/client/components/ui/Hero/Hero";
 import { Link } from "~/client/components/ui/Link/Link";
@@ -18,7 +19,7 @@ export default function JeRecrutePage() {
 			/>
 			<main id="contenu">
 				<Banner>
-					<h1 className="fr-h1">
+					<h1>
 						Vous cherchez à recruter ?
 					</h1>
 					<p className="fr-text--lead fr-mb-0">
@@ -26,7 +27,8 @@ export default function JeRecrutePage() {
 					</p>
 				</Banner>
 
-				<div className="fr-container fr-mb-5w">
+				<section className="fr-container fr-py-5w">
+					<h2>Recrutez</h2>
 					<ul className="fr-grid-row fr-grid-row--gutters fr-pl-0">
 						<li className="fr-col-12 fr-col-md-4">
 							<Tuile titreAs="h2" lien="/emplois/deposer-offre" titre="Déposer une offre d’emploi" />
@@ -38,10 +40,33 @@ export default function JeRecrutePage() {
 							<Tuile titreAs="h2" lien="/stages/deposer-offre" titre="Déposer une offre de stage" />
 						</li>
 					</ul>
-				</div>
+				</section>
 
 				<section className="fr-container fr-py-5w">
-					<h2 className="fr-h2">Découvrez et engagez-vous</h2>
+					<h2>Découvrez l’apprentissage</h2>
+					<p>Les avantages, les coûts, des témoignages de jeunes ayant fait l’expérience de l’apprentissage, des conseils pratiques</p>
+					<div className="fr-grid-row fr-grid-row--gutters">
+						<div className="fr-col-12 fr-col-md-5">
+							<Tuile
+								titreAs="h3"
+								lien="/documents/pourquoi-recruter-un-apprenti-2026.pdf"
+								titre="Télécharger le flyer “Pourquoi recruter un apprenti"
+								telechargement="PDF - 1,2 Mo"
+								pictogramme={documentSvg}
+							/>
+						</div>
+						<div className="fr-col-12 fr-col-md-5">
+							<Tuile
+								titreAs="h3"
+								lien="/faq"
+								titre="FAQ : L’apprentissage le bon choix pour l’entreprise"
+							/>
+						</div>
+					</div>
+				</section>
+
+				<section className="fr-container fr-py-5w">
+					<h2>Découvrez et engagez-vous</h2>
 					<div className="fr-grid-row fr-grid-row--gutters">
 						<div className="fr-col-12 fr-col-md-4">
 							<Carte
