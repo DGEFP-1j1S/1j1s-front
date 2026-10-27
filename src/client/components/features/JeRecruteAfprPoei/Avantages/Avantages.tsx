@@ -2,7 +2,7 @@ import { Image } from '~/client/components/ui/Img';
 
 export default function Avantages() {
 	return (
-		<section className="fr-container">
+		<section className="fr-container fr-mb-2w">
 			<div className="fr-grid-row fr-grid-row--gutters">
 				<Image
 					className="fr-col-12 fr-col-lg-6 fr-hidden fr-unhidden-lg"

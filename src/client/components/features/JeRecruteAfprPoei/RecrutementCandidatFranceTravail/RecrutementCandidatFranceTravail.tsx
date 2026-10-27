@@ -5,7 +5,7 @@ import { Link } from '~/client/components/ui/Link/Link';
 
 export default function RecrutementCandidatFranceTravail() {
 	return (
-		<section className="fr-container">
+		<section className="fr-container fr-mb-2w">
 			<div className="fr-grid-row fr-grid-row-gutters align-items--center">
 				<div className="fr-col-lg-8 fr-col-12">
 					<h1>
@@ -22,7 +22,7 @@ export default function RecrutementCandidatFranceTravail() {
 			<Footnote htmlFor={'abreviation'} id={'abreviation-reference'}>POE : Préparation
 				Opérationnelle à l’Emploi ; AFPR : Action de Formation Préalable au Recrutement
 			</Footnote>
-			<div className="fr-grid-row fr-grid-row--center fr-pb-4w">
+			<div className="fr-grid-row fr-grid-row--center">
 				<ul className="fr-btns-group fr-btns-group--inline">
 					<li>
 						<Link className="fr-btn fr-btn--lg fr-mr-2w"

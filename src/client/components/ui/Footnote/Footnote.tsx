@@ -17,7 +17,7 @@ const FootnoteComponent = forwardRef<HTMLParagraphElement, FootnoteProps>(functi
 }, ref) {
 	return (
 		<p {...pProps} ref={ref}>
-			<abbr title="note de pied de page">*</abbr> {children} <Link href={`#${htmlFor}`} title="Retour à la référence"><Icon name="arrow-up" className={styles.icon} /></Link>
+			<abbr aria-label="note de pied de page">*</abbr> {children} <Link href={`#${htmlFor}`} title="Retour à la référence"><Icon name="arrow-up" className={styles.icon} /></Link>
 		</p>
 	);
 });
@@ -33,7 +33,7 @@ const Reference = forwardRef<HTMLAnchorElement, ReferenceProps>(function Referen
 }, ref) {
 	return (
 		<a href={`#${to}`} aria-label="note de pied de page" {...aProps} ref={ref}>
-			<abbr title="note de pied de page">*</abbr>
+			<abbr label="note de pied de page">*</abbr>
 		</a>
 	);
 });
