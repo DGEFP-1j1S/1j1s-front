@@ -22,8 +22,8 @@ export default function RecrutementCandidatFranceTravail() {
 			<Footnote htmlFor={'abreviation'} id={'abreviation-reference'}>POE : Préparation
 				Opérationnelle à l’Emploi ; AFPR : Action de Formation Préalable au Recrutement
 			</Footnote>
-			<div className="fr-grid-row fr-grid-row--center">
-				<ul className="fr-btns-group fr-btns-group--inline">
+			<div className="">
+				<ul className="fr-btns-group fr-btns-group--inline fr-btns-group--equisized">
 					<li>
 						<Link className="fr-btn fr-btn--lg fr-mr-2w"
 									href="https://entreprise.francetravail.fr/accueil/description/afpr">M‘engager à recruter
