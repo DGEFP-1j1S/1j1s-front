@@ -17,7 +17,7 @@ const FootnoteComponent = forwardRef<HTMLParagraphElement, FootnoteProps>(functi
 }, ref) {
 	return (
 		<p {...pProps} ref={ref}>
-			<abbr title="note de pied de page">*</abbr> {children} <Link href={`#${htmlFor}`} title="Retour à la référence"><Icon name="arrow-up" className={styles.icon} /></Link>
+			<abbr title="note de pied de page">*</abbr> {children} <Link href={`#${htmlFor}`} aria-label="Retour à la référence"><Icon name="arrow-up" className={styles.icon} /></Link>
 		</p>
 	);
 });
