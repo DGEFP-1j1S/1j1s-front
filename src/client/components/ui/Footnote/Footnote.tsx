@@ -33,7 +33,7 @@ const Reference = forwardRef<HTMLAnchorElement, ReferenceProps>(function Referen
 }, ref) {
 	return (
 		<a href={`#${to}`} aria-label="note de pied de page" {...aProps} ref={ref}>
-			<abbr label="note de pied de page">*</abbr>
+			<abbr aria-label="note de pied de page">*</abbr>
 		</a>
 	);
 });
