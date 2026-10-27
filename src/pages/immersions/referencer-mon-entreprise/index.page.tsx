@@ -17,7 +17,7 @@ export default function ImmersionReferenceMonEntreprisePage() {
 				title="je référence mon entreprise pour des immersions | 1jeune1solution"
 				robots="index,follow"/>
 			<Banner>
-				<h1 className="fr-h1">
+				<h1>
 					Je référence mon entreprise afin de proposer des immersions
 				</h1>
 				<p className="fr-text--lead fr-mb-0"> Ce formulaire vous permet d‘indiquer les métiers de votre établissement
