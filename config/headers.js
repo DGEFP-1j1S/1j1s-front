@@ -4,6 +4,15 @@ const ANALYTICS_SOURCES = `${process.env.NEXT_PUBLIC_ANALYTICS_DOMAIN} ${process
 const MARKETING_SCRIPT_SOURCES = "https://www.googletagmanager.com https://tags.srv.stackadapt.com https://*.goldenbees.fr";
 const MARKETING_IMG_SOURCES = "https://*.doubleclick.net https://www.googletagmanager.com https://*.adform.net https://tags.srv.stackadapt.com https://*.goldenbees.fr";
 const MARKETING_CONNECT_SOURCES = "https://*.doubleclick.net https://www.google.com https://www.googletagmanager.com https://*.stackadapt.com https://*.goldenbees.fr";
+
+function getLocalSearchEngineOrigin() {
+	try {
+		return new URL(process.env.NEXT_PUBLIC_STAGE_SEARCH_ENGINE_BASE_URL).origin;
+	} catch {
+		return '';
+	}
+}
+
 const contentSecurityPolicy = `
   default-src 'self' ${TRUSTED_SOURCES} *.myjobglasses.com https://fonts.gstatic.com/ ${MARKETING_CONNECT_SOURCES};
   script-src 'self' ${ANALYTICS_SOURCES} https://*.adform.net *.myjobglasses.com ${MARKETING_SCRIPT_SOURCES};
@@ -50,7 +59,10 @@ const LOCAL_MODE_HEADERS = [{
 		value: 'no-referrer, strict-origin-when-cross-origin',
 	}, {
 		key: 'Content-Security-Policy',
-		value: contentSecurityPolicy.replace('script-src', "script-src 'unsafe-eval'").replace(/\s{2,}/g, ' ').trim(),
+		value: contentSecurityPolicy
+			.replace('default-src', `default-src ${getLocalSearchEngineOrigin()}`)
+			.replace('script-src', "script-src 'unsafe-eval'")
+			.replace(/\s{2,}/g, ' ').trim(),
 	}],
 	source: '/:path*',
 }];
