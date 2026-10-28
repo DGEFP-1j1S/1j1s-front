@@ -25,7 +25,8 @@ export function Tuile({
 	pictogramme,
 }: React.PropsWithChildren<TuileProps>) {
 	const isInternalLink = useIsInternalLink(lien);
-	const title = !isInternalLink && typeof titre === "string" ? `${titre} - nouvelle fenêtre` : undefined;
+	const suffixe = telechargement ?? (!isInternalLink ? "nouvelle fenêtre" : undefined);
+	const title = suffixe && typeof titre === "string" ? `${titre} - ${suffixe}` : undefined;
 
 	return (
 		<div className={classNames("fr-tile", "fr-enlarge-link", { "fr-tile--download": telechargement }, className)}>

@@ -31,13 +31,13 @@ export default function JeRecrutePage() {
 					<h2>Recrutez</h2>
 					<ul className="fr-grid-row fr-grid-row--gutters fr-pl-0">
 						<li className="fr-col-12 fr-col-md-4">
-							<Tuile titreAs="h2" lien="/emplois/deposer-offre" titre="Déposer une offre d’emploi" />
+							<Tuile lien="/emplois/deposer-offre" titre="Déposer une offre d’emploi" />
 						</li>
 						<li className="fr-col-12 fr-col-md-4">
-							<Tuile titreAs="h2" lien={LBA_RECRUTEUR_URL} titre="Déposer une offre d’alternance" />
+							<Tuile lien={LBA_RECRUTEUR_URL} titre="Déposer une offre d’alternance" />
 						</li>
 						<li className="fr-col-12 fr-col-md-4">
-							<Tuile titreAs="h2" lien="/stages/deposer-offre" titre="Déposer une offre de stage" />
+							<Tuile lien="/stages/deposer-offre" titre="Déposer une offre de stage" />
 						</li>
 					</ul>
 				</section>
@@ -45,30 +45,28 @@ export default function JeRecrutePage() {
 				<section className="fr-container fr-py-5w">
 					<h2>Découvrez l’apprentissage</h2>
 					<p>Les avantages, les coûts, des témoignages de jeunes ayant fait l’expérience de l’apprentissage, des conseils pratiques</p>
-					<div className="fr-grid-row fr-grid-row--gutters">
-						<div className="fr-col-12 fr-col-md-5">
+					<ul className="fr-grid-row fr-grid-row--gutters">
+						<li className="fr-col-12 fr-col-md-5">
 							<Tuile
-								titreAs="h3"
 								lien="/documents/pourquoi-recruter-un-apprenti-2026.pdf"
-								titre="Télécharger le flyer “Pourquoi recruter un apprenti"
+								titre="Télécharger le flyer “Pourquoi recruter un apprenti ?”"
 								telechargement="PDF - 1,2 Mo"
 								pictogramme={documentSvg}
 							/>
-						</div>
-						<div className="fr-col-12 fr-col-md-5">
+						</li>
+						<li className="fr-col-12 fr-col-md-5">
 							<Tuile
-								titreAs="h3"
-								lien="/faq"
+								lien="/faq/apprentissage-employeurs-apprentis"
 								titre="FAQ : L’apprentissage le bon choix pour l’entreprise"
 							/>
-						</div>
-					</div>
+						</li>
+					</ul>
 				</section>
 
 				<section className="fr-container fr-py-5w">
 					<h2>Découvrez et engagez-vous</h2>
-					<div className="fr-grid-row fr-grid-row--gutters">
-						<div className="fr-col-12 fr-col-md-4">
+					<ul className="fr-grid-row fr-grid-row--gutters">
+						<li className="fr-col-12 fr-col-md-4">
 							<Carte
 								className="height--full"
 								titre="Découvrez les mesures du plan 1jeune1solution pour vous aider à recruter plus facilement"
@@ -81,23 +79,8 @@ export default function JeRecrutePage() {
 								}>
 									Déposez facilement une offre d’emploi, d’alternance ou de stage et découvrez les aides à l’embauche et les dispositifs pour faciliter votre recrutement
 								</Carte>
-						</div>
-						<div className="fr-col-12 fr-col-md-4">
-							<Carte
-								className="height--full"
-								titre="Découvrez l’apprentissage, le bon choix pour votre entreprise"
-								footer={
-									<div className="flex justify-center">
-										<Link href={LBA_RECRUTEUR_URL} className="fr-btn">
-											Découvrir l’apprentissage
-										</Link>
-									</div>
-								}>
-								Les avantages, les coûts, des témoignages de jeunes ayant fait l’expérience de l’apprentissage, des
-								conseils pratiques...
-							</Carte>
-						</div>
-						<div className="fr-col-12 fr-col-md-4">
+						</li>
+						<li className="fr-col-12 fr-col-md-4">
 							<Carte
 								className="height--full"
 								titre="Les entreprises s’engagent, une mobilisation des entreprises pour l’emploi des jeunes"
@@ -110,8 +93,8 @@ export default function JeRecrutePage() {
 								}>
 									Rejoignez les entreprises s’engagent, et bénéficiez de services inédits : un accompagnement personnalisé si vous le souhaitez, des aides pour communiquer, etc
 							</Carte>
-						</div>
-					</div>
+						</li>
+					</ul>
 				</section>
 			</main>
 		</>
