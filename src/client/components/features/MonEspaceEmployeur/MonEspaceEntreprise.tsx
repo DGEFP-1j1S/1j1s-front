@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Container } from '~/client/components/layouts/Container/Container';
-import { LightHeroPrimaryText, LightHeroSecondaryText } from '~/client/components/ui/Hero/LightHero';
+import { Banner } from "~/client/components/ui/Hero/Hero";
 import { Image } from '~/client/components/ui/Img';
 import { Link } from '~/client/components/ui/Link/Link';
 
@@ -13,70 +12,94 @@ export function MonEspaceEntreprise() {
 	const MAIL_TO_CONTACT_1J1S = 'contact-1j1s@sg.social.gouv.fr';
 
 	return (
-		<section className={styles.monEspace}>
-			<Container>
-				<h1>
-					<LightHeroPrimaryText>
-						Les entreprises s‘engagent auprès de la jeunesse !
-					</LightHeroPrimaryText>
-				</h1>
-				<div className={styles.entreprisesPourLaJeunesse}>
-					<Image src="/images/logos/les-entreprises-s-engagent.svg" alt="" width={150} height={150} />
-					<h2>
-						<LightHeroSecondaryText>
-							<span>Vous êtes déjà membre de la Communauté</span> &quot;Les entreprises s‘engagent&quot; ?
-						</LightHeroSecondaryText>
-					</h2>
+		<section className="fr-container">
+			<h1>Espace employeur</h1>
+			<h2>Engagez-vous pour les jeunes : “Les entreprises s’engagent”</h2>
+			<p className="fr-text--lead fr-mb-6w">
+				Rejoignez une communauté d’entreprises mobilisées pour favoriser l’insertion des jeunes.
+			</p>
+
+			<div className="fr-grid-row fr-grid-row--gutters fr-mb-6w blocs-employeur">
+				<div className="border--blue fr-p-4w bloc-employeur--2-blocs">
+					<h3 className="fr-h5">
+						Vous êtes déjà membre de la “Communauté les entreprises s’engagent” ?
+					</h3>
 					<p>
-						<span>
-							Connectez-vous à votre espace sur la plateforme &quot;Les entreprises s‘engagent&quot; pour accéder à tous les services d‘accompagnement et valoriser votre engagement en faveur des jeunes.
-						</span>
+						Connectez-vous à votre espace sur la plateforme
+						"Les entreprises s‘engagent" pour accéder à tous les services
+						d‘accompagnement et valoriser votre engagement en faveur des jeunes.
 					</p>
-					<div>
-						<Link
-							href="https://www.lesentreprises-sengagent.gouv.fr/login"
-							appearance="asPrimaryButton">
-							Se connecter
-							<Link.Icon />
-						</Link>
-						<Link
-							appearance={'asQuaternaryButton'}
-							href="/les-entreprises-s-engagent">
-							<Link.Icon name="information" />
-							Pas encore inscrit ? Rejoignez la mobilisation
-						</Link>
-					</div>
-					<Image
-						src="/images/logos/la-bonne-alternance.svg"
-						alt=""
-						width={200}
-						height={200} />
-					<h2>
-						<LightHeroSecondaryText>
-							Vous avez déjà publié une offre en alternance pour les jeunes ?
-						</LightHeroSecondaryText>
-					</h2>
-					<p>
-						<span>
-							Connectez-vous à votre espace sur la plateforme &quot;La bonne alternance&quot; pour gérer vos offres
-							actuelles ou en publier de nouvelles.
-						</span>
-					</p>
-					<div>
-						<Link href={AUTHENTIFICATION_URL_LBA} appearance="asPrimaryButton">Se connecter<Link.Icon /></Link>
-						<Link
-							appearance={'asQuaternaryButton'}
-							href={INSCRIPTION_URL_LBA}>
-							<Link.Icon name="information" />
-							Pas encore inscrit ? Inscrivez votre entreprise
-						</Link>
-					</div>
+					<Link
+						className="fr-btn fr-btn--lg bouton-employeur"
+						href="https://www.lesentreprises-sengagent.gouv.fr/login"
+					>
+						Se connecter à la communauté
+					</Link>
 				</div>
-				<p className={styles.contact}>
-					Pour toute demande concernant les offres de stages d‘études, veuillez <Link
-						href={`mailto:${MAIL_TO_CONTACT_1J1S}`}>nous contacter par email<Link.Icon /></Link>
-				</p>
-			</Container>
+
+				<div className="border--blue fr-p-4w bloc-employeur--2-blocs">
+					<h3 className="fr-h5">Vous souhaitez vous engager ?</h3>
+					<p>
+						Découvrez la mobilisation et rejoignez une communauté
+						d’entreprises engagées pour les jeunes.
+					</p>
+					<Link
+						className="fr-btn fr-btn--lg fr-btn--secondary bouton-employeur"
+						href="/les-entreprises-s-engagent"
+					>
+						Rejoindre la mobilisation
+					</Link>
+				</div>
+			</div>
+
+			<h2>Recrutez sur La Bonne Alternance</h2>
+			<p className="fr-text--lead fr-mb-6w">
+				Accédez aux services pour publier vos offres, recrutez des alternants et contribuer à l’insertion des jeunes
+			</p>
+			<div className="fr-grid-row fr-grid-row--gutters fr-mb-6w blocs-employeur">
+				<div className="border--blue fr-p-4w bloc-employeur--3-blocs">
+					<h3 className="fr-h5">
+						Vous avez déjà publié une offre en alternance pour les jeunes ?
+					</h3>
+					<p>
+						Connectez-vous à votre espace sur la plateforme "La bonne alternance" pour gérer vos offres actuelles ou en
+						publier de nouvelles.
+					</p>
+					<Link
+						className="fr-btn fr-btn--lg bouton-employeur"
+						href={AUTHENTIFICATION_URL_LBA}
+					>
+						Gérer ses offres
+					</Link>
+				</div>
+
+				<div className="border--blue fr-p-4w bloc-employeur--3-blocs">
+					<h3 className="fr-h5">Pas encore inscrit ? Inscrivez votre entreprise</h3>
+					<p>
+						Diffusez simplement et gratuitement vos offres en alternance afin d’être visible auprès des jeunes en
+						recherche de contrat, et des centres de formation pouvant vous accompagner.
+					</p>
+					<Link
+						className="fr-btn fr-btn--lg fr-btn--secondary bouton-employeur"
+						href={INSCRIPTION_URL_LBA}
+					>
+						Inscrire son entreprise
+					</Link>
+				</div>
+
+				<div className="border--blue fr-p-4w bloc-employeur--3-blocs">
+					<h3 className="fr-h5">Offres de stages d’études</h3>
+					<p>
+						Pour toutes demandes concernant les offres de stages d’etudes, veuillez nous contactez par email.
+					</p>
+					<Link
+						className="fr-btn fr-btn--lg fr-btn--secondary bouton-employeur"
+						href={`mailto:${MAIL_TO_CONTACT_1J1S}`}
+					>
+						Contacter par email
+					</Link>
+				</div>
+			</div>
 		</section>
 	);
 }
