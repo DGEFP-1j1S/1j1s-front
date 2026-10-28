@@ -28,20 +28,20 @@ export function PourQui() {
 					Permettez à votre entreprise d’apporter des solutions pour les jeunes, rejoignez des milliers d’entreprises
 					déjà engagées et bénéficiez de services inédits.
 				</p>
+				<div className="fr-pb-4w">
+					<ul className="fr-btns-group fr-btns-group--inline fr-btns-group--equisized">
+						<li>
+							<Link className="fr-btn fr-btn--lg fr-mr-2w"
+										href="https://www.1jeune1mentor.fr/formulaire-mentor?1jeune1solution">Devenir
+								mentor</Link>
+						</li>
+						<li>
+							<Link className="fr-btn fr-btn--lg fr-btn--secondary" href="/les-entreprises-s-engagent">Engager mon
+								entreprise</Link>
+						</li>
+					</ul>
+				</div>
 			</section>
-			<div className="fr-grid-row fr-grid-row--center fr-pb-4w">
-				<ul className="fr-btns-group fr-btns-group--inline">
-					<li>
-						<Link className="fr-btn fr-btn--lg fr-mr-2w"
-									href="https://www.1jeune1mentor.fr/formulaire-mentor?1jeune1solution">Devenir
-							mentor</Link>
-					</li>
-					<li>
-						<Link className="fr-btn fr-btn--lg fr-btn--secondary" href="/les-entreprises-s-engagent">Engager mon
-							entreprise</Link>
-					</li>
-				</ul>
-			</div>
 		</>
 	);
 }

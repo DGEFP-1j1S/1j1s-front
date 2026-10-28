@@ -25,24 +25,31 @@ export function HeroWithButtonLink(props: HeroWithButtonLinkProps) {
 			<div className="fr-grid-row fr-grid-row--gutters">
 				<div className="fr-col-lg-6 fr-col-12">
 					<div className="fr-pb-4w">
-							<h1 className="fr-h1 fr-mb-4w">
-								{title}
-							</h1>
-							<p className="fr-text--lead fr-mb-4w">
-								{content}
-							</p>
-							<div className="fr-btns-group width--fill-content">
+						<h1 className="fr-mb-4w">
+							{title}
+						</h1>
+						<p className="fr-text--lead fr-mb-4w">
+							{content}
+						</p>
+						{ (buttonLabelSecondary && buttonHrefSecondary) ?
+							(<ul className="fr-btns-group fr-btns-group--lg fr-btns-group--equisized">
+								<li>
+									<Link className="fr-btn fr-btn--lg" href={buttonHref}>{buttonLabel}</Link>
+								</li>
+								<li>
+									<Link className="fr-btn fr-btn--lg fr-btn--secondary" href={buttonHrefSecondary}>{buttonLabelSecondary}</Link>	
+								</li>
+							</ul>) : (
 								<Link className="fr-btn fr-btn--lg" href={buttonHref}>{buttonLabel}</Link>
-								{(buttonLabelSecondary && buttonHrefSecondary) && <Link className="fr-btn fr-btn--secondary fr-btn--lg" href={buttonHrefSecondary}>{buttonLabelSecondary}</Link>}
-							</div>
-							{additionalInformation}
-						</div>
+							)
+						}
+						{additionalInformation}
 					</div>
+				</div>
 				<div className="fr-col-lg-6 fr-col-12 fr-hidden fr-unhidden-lg">
 					<Image className={imgContain ? "img-contain" : "img-cover height--full"} src={imgSrc} alt={imgAlt ?? ""} width="810" height="540" priority />
 				</div>
 			</div>
 		</div>
-
 	);
 }
