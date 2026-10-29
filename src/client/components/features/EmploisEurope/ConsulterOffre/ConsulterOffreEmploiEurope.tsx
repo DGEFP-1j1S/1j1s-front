@@ -39,10 +39,10 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 	function getCompetencesLinguistiquesRequises() {
 		return competencesLinguistiques?.map((competence) => {
 			return (
-				<div key={competence.langage} className="fr-mt-1w" lang={codeLangueDeLOffre}>
+				<li key={competence.langage} className="fr-mt-1w" lang={codeLangueDeLOffre}>
 					<strong>{capitalizeFirstLetter(competence.langage)}</strong> ({competence.codeDuNiveauDeLangue} - {competence.nomDuNiveauDeLangue})
 					{getDetailLanguageCompetence(competence.detailCompetenceLanguistique)}
-				</div>
+				</li>
 			);
 		});
 	}
@@ -123,7 +123,7 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 				{competencesLinguistiques?.length > 0 && (
 					<div className="fr-mb-2w">
 						<h2 className="fr-h3 fr-mb-1w">Compétences linguistiques requises</h2>
-						<div>{getCompetencesLinguistiquesRequises()}</div>
+						<ul>{getCompetencesLinguistiquesRequises()}</ul>
 					</div>
 				)}
 				{annonceEmploiEurope.laPlusLongueExperienceNecessaire !== undefined && (

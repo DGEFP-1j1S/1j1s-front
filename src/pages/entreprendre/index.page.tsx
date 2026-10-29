@@ -30,24 +30,24 @@ export default function Entreprendre() {
 					</h1>
 				</BannerWithIllustration>
 				<section className="fr-container fr-py-5w">
-					<div className="fr-grid-row" role="list" aria-label="stades projet de création">
+					<ol className="fr-grid-row list-style-none fr-pl-0" aria-label="stades projet de création">
 						{phasesProjet.map(({ titre, description }, index) => (
 							<React.Fragment key={titre}>
 								{index > 0 && (
 									<>
-										<span className="fr-col-12 fr-hidden-md flex justify-center fr-py-1w fr-icon-arrow-down-line fr-icon--lg" aria-hidden="true" />
-										<span className="fr-hidden fr-unhidden-md align-items--center fr-px-2w fr-icon-arrow-right-line fr-icon--lg" aria-hidden="true" />
+										<li className="fr-col-12 fr-hidden-md flex justify-center fr-py-1w fr-icon-arrow-down-line fr-icon--lg" aria-hidden="true" />
+										<li className="fr-hidden fr-unhidden-md align-items--center fr-px-2w fr-icon-arrow-right-line fr-icon--lg" aria-hidden="true" />
 									</>
 								)}
-								<div role="listitem" className="fr-col-12 fr-col-md">
+								<li className="fr-col-12 fr-col-md">
 									<div className="background--blue-light fr-p-3w height--full">
 										<p className="fr-text--lg fr-text--bold fr-mb-1w">{titre}</p>
 										<p className="fr-text--sm fr-mb-0">{description}</p>
 									</div>
-								</div>
+								</li>
 							</React.Fragment>
 						))}
-					</div>
+					</ol>
 				</section>
 				<section className="background--blue-light fr-py-5w">
 					<div className="fr-container">

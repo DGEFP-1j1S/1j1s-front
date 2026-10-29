@@ -23,10 +23,10 @@ export function ErrorLayout(props: React.PropsWithChildren<ErrorLayoutProps>) {
 					<p className="fr-text--sm fr-mb-3w">Erreur {errorCode}</p>
 					<p className="fr-text--lead fr-mb-3w">{subTitle}</p>
 					<p className="fr-text--sm fr-mb-5w">{content}</p>
-					<div className="fr-btns-group fr-btns-group--inline-md">
-						<BackButton aria-label="Retourner à la page précédente" label="Retourner à la page précédente"/>
-						<Link href="/" className="fr-btn fr-btn--secondary">Aller à l‘accueil</Link>
-					</div>
+					<ul className="fr-btns-group fr-btns-group--inline-md">
+						<li><BackButton aria-label="Retourner à la page précédente" label="Retourner à la page précédente"/></li>
+						<li><Link href="/" className="fr-btn fr-btn--secondary">Aller à l‘accueil</Link></li>
+					</ul>
 				</div>
 				<div className="fr-col-3 fr-hidden fr-unhidden-lg">
 					<Image src="/images/logos/technical-error.svg" alt="" width={185} height={205}/>
