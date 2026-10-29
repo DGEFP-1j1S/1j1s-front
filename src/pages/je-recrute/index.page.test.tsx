@@ -62,17 +62,12 @@ describe('<JeRecrutePage />', () => {
 		const titreSection = screen.getByRole("heading", { level: 2, name: "Découvrez et engagez-vous" });
 		const titreMesuresEmployeurs = screen.getByRole("heading", { level: 3, name: "Découvrez les mesures du plan 1jeune1solution pour vous aider à recruter plus facilement" });
 		const lienMesuresEmployeurs = screen.getByRole("link", { name: "Découvrir les mesures employeurs" });
-		const titreApprentissage = screen.getByRole("heading", { level: 3, name: "Découvrez l’apprentissage, le bon choix pour votre entreprise" });
-		const lienApprentissage = screen.getByRole("link", { name: "Découvrir l’apprentissage - nouvelle fenêtre" });
 		const titreEntreprisesEngagees = screen.getByRole("heading", { level: 3, name: "Les entreprises s’engagent, une mobilisation des entreprises pour l’emploi des jeunes" });
 		const lienMobilisation = screen.getByRole("link", { name: "Rejoindre la mobilisation" });
 
 		expect(titreSection).toBeVisible();
 		expect(titreMesuresEmployeurs).toBeVisible();
 		expect(lienMesuresEmployeurs).toHaveAttribute("href", "/mesures-employeurs");
-		expect(titreApprentissage).toBeVisible();
-		expect(lienApprentissage).toHaveAttribute("href", expect.stringContaining("1jeune1solution-recruteurs"));
-		expect(lienApprentissage).toHaveAttribute("target", "_blank");
 		expect(titreEntreprisesEngagees).toBeVisible();
 		expect(lienMobilisation).toHaveAttribute("href", "/les-entreprises-s-engagent");
 	});

@@ -104,6 +104,7 @@ const employeurNav = (): NavigationItemWithChildren => ({
 		{ label: "Je recrute un apprenti", link: LBA_RECRUTEUR_URL },
 		{ label: "Découvrir les mesures employeurs", link: "/mesures-employeurs" },
 		{ label: "Accéder à mon espace", link: "/mon-espace" },
+		{ label: "FAQ", link: "/faq" },
 	],
 	label: "Je suis employeur",
 	legend: "Découvrez des services faits pour vous !",
@@ -134,6 +135,7 @@ const aidesEtOutilsNav = (): NavigationItemWithChildren => ({
 			label: 'Découvrir les services jeunes liés aux aides financières',
 			link: '/services-jeunes?filtre=aidesFinancieres',
 		}]: []),
+		{ label: "FAQ", link: "/faq" },
 	],
 	label: 'Aides et outils',
 });

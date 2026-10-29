@@ -1,15 +1,12 @@
 import React from 'react';
 
-import { Container } from '~/client/components/layouts/Container/Container';
 import { Image } from '~/client/components/ui/Img';
-
-import styles from './CommentCaMarche.module.scss';
 
 export function CommentCaMarche() {
 	return (
-		<section className={styles.commentCaMarche}>
-			<Container className={styles.container}>
-				<div>
+		<section className="fr-container">
+			<div className="fr-grid-row fr-grid-row--gutters">
+				<div className="fr-col-12 fr-col-lg-6">
 					<h2>Comment ça marche ?</h2>
 					<ol>
 						<li>Vous déposez votre offre d’emploi en ligne sur notre site ou en contactant votre conseiller</li>
@@ -20,12 +17,13 @@ export function CommentCaMarche() {
 					</ol>
 				</div>
 				<Image
+					className="fr-col-12 fr-col-lg-6 fr-hidden fr-unhidden-lg"
 					src="/illustrations/mentorat-citoyen.svg"
-					className={styles.illustration}
 					alt=""
 					width={500}
-					height={300} />
-			</Container>
+					height={300}
+				/>
+			</div>
 		</section>
 	);
 }
