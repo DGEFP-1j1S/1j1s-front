@@ -15,10 +15,14 @@ export default function ConseilsLogement() {
 				title="Découvrir tous nos conseils logement | 1jeune1solution"
 				robots="index,follow" />
 			<main id="contenu">
+				<Banner>
+					<h1 className="fr-h1 fr-mb-0">
+						Tout ce qu’il faut savoir et tous nos conseils concernant votre logement
+					</h1>
+				</Banner>
 				<div className="fr-container fr-pb-6w">
-					<BannièreConseilsLogement />
-					<div className="fr-grid-row fr-grid-row--gutters">
-						<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
+					<ul className="fr-grid-row fr-grid-row--gutters">
+						<li className="fr-col-12 fr-col-md-6 fr-col-lg-4">
 							<Carte
 								imageSrc="/images/articles/documents.svg"
 								lien="/articles/comment-constituer-un-dossier-locatif"
@@ -29,8 +33,8 @@ export default function ConseilsLogement() {
 							surtout si c’est la première fois ! Vous vous demandez comment vous y prendre ?
 							Quels documents rassembler ? Suivez le guide !
 							</Carte>
-						</div>
-						<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
+						</li>
+						<li className="fr-col-12 fr-col-md-6 fr-col-lg-4">
 							<Carte
 								imageSrc="/images/articles/consultative-sales.svg"
 								lien="/articles/les-garants-a-quoi-ca-sert-et-vers-qui-me-tourner"
@@ -41,8 +45,8 @@ export default function ConseilsLogement() {
 								demandez quel est le rôle d’un garant et comment en trouver un ?
 								On vous explique tout pour que vous trouviez une solution adaptée à votre situation.
 							</Carte>
-						</div>
-						<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
+						</li>
+						<li className="fr-col-12 fr-col-md-6 fr-col-lg-4">
 							<Carte
 								imageSrc="/images/articles/product-quality.svg"
 								lien="/articles/quelles-sont-les-aides-pour-financer-un-logement"
@@ -53,19 +57,10 @@ export default function ConseilsLogement() {
 								financer votre loyer tous les mois et vous soutenir au moment de votre installation.
 								Comment savoir à quelles aides vous pouvez accéder ? On vous dit tout !
 							</Carte>
-						</div>
-					</div>
+						</li>
+					</ul>
 				</div>
 			</main>
 		</>
-	);}
-
-function BannièreConseilsLogement() {
-	return (
-		<Banner>
-			<h1 className="fr-h1 fr-mb-0">
-				Tout ce qu’il faut savoir et tous nos conseils concernant votre logement
-			</h1>
-		</Banner>
 	);
 }
