@@ -6,6 +6,7 @@ import { DomainesStage } from '~/server/stages/repository/domainesStage';
 export function aStageService(override?: Partial<StageService>): StageService {
 	return {
 		enregistrerOffreDeStage: vi.fn().mockResolvedValue(createSuccess(undefined)),
+		rechercherLocalisations: vi.fn().mockResolvedValue(createSuccess([])),
 		...override,
 	};
 }

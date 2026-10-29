@@ -3,7 +3,6 @@ import React, { useMemo } from 'react';
 
 import styles from '~/client/components/features/Logement/Annonce.module.scss';
 import { AnnonceDeLogementIndexee } from '~/client/components/features/Logement/AnnonceDeLogementIndexee';
-import { HitProps } from '~/client/components/layouts/InstantSearch/InstantSearchLayout';
 import { Card } from '~/client/components/ui/Card/Card';
 import { Carousel } from '~/client/components/ui/Carousel/Carousel';
 import { Image } from '~/client/components/ui/Img';
@@ -14,7 +13,7 @@ import { DateService } from '~/client/services/date/date.service';
 
 const TYPE_DE_LOGEMENT_INTERGENERATIONNEL = 'habitation intergénérationnelle';
 
-export function AnnonceDeLogement(props: HitProps<AnnonceDeLogementIndexee>) {
+export function AnnonceDeLogement(props: { hit: AnnonceDeLogementIndexee }) {
 	const annonce = props.hit;
 	const typeDeLogement = annonce.type === TYPE_DE_LOGEMENT_INTERGENERATIONNEL ? 'intergénérationnel' : annonce.type;
 	const dateService = useDependency<DateService>('dateService');

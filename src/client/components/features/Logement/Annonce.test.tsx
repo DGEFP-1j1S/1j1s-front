@@ -35,8 +35,7 @@ describe('Annonce Component', () => {
 			render(
 				<DependenciesProvider dateService={aDateService()}>
 					<AnnonceDeLogement
-						hit={anAnnonceDeLogement({ imagesUrl: [] })}
-						sendEvent={vi.fn()} />
+						hit={anAnnonceDeLogement({ imagesUrl: [] })} />
 				</DependenciesProvider>,
 			);
 			const image: HTMLImageElement = screen.getByRole('presentation');
@@ -49,8 +48,7 @@ describe('Annonce Component', () => {
 			render(
 				<DependenciesProvider dateService={aDateService()}>
 					<AnnonceDeLogement
-						hit={anAnnonceDeLogement({ imagesUrl: ['/image-0.jpg'] })}
-						sendEvent={vi.fn()} />
+						hit={anAnnonceDeLogement({ imagesUrl: ['/image-0.jpg'] })} />
 				</DependenciesProvider>,
 			);
 			const image: HTMLImageElement = screen.getByRole('presentation');
@@ -63,8 +61,7 @@ describe('Annonce Component', () => {
 			render(
 				<DependenciesProvider dateService={aDateService()}>
 					<AnnonceDeLogement
-						hit={anAnnonceDeLogement()}
-						sendEvent={vi.fn()} />
+						hit={anAnnonceDeLogement()} />
 				</DependenciesProvider>,
 			);
 			const listDesSlides = screen.getByText((content, element) => element?.getAttribute('aria-live') === 'polite');
@@ -79,8 +76,7 @@ describe('Annonce Component', () => {
 				render(
 					<DependenciesProvider dateService={aDateService()}>
 						<AnnonceDeLogement
-							hit={anAnnonceDeLogement({ type: 'habitation intergénérationnelle' })}
-							sendEvent={vi.fn()} />
+							hit={anAnnonceDeLogement({ type: 'habitation intergénérationnelle' })} />
 					</DependenciesProvider>,
 				);
 				const type = screen.getByText(/intergénérationnel/i);
@@ -93,8 +89,7 @@ describe('Annonce Component', () => {
 				render(
 					<DependenciesProvider dateService={aDateService()}>
 						<AnnonceDeLogement
-							hit={anAnnonceDeLogement()}
-							sendEvent={vi.fn()} />
+							hit={anAnnonceDeLogement()} />
 					</DependenciesProvider>,
 				);
 				const appartement = 'appartement';
@@ -114,8 +109,7 @@ describe('Annonce Component', () => {
 		render(
 			<DependenciesProvider dateService={dateService}>
 				<AnnonceDeLogement
-					hit={annoncesLogement}
-					sendEvent={vi.fn()} />
+					hit={annoncesLogement} />
 			</DependenciesProvider>,
 		);
 		const dateDePublication = 'postée le 12 avril 2022';
@@ -127,8 +121,7 @@ describe('Annonce Component', () => {
 		render(
 			<DependenciesProvider dateService={aDateService()}>
 				<AnnonceDeLogement
-					hit={anAnnonceDeLogement()}
-					sendEvent={vi.fn()} />
+					hit={anAnnonceDeLogement()} />
 			</DependenciesProvider>,
 		);
 		const titre = screen.getByRole('heading', { level: 3 });
@@ -139,8 +132,7 @@ describe('Annonce Component', () => {
 		render(
 			<DependenciesProvider dateService={aDateService()}>
 				<AnnonceDeLogement
-					hit={anAnnonceDeLogement()}
-					sendEvent={vi.fn()} />
+					hit={anAnnonceDeLogement()} />
 			</DependenciesProvider>,
 		);
 		const intervalleSurface = 'de 70 à 71m2';
@@ -156,8 +148,7 @@ describe('Annonce Component', () => {
 		render(
 			<DependenciesProvider dateService={aDateService()}>
 				<AnnonceDeLogement
-					hit={anAnnonceDeLogement()}
-					sendEvent={vi.fn()} />
+					hit={anAnnonceDeLogement()} />
 			</DependenciesProvider>,
 		);
 		const ville = 'Paris';
@@ -171,8 +162,7 @@ describe('Annonce Component', () => {
 		render(
 			<DependenciesProvider dateService={aDateService()}>
 				<AnnonceDeLogement
-					hit={anAnnonceDeLogement()}
-					sendEvent={vi.fn()} />
+					hit={anAnnonceDeLogement()} />
 			</DependenciesProvider>,
 		);
 		const url = screen.getByRole('link');

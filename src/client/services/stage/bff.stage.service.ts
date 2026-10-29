@@ -19,6 +19,10 @@ export class BffStageService implements StageService {
 		return this.httpClientService.post('stages', offreDeStage);
 	};
 
+	async rechercherLocalisations(saisie: string): Promise<Either<Array<string>>> {
+		return this.httpClientService.get<Array<string>>(`stages/localisations?${new URLSearchParams({ recherche: saisie.trim() })}`);
+	}
+
 	private préparerDonnéesOffreDeStage(informationsEntreprise: OffreDeStageDeposeeEntreprise, informationsStage: OffreDeStageDeposeeStage, informationsLocalisation: OffreDeStageDeposeeLocalisation): Partial<OffreDeStageDepot> {
 		const urlDeCandidature = informationsStage.lienCandidature.startsWith('http')
 			? informationsStage.lienCandidature
