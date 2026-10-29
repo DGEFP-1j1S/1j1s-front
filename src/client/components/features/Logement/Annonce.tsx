@@ -1,7 +1,6 @@
 import React from "react";
 
 import { AnnonceDeLogementIndexee } from '~/client/components/features/Logement/AnnonceDeLogementIndexee';
-import { HitProps } from '~/client/components/layouts/InstantSearch/InstantSearchLayout';
 import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { Carte } from '~/client/dsfr';
 import { DateService } from '~/client/services/date/date.service';
@@ -9,7 +8,7 @@ import { DateService } from '~/client/services/date/date.service';
 const TYPE_DE_LOGEMENT_INTERGENERATIONNEL = 'habitation intergénérationnelle';
 const IMAGE_PAR_DEFAUT = "/images/image-par-defaut-carte.webp";
 
-export function AnnonceDeLogement(props: HitProps<AnnonceDeLogementIndexee>) {
+export function AnnonceDeLogement(props: { hit: AnnonceDeLogementIndexee }) {
 	const annonce = props.hit;
 	const typeDeLogement = annonce.type === TYPE_DE_LOGEMENT_INTERGENERATIONNEL ? 'intergénérationnel' : annonce.type;
 	const dateService = useDependency<DateService>('dateService');

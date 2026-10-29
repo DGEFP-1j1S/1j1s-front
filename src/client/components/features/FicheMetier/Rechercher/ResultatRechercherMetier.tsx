@@ -1,13 +1,12 @@
 import React, { useMemo } from 'react';
 
-import { HitProps } from '~/client/components/layouts/InstantSearch/InstantSearchLayout';
 import { Carte } from '~/client/dsfr';
 import useSanitize from '~/client/hooks/useSanitize';
 import { formatCarriageReturnToHtml } from '~/client/utils/formatCarriageReturnToHtml';
 import { mapFicheMetier } from '~/server/fiche-metier/domain/ficheMetierHttp';
-import { StrapiFicheMetier } from '~/server/fiche-metier/infra/strapiFicheMetier';
+import { FicheMetierIndexee } from '~/server/fiche-metier/domain/rechercheFicheMetier';
 
-export function RésultatRechercherMétier(props: HitProps<Partial<StrapiFicheMetier>>) {
+export function RésultatRechercherMétier(props: { hit: FicheMetierIndexee }) {
 	const ficheMetier = mapFicheMetier(props.hit);
 	const accrocheMétier = useSanitize(formatCarriageReturnToHtml(ficheMetier.accrocheMetier));
 	const nomMetier = useMemo(() => {

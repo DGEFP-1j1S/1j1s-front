@@ -38,10 +38,13 @@ export default class ServerConfigurationService implements ConfigurationService 
 			FRANCE_TRAVAIL_IMAGES_HOSTNAME: ServerConfigurationService.getOrThrowError('FRANCE_TRAVAIL_IMAGES_HOSTNAME'),
 			MAILER_SERVICE_ACTIVE: ServerConfigurationService.getOrDefault('MAILER_SERVICE_ACTIVE', '0'),
 
+			LOGEMENT_IMAGE_URL_LIST: ServerConfigurationService.getOrThrowError('LOGEMENT_IMAGE_URL_LIST'),
 			MAILER_SERVICE_REDIRECT_TO: ServerConfigurationService.getOrDefault('MAILER_SERVICE_REDIRECT_TO', ''),
 			NEXT_PUBLIC_1J1S_DOMAIN: ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_1J1S_DOMAIN'),
 			NEXT_PUBLIC_ALTERNANCE_LBA_FEATURE: Boolean(Number(ServerConfigurationService.getOrDefault('NEXT_PUBLIC_ALTERNANCE_LBA_FEATURE', '0'))),
 			NEXT_PUBLIC_API_ADRESSE_MINIMUM_QUERY_LENGTH: Number(ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_API_ADRESSE_MINIMUM_QUERY_LENGTH')),
+			NEXT_PUBLIC_INDEX_ANNONCE_DE_LOGEMENT: ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_INDEX_ANNONCE_DE_LOGEMENT'),
+			NEXT_PUBLIC_INDEX_OFFRE_DE_STAGE: ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_INDEX_OFFRE_DE_STAGE'),
 			NEXT_PUBLIC_SENTRY_DSN: ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_SENTRY_DSN'),
 			NEXT_PUBLIC_SENTRY_ENVIRONMENT: ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_SENTRY_ENVIRONMENT'),
 			NEXT_PUBLIC_SENTRY_LOG_LEVEL: ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_SENTRY_LOG_LEVEL'),
@@ -94,6 +97,8 @@ export interface EnvironmentVariables {
 	readonly NEXT_PUBLIC_API_ADRESSE_MINIMUM_QUERY_LENGTH: number
 	readonly NEXT_PUBLIC_SENTRY_LOG_LEVEL: string
 	readonly NEXT_PUBLIC_1J1S_DOMAIN: string
+	readonly NEXT_PUBLIC_INDEX_ANNONCE_DE_LOGEMENT: string
+	readonly NEXT_PUBLIC_INDEX_OFFRE_DE_STAGE: string
 	readonly NEXT_PUBLIC_SENTRY_DSN: string
 	readonly NEXT_PUBLIC_SENTRY_ENVIRONMENT: string
 	readonly NEXT_PUBLIC_SENTRY_USER_AGENT_BLACKLIST: string
@@ -126,6 +131,7 @@ export interface EnvironmentVariables {
 	readonly ENVIRONMENT: string
 	readonly DUREE_VALIDITE_CACHE_CMS_EN_SECONDES: number
 	readonly MAILER_SERVICE_ACTIVE: string
+	readonly LOGEMENT_IMAGE_URL_LIST: string
 	readonly MAILER_SERVICE_REDIRECT_TO: string
 	readonly NEXT_PUBLIC_ALTERNANCE_LBA_FEATURE: boolean
 	readonly NEXT_PUBLIC_STAGE_SEARCH_ENGINE_API_KEY: string

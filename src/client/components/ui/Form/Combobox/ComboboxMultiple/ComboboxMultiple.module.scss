@@ -1,0 +1,4 @@
+// NOTE : les styles de Select.module.scss visent un bouton ; ici le combobox est un champ de saisie
+.comboboxMultiple input[role="combobox"] {
+  cursor: text;
+}

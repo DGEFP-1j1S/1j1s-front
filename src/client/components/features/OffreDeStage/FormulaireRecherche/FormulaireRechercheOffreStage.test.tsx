@@ -1,18 +1,13 @@
-import type { SearchResults } from 'algoliasearch-helper';
-
 import {
 	sortByDurationAscending,
 	sortWithNonRenseigneAtTheEnd,
 } from '~/client/components/features/OffreDeStage/FormulaireRecherche/FormulaireRechercheOffreStage';
+import { Facette } from '~/server/services/meilisearch/rechercheIndexee';
 
-function anFacedValue(override ?: Partial<SearchResults.FacetValue>): SearchResults.FacetValue {
+function anFacedValue(override ?: { name: string }): Facette {
 	return {
-		count: 1,
-		escapedValue: '',
-		isExcluded: false,
-		isRefined: false,
-		name: 'name',
-		...override,
+		nombre: 1,
+		valeur: override?.name ?? 'name',
 	};
 }
 
