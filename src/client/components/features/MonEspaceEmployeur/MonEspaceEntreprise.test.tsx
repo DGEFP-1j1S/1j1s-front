@@ -9,18 +9,19 @@ describe('<MonEspaceEntreprise/>', () => {
 			NEXT_PUBLIC_LA_BONNE_ALTERNANCE_URL: 'https://url-lba.com/',
 		};
 		render(<MonEspaceEntreprise />);
-		const linkConnexion = screen.getAllByRole('link', { name: 'Se connecter - nouvelle fenêtre' });
-		expect(linkConnexion[0]).toBeVisible();
-		expect(linkConnexion[0]).toHaveAttribute('href', 'https://www.lesentreprises-sengagent.gouv.fr/login');
+		const linkConnexion = screen.getByRole('link', { name: 'Se connecter à la communauté - nouvelle fenêtre' });
+		expect(linkConnexion).toBeVisible();
+		expect(linkConnexion).toHaveAttribute('href', 'https://www.lesentreprises-sengagent.gouv.fr/login');
 
-		expect(linkConnexion[1]).toBeVisible();
-		expect(linkConnexion[1]).toHaveAttribute('href', 'https://url-lba.com/espace-pro/authentification');
+		const linkConnexionLBA = screen.getByRole('link', { name: 'Gérer ses offres - nouvelle fenêtre' });
+		expect(linkConnexionLBA).toBeVisible();
+		expect(linkConnexionLBA).toHaveAttribute('href', 'https://url-lba.com/espace-pro/authentification');
 
-		const linkInscriptionLEE = screen.getByRole('link', { name: 'Pas encore inscrit ? Rejoignez la mobilisation' });
+		const linkInscriptionLEE = screen.getByRole('link', { name: 'Rejoindre la mobilisation' });
 		expect(linkInscriptionLEE).toBeVisible();
 		expect(linkInscriptionLEE).toHaveAttribute('href', '/les-entreprises-s-engagent');
 
-		const linkInscriptionLBA = screen.getByRole('link', { name: 'Pas encore inscrit ? Inscrivez votre entreprise - nouvelle fenêtre' });
+		const linkInscriptionLBA = screen.getByRole('link', { name: 'Inscrire son entreprise - nouvelle fenêtre' });
 		expect(linkInscriptionLBA).toBeVisible();
 		expect(linkInscriptionLBA).toHaveAttribute('href', 'https://url-lba.com/espace-pro/creation/entreprise');
 	});
@@ -28,7 +29,7 @@ describe('<MonEspaceEntreprise/>', () => {
 	it('voit la demande de contact par mail', () => {
 		render(<MonEspaceEntreprise />);
 
-		const demandeContactMail = screen.getByRole('link', { name: 'nous contacter par email - nouvelle fenêtre' });
+		const demandeContactMail = screen.getByRole('link', { name: 'Contacter par email - nouvelle fenêtre' });
 		expect(demandeContactMail).toBeVisible();
 		expect(demandeContactMail).toHaveAttribute('href', 'mailto:contact-1j1s@sg.social.gouv.fr');
 	});

@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.363.0](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.362.4...v3.363.0) (2026-10-29)
+
+
+### Features
+
+* ajout flyer page faq ([#3768](https://github.com/DGEFP-1j1S/1j1s-front/issues/3768)) ([fda7e23](https://github.com/DGEFP-1j1S/1j1s-front/commit/fda7e23e50807409ae308bc22e2c4c0b734150c3))
+* **dsfr:** Je deviens mentor ([#3750](https://github.com/DGEFP-1j1S/1j1s-front/issues/3750)) ([9490086](https://github.com/DGEFP-1j1S/1j1s-front/commit/94900865eee14b207c00440814ab4387b9520a6e))
+* **dsfr:** page "Je forme des jeunes" ([#3766](https://github.com/DGEFP-1j1S/1j1s-front/issues/3766)) ([3b0cfcd](https://github.com/DGEFP-1j1S/1j1s-front/commit/3b0cfcd3980a9803547b7b44132f9af04b9bbf8c))
+* **dsfr:** page Espace Employeur ([#3770](https://github.com/DGEFP-1j1S/1j1s-front/issues/3770)) ([4fa11da](https://github.com/DGEFP-1j1S/1j1s-front/commit/4fa11da3299bd1fc4981ad21dd7195ad43d2a588))
+* **dsfr:** Pages "je propose immersions" et "rejoindre la mobilisation" ([#3765](https://github.com/DGEFP-1j1S/1j1s-front/issues/3765)) ([c0c391f](https://github.com/DGEFP-1j1S/1j1s-front/commit/c0c391f7bfbf3327e5ffd53170b884936c5bea6e))
+
+
+### Bug Fixes
+
+* **CSP:** autoriser le CMS local ([#3769](https://github.com/DGEFP-1j1S/1j1s-front/issues/3769)) ([855384e](https://github.com/DGEFP-1j1S/1j1s-front/commit/855384e206a6a0a853ac6bcfe30c85dce97e9dc9))
+* **ui:** alignement boutons les entreprises s'engagent ([#3767](https://github.com/DGEFP-1j1S/1j1s-front/issues/3767)) ([978bd59](https://github.com/DGEFP-1j1S/1j1s-front/commit/978bd591c04f5d701898f65b03a449c3250a97d5))
+
 ## [3.362.4](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.362.3...v3.362.4) (2026-10-26)
 
 
