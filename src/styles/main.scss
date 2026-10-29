@@ -155,38 +155,3 @@ hr {
   overflow: hidden;
   min-height: 3000px;
 }
-
-.blocs-employeur {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
-
-.bloc-employeur--2-blocs {
-  display: flex;
-  flex: 1 1 calc(50% - 0.75rem);
-  flex-direction: column;
-  min-width: 0;
-}
-
-.bloc-employeur--3-blocs {
-  display: flex;
-  flex: 1 1 calc((100% - 3rem) /3);
-  flex-direction: column;
-  min-width: 0;
-}
-
-.bouton-employeur {
-  align-self: flex-start;
-  margin-top: auto;
-}
-
-@media (max-width: 767px) {
-  .bloc-employeur--2-blocs {
-    flex-basis: 100%;
-  }
-
-  .bloc-employeur--3-blocs {
-    flex-basis: 100%;
-  }
-}

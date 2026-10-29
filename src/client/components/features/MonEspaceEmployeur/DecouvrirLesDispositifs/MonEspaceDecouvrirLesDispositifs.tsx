@@ -1,21 +1,20 @@
 import React from 'react';
 
-import { FoldingSection } from '~/client/components/ui/FoldingSection/FoldingSection';
 import { Image } from '~/client/components/ui/Img';
 
 export function MonEspaceDecouvrirLesDispositifs() {
 	return (
-		<section className="fr-container fr-mb-6w">
+		<section className="fr-py-3w">
 			<h2>Découvrir les dispositifs</h2>
 			<div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
 				<div className="fr-col-2 fr-hidden fr-unhidden-lg align-items--center">
 					<Image src="/images/logos/les-entreprises-s-engagent.svg" alt="" width={150} height={150}
 								 className='img-contain'/>
 				</div>
-				<div className="fr-col-12 fr-col-lg-10">
+				<div className="fr-col-12 fr-col-lg-10 fr-pl-lg-4w">
 					<p>
-						Rejoignez une communauté d’entreprises mobilisées pour favoriser l’insertion des jeunes La communauté "Les
-						entreprises s’engagent" a été lancée par le Président de la République en juillet 2018 dans l’objectif de
+						Rejoignez une communauté d’entreprises mobilisées pour favoriser l’insertion des jeunes La communauté “Les
+						entreprises s’engagent” a été lancée par le Président de la République en juillet 2018 dans l’objectif de
 						renforcer et de pérenniser le lien entre l’Etat et l’Entreprise en faveur de l’emploi de tous les publics.
 					</p>
 					<ul>
@@ -38,14 +37,14 @@ export function MonEspaceDecouvrirLesDispositifs() {
 				</div>
 			</div>
 
-			<div className={"fr-grid-row fr-grid-row--gutters"}>
+			<div className="fr-grid-row fr-grid-row--gutters">
 				<div className="fr-col-2 fr-hidden fr-unhidden-lg align-items--center">
 					<Image src="/images/logos/la-bonne-alternance.svg" alt="" width={150} height={150}
 								 className='img-contain'/>
 				</div>
-				<div className="fr-col-12 fr-col-lg-10">
+				<div className="fr-col-12 fr-col-lg-10 fr-pl-lg-4w">
 					<p>
-						La plateforme "La bonne alternance" a été créée pour simplifier la mise en relation entre jeunes,
+						La plateforme “La bonne alternance” a été créée pour simplifier la mise en relation entre jeunes,
 						entreprises et centres de formation dans l’objectif de faciliter les entrées en alternance.
 					</p>
 					<ul>
