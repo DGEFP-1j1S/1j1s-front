@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Carte } from '~/client/dsfr';
 
-export function MétierDuSoinPartner() {
+export function MetierDuSoinPartner() {
 	return (
 		<Carte
 			horizontal

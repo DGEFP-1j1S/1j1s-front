@@ -1,39 +1,34 @@
-import type { SearchResults } from 'algoliasearch-helper';
-
 import {
 	sortByDurationAscending,
 	sortWithNonRenseigneAtTheEnd,
 } from '~/client/components/features/OffreDeStage/FormulaireRecherche/FormulaireRechercheOffreStage';
+import { Facette } from '~/server/services/meilisearch/rechercheIndexee';
 
-function anFacedValue(override ?: Partial<SearchResults.FacetValue>): SearchResults.FacetValue {
+function uneFacette(override ?: { name: string }): Facette {
 	return {
-		count: 1,
-		escapedValue: '',
-		isExcluded: false,
-		isRefined: false,
-		name: 'name',
-		...override,
+		nombre: 1,
+		valeur: override?.name ?? 'name',
 	};
 }
 
 describe('sortWithNonRenseigneAtTheEnd', () => {
-	it('tri les données par ordre ascendant avec Non rensigné à la fin', () => {
+	it('tri les données par ordre ascendant avec Non renseigné à la fin', () => {
 		const data = [
-			anFacedValue({ name: 'ab' }),
-			anFacedValue({ name: 'non renseigné' }),
-			anFacedValue({ name: 's' }),
-			anFacedValue({ name: 'n' }),
-			anFacedValue({ name: 'a' }),
+			uneFacette({ name: 'ab' }),
+			uneFacette({ name: 'non renseigné' }),
+			uneFacette({ name: 's' }),
+			uneFacette({ name: 'n' }),
+			uneFacette({ name: 'a' }),
 		];
 
 		const sortedData = data.sort(sortWithNonRenseigneAtTheEnd);
 
 		expect(sortedData).toStrictEqual([
-			anFacedValue({ name: 'a' }),
-			anFacedValue({ name: 'ab' }),
-			anFacedValue({ name: 'n' }),
-			anFacedValue({ name: 's' }),
-			anFacedValue({ name: 'non renseigné' }),
+			uneFacette({ name: 'a' }),
+			uneFacette({ name: 'ab' }),
+			uneFacette({ name: 'n' }),
+			uneFacette({ name: 's' }),
+			uneFacette({ name: 'non renseigné' }),
 		]);
 	});
 });
@@ -41,24 +36,24 @@ describe('sortWithNonRenseigneAtTheEnd', () => {
 describe('sortByDurationAscending', () => {
 	it('tri les données par ordre ascendant avec < 1 mois au début', () => {
 		const data = [
-			anFacedValue({ name: '< 1 mois' }),
-			anFacedValue({ name: 'non renseigné' }),
-			anFacedValue({ name: '3 mois' }),
-			anFacedValue({ name: '1 mois' }),
-			anFacedValue({ name: '2 mois' }),
-			anFacedValue({ name: '> 6 mois' }),
+			uneFacette({ name: '< 1 mois' }),
+			uneFacette({ name: 'non renseigné' }),
+			uneFacette({ name: '3 mois' }),
+			uneFacette({ name: '1 mois' }),
+			uneFacette({ name: '2 mois' }),
+			uneFacette({ name: '> 6 mois' }),
 		];
 
 		const sortedData = data.sort(sortByDurationAscending);
 
 
 		expect(sortedData).toStrictEqual([
-			anFacedValue({ name: '< 1 mois' }),
-			anFacedValue({ name: '1 mois' }),
-			anFacedValue({ name: '2 mois' }),
-			anFacedValue({ name: '3 mois' }),
-			anFacedValue({ name: '> 6 mois' }),
-			anFacedValue({ name: 'non renseigné' }),
+			uneFacette({ name: '< 1 mois' }),
+			uneFacette({ name: '1 mois' }),
+			uneFacette({ name: '2 mois' }),
+			uneFacette({ name: '3 mois' }),
+			uneFacette({ name: '> 6 mois' }),
+			uneFacette({ name: 'non renseigné' }),
 		]);
 	});
 });

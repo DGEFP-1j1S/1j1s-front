@@ -1,4 +1,4 @@
-import { getArrayQueryParam, getSingleQueryParam } from '~/client/utils/queryParams.utils';
+import { getArrayQueryParam, getSingleQueryParam, getValeursQueryParam } from '~/client/utils/queryParams.utils';
 
 describe('getSingleQueryParam', () => {
 	it('renvoie le param lui-même quand on donne un param unique', () => {
@@ -45,5 +45,19 @@ describe('getArrayQueryParam', () => {
 		const result = getArrayQueryParam(queries.toString());
 
 		expect(result).toEqual(queries);
+	});
+});
+
+describe('getValeursQueryParam', () => {
+	it('renvoie undefined quand le param est absent', () => {
+		expect(getValeursQueryParam(undefined)).toBeUndefined();
+	});
+
+	it('renvoie une seule valeur sans la découper sur les virgules', () => {
+		expect(getValeursQueryParam('Lyon, Part-Dieu')).toStrictEqual(['Lyon, Part-Dieu']);
+	});
+
+	it('renvoie les valeurs d‘un param répété', () => {
+		expect(getValeursQueryParam(['Lyon, Part-Dieu', 'Paris'])).toStrictEqual(['Lyon, Part-Dieu', 'Paris']);
 	});
 });

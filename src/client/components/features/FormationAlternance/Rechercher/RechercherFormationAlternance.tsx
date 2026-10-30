@@ -10,7 +10,7 @@ import {
 import { ServiceCardList } from '~/client/components/features/ServiceCard/Card/ServiceCard';
 import { CarifOrefPartner } from '~/client/components/features/ServiceCard/CarifOrefPartner';
 import { DecouvrirApprentissage } from '~/client/components/features/ServiceCard/DecouvrirApprentissage';
-import { MétierDuSoinPartner } from '~/client/components/features/ServiceCard/MetiersDuSoinPartner';
+import { MetierDuSoinPartner } from '~/client/components/features/ServiceCard/MetiersDuSoinPartner';
 import { MonCompteFormationPartner } from '~/client/components/features/ServiceCard/MonCompteFormationPartner';
 import { ParcourSupPartner } from '~/client/components/features/ServiceCard/ParcourSupPartner';
 import { PixPartner } from '~/client/components/features/ServiceCard/PixPartner';
@@ -90,7 +90,7 @@ export default function RechercherFormationAlternance({ resultats: formationAlte
 						<ParcourSupPartner />
 						<CarifOrefPartner />
 						<PixPartner />
-						<MétierDuSoinPartner />
+						<MetierDuSoinPartner />
 					</ServiceCardList>
 			</main>
 		</>
