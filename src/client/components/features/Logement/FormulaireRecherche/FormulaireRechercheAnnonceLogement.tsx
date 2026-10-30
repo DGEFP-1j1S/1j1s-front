@@ -1,5 +1,4 @@
-import { useRouter } from 'next/router';
-import React, { FormEvent } from 'react';
+import React from 'react';
 
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 import { ChampFacette } from '~/client/components/ui/Form/ChampFacette/ChampFacette';
@@ -7,7 +6,7 @@ import { ChampIntervalle } from '~/client/components/ui/Form/ChampIntervalle/Cha
 import { Input } from '~/client/components/ui/Form/Input';
 import { Button } from '~/client/dsfr';
 import { useAnnonceDeLogementQuery } from '~/client/hooks/useAnnonceDeLogementQuery';
-import { getFormAsQueryAvecValeursRepetees } from '~/client/utils/form.util';
+import { useSoumissionRechercheIndexee } from '~/client/hooks/useSoumissionRechercheIndexee';
 import { Facette } from '~/server/services/meilisearch/rechercheIndexee';
 
 export const PRIX_MINIMUM = 0;
@@ -29,14 +28,9 @@ function toNumber(valeur?: string) {
 }
 
 export function FormulaireRechercheAnnonceLogement({ facettes }: FormulaireRechercheAnnonceLogementProps) {
-	const router = useRouter();
 	const queryParams = useAnnonceDeLogementQuery();
 
-	function rechercher(event: FormEvent<HTMLFormElement>) {
-		event.preventDefault();
-		const query = getFormAsQueryAvecValeursRepetees(event.currentTarget, queryParams);
-		router.push({ query }, undefined, { scroll: false });
-	}
+	const rechercher = useSoumissionRechercheIndexee(queryParams);
 
 	return (
 		<form

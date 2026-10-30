@@ -1,5 +1,4 @@
-import { useRouter } from 'next/router';
-import React, { FormEvent } from 'react';
+import React from 'react';
 
 import styles
 	from '~/client/components/features/Evenement/FormulaireRecherche/FormulaireRechercheEvenement.module.scss';
@@ -10,20 +9,15 @@ import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { Button } from '~/client/dsfr';
 import { useEvenementQuery } from '~/client/hooks/useEvenementQuery';
 import { EvenementService } from '~/client/services/evenement/evenement.service';
-import { getFormAsQueryAvecValeursRepetees } from '~/client/utils/form.util';
+import { useSoumissionRechercheIndexee } from '~/client/hooks/useSoumissionRechercheIndexee';
 
 const MESSAGE_PAS_DE_RESULTAT = 'Aucune proposition ne correspond à votre saisie. Vérifiez que votre saisie correspond bien à un lieu. Exemple : Paris, Marseille …';
 
 export function FormulaireRechercheEvenement() {
-	const router = useRouter();
 	const queryParams = useEvenementQuery();
 	const evenementService = useDependency<EvenementService>('evenementService');
 
-	function rechercher(event: FormEvent<HTMLFormElement>) {
-		event.preventDefault();
-		const query = getFormAsQueryAvecValeursRepetees(event.currentTarget, queryParams);
-		router.push({ query }, undefined, { scroll: false });
-	}
+	const rechercher = useSoumissionRechercheIndexee(queryParams);
 
 	return (
 		<form role="search" aria-label="Rechercher un évènement" onSubmit={rechercher}>
