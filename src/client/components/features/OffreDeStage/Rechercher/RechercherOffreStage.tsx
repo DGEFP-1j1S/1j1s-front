@@ -49,6 +49,6 @@ export function RechercherOffreStage({ erreurRecherche, resultats }: RechercherO
 			resultats={resultats?.resultats ?? []}
 			libelleListe="Offres de stage"
 			cleResultat={(offreDeStage) => offreDeStage.slug}
-			afficherResultat={(offreDeStage) => <OffreDeStage hit={offreDeStage} />} />
+			afficherResultat={(offreDeStage) => <OffreDeStage offreDeStage={offreDeStage} />} />
 	);
 }

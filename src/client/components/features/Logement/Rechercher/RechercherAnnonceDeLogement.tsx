@@ -52,7 +52,7 @@ export function RechercherAnnonceDeLogement({ erreurRecherche, resultats }: Rech
 			resultats={resultats?.resultats ?? []}
 			libelleListe="Annonces de logement"
 			cleResultat={(annonce) => annonce.slug}
-			afficherResultat={(annonce) => <AnnonceDeLogement hit={annonce} />} />
+			afficherResultat={(annonce) => <AnnonceDeLogement annonce={annonce} />} />
 	);
 }
 
