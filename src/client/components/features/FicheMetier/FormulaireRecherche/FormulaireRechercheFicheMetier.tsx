@@ -1,12 +1,11 @@
-import { useRouter } from 'next/router';
-import React, { FormEvent } from 'react';
+import React from 'react';
 
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 import { ChampFacette } from '~/client/components/ui/Form/ChampFacette/ChampFacette';
 import { Input } from '~/client/components/ui/Form/Input';
 import { Button } from '~/client/dsfr';
 import { useFicheMetierQuery } from '~/client/hooks/useFicheMetierQuery';
-import { getFormAsQueryAvecValeursRepetees } from '~/client/utils/form.util';
+import { useSoumissionRechercheIndexee } from '~/client/hooks/useSoumissionRechercheIndexee';
 import { Facette } from '~/server/services/meilisearch/rechercheIndexee';
 
 interface FormulaireRechercheFicheMetierProps {
@@ -16,14 +15,9 @@ interface FormulaireRechercheFicheMetierProps {
 }
 
 export function FormulaireRechercheFicheMetier({ facettes }: FormulaireRechercheFicheMetierProps) {
-	const router = useRouter();
 	const queryParams = useFicheMetierQuery();
 
-	function rechercher(event: FormEvent<HTMLFormElement>) {
-		event.preventDefault();
-		const query = getFormAsQueryAvecValeursRepetees(event.currentTarget, queryParams);
-		router.push({ query }, undefined, { scroll: false });
-	}
+	const rechercher = useSoumissionRechercheIndexee(queryParams);
 
 	return (
 		<form className="border--blue fr-p-5w" role="search" aria-label="Rechercher un métier" onSubmit={rechercher}>
