@@ -1,11 +1,11 @@
 
 import {
-	LocalisationStageIndexée,
-	OffreDeStageIndexée,
-} from '~/client/components/features/OffreDeStage/OffreDeStageIndexee';
-import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonneesStage';
+	LocalisationStageIndexee,
+	OffreDeStageIndexee,
+} from '~/server/stages/domain/offreDeStageIndexee';
+import { SourceDesDonnees } from '~/server/stages/repository/sourceDesDonneesStage';
 
-export function anOffreDeStageIndexee(override?: Partial<OffreDeStageIndexée>): OffreDeStageIndexée {
+export function anOffreDeStageIndexee(override?: Partial<OffreDeStageIndexee>): OffreDeStageIndexee {
 	return {
 		dateDeDebutMax: '2024-09-01',
 		dateDeDebutMin: '2024-09-01',
@@ -22,14 +22,14 @@ export function anOffreDeStageIndexee(override?: Partial<OffreDeStageIndexée>):
 		logoUrlEmployeur: 'www.vienstravailler.example.com',
 		nomEmployeur: 'Viens travailler',
 		slug: 'stage-audit-tours-h-f-036780b7-95ba-4711-bf26-471d1f95051c',
-		source: SourceDesDonnées.JOBTEASER,
+		source: SourceDesDonnees.JOBTEASER,
 		teletravailPossible: true,
 		titre: 'un stage d’audit',
 		...override,
 	};
 }
 
-export function aLocalisationStageIndexee(override?: Partial<LocalisationStageIndexée>): LocalisationStageIndexée {
+export function aLocalisationStageIndexee(override?: Partial<LocalisationStageIndexee>): LocalisationStageIndexee {
 	return {
 		codePostal: undefined,
 		departement: undefined,

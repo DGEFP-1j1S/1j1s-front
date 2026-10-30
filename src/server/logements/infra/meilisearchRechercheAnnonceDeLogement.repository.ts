@@ -1,6 +1,6 @@
 import type { Meilisearch } from 'meilisearch';
 
-import { AnnonceDeLogementIndexee } from '~/client/components/features/Logement/AnnonceDeLogementIndexee';
+import { AnnonceDeLogementIndexee } from '~/server/logements/domain/annonceDeLogementIndexee';
 import { createSuccess, Either } from '~/server/errors/either';
 import {
 	FiltreRechercheAnnonceDeLogement,

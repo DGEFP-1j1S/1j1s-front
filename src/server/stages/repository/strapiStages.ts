@@ -1,6 +1,6 @@
 import { RemunerationPeriode } from '~/server/stages/domain/remunerationPeriode';
 import { DomainesStage } from '~/server/stages/repository/domainesStage';
-import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonneesStage';
+import { SourceDesDonnees } from '~/server/stages/repository/sourceDesDonneesStage';
 
 
 export interface OffreStageResponseStrapi {
@@ -26,7 +26,7 @@ export interface OffreStageResponseStrapi {
 	remunerationMin?: number
 	remunerationMax?: number
 	remunerationPeriode?: RemunerationPeriode
-	source: SourceDesDonnées | null
+	source: SourceDesDonnees | null
 	teletravailPossible: boolean | null
 }
 
@@ -59,5 +59,5 @@ export type OffreStageDepotStrapi =
 	urlDeCandidature: string;
 	localisation: OffreStageResponseStrapiLocalisation;
 	employeur: OffreStageResponseStrapiEmployeur;
-	source: SourceDesDonnées.INTERNE;
+	source: SourceDesDonnees.INTERNE;
 }

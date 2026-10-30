@@ -1,4 +1,4 @@
-import { OffreDeStageIndexée } from '~/client/components/features/OffreDeStage/OffreDeStageIndexee';
+import { OffreDeStageIndexee } from '~/server/stages/domain/offreDeStageIndexee';
 import { Either } from '~/server/errors/either';
 import { Facette } from '~/server/services/meilisearch/rechercheIndexee';
 
@@ -14,7 +14,7 @@ export interface FiltreRechercheOffreStage {
 
 export interface ResultatsRechercheOffreStage {
 	nombreDeResultats: number
-	resultats: Array<OffreDeStageIndexée>
+	resultats: Array<OffreDeStageIndexee>
 	facettes: {
 		domaines: Array<Facette>
 		durees: Array<Facette>

@@ -1,14 +1,14 @@
 import { DomainesStage } from '~/server/stages/repository/domainesStage';
-import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonneesStage';
+import { SourceDesDonnees } from '~/server/stages/repository/sourceDesDonneesStage';
 
-export type LocalisationStageIndexée = {
+export type LocalisationStageIndexee = {
 	ville?: string
 	departement?: string
 	codePostal?: string
 	region?: string // enum de region ? (interessant pour savoir si pays en full + majuscule …)
 	pays: string // enum de pays ? (interessant pour savoir si pays en full + majuscule …) (https://www.npmjs.com/package/i18n-iso-countries ?)
 }
-export type OffreDeStageIndexée = {
+export type OffreDeStageIndexee = {
 	titre: string
 	description: string
 	dateDeDebutMin?: string
@@ -20,9 +20,9 @@ export type OffreDeStageIndexée = {
 	dureeCategorisee?: string,
 	dureeEnJour?: number
 	dureeEnJourMax?: number
-	localisation?: LocalisationStageIndexée
+	localisation?: LocalisationStageIndexee
 	nomEmployeur?: string
 	logoUrlEmployeur?: string
-	source?: SourceDesDonnées
+	source?: SourceDesDonnees
 	teletravailPossible?: boolean
 };

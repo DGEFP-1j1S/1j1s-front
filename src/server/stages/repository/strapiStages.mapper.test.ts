@@ -2,7 +2,7 @@ import { anOffreDeStageDepot } from '~/client/services/stage/stageService.fixtur
 import { RemunerationPeriode } from '~/server/stages/domain/remunerationPeriode';
 import { anOffreDeStage } from '~/server/stages/domain/stages.fixture';
 import { DomainesStage } from '~/server/stages/repository/domainesStage';
-import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonneesStage';
+import { SourceDesDonnees } from '~/server/stages/repository/sourceDesDonneesStage';
 import { aStrapiOffreDeStage, aStrapiOffreDeStageDepot } from '~/server/stages/repository/strapiStages.fixture';
 import { mapOffreStage, mapToStrapiDepotOffreDeStage } from '~/server/stages/repository/strapiStages.mapper';
 
@@ -52,7 +52,7 @@ describe('strapiStage mapper', () => {
 				remunerationMin: 900,
 				remunerationPeriode: RemunerationPeriode.MONTHLY,
 				slug: 'alternance-audit-tours-h-f-036780b7-95ba-4711-bf26-471d1f95051c',
-				source: 'jobteaser' as SourceDesDonnées,
+				source: 'jobteaser' as SourceDesDonnees,
 				sourceCreatedAt: '',
 				sourcePublishedAt: '',
 				sourceUpdatedAt: '',
@@ -82,7 +82,7 @@ describe('strapiStage mapper', () => {
 				remunerationMin: 900,
 				remunerationPeriode: RemunerationPeriode.MONTHLY,
 				slug: 'alternance-audit-tours-h-f-036780b7-95ba-4711-bf26-471d1f95051c',
-				source: SourceDesDonnées.JOBTEASER,
+				source: SourceDesDonnees.JOBTEASER,
 				teletravailPossible: true,
 				titre: 'Alternance Audit - Tours ( H/F)',
 				urlDeCandidature: 'https://www.jobteaser.com/en/job-offers/10067252',

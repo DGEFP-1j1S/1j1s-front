@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { useMemo } from 'react';
 
 import styles from '~/client/components/features/Logement/Annonce.module.scss';
-import { AnnonceDeLogementIndexee } from '~/client/components/features/Logement/AnnonceDeLogementIndexee';
+import { AnnonceDeLogementIndexee } from '~/server/logements/domain/annonceDeLogementIndexee';
 import { Card } from '~/client/components/ui/Card/Card';
 import { Carousel } from '~/client/components/ui/Carousel/Carousel';
 import { Image } from '~/client/components/ui/Img';

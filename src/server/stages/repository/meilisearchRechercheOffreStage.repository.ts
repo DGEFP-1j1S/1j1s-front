@@ -1,6 +1,6 @@
 import type { Meilisearch } from 'meilisearch';
 
-import { OffreDeStageIndexée } from '~/client/components/features/OffreDeStage/OffreDeStageIndexee';
+import { OffreDeStageIndexee } from '~/server/stages/domain/offreDeStageIndexee';
 import { createSuccess, Either } from '~/server/errors/either';
 import { ErrorManagementService } from '~/server/services/error/errorManagement.service';
 import {
@@ -28,7 +28,7 @@ export class MeilisearchRechercheOffreStageRepository implements RechercheOffreS
 
 	async rechercher(filtre: FiltreRechercheOffreStage): Promise<Either<ResultatsRechercheOffreStage>> {
 		try {
-			const { facettes, nombreDeResultats, resultats } = await rechercherAvecFacettesDisjonctives<OffreDeStageIndexée>(this.client, this.indexName, {
+			const { facettes, nombreDeResultats, resultats } = await rechercherAvecFacettesDisjonctives<OffreDeStageIndexee>(this.client, this.indexName, {
 				facettes: [ATTRIBUT_DOMAINES, ATTRIBUT_DUREE],
 				filtres: {
 					[ATTRIBUT_DOMAINES]: filtre.domaines,

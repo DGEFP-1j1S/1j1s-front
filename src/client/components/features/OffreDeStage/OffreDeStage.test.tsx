@@ -4,7 +4,7 @@ import { OffreDeStage } from '~/client/components/features/OffreDeStage/OffreDeS
 import {
 	aLocalisationStageIndexee,
 	anOffreDeStageIndexee,
-} from '~/client/components/features/OffreDeStage/offreDeStageIndexee.fixture';
+} from '~/server/stages/domain/offreDeStageIndexee.fixture';
 import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { mockSmallScreen } from '~/client/components/window.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
