@@ -4,7 +4,7 @@ import React from 'react';
 
 import { RechercherFicheMetier } from '~/client/components/features/FicheMetier/Rechercher/RechercherFicheMetier';
 import { ServiceCardList } from '~/client/components/features/ServiceCard/Card/ServiceCard';
-import { MétierDuSoinPartner } from '~/client/components/features/ServiceCard/MetiersDuSoinPartner';
+import { MetierDuSoinPartner } from '~/client/components/features/ServiceCard/MetiersDuSoinPartner';
 import { Head } from '~/client/components/head/Head';
 import useAnalytics from '~/client/hooks/useAnalytics';
 import { transformQueryToArray } from '~/pages/api/utils/joi/joi.util';
@@ -33,7 +33,7 @@ export default function RechercherFicheMetierPage(props: RechercherFicheMetierPa
 				robots="index,follow" />
 			<RechercherFicheMetier resultats={props.resultats} erreurRecherche={props.erreurRecherche} />
 			<ServiceCardList>
-				<MétierDuSoinPartner />
+				<MetierDuSoinPartner />
 			</ServiceCardList>
 		</>
 	);
