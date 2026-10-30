@@ -16,7 +16,7 @@ function desResultats(): ResultatsRechercheFicheMetier {
 			centresInteret: [{ nombre: 3, valeur: 'j‘aime bouger' }, { nombre: 1, valeur: 'je veux travailler de mes mains' }],
 		},
 		nombreDeResultats: 1,
-		resultats: [{ accroche_metier: 'Maître dans sa cuisine', nom_metier: 'cuisinier/ère' }],
+		resultats: [{ accroche_metier: '<p>Maître dans sa cuisine</p>', nom_metier: 'cuisinier/ère' }],
 	};
 }
 
