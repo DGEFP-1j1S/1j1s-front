@@ -69,7 +69,7 @@ export function BannerWithIllustration({ children, image, isCover = false, ...re
 	const containerClassName = isLargeScreen ? "fr-container" : "fr-container fr-py-5w"
 	return (
 		<div className={containerClassName}>
-			<div className="fr-grid-row fr-grid-row-gutters align-items--center" {...rest}>
+			<div className="fr-grid-row fr-grid-row--gutters align-items--center" {...rest}>
 				<div className="fr-col-lg-6 fr-col-12">
 					{children}
 				</div>

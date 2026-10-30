@@ -42,8 +42,8 @@ export default function MentoratPage() {
 				</Banner>
 
 				<div className="fr-container fr-mb-5w">
-					<div className="fr-grid-row fr-grid-row--gutters">
-						<div className="fr-col-12 fr-col-md-6">
+					<ul className="fr-grid-row fr-grid-row--gutters">
+						<li className="fr-col-12 fr-col-md-6">
 							<Carte
 								titreAs="h2"
 								className="height--full"
@@ -61,8 +61,8 @@ export default function MentoratPage() {
 								conseils pour atteindre vos objectifs : améliorer vos résultats scolaires, définir votre
 								orientation, trouver vos premières expériences professionnelles…
 							</Carte>
-						</div>
-						<div className="fr-col-12 fr-col-md-6">
+						</li>
+						<li className="fr-col-12 fr-col-md-6">
 							<Carte
 								titreAs="h2"
 								className="height--full"
@@ -75,8 +75,8 @@ export default function MentoratPage() {
 								Embarquez dans une aventure humaine hors du commun, pour partager votre expérience, favoriser
 								l’égalité des chances et continuer à apprendre en accompagnant un jeune
 							</Carte>
-						</div>
-					</div>
+						</li>
+					</ul>
 				</div>
 
 				<QuEstCeQueLeMentorat />
