@@ -40,18 +40,19 @@ export default class ServerConfigurationService implements ConfigurationService 
 
 			LOGEMENT_IMAGE_URL_LIST: ServerConfigurationService.getOrThrowError('LOGEMENT_IMAGE_URL_LIST'),
 			MAILER_SERVICE_REDIRECT_TO: ServerConfigurationService.getOrDefault('MAILER_SERVICE_REDIRECT_TO', ''),
+			// NOTE : repli sur les anciens noms NEXT_PUBLIC_* le temps que les environnements soient migrés
+			MEILISEARCH_API_KEY: ServerConfigurationService.getOrThrowErrorAvecRepli('MEILISEARCH_API_KEY', 'NEXT_PUBLIC_STAGE_SEARCH_ENGINE_API_KEY'),
+			MEILISEARCH_BASE_URL: ServerConfigurationService.getOrThrowErrorAvecRepli('MEILISEARCH_BASE_URL', 'NEXT_PUBLIC_STAGE_SEARCH_ENGINE_BASE_URL'),
+			MEILISEARCH_INDEX_ANNONCE_DE_LOGEMENT: ServerConfigurationService.getOrThrowErrorAvecRepli('MEILISEARCH_INDEX_ANNONCE_DE_LOGEMENT', 'NEXT_PUBLIC_INDEX_ANNONCE_DE_LOGEMENT'),
+			MEILISEARCH_INDEX_OFFRE_DE_STAGE: ServerConfigurationService.getOrThrowErrorAvecRepli('MEILISEARCH_INDEX_OFFRE_DE_STAGE', 'NEXT_PUBLIC_INDEX_OFFRE_DE_STAGE'),
 			NEXT_PUBLIC_1J1S_DOMAIN: ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_1J1S_DOMAIN'),
 			NEXT_PUBLIC_ALTERNANCE_LBA_FEATURE: Boolean(Number(ServerConfigurationService.getOrDefault('NEXT_PUBLIC_ALTERNANCE_LBA_FEATURE', '0'))),
 			NEXT_PUBLIC_API_ADRESSE_MINIMUM_QUERY_LENGTH: Number(ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_API_ADRESSE_MINIMUM_QUERY_LENGTH')),
-			NEXT_PUBLIC_INDEX_ANNONCE_DE_LOGEMENT: ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_INDEX_ANNONCE_DE_LOGEMENT'),
-			NEXT_PUBLIC_INDEX_OFFRE_DE_STAGE: ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_INDEX_OFFRE_DE_STAGE'),
 			NEXT_PUBLIC_SENTRY_DSN: ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_SENTRY_DSN'),
 			NEXT_PUBLIC_SENTRY_ENVIRONMENT: ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_SENTRY_ENVIRONMENT'),
 			NEXT_PUBLIC_SENTRY_LOG_LEVEL: ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_SENTRY_LOG_LEVEL'),
 			NEXT_PUBLIC_SENTRY_TRACES_SAMPLE_RATE: Number(ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_SENTRY_USER_AGENT_BLACKLIST')),
 			NEXT_PUBLIC_SENTRY_USER_AGENT_BLACKLIST: ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_SENTRY_USER_AGENT_BLACKLIST'),
-			NEXT_PUBLIC_STAGE_SEARCH_ENGINE_API_KEY: ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_STAGE_SEARCH_ENGINE_API_KEY'),
-			NEXT_PUBLIC_STAGE_SEARCH_ENGINE_BASE_URL: ServerConfigurationService.getOrThrowError('NEXT_PUBLIC_STAGE_SEARCH_ENGINE_BASE_URL'),
 			REDIS_URL: ServerConfigurationService.getOrDefault('REDIS_URL', ''),
 			STRAPI_AUTH: ServerConfigurationService.matchOrThrowError('STRAPI_AUTH', /^(.+):(.+)$/),
 			STRAPI_URL_API: ServerConfigurationService.getOrThrowError('STRAPI_URL_API'),
@@ -59,6 +60,16 @@ export default class ServerConfigurationService implements ConfigurationService 
 			TIPIMAIL_API_KEY: ServerConfigurationService.getOrThrowError('TIPIMAIL_API_KEY'),
 			TIPIMAIL_API_USER: ServerConfigurationService.getOrThrowError('TIPIMAIL_API_USER'),
 		};
+	}
+
+	private static getOrThrowErrorAvecRepli(name: string, ancienName: string): string {
+		const environmentVariable = process.env[name] || process.env[ancienName];
+		if (!environmentVariable) {
+			throw new EnvironmentVariablesException(
+				`Variable ${name} missing from environment!`,
+			);
+		}
+		return environmentVariable;
 	}
 
 	private static getOrThrowError(name: string): string {
@@ -97,8 +108,6 @@ export interface EnvironmentVariables {
 	readonly NEXT_PUBLIC_API_ADRESSE_MINIMUM_QUERY_LENGTH: number
 	readonly NEXT_PUBLIC_SENTRY_LOG_LEVEL: string
 	readonly NEXT_PUBLIC_1J1S_DOMAIN: string
-	readonly NEXT_PUBLIC_INDEX_ANNONCE_DE_LOGEMENT: string
-	readonly NEXT_PUBLIC_INDEX_OFFRE_DE_STAGE: string
 	readonly NEXT_PUBLIC_SENTRY_DSN: string
 	readonly NEXT_PUBLIC_SENTRY_ENVIRONMENT: string
 	readonly NEXT_PUBLIC_SENTRY_USER_AGENT_BLACKLIST: string
@@ -133,9 +142,11 @@ export interface EnvironmentVariables {
 	readonly MAILER_SERVICE_ACTIVE: string
 	readonly LOGEMENT_IMAGE_URL_LIST: string
 	readonly MAILER_SERVICE_REDIRECT_TO: string
+	readonly MEILISEARCH_API_KEY: string
+	readonly MEILISEARCH_BASE_URL: string
+	readonly MEILISEARCH_INDEX_ANNONCE_DE_LOGEMENT: string
+	readonly MEILISEARCH_INDEX_OFFRE_DE_STAGE: string
 	readonly NEXT_PUBLIC_ALTERNANCE_LBA_FEATURE: boolean
-	readonly NEXT_PUBLIC_STAGE_SEARCH_ENGINE_API_KEY: string
-	readonly NEXT_PUBLIC_STAGE_SEARCH_ENGINE_BASE_URL: string
 	readonly FRANCE_TRAVAIL_CONNECT_CLIENT_ID: string
 	readonly FRANCE_TRAVAIL_CONNECT_CLIENT_SECRET: string
 	readonly FRANCE_TRAVAIL_CONNECT_SCOPE: string
