@@ -1,19 +1,14 @@
-import classNames from 'classnames';
-import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
-import { useRange, UseRangeProps } from 'react-instantsearch';
+import React, { useCallback, useId, useState } from "react";
+import { useRange, UseRangeProps } from "react-instantsearch";
 
-import { KeyBoard } from '../../../keyboard/keyboard.enum';
-import { ButtonComponent } from '../../Button/ButtonComponent';
-import { Icon } from '../../Icon/Icon';
-import styles from './MeilisearchRange.module.scss';
+import { Label } from "~/client/components/ui/Form/Label";
 
-interface MeilisearchRangeProps extends Pick<React.HTMLAttributes<unknown>, 'className'> {
-    label: string
-    placeholder: string
-    unite: string
-    min: number
-    max: number
-		'data-testid'?: string // FIXME (SULI 29-03-2024): a été ajouté pour faire passer des tests car pas de CSS inclus dans le JSDOM
+interface MeilisearchRangeProps {
+	labelMinimum: string
+	labelMaximum: string
+	unite: string
+	min: number
+	max: number
 }
 
 export function MeilisearchRange(props: UseRangeProps & MeilisearchRangeProps) {
@@ -22,123 +17,67 @@ export function MeilisearchRange(props: UseRangeProps & MeilisearchRangeProps) {
 		start,
 	} = useRange(props);
 
-	const { label, placeholder, unite, min, max, className } = props;
-	const [isRangeBoxOpen, setIsRangeBoxOpen] = useState(false);
-  type EmptyInput = '';
-  const [minValue, setMinValue] = useState<number | EmptyInput>('');
-  const [maxValue, setMaxValue] = useState<number | EmptyInput>('');
-  const [previousStart, setPreviousStart] = useState(start);
+	const { labelMinimum, labelMaximum, unite, min, max } = props;
+	type EmptyInput = "";
+	const [minValue, setMinValue] = useState<number | EmptyInput>("");
+	const [maxValue, setMaxValue] = useState<number | EmptyInput>("");
+	const [previousStart, setPreviousStart] = useState(start);
 
-  if (start[0] !== previousStart[0] || start[1] !== previousStart[1]) {
-  	setPreviousStart(start);
-  	if (start[0] === -Infinity) setMinValue('');
-  	if (start[1] === Infinity) setMaxValue('');
-  }
+	if (start[0] !== previousStart[0] || start[1] !== previousStart[1]) {
+		setPreviousStart(start);
+		if (start[0] === -Infinity) setMinValue("");
+		if (start[1] === Infinity) setMaxValue("");
+	}
 
-  const rangeBoxRef = useRef<HTMLDivElement>(null);
-  const buttonId = useId();
-  const inputMinId = useId();
-  const inputMaxId = useId();
-  const BUTTON_LABEL = 'Appliquer';
+	const inputMinId = useId();
+	const inputMaxId = useId();
 
-  const closeRangeBoxOnClickOutside = useCallback((event: MouseEvent) => {
-  	if (!(rangeBoxRef.current)?.contains(event.target as Node)) {
-  		setIsRangeBoxOpen(false);
-  	}
-  }, []);
+	const onMaxInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+		const value = event.target.value;
+		setMaxValue(value === "" ? value : Number(value));
+	}, []);
 
-  const closeRangeBoxOnEscape = useCallback((event: KeyboardEvent) => {
-  	if (event.key === KeyBoard.ESCAPE && isRangeBoxOpen) {
-  		setIsRangeBoxOpen(false);
-  	}
-  }, [isRangeBoxOpen]);
+	const onMinInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+		const value = event.target.value;
+		setMinValue(value === "" ? value : Number(value));
+	}, []);
 
-  useEffect(function setEventListenerOnMount() {
-  	// FIXME (GAFI 28-10-2024): À placer plutôt sur le onBlur du composant au global pour éviter le flicker
-  	// 	quand on click sur le label
-  	document.addEventListener('mousedown', closeRangeBoxOnClickOutside);
-  	document.addEventListener('keyup', closeRangeBoxOnEscape);
+	const refineRange = useCallback(() => {
+		const from = minValue || undefined;
+		const to = maxValue || undefined;
+		refine([from, to]);
+	}, [minValue, maxValue, refine]);
 
-  	return () => {
-  		document.removeEventListener('mousedown', closeRangeBoxOnClickOutside);
-  		document.removeEventListener('keyup', closeRangeBoxOnEscape);
-  	};
-  }, [closeRangeBoxOnClickOutside, closeRangeBoxOnEscape]);
-
-  const onMaxInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-  	const value = event.target.value;
-  	if(!value) setMaxValue('');
-  	else setMaxValue(Number(value));
-  }, []);
-
-  const onMinInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-  	const value = event.target.value;
-  	if(!value) setMinValue('');
-  	else setMinValue(Number(value));
-  }, []);
-
-  function refineRange() {
-  	const from = minValue || undefined;
-  	const to = maxValue || undefined;
-  	refine([from, to]);
-  	setIsRangeBoxOpen(false);
-  }
-
-  const displayPlaceholder = () => {
-  	if (minValue && !maxValue) return `A partir de ${minValue} ${unite}`;
-  	if (!minValue && maxValue) return `Jusqu‘à ${maxValue} ${unite}`;
-  	if (minValue && maxValue ) return `De ${minValue} ${unite} à ${maxValue} ${unite}`;
-  	return placeholder;
-  };
-
-  const renderRangeBox = () => (
-  	<fieldset className={styles.rangeBox}>
-  		<label className={styles.label} htmlFor={inputMinId}>Minimum</label>
-  		<span className={styles.customRangeInputWrapper}>
-  			<input
-  				id={inputMinId}
-					className='fr-input'
-  				type="number"
-  				min={min}
-  				max={max}
-  				value={minValue}
-  				onChange={onMinInputChange} />
-  			<span>{unite}</span>
-  		</span>
-  		<label className={styles.label} htmlFor={inputMaxId}>Maximum</label>
-  		<span className={classNames(styles.customRangeInputWrapper)}>
-  			<input
-  				id={inputMaxId}
-					className='fr-input'
-  				type="number"
-  				min={min}
-  				max={max}
-  				value={maxValue}
-  				onChange={onMaxInputChange} />
-  			<span>{unite}</span>
-  		</span>
-  		<ButtonComponent label={BUTTON_LABEL} onClick={refineRange} />
-  	</fieldset>
-  );
-
-  return (
-  	<div className={classNames(className)} data-testid={props['data-testid']}>
-  		<label className={styles.label} htmlFor={buttonId}>{label}</label>
-  		<div ref={rangeBoxRef} className={styles.selectContainer}>
-  			<button
-  				type="button"
-  				aria-haspopup="listbox"
-  				aria-expanded={isRangeBoxOpen}
-  				id={buttonId}
-  				className={styles.button}
-  				onClick={() => setIsRangeBoxOpen(!isRangeBoxOpen)}>
-  				<span>{displayPlaceholder()}</span>
-  				<Icon name={isRangeBoxOpen ? 'angle-up' : 'angle-down'} />
-  			</button>
-  			{isRangeBoxOpen && renderRangeBox()}
-  		</div>
-  	</div>
-  );
+	return (
+		<div className="fr-grid-row fr-grid-row--gutters">
+			<div className="fr-col-6">
+				<div className="fr-input-group">
+					<Label htmlFor={inputMinId}>{labelMinimum} ({unite})</Label>
+					<input
+						id={inputMinId}
+						className="fr-input"
+						type="number"
+						min={min}
+						max={max}
+						value={minValue}
+						onChange={onMinInputChange}
+						onBlur={refineRange} />
+				</div>
+			</div>
+			<div className="fr-col-6">
+				<div className="fr-input-group">
+					<Label htmlFor={inputMaxId}>{labelMaximum} ({unite})</Label>
+					<input
+						id={inputMaxId}
+						className="fr-input"
+						type="number"
+						min={min}
+						max={max}
+						value={maxValue}
+						onChange={onMaxInputChange}
+						onBlur={refineRange} />
+				</div>
+			</div>
+		</div>
+	);
 }
-
-
