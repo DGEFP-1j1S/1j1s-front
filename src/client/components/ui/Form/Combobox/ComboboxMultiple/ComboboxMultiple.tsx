@@ -4,7 +4,6 @@ import React, {
 	KeyboardEvent,
 	useCallback,
 	useId,
-	useLayoutEffect,
 	useRef,
 	useState,
 } from 'react';
@@ -13,6 +12,7 @@ import { KeyBoard } from '~/client/components/keyboard/keyboard.enum';
 import styles from '~/client/components/ui/Form/Select/Select.module.scss';
 import { SelectContext } from '~/client/components/ui/Form/Select/SelectContext';
 import { SelectOption } from '~/client/components/ui/Form/Select/SelectOption/SelectOption';
+import { useIsomorphicLayoutEffect } from '~/client/hooks/useIsomorphicLayoutEffect';
 
 import comboboxMultipleStyles from './ComboboxMultiple.module.scss';
 
@@ -55,7 +55,7 @@ export function ComboboxMultiple({
 		setActiveDescendant(undefined);
 	}
 
-	useLayoutEffect(function scrollOptionIntoView() {
+	useIsomorphicLayoutEffect(function scrollOptionIntoView() {
 		if (activeDescendant) {
 			document.getElementById(activeDescendant)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 		}

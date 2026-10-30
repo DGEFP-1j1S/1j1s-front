@@ -16,10 +16,6 @@ interface ChampFacetteProps {
 
 const triAlphabetique = (a: Facette, b: Facette) => a.valeur.localeCompare(b.valeur);
 
-/**
- * Select multiple dont les options sont les valeurs d‘une facette de recherche indexée.
- * Les valeurs cochées sont envoyées dans le formulaire sous le nom `name`.
- */
 export function ChampFacette({ label, labelComplement, name, facettes, valeursInitiales, tri = triAlphabetique }: ChampFacetteProps) {
 	// NOTE : une valeur cochée peut ne plus avoir de résultat avec les autres filtres ; elle doit rester proposée pour être décochée
 	const valeursAbsentes = valeursInitiales.filter((valeur) => !facettes.some((facette) => facette.valeur === valeur));
