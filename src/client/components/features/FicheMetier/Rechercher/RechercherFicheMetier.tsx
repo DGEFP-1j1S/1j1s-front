@@ -45,6 +45,6 @@ export function RechercherFicheMetier({ erreurRecherche, resultats }: Rechercher
 			resultats={resultats?.resultats ?? []}
 			libelleListe="Fiches métier"
 			cleResultat={(ficheMetier, index) => ficheMetier.nom_metier ?? String(index)}
-			afficherResultat={(ficheMetier) => <ResultatRechercherMetier hit={ficheMetier} />} />
+			afficherResultat={(ficheMetier) => <ResultatRechercherMetier ficheMetier={ficheMetier} />} />
 	);
 }

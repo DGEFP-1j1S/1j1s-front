@@ -40,6 +40,6 @@ export function RechercherEvenement({ erreurRecherche, resultats }: RechercherEv
 			resultats={resultats?.resultats ?? []}
 			libelleListe="Évènements"
 			cleResultat={(evenement, index) => evenement.slug ?? String(index)}
-			afficherResultat={(evenement) => <ResultatRechercherEvenement hit={evenement} />} />
+			afficherResultat={(evenement) => <ResultatRechercherEvenement evenement={evenement} />} />
 	);
 }

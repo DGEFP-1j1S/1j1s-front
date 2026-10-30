@@ -13,8 +13,8 @@ import { DateService } from '~/client/services/date/date.service';
 
 const TYPE_DE_LOGEMENT_INTERGENERATIONNEL = 'habitation intergénérationnelle';
 
-export function AnnonceDeLogement(props: { hit: AnnonceDeLogementIndexee }) {
-	const annonce = props.hit;
+export function AnnonceDeLogement(props: { annonce: AnnonceDeLogementIndexee }) {
+	const annonce = props.annonce;
 	const typeDeLogement = annonce.type === TYPE_DE_LOGEMENT_INTERGENERATIONNEL ? 'intergénérationnel' : annonce.type;
 	const dateService = useDependency<DateService>('dateService');
 	const dateDeLAnnonce = dateService.formatToHumanReadableDate(new Date(annonce.dateDeMiseAJour));

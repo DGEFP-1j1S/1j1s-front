@@ -7,8 +7,8 @@ import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { DateService } from '~/client/services/date/date.service';
 import { DomainesStage } from '~/server/stages/repository/domainesStage';
 
-export function OffreDeStage(props: { hit: OffreDeStageIndexee }) {
-	const stage = props.hit;
+export function OffreDeStage(props: { offreDeStage: OffreDeStageIndexee }) {
+	const stage = props.offreDeStage;
 	const dateService = useDependency<DateService>('dateService');
 
 	function formatDate(dateDebutMin: string, dateDebutMax?: string) {

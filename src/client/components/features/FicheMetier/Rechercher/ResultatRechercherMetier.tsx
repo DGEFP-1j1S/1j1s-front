@@ -6,8 +6,8 @@ import { formatCarriageReturnToHtml } from '~/client/utils/formatCarriageReturnT
 import { mapFicheMetier } from '~/server/fiche-metier/domain/ficheMetierHttp';
 import { FicheMetierIndexee } from '~/server/fiche-metier/domain/rechercheFicheMetier';
 
-export function ResultatRechercherMetier(props: { hit: FicheMetierIndexee }) {
-	const ficheMetier = mapFicheMetier(props.hit);
+export function ResultatRechercherMetier(props: { ficheMetier: FicheMetierIndexee }) {
+	const ficheMetier = mapFicheMetier(props.ficheMetier);
 	const accrocheMetier = useSanitize(formatCarriageReturnToHtml(ficheMetier.accrocheMetier));
 	const nomMetier = useMemo(() => {
 		return `${ficheMetier.nomMetier?.charAt(0).toUpperCase()}${ficheMetier.nomMetier?.slice(1)}`;
