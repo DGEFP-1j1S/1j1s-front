@@ -18,20 +18,13 @@ import comboboxMultipleStyles from './ComboboxMultiple.module.scss';
 
 export type ComboboxMultipleProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'value' | 'onChange'> & {
 	optionsAriaLabel: string
-	/** valeurs des options cochées */
 	value: Array<string>
-	/** appelé avec la valeur de l‘option cochée ou décochée */
 	onChange: (optionValue: string) => void
-	/** texte saisi pour filtrer les options */
 	inputValue: string
 	onInputValueChange: (inputValue: string) => void
 	onTouch?: (touched: boolean) => void
 };
 
-/**
- * Champ de saisie qui filtre une liste d‘options à cocher (ex : recherche de localisations).
- * Le filtrage des options est à la charge du parent, qui reçoit la saisie via onInputValueChange.
- */
 export function ComboboxMultiple({
 	optionsAriaLabel,
 	value,

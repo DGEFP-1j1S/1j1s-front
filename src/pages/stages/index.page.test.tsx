@@ -1,6 +1,6 @@
 import '~/test-utils';
 
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 
 import { anOffreDeStageIndexee } from '~/client/components/features/OffreDeStage/offreDeStageIndexee.fixture';
@@ -11,6 +11,7 @@ import { aManualAnalyticsService } from '~/client/services/analytics/analytics.s
 import { aDateService } from '~/client/services/date/date.service.fixture';
 import { aStageService } from '~/client/services/stage/stageService.fixture';
 import RechercherOffreStagePage from '~/pages/stages/index.page';
+import { createSuccess } from '~/server/errors/either';
 import { ResultatsRechercheOffreStage } from '~/server/stages/domain/rechercheOffreStage';
 
 function desResultats(): ResultatsRechercheOffreStage {
@@ -25,11 +26,11 @@ function desResultats(): ResultatsRechercheOffreStage {
 }
 
 // NOTE : async pour attendre le chargement initial des localisations proposées
-async function renderPage(resultats = desResultats(), routerQuery = {}) {
+async function renderPage(resultats = desResultats(), routerQuery = {}, localisationsProposees: Array<string> = []) {
 	const push = vi.fn();
 	mockUseRouter({ push, query: routerQuery });
 	mockSmallScreen();
-	const stageService = aStageService();
+	const stageService = aStageService({ rechercherLocalisations: vi.fn().mockResolvedValue(createSuccess(localisationsProposees)) });
 	const view = render(
 		<DependenciesProvider
 			analyticsService={aManualAnalyticsService()}
@@ -96,5 +97,28 @@ describe('<RechercherOffreStagePage />', () => {
 		const filtres = screen.getByRole('list', { name: 'Filtres de la recherche' });
 		expect(filtres).toHaveTextContent('Paris');
 		expect(filtres).toHaveTextContent('Audit');
+	});
+
+	describe('quand une localisation contient une virgule', () => {
+		it('la met dans l‘URL comme une seule valeur, en répétant le paramètre pour chaque localisation', async () => {
+			const user = userEvent.setup();
+			const { push } = await renderPage(desResultats(), {}, ['Lyon, Part-Dieu', 'Paris']);
+			await screen.findByRole('option', { hidden: true, name: 'Lyon, Part-Dieu' });
+
+			await user.click(screen.getByRole('combobox', { name: /Localisation/ }));
+			await user.click(screen.getByRole('option', { name: 'Lyon, Part-Dieu' }));
+			await user.click(screen.getByRole('option', { name: 'Paris' }));
+			await user.click(screen.getByRole('button', { name: 'Rechercher' }));
+
+			expect(push).toHaveBeenCalledWith({ query: 'localisations=Lyon%2C+Part-Dieu&localisations=Paris&page=1' }, undefined, { scroll: false });
+		});
+
+		it('la relit dans l‘URL comme une seule valeur', async () => {
+			await renderPage(desResultats(), { localisations: 'Lyon, Part-Dieu' });
+
+			const filtres = screen.getByRole('list', { name: 'Filtres de la recherche' });
+			expect(within(filtres).getAllByRole('listitem')).toHaveLength(1);
+			expect(filtres).toHaveTextContent('Lyon, Part-Dieu');
+		});
 	});
 });

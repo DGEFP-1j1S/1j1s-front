@@ -7,7 +7,7 @@ import { Head } from '~/client/components/head/Head';
 import { HeroWithButtonLink } from '~/client/components/ui/Hero/HeroWithButtonLink';
 import useAnalytics from '~/client/hooks/useAnalytics';
 import { transformQueryToArray } from '~/pages/api/utils/joi/joi.util';
-import { queryToArray } from '~/pages/api/utils/queryToArray.util';
+import { queryToValeurs } from '~/pages/api/utils/queryToArray.util';
 import analytics from '~/pages/evenements/index.analytics';
 import { isFailure } from '~/server/errors/either';
 import { Erreur } from '~/server/errors/erreur.types';
@@ -78,7 +78,7 @@ type RequestQuery = Partial<{ [p: string]: string | string[] }>;
 
 function evenementFiltreMapper(query: RequestQuery): FiltreRechercheEvenement {
 	return {
-		lieux: query.lieux ? queryToArray(query.lieux) : [],
+		lieux: query.lieux ? queryToValeurs(query.lieux) : [],
 		motCle: query.motCle ? String(query.motCle) : undefined,
 		page: query.page ? Number(query.page) : 1,
 	};

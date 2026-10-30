@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import React from 'react';
 
+import { KeyBoard } from '~/client/components/keyboard/keyboard.enum';
 import { ChampSuggestionsMultiples } from '~/client/components/ui/Form/ChampSuggestionsMultiples/ChampSuggestionsMultiples';
 import { mockScrollIntoView } from '~/client/components/window.mock';
 import { createSuccess } from '~/server/errors/either';
@@ -60,6 +61,24 @@ describe('<ChampSuggestionsMultiples />', () => {
 		expect(valeursDuFormulaire()).toStrictEqual(['Marseille', 'Lyon']);
 		expect(screen.getAllByRole('option').map((option) => option.textContent)).toStrictEqual(['Marseille', 'Lyon', 'Paris']);
 		expect(screen.getByRole('combobox', { name: 'Localisation' })).toHaveAttribute('placeholder', '2 cochée(s)');
+	});
+
+	it('au clavier, l‘option cochée reste active : un second Entrée la décoche', async () => {
+		const user = userEvent.setup();
+		await afficherChamp();
+
+		const combobox = screen.getByRole('combobox', { name: 'Localisation' });
+		await user.click(combobox);
+		await user.keyboard(`{${KeyBoard.ARROW_DOWN}}{${KeyBoard.ENTER}}`);
+
+		const paris = screen.getByRole('option', { name: 'Paris' });
+		expect(paris).toHaveAttribute('aria-selected', 'true');
+		expect(combobox).toHaveAttribute('aria-activedescendant', paris.id);
+
+		await user.keyboard(`{${KeyBoard.ENTER}}`);
+
+		expect(screen.getByRole('option', { name: 'Paris' })).toHaveAttribute('aria-selected', 'false');
+		expect(valeursDuFormulaire()).toStrictEqual([]);
 	});
 
 	it('affiche un message quand aucune suggestion ne correspond à la saisie', async () => {

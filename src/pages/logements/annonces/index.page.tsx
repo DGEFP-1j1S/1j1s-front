@@ -7,7 +7,7 @@ import { Head } from '~/client/components/head/Head';
 import ErrorUnavailableService from '~/client/components/layouts/Error/ErrorUnavailableService';
 import useAnalytics from '~/client/hooks/useAnalytics';
 import { transformQueryToArray } from '~/pages/api/utils/joi/joi.util';
-import { queryToArray } from '~/pages/api/utils/queryToArray.util';
+import { queryToValeurs } from '~/pages/api/utils/queryToArray.util';
 import analytics from '~/pages/logements/annonces/index.analytics';
 import { isFailure } from '~/server/errors/either';
 import { Erreur } from '~/server/errors/erreur.types';
@@ -69,8 +69,8 @@ function annonceDeLogementFiltreMapper(query: RequestQuery): FiltreRechercheAnno
 		page: query.page ? Number(query.page) : 1,
 		prix: { max: versNombre(query.prixMax), min: versNombre(query.prixMin) },
 		surface: { max: versNombre(query.surfaceMax), min: versNombre(query.surfaceMin) },
-		typesBien: query.typesBien ? queryToArray(query.typesBien) : [],
-		typesOffre: query.typesOffre ? queryToArray(query.typesOffre) : [],
+		typesBien: query.typesBien ? queryToValeurs(query.typesBien) : [],
+		typesOffre: query.typesOffre ? queryToValeurs(query.typesOffre) : [],
 		ville: query.ville ? String(query.ville) : undefined,
 	};
 }
