@@ -2,7 +2,6 @@ import { GetStaticPathsResult, GetStaticPropsContext, GetStaticPropsResult } fro
 import { ParsedUrlQuery } from 'querystring';
 import React from 'react';
 
-import { BackButton } from '~/client/components/features/ButtonRetour/BackButton';
 import { ConsulterFicheMetier } from '~/client/components/features/FicheMetier/Consulter/ConsulterFicheMetier';
 import { OnisepGeneralPartner } from '~/client/components/features/ServiceCard/OnisepGeneralPartner';
 import { Head } from '~/client/components/head/Head';
@@ -31,7 +30,6 @@ export default function ConsulterFicheMetierPage({ ficheMetier }: ConsulterFiche
 				robots="index,follow" />
 			<main id="contenu">
 				<div className="fr-container">
-					<BackButton />
 					<ConsulterFicheMetier ficheMetier={ficheMetier} />
 				</div>
 
