@@ -12,13 +12,16 @@
   & [role="combobox"] {
     width: 100%;
     text-align: left;
-    cursor: pointer;
     @extend %outlined;
     font-size: inherit;
     line-height: inherit;
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
+
+    &:is(button) {
+      cursor: pointer;
+    }
 
     &:focus-within {
       outline: #0a76f6 solid 2px;

@@ -14,8 +14,6 @@ import { SelectContext } from '~/client/components/ui/Form/Select/SelectContext'
 import { SelectOption } from '~/client/components/ui/Form/Select/SelectOption/SelectOption';
 import { useIsomorphicLayoutEffect } from '~/client/hooks/useIsomorphicLayoutEffect';
 
-import comboboxMultipleStyles from './ComboboxMultiple.module.scss';
-
 export type ComboboxMultipleProps = Omit<React.ComponentPropsWithoutRef<'input'>, 'value' | 'onChange'> & {
 	optionsAriaLabel: string
 	value: Array<string>
@@ -127,7 +125,7 @@ export function ComboboxMultiple({
 
 	return (
 		<SelectContext.Provider value={{ activeDescendant, isCurrentItemSelected, onOptionSelection }}>
-			<div className={classNames(styles.container, comboboxMultipleStyles.comboboxMultiple, className)} onBlur={onBlur}>
+			<div className={classNames(styles.container, className)} onBlur={onBlur}>
 				<input
 					type="text"
 					role="combobox"
