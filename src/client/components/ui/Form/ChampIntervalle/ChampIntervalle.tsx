@@ -12,8 +12,7 @@ interface ChampIntervalleProps extends Pick<React.HTMLAttributes<unknown>, 'clas
     unite: string
     min: number
     max: number
-    /** les bornes sont envoyées dans le formulaire sous les noms `${name}Min` et `${name}Max` */
-    name: string
+    name: string // les bornes sont envoyées dans le formulaire sous les noms `${name}Min` et `${name}Max`
     valeurMinInitiale?: number
     valeurMaxInitiale?: number
 		'data-testid'?: string // FIXME (SULI 29-03-2024): a été ajouté pour faire passer des tests car pas de CSS inclus dans le JSDOM
@@ -68,7 +67,6 @@ export function ChampIntervalle(props: ChampIntervalleProps) {
   	else setMinValue(Number(value));
   }, []);
 
-  // NOTE : les bornes ne sont appliquées qu‘à la soumission du formulaire ; « Appliquer » referme la saisie
   function fermerLaSaisie() {
   	setIsRangeBoxOpen(false);
   }

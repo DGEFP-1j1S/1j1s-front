@@ -46,3 +46,15 @@ export function getFormAsQuery(formElement: HTMLFormElement, queryParamsWhitelis
 		.map(joinValues);
 	return new URLSearchParams(flattenedGroupedEntries).toString();
 }
+
+export function getFormAsQueryAvecValeursRepetees(formElement: HTMLFormElement, queryParamsWhitelist: Whitelist, appendPageQueryParam = true): string {
+	const formData = new FormData(formElement);
+	if (appendPageQueryParam) {
+		formData.set('page', '1');
+	}
+
+	const entries = Array.from<FormEntry, FlattenedFormEntry>(formData, flattenFiles)
+		.filter(isWhitelisted(queryParamsWhitelist))
+		.filter(isSet);
+	return new URLSearchParams(entries).toString();
+}

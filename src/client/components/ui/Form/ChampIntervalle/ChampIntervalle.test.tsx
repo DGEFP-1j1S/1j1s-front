@@ -8,7 +8,7 @@ import React from 'react';
 
 import { ChampIntervalle } from '~/client/components/ui/Form/ChampIntervalle/ChampIntervalle';
 
-const renderMeilisearchCustomRangeInputComponent = (props?: { valeurMinInitiale?: number, valeurMaxInitiale?: number }) => {
+const renderChampIntervalleComponent = (props?: { valeurMinInitiale?: number, valeurMaxInitiale?: number }) => {
 	render(
 		<form aria-label="formulaire">
 			<ChampIntervalle
@@ -29,21 +29,21 @@ function valeursDuFormulaire() {
 
 describe('<ChampIntervalle/>', ()=> {
 	it('reprend les valeurs initiales', () => {
-		renderMeilisearchCustomRangeInputComponent({ valeurMaxInitiale: 50, valeurMinInitiale: 12 });
+		renderChampIntervalleComponent({ valeurMaxInitiale: 50, valeurMinInitiale: 12 });
 
 		expect(screen.getByRole('button')).toHaveTextContent('De 12 test-unité à 50 test-unité');
 		expect(valeursDuFormulaire()).toStrictEqual({ testMax: '50', testMin: '12' });
 	});
 
 	it('monte le composant', ()=> {
-		renderMeilisearchCustomRangeInputComponent();
+		renderChampIntervalleComponent();
 		const meilisearchCustomRangeInputComponent = screen.getByLabelText('test-label');
 		expect(meilisearchCustomRangeInputComponent).toBeInTheDocument();
 	});
 
 	it('contient deux champs inputs de type number', async () => {
 		const user = userEvent.setup();
-		renderMeilisearchCustomRangeInputComponent();
+		renderChampIntervalleComponent();
 		const button = screen.getByRole('button');
 
 		await user.click(button);
@@ -59,7 +59,7 @@ describe('<ChampIntervalle/>', ()=> {
 
 	it('contient un bouton Appliquer', async () => {
 		const user = userEvent.setup();
-		renderMeilisearchCustomRangeInputComponent();
+		renderChampIntervalleComponent();
 		const meilisearchCustomRangeInputComponent = screen.getByRole('button');
 
 		await user.click(meilisearchCustomRangeInputComponent);
@@ -73,7 +73,7 @@ describe('<ChampIntervalle/>', ()=> {
 	describe('quand on renseigne les champs minimum et maximum', () => {
 		it('envoie les valeurs renseignées dans le formulaire', async () => {
 			const user = userEvent.setup();
-			renderMeilisearchCustomRangeInputComponent();
+			renderChampIntervalleComponent();
 			const meilisearchCustomRangeInputComponent = screen.getByRole('button');
 
 			await user.click(meilisearchCustomRangeInputComponent);
@@ -92,7 +92,7 @@ describe('<ChampIntervalle/>', ()=> {
 
 		it('affiche dans le placeholder la bonne saisie', async () => {
 			const user = userEvent.setup();
-			renderMeilisearchCustomRangeInputComponent();
+			renderChampIntervalleComponent();
 			const meilisearchCustomRangeInputComponent = screen.getByRole('button');
 
 			await user.click(meilisearchCustomRangeInputComponent);
@@ -107,7 +107,7 @@ describe('<ChampIntervalle/>', ()=> {
 
 		it('ferme l‘affichage des champs au click sur le bouton Appliquer', async () => {
 			const user = userEvent.setup();
-			renderMeilisearchCustomRangeInputComponent();
+			renderChampIntervalleComponent();
 			const meilisearchCustomRangeInputComponent = screen.getByRole('button');
 
 			await user.click(meilisearchCustomRangeInputComponent);
@@ -128,7 +128,7 @@ describe('<ChampIntervalle/>', ()=> {
 	describe('quand on renseigne seulement le champ minimum', () => {
 		it('n‘envoie que la valeur minimum dans le formulaire', async () => {
 			const user = userEvent.setup();
-			renderMeilisearchCustomRangeInputComponent();
+			renderChampIntervalleComponent();
 			const meilisearchCustomRangeInputComponent = screen.getByRole('button');
 
 			await user.click(meilisearchCustomRangeInputComponent);
@@ -146,7 +146,7 @@ describe('<ChampIntervalle/>', ()=> {
 
 		it('affiche dans le placeholder la bonne saisie', async () => {
 			const user = userEvent.setup();
-			renderMeilisearchCustomRangeInputComponent();
+			renderChampIntervalleComponent();
 			const meilisearchCustomRangeInputComponent = screen.getByRole('button');
 
 			await user.click(meilisearchCustomRangeInputComponent);
@@ -160,7 +160,7 @@ describe('<ChampIntervalle/>', ()=> {
 	describe('quand on renseigne seulement le champ maximum', () => {
 		it('n‘envoie que la valeur maximum dans le formulaire', async () => {
 			const user = userEvent.setup();
-			renderMeilisearchCustomRangeInputComponent();
+			renderChampIntervalleComponent();
 			const meilisearchCustomRangeInputComponent = screen.getByRole('button');
 
 			await user.click(meilisearchCustomRangeInputComponent);
@@ -178,7 +178,7 @@ describe('<ChampIntervalle/>', ()=> {
 
 		it('affiche dans le placeholder la bonne saisie', async () => {
 			const user = userEvent.setup();
-			renderMeilisearchCustomRangeInputComponent();
+			renderChampIntervalleComponent();
 			const meilisearchCustomRangeInputComponent = screen.getByRole('button');
 
 			await user.click(meilisearchCustomRangeInputComponent);

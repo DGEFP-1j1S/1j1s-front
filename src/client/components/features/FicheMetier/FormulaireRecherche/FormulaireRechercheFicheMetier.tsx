@@ -6,7 +6,7 @@ import { ChampFacette } from '~/client/components/ui/Form/ChampFacette/ChampFace
 import { Input } from '~/client/components/ui/Form/Input';
 import { Button } from '~/client/dsfr';
 import { useFicheMetierQuery } from '~/client/hooks/useFicheMetierQuery';
-import { getFormAsQuery } from '~/client/utils/form.util';
+import { getFormAsQueryAvecValeursRepetees } from '~/client/utils/form.util';
 import { Facette } from '~/server/services/meilisearch/rechercheIndexee';
 
 interface FormulaireRechercheFicheMetierProps {
@@ -21,7 +21,7 @@ export function FormulaireRechercheFicheMetier({ facettes }: FormulaireRecherche
 
 	function rechercher(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
-		const query = getFormAsQuery(event.currentTarget, queryParams);
+		const query = getFormAsQueryAvecValeursRepetees(event.currentTarget, queryParams);
 		router.push({ query }, undefined, { scroll: false });
 	}
 

@@ -10,7 +10,7 @@ import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { Button } from '~/client/dsfr';
 import { useEvenementQuery } from '~/client/hooks/useEvenementQuery';
 import { EvenementService } from '~/client/services/evenement/evenement.service';
-import { getFormAsQuery } from '~/client/utils/form.util';
+import { getFormAsQueryAvecValeursRepetees } from '~/client/utils/form.util';
 
 const MESSAGE_PAS_DE_RESULTAT = 'Aucune proposition ne correspond à votre saisie. Vérifiez que votre saisie correspond bien à un lieu. Exemple : Paris, Marseille …';
 
@@ -21,7 +21,7 @@ export function FormulaireRechercheEvenement() {
 
 	function rechercher(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
-		const query = getFormAsQuery(event.currentTarget, queryParams);
+		const query = getFormAsQueryAvecValeursRepetees(event.currentTarget, queryParams);
 		router.push({ query }, undefined, { scroll: false });
 	}
 

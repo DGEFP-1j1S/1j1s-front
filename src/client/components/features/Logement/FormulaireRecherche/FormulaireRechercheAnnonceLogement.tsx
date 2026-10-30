@@ -7,7 +7,7 @@ import { ChampIntervalle } from '~/client/components/ui/Form/ChampIntervalle/Cha
 import { Input } from '~/client/components/ui/Form/Input';
 import { Button } from '~/client/dsfr';
 import { useAnnonceDeLogementQuery } from '~/client/hooks/useAnnonceDeLogementQuery';
-import { getFormAsQuery } from '~/client/utils/form.util';
+import { getFormAsQueryAvecValeursRepetees } from '~/client/utils/form.util';
 import { Facette } from '~/server/services/meilisearch/rechercheIndexee';
 
 export const PRIX_MINIMUM = 0;
@@ -24,7 +24,7 @@ interface FormulaireRechercheAnnonceLogementProps {
 	}
 }
 
-function versNombre(valeur?: string) {
+function toNumber(valeur?: string) {
 	return valeur ? Number(valeur) : undefined;
 }
 
@@ -34,7 +34,7 @@ export function FormulaireRechercheAnnonceLogement({ facettes }: FormulaireReche
 
 	function rechercher(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
-		const query = getFormAsQuery(event.currentTarget, queryParams);
+		const query = getFormAsQueryAvecValeursRepetees(event.currentTarget, queryParams);
 		router.push({ query }, undefined, { scroll: false });
 	}
 
@@ -80,8 +80,8 @@ export function FormulaireRechercheAnnonceLogement({ facettes }: FormulaireReche
 						unite={UNITE_SURFACE}
 						min={SURFACE_MINIMUM}
 						max={SURFACE_MAXIMUM}
-						valeurMinInitiale={versNombre(queryParams.surfaceMin)}
-						valeurMaxInitiale={versNombre(queryParams.surfaceMax)} />
+						valeurMinInitiale={toNumber(queryParams.surfaceMin)}
+						valeurMaxInitiale={toNumber(queryParams.surfaceMax)} />
 				</div>
 				<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
 					<ChampIntervalle
@@ -91,8 +91,8 @@ export function FormulaireRechercheAnnonceLogement({ facettes }: FormulaireReche
 						unite={DEVISE}
 						min={PRIX_MINIMUM}
 						max={PRIX_MAXIMUM}
-						valeurMinInitiale={versNombre(queryParams.prixMin)}
-						valeurMaxInitiale={versNombre(queryParams.prixMax)} />
+						valeurMinInitiale={toNumber(queryParams.prixMin)}
+						valeurMaxInitiale={toNumber(queryParams.prixMax)} />
 				</div>
 			</div>
 			<div className="fr-grid-row fr-grid-row--center fr-mt-4w">

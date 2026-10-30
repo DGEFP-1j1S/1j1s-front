@@ -8,7 +8,7 @@ import { MétierDuSoinPartner } from '~/client/components/features/ServiceCard/M
 import { Head } from '~/client/components/head/Head';
 import useAnalytics from '~/client/hooks/useAnalytics';
 import { transformQueryToArray } from '~/pages/api/utils/joi/joi.util';
-import { queryToArray } from '~/pages/api/utils/queryToArray.util';
+import { queryToValeurs } from '~/pages/api/utils/queryToArray.util';
 import analytics from '~/pages/decouvrir-les-metiers/index.analytics';
 import { isFailure } from '~/server/errors/either';
 import { Erreur } from '~/server/errors/erreur.types';
@@ -51,7 +51,7 @@ type RequestQuery = Partial<{ [p: string]: string | string[] }>;
 
 function ficheMetierFiltreMapper(query: RequestQuery): FiltreRechercheFicheMetier {
 	return {
-		centresInteret: query.centresInteret ? queryToArray(query.centresInteret) : [],
+		centresInteret: query.centresInteret ? queryToValeurs(query.centresInteret) : [],
 		motCle: query.motCle ? String(query.motCle) : undefined,
 		page: query.page ? Number(query.page) : 1,
 	};

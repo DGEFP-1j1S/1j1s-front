@@ -15,10 +15,6 @@ interface ChampSuggestionsMultiplesProps {
 	placeholder: (nombreDeValeursCochees: number) => string | undefined
 }
 
-/**
- * Champ de saisie qui propose des valeurs à cocher (ex : localisations), cherchées pendant la frappe.
- * Les valeurs cochées restent en tête de liste et sont envoyées dans le formulaire sous le nom `name`.
- */
 export function ChampSuggestionsMultiples({
 	label,
 	labelComplement,
@@ -74,10 +70,7 @@ export function ChampSuggestionsMultiples({
 				inputValue={saisie}
 				onInputValueChange={modifierLaSaisie}
 				placeholder={placeholder(valeursCochees.length)}>
-				{valeursCochees.map((valeur) => (
-					<ComboboxMultiple.Option key={valeur} value={valeur}>{valeur}</ComboboxMultiple.Option>
-				))}
-				{suggestionsNonCochees.map((valeur) => (
+				{[...valeursCochees, ...suggestionsNonCochees].map((valeur) => (
 					<ComboboxMultiple.Option key={valeur} value={valeur}>{valeur}</ComboboxMultiple.Option>
 				))}
 				{saisie && suggestionsNonCochees.length === 0 && <li role="status">{messagePasDeResultat}</li>}

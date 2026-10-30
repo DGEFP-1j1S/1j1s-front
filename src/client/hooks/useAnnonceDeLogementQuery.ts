@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 
-import { getArrayQueryParam, getSingleQueryParam } from '~/client/utils/queryParams.utils';
+import { getValeursQueryParam, getSingleQueryParam } from '~/client/utils/queryParams.utils';
 
 export type AnnonceDeLogementQueryParams = {
 	ville?: string
@@ -22,8 +22,8 @@ export function useAnnonceDeLogementQuery(): AnnonceDeLogementQueryParams {
 		prixMin: getSingleQueryParam(query.prixMin),
 		surfaceMax: getSingleQueryParam(query.surfaceMax),
 		surfaceMin: getSingleQueryParam(query.surfaceMin),
-		typesBien: getArrayQueryParam(query.typesBien),
-		typesOffre: getArrayQueryParam(query.typesOffre),
+		typesBien: getValeursQueryParam(query.typesBien),
+		typesOffre: getValeursQueryParam(query.typesOffre),
 		ville: getSingleQueryParam(query.ville),
 	}), [query.page, query.prixMax, query.prixMin, query.surfaceMax, query.surfaceMin, query.typesBien, query.typesOffre, query.ville]);
 }

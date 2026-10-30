@@ -6,7 +6,7 @@ import { RechercherOffreStage } from '~/client/components/features/OffreDeStage/
 import { Head } from '~/client/components/head/Head';
 import useAnalytics from '~/client/hooks/useAnalytics';
 import { transformQueryToArray } from '~/pages/api/utils/joi/joi.util';
-import { queryToArray } from '~/pages/api/utils/queryToArray.util';
+import { queryToValeurs } from '~/pages/api/utils/queryToArray.util';
 import analytics from '~/pages/stages/index.analytics';
 import { isFailure } from '~/server/errors/either';
 import { Erreur } from '~/server/errors/erreur.types';
@@ -49,9 +49,9 @@ type RequestQuery = Partial<{ [p: string]: string | string[] }>;
 
 function stagesFiltreMapper(query: RequestQuery): FiltreRechercheOffreStage {
 	return {
-		domaines: query.domaines ? queryToArray(query.domaines) : [],
-		durees: query.durees ? queryToArray(query.durees) : [],
-		localisations: query.localisations ? queryToArray(query.localisations) : [],
+		domaines: query.domaines ? queryToValeurs(query.domaines) : [],
+		durees: query.durees ? queryToValeurs(query.durees) : [],
+		localisations: query.localisations ? queryToValeurs(query.localisations) : [],
 		motCle: query.motCle ? String(query.motCle) : undefined,
 		page: query.page ? Number(query.page) : 1,
 	};
