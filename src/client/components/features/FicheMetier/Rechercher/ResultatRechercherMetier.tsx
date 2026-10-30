@@ -6,9 +6,9 @@ import { formatCarriageReturnToHtml } from '~/client/utils/formatCarriageReturnT
 import { mapFicheMetier } from '~/server/fiche-metier/domain/ficheMetierHttp';
 import { FicheMetierIndexee } from '~/server/fiche-metier/domain/rechercheFicheMetier';
 
-export function RésultatRechercherMétier(props: { hit: FicheMetierIndexee }) {
+export function ResultatRechercherMetier(props: { hit: FicheMetierIndexee }) {
 	const ficheMetier = mapFicheMetier(props.hit);
-	const accrocheMétier = useSanitize(formatCarriageReturnToHtml(ficheMetier.accrocheMetier));
+	const accrocheMetier = useSanitize(formatCarriageReturnToHtml(ficheMetier.accrocheMetier));
 	const nomMetier = useMemo(() => {
 		return `${ficheMetier.nomMetier?.charAt(0).toUpperCase()}${ficheMetier.nomMetier?.slice(1)}`;
 	}, [ficheMetier.nomMetier]);
@@ -20,7 +20,7 @@ export function RésultatRechercherMétier(props: { hit: FicheMetierIndexee }) {
 			titre={nomMetier}
 			lien={`/decouvrir-les-metiers/${encodeURIComponent(ficheMetier.nomMetier)}`}
 			descriptionAs="div">
-			<div dangerouslySetInnerHTML={{ __html: accrocheMétier || '' }} />
+			<div dangerouslySetInnerHTML={{ __html: accrocheMetier || '' }} />
 		</Carte>
 	);
 }

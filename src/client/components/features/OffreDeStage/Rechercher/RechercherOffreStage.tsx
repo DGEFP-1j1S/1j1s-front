@@ -4,11 +4,12 @@ import {
 	FormulaireRechercheOffreStage,
 } from '~/client/components/features/OffreDeStage/FormulaireRecherche/FormulaireRechercheOffreStage';
 import { OffreDeStage } from '~/client/components/features/OffreDeStage/OffreDeStage';
-import { RechercherSolutionLayout } from '~/client/components/layouts/RechercherSolution/RechercherSolutionLayout';
-import { Banner } from '~/client/components/ui/Hero/Hero';
-import { getCapitalizedItems } from '~/client/utils/getCapitalizedItems';
-import { TagList } from '~/client/components/ui/Tag/TagList';
+import {
+	LibelleResultats,
+	RechercheIndexeeLayout
+} from '~/client/components/layouts/RechercheIndexee/RechercheIndexeeLayout';
 import { useStageQuery } from '~/client/hooks/useStageQuery';
+import { getCapitalizedItems } from '~/client/utils/getCapitalizedItems';
 import { Erreur } from '~/server/errors/erreur.types';
 import {
 	NOMBRE_RESULTATS_OFFRE_STAGE_PAR_PAGE,
@@ -24,50 +25,30 @@ const FACETTES_VIDES: ResultatsRechercheOffreStage['facettes'] = { domaines: [],
 
 export function RechercherOffreStage({ erreurRecherche, resultats }: RechercherOffreStageProps) {
 	const stageQuery = useStageQuery();
-	const nombreDeResultats = resultats?.nombreDeResultats ?? 0;
-	const filtresAppliques = [
-		...(stageQuery.localisations ?? []),
-		...(stageQuery.domaines ?? []).map(getCapitalizedItems),
-		...(stageQuery.durees ?? []),
-	];
+	const libelleResultats: LibelleResultats = {
+		intitule: {
+			singulier: 'offre de stage',
+			pluriel: 'offres de stage'
+		},
+		pourFiltre: stageQuery.motCle
+	}
 
 	return (
-		<main id="contenu">
-			<RechercherSolutionLayout
-				banniere={(
-					<Banner>
-						<h1 className="fr-h1 fr-mb-0">Des milliers d‘offres de stages sélectionnées pour vous</h1>
-					</Banner>
-				)}
-				erreurRecherche={erreurRecherche}
-				// NOTE : la clé recrée le formulaire quand l‘URL change (historique), pour que ses champs reflètent la recherche
-				formulaireRecherche={<FormulaireRechercheOffreStage key={JSON.stringify(stageQuery)} facettes={resultats?.facettes ?? FACETTES_VIDES} />}
-				etiquettesRecherche={filtresAppliques.length > 0 ? <TagList list={filtresAppliques} aria-label="Filtres de la recherche" /> : undefined}
-				isChargement={false}
-				isEtatInitial={false}
-				messageResultatRecherche={messageResultatRecherche(nombreDeResultats, stageQuery.motCle)}
-				nombreTotalSolutions={nombreDeResultats}
-				paginationOffset={NOMBRE_RESULTATS_OFFRE_STAGE_PAR_PAGE}
-				listeSolutionElement={<ListeOffreStage resultats={resultats?.resultats ?? []} />} />
-		</main>
-	);
-}
-
-function messageResultatRecherche(nombreDeResultats: number, motCle?: string) {
-	const libelle = nombreDeResultats > 1 ? 'offres de stage' : 'offre de stage';
-	return [`${nombreDeResultats} ${libelle}`, motCle && `pour ${motCle}`].filter(Boolean).join(' ');
-}
-
-function ListeOffreStage({ resultats }: { resultats: ResultatsRechercheOffreStage['resultats'] }) {
-	if (!resultats.length) return null;
-
-	return (
-		<ul className="fr-grid-row fr-grid-row--gutters" aria-label="Offres de stage">
-			{resultats.map((offreDeStage) => (
-				<li key={offreDeStage.slug} className="fr-col-lg-4 fr-col-md-6 fr-col-12">
-					<OffreDeStage hit={offreDeStage} />
-				</li>
-			))}
-		</ul>
+		<RechercheIndexeeLayout
+			titre="Des milliers d‘offres de stages sélectionnées pour vous"
+			formulaire={<FormulaireRechercheOffreStage facettes={resultats?.facettes ?? FACETTES_VIDES} />}
+			erreurRecherche={erreurRecherche}
+			nombreDeResultats={resultats?.nombreDeResultats ?? 0}
+			nombreDeResultatsParPage={NOMBRE_RESULTATS_OFFRE_STAGE_PAR_PAGE}
+			libelleResultats={libelleResultats}
+			filtresAppliques={[
+				...(stageQuery.localisations ?? []),
+				...(stageQuery.domaines ?? []).map(getCapitalizedItems),
+				...(stageQuery.durees ?? []),
+			]}
+			resultats={resultats?.resultats ?? []}
+			libelleListe="Offres de stage"
+			cleResultat={(offreDeStage) => offreDeStage.slug}
+			afficherResultat={(offreDeStage) => <OffreDeStage hit={offreDeStage} />} />
 	);
 }
