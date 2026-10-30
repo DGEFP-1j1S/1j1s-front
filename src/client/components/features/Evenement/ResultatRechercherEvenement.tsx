@@ -8,7 +8,7 @@ import { TagList } from '~/client/components/ui/Tag/TagList';
 import { formatEventDateTime } from '~/client/utils/formatEventDateTime.util';
 import { EvenementIndexe } from '~/server/evenements/domain/rechercheEvenement';
 
-export function RésultatRechercherEvenement(props: { hit: EvenementIndexe }) {
+export function ResultatRechercherEvenement(props: { hit: EvenementIndexe }) {
 	const { titre, organismeOrganisateur, dateDebut, dateFin, lieu, slug } = props.hit;
 
 	return (
