@@ -18,8 +18,9 @@ export function RésultatRechercherMétier(props: { hit: FicheMetierIndexee }) {
 	return (
 		<Carte
 			titre={nomMetier}
-			lien={`/decouvrir-les-metiers/${encodeURIComponent(ficheMetier.nomMetier)}`}>
-			<span dangerouslySetInnerHTML={{ __html: accrocheMétier || '' }} />
+			lien={`/decouvrir-les-metiers/${encodeURIComponent(ficheMetier.nomMetier)}`}
+			descriptionAs="div">
+			<div dangerouslySetInnerHTML={{ __html: accrocheMétier || '' }} />
 		</Carte>
 	);
 }
