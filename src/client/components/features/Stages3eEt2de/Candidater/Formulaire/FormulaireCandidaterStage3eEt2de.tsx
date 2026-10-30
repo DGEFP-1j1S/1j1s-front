@@ -1,6 +1,5 @@
 import React, { FormEvent, useState } from 'react';
 
-import { BackButton } from '~/client/components/features/ButtonRetour/BackButton';
 import { Container } from '~/client/components/layouts/Container/Container';
 import { ButtonComponent } from '~/client/components/ui/Button/ButtonComponent';
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
@@ -179,8 +178,6 @@ function FormulaireContactParTelephone(props: {
 		<>
 			<Container className={styles.formulaireContainer}>
 
-				<BackButton label="Retour à la recherche" aria-label="Retour à la recherche" className={styles.boutonRetour} />
-
 				<p className={styles.mentionChampsObligatoires}>Tous les champs sont obligatoires (sauf mention contraire)</p>
 
 				<form
@@ -274,8 +271,6 @@ function FormulaireContactParEmail(props: {
 	return (
 		<>
 			<Container className={styles.formulaireContainer}>
-
-				<BackButton label="Retour à la recherche" aria-label="Retour à la recherche" className={styles.boutonRetour} />
 
 				<p className={styles.mentionChampsObligatoires}>Tous les champs sont obligatoires (sauf mention contraire)</p>
 

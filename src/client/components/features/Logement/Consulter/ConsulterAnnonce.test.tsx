@@ -16,22 +16,6 @@ describe('<ConsulterAnnonce />', () => {
 		mockUseRouter({ reload: routerReload });
 	});
 
-	it('affiche le bouton retour vers la liste des annonces', () => {
-		const annonceDeLogement = anAnnonceDeLogement({
-			titre: 'Super T3 dans le centre de Paris',
-		});
-		const sessionStorageService = aStorageService({
-			get: vi.fn().mockReturnValue(true),
-		});
-
-		render(
-			<DependenciesProvider dateService={aDateService()} sessionStorageService={sessionStorageService}>
-				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
-			</DependenciesProvider>,
-		);
-		expect(screen.getByRole('link', { name: 'Retour vers la page précédente' })).toBeVisible();
-	});
-
 	it("affiche le titre de l'annonce", () => {
 		const annonceDeLogement = anAnnonceDeLogement({
 			titre: 'Super T3 dans le centre de Paris',

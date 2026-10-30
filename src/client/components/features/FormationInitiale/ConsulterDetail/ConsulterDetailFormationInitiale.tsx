@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { BackButton } from "~/client/components/features/ButtonRetour/BackButton";
 import { Link } from '~/client/components/ui/Link/Link';
 import { TagList } from '~/client/components/ui/Tag/TagList';
 import useSanitize from '~/client/hooks/useSanitize';
@@ -24,7 +23,6 @@ export function ConsulterDetailFormationInitiale({ formationInitialeDetail }: {
 
 	return (
 		<>
-			<BackButton/>
 			<h1 className="fr-my-2w">{formationInitialeDetail.libelle}</h1>
 			<TagList list={getTags()} aria-label="Caractéristiques de la formation" />
 			<Link className="fr-btn fr-btn--lg fr-mb-3w" href={formationInitialeDetail.url_formation}>

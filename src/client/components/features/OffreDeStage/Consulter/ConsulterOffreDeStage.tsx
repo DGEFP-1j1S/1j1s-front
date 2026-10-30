@@ -1,6 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
 
-import { BackButton } from '~/client/components/features/ButtonRetour/BackButton';
 import { dureeCategorisee } from '~/client/components/features/OffreDeStage/Consulter/getDureeCategorisee';
 import { Link } from '~/client/components/ui/Link/Link';
 import { getHtmlFromMd } from '~/client/components/ui/MarkdownToHtml/getHtmlFromMd';
@@ -84,7 +83,6 @@ export function ConsulterOffreDeStage({offreDeStage}: ConsulterOffreDeStageProps
 
 	return (
 		<main id="contenu" className="fr-container">
-			<BackButton/>
 			<h1 className="fr-my-2w">{offreDeStage.titre}</h1>
 			{offreDeStage.employeur?.nom && <h2>{offreDeStage.employeur?.nom}</h2>}
 			<TagList list={listeEtiquettes} aria-label="Caractéristiques de l‘offre de stage"/>
