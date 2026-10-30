@@ -31,8 +31,8 @@ Il faut avoir :
 1. lancé le projet 1j1s-main-cms et peuplé les données via les scripts `npm run docker:populate` et `npm run docker:start`  (voir documentation sur le repo concerné)
 2. synchronisé la configuration sur l'interface d'administration du CMS / Strapi (`Settings -> Config sync -> Interface`-> Cliquer sur "Import")
 3. dans Strapi (`Content-Manager -> Collection Types -> User`), récupéré les credentials de l'utilisateur 1j1s avec role formulaire pour renseigner la variable d'environnement `STRAPI_AUTH` du projet 1j1s-front
-4. lancé meilisearch et renseigné la master key avec la même valeur que la variable d'env `NEXT_PUBLIC_STAGE_SEARCH_ENGINE_API_KEY`
-   Exemple : pour - `MEILI_MASTER_KEY=${MEILI_MASTER_KEY:-masterKey}` dans `docker-compose.yml` du projet 1j1s-main-cms -> il faut avoir `NEXT_PUBLIC_STAGE_SEARCH_ENGINE_API_KEY=masterKey` dans `.env` du projet 1j1s-front
+4. lancé meilisearch et renseigné la master key avec la même valeur que la variable d'env `MEILISEARCH_API_KEY`
+   Exemple : pour - `MEILI_MASTER_KEY=${MEILI_MASTER_KEY:-masterKey}` dans `docker-compose.yml` du projet 1j1s-main-cms -> il faut avoir `MEILISEARCH_API_KEY=masterKey` dans `.env` du projet 1j1s-front
 5. indexé les collections du CMS via le plugin Meilisearch = cocher les collections à indexer (logements, offre de stages, fiches metiers...) sur interface Strapi
 6. Ajouter la ligne suivante au fichier `/etc/hosts` :
 ```

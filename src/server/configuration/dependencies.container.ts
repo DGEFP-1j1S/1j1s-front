@@ -286,8 +286,8 @@ export function dependenciesContainer(): Dependencies {
 	const defaultErrorManagementService = new DefaultErrorManagementService(loggerService);
 	const configuration = serverConfigurationService.getConfiguration();
 	const meilisearchClient = new Meilisearch({
-		apiKey: configuration.NEXT_PUBLIC_STAGE_SEARCH_ENGINE_API_KEY,
-		host: configuration.NEXT_PUBLIC_STAGE_SEARCH_ENGINE_BASE_URL,
+		apiKey: configuration.MEILISEARCH_API_KEY,
+		host: configuration.MEILISEARCH_BASE_URL,
 	});
 	const meilisearchErrorManagementService = new MeilisearchErrorManagementService(loggerService);
 
@@ -398,7 +398,7 @@ export function dependenciesContainer(): Dependencies {
 		annonceDeLogementRepository,
 		new MeilisearchRechercheAnnonceDeLogementRepository(
 			meilisearchClient,
-			configuration.NEXT_PUBLIC_INDEX_ANNONCE_DE_LOGEMENT,
+			configuration.MEILISEARCH_INDEX_ANNONCE_DE_LOGEMENT,
 			listeDesHotesAutorises(configuration.LOGEMENT_IMAGE_URL_LIST),
 			meilisearchErrorManagementService,
 		),
@@ -407,7 +407,7 @@ export function dependenciesContainer(): Dependencies {
 	const stagesRepository = new StrapiStagesRepository(cmsService, defaultErrorManagementService);
 	const rechercheOffreStageRepository = new MeilisearchRechercheOffreStageRepository(
 		meilisearchClient,
-		configuration.NEXT_PUBLIC_INDEX_OFFRE_DE_STAGE,
+		configuration.MEILISEARCH_INDEX_OFFRE_DE_STAGE,
 		meilisearchErrorManagementService,
 	);
 	const stagesDependencies = stagesDependenciesContainer(stagesRepository, rechercheOffreStageRepository);
