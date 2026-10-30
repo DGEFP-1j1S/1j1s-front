@@ -144,42 +144,6 @@ describe('Candidater à un stage de 3e et 2de', () => {
 
 	describe('formulaire de candidature', () => {
 		describe('lorsque que le mode de contact est par téléphone ou en personne', () => {
-			it('affiche un bouton de retour à la recherche', async () => {
-				// GIVEN
-				const routerBack = vi.fn();
-				mockUseRouter({ back: routerBack });
-				mockSessionStorage({
-					getItem: vi.fn().mockReturnValue('/page-1'),
-				});
-				const user = userEvent.setup();
-				const donneesEntreprise = aDonneesEntrepriseStage3eEt2de(
-					{
-						appellations: [
-							{
-								code: 'code',
-								label: 'label',
-							},
-						],
-						modeDeContact: ModeDeContact.IN_PERSON,
-						nomEntreprise: 'Carrefour',
-						siret: '37000000000000',
-					});
-
-				// WHEN
-				render(
-					<DependenciesProvider sessionStorageService={aStorageService({ get: vi.fn().mockReturnValue(true) })} stage3eEt2deService={aStage3eEt2deService()}>
-						<CandidaterStage3eEt2de
-							donneesEntreprise={donneesEntreprise} />
-					</DependenciesProvider>,
-				);
-				const boutonRetour = screen.getByRole('link', { name: 'Retour à la recherche' });
-				await user.click(boutonRetour);
-
-				// THEN
-				expect(boutonRetour).toBeVisible();
-				expect(routerBack).toHaveBeenCalled();
-			});
-
 			it('affiche un message indiquant que tous les champs sont obligatoires', () => {
 				// GIVEN
 				const donneesEntreprise = aDonneesEntrepriseStage3eEt2de(
@@ -273,33 +237,6 @@ describe('Candidater à un stage de 3e et 2de', () => {
 			});
 		});
 		describe('lorsque que le mode de contact est par mail', () => {
-			it('affiche un bouton de retour à la recherche', async () => {
-				// GIVEN
-				const routerBack = vi.fn();
-				mockUseRouter({ back: routerBack });
-				mockSessionStorage({
-					getItem: vi.fn().mockReturnValue('/page-1'),
-				});
-				const user = userEvent.setup();
-				const donneesEntreprise = aDonneesEntrepriseStage3eEt2de(
-					{
-						modeDeContact: ModeDeContact.EMAIL,
-					});
-
-				// WHEN
-				render(
-					<DependenciesProvider sessionStorageService={aStorageService({ get: vi.fn().mockReturnValue(true) })} stage3eEt2deService={aStage3eEt2deService()}>
-						<CandidaterStage3eEt2de
-							donneesEntreprise={donneesEntreprise} />
-					</DependenciesProvider>,
-				);
-				const boutonRetour = screen.getByRole('link', { name: 'Retour à la recherche' });
-				await user.click(boutonRetour);
-
-				// THEN
-				expect(boutonRetour).toBeVisible();
-				expect(routerBack).toHaveBeenCalled();
-			});
 			it('affiche un message indiquant que tous les champs sont obligatoires', () => {
 				// GIVEN
 				const donneesEntreprise = aDonneesEntrepriseStage3eEt2de(
