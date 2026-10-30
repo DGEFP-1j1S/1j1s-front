@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@gouvfr/dsfr": "^1.15.2",
-    "@meilisearch/instant-meilisearch": "^0.31.4",
     "@sentry/nextjs": "^11.0.0",
     "axios": "^1.13.5",
     "axios-cache-interceptor": "^1.11.4",
@@ -49,8 +48,6 @@
     "react": "^18.3.1",
     "react-autosuggest": "^10.1.0",
     "react-dom": "^18.3.1",
-    "react-instantsearch": "^7.24.0",
-    "react-instantsearch-router-nextjs": "^7.24.0",
     "reflect-metadata": "^0.2.2",
     "sharp": "^0.35.4"
   },
