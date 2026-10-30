@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { OffreDeStageIndexée } from '~/client/components/features/OffreDeStage/OffreDeStageIndexee';
+import { OffreDeStageIndexee } from '~/server/stages/domain/offreDeStageIndexee';
 import { Carte } from '~/client/dsfr';
 import { getCapitalizedItems } from '~/client/utils/getCapitalizedItems';
 import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { DateService } from '~/client/services/date/date.service';
 import { DomainesStage } from '~/server/stages/repository/domainesStage';
 
-export function OffreDeStage(props: { hit: OffreDeStageIndexée }) {
+export function OffreDeStage(props: { hit: OffreDeStageIndexee }) {
 	const stage = props.hit;
 	const dateService = useDependency<DateService>('dateService');
 

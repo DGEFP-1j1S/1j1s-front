@@ -1,4 +1,4 @@
-export enum SourceDesDonnées {
+export enum SourceDesDonnees {
 	INTERNE = 'interne',
 	WELCOME_TO_THE_JUNGLE = 'welcome to the jungle',
 	JOBIJOBA = 'jobijoba',

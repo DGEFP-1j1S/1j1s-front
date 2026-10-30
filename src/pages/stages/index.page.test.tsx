@@ -3,7 +3,7 @@ import '~/test-utils';
 import { render, screen, waitFor, within } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 
-import { anOffreDeStageIndexee } from '~/client/components/features/OffreDeStage/offreDeStageIndexee.fixture';
+import { anOffreDeStageIndexee } from '~/server/stages/domain/offreDeStageIndexee.fixture';
 import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { mockScrollIntoView, mockSmallScreen } from '~/client/components/window.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';

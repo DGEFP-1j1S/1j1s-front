@@ -1,6 +1,6 @@
 import type { Meilisearch } from 'meilisearch';
 
-import { anOffreDeStageIndexee } from '~/client/components/features/OffreDeStage/offreDeStageIndexee.fixture';
+import { anOffreDeStageIndexee } from '~/server/stages/domain/offreDeStageIndexee.fixture';
 import { createFailure, createSuccess } from '~/server/errors/either';
 import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { aLoggerService } from '~/server/services/logger.service.fixture';

@@ -1,4 +1,4 @@
-import { AnnonceDeLogementIndexee } from '~/client/components/features/Logement/AnnonceDeLogementIndexee';
+import { AnnonceDeLogementIndexee } from '~/server/logements/domain/annonceDeLogementIndexee';
 import { Either } from '~/server/errors/either';
 import { Facette, Intervalle } from '~/server/services/meilisearch/rechercheIndexee';
 

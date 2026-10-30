@@ -1,6 +1,6 @@
 import React from "react";
 
-import { AnnonceDeLogementIndexee } from '~/client/components/features/Logement/AnnonceDeLogementIndexee';
+import { AnnonceDeLogementIndexee } from '~/server/logements/domain/annonceDeLogementIndexee';
 import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { Carte } from '~/client/dsfr';
 import { DateService } from '~/client/services/date/date.service';
