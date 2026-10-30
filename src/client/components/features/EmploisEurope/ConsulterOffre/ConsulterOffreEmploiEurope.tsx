@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { BackButton } from '~/client/components/features/ButtonRetour/BackButton';
 import { getTagsFromAnnonce } from '~/client/components/features/EmploisEurope/tags.utils';
 import { Link } from '~/client/components/ui/Link/Link';
 import { TagList } from '~/client/components/ui/Tag/TagList';
@@ -91,7 +90,6 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 
 	return (
 		<main id="contenu" className="fr-container">
-			<BackButton/>
 			{annonceEmploiEurope.titre ? <h1 className="fr-h1 fr-my-2w" lang={codeLangueDeLOffre}>{annonceEmploiEurope.titre}</h1>
 				: <h1 className="fr-h1 fr-my-2w">Offre d’emploi sans titre</h1>}
 			{annonceEmploiEurope.nomEntreprise && <p className="fr-text--lead">{annonceEmploiEurope.nomEntreprise}</p>}
