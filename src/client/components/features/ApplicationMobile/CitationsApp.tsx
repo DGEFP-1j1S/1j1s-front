@@ -1,5 +1,5 @@
 import React from "react";
-import { Citation } from "../../../dsfr/Citation";
+import { Citation } from "~/client/dsfr/Citation";
 
 export function CitationsApp() {
 	return (

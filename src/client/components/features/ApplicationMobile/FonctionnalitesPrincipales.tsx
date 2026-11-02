@@ -1,5 +1,5 @@
 import React from "react";
-import { Image } from "../../ui/Img";
+import { Image } from "~/client/components/ui/Img";
 
 export function FonctionnalitesPrincipales() {
 	return (

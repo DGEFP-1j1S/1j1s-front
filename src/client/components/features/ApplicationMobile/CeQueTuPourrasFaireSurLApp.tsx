@@ -1,5 +1,5 @@
 import React from "react";
-import { Carte } from "../../../dsfr";
+import { Carte } from "~/client/dsfr";
 
 export function CeQueTuPourrasFaireSurLApp() {
 	return (

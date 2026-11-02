@@ -14,7 +14,7 @@ export function HeroApplicationMobileAvantLancement() {
 					<div className="fr-col-lg-5 fr-hidden fr-unhidden-lg justify-center">
 						<Image
 							src="/images/application-mobile/screen-app-mobile.png"
-							alt={`Capture de l'écran d'accueil de l'application mobile 1Jeune1solution`}
+							alt="Capture de l'écran d'accueil de l'application mobile 1Jeune1solution"
 							width="258"
 							height="504"
 							priority

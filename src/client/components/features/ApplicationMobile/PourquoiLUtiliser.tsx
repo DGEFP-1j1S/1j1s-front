@@ -5,12 +5,12 @@ export function PourquoiLUtiliser() {
 		<section className="fr-container fr-pt-5w">
 			<h2 className="fr-mb-5w">Pourquoi l&#39;utiliser</h2>
 			{ pourquois.map(pourquoi => (
-				<>
+				<React.Fragment key={pourquoi.titre}>
 					<h3 className={`fr-h5 fr-mb-3v ${pourquoi.iconClass}`}>
 						<span className="fr-ml-1w">{pourquoi.titre}</span>
 					</h3>
-					<p className="fr-mb-3v">{pourquoi.texte}</p>
-				</>
+					<p className="fr-mb-5v">{pourquoi.texte}</p>
+				</React.Fragment>
 			))}
 		</section>
 	);
@@ -30,7 +30,7 @@ const pourquois: Pourquoi[] = [
 	},
 	{
 		titre: "Ne rate aucune offre",
-		iconClass: "fr-icon-phone-gift-fill",
+		iconClass: "fr-icon-gift-fill",
 		texte: "Crée une alerte sur ta recherche et reçois une notification dès qu'une nouvelle offre d'emploi, d'immersion, d'alternance ou de service civique correspond à ce que tu cherches."
 	},
 	{
