@@ -14,6 +14,7 @@ interface CarteProps {
 	tags?: React.ReactNode[]
 	imageSrc?: string
 	imageAlt?: string
+	pictogramme?: string
 	titreAs?: HtmlHeadingTag
 	className?: string
 	horizontal?: boolean
@@ -30,6 +31,7 @@ export function Carte({
 	tags,
 	imageSrc,
 	imageAlt = '',
+	pictogramme,
 	titreAs = 'h3',
 	className,
 	horizontal = false,
@@ -45,15 +47,22 @@ export function Carte({
 		<div className={classNames('fr-card', { 'fr-enlarge-link': lien }, { 'fr-card--horizontal': horizontal }, className)}>
 			<div className="fr-card__body">
 				<div className="fr-card__content">
-					{tags && tags.length > 0 && (
+					{((tags && tags.length > 0) || pictogramme) && (
 						<div className="fr-card__start">
-							<ul className="fr-tags-group">
-								{tags.map((tag, index) => (
-									<li key={index}>
-										<Tag>{tag}</Tag>
-									</li>
-								))}
-							</ul>
+							{tags && tags.length > 0 && (
+								<ul className="fr-tags-group">
+									{tags.map((tag, index) => (
+										<li key={index}>
+											<Tag>{tag}</Tag>
+										</li>
+									))}
+								</ul>
+							)}
+							{pictogramme && (
+								<div className="fr-grid-row fr-grid-row--center fr-mb-2w">
+									<Image src={pictogramme} alt="" width={80} height={80} />
+								</div>
+							)}
 						</div>
 					)}
 					{React.createElement(
