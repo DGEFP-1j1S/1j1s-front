@@ -36,7 +36,7 @@
     "dompurify": "^3.4.17",
     "fast-xml-parser": "^5.11.1",
     "ioredis": "^6.0.0",
-    "joi": "^18.2.9",
+    "joi": "^18.3.1",
     "lodash.debounce": "^4.0.8",
     "markdown-it": "^15.0.3",
     "markdown-it-anchor": "^10.0.0",
@@ -91,6 +91,9 @@
     "vitest": "^5.0.1"
   },
   "overrides": {
+    "@sentry/bundler-plugins": {
+      "glob": "^14.0.3"
+    },
     "@storybook/builder-webpack5": {
       "webpack-dev-middleware": "^7.4.6"
     },
