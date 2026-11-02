@@ -125,6 +125,7 @@ const logementsNav = (): NavigationItemWithChildren => ({
 
 const aidesEtOutilsNav = (): NavigationItemWithChildren => ({
 	children: [
+		{ label: 'Application mobile', link: '/application-mobile' },
 		{ label: 'Simulateur d’aides financières', link: '/mes-aides' },
 		...(process.env.NEXT_PUBLIC_1JEUNE1PERMIS_FEATURE === '1' ? [{
 			label: 'Aides au permis de conduire',

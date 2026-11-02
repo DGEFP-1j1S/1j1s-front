@@ -46,6 +46,7 @@ export const filDArianeConfig: Record<string, FilDArianeEntry> = {
 	"/accessibilite": { label: "Accessibilité", parents: [] },
 	"/accompagnement": { label: "Trouver une structure d'accompagnement", parents: [] },
 	"/actualites": { label: "Actualités", parents: [] },
+	"/application-mobile": { label: "Application mobile", parents: [] },
 	"/apprentissage": { label: "Contrats d'alternance", parents: [] },
 	"/apprentissage-entreprises": { label: "Les avantages de l'apprentissage pour les entreprises", parents: [] },
 	"/apprentissage/[id]": { label: fromProp("alternanceSerialized", "titre"), parents: [alternance] },
