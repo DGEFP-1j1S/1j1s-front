@@ -41,20 +41,20 @@ export function FormulaireRechercheAnnonceLogement() {
 						labelComplement="Exemple : Appartement"
 						sortBy={['name:asc']} />
 				</div>
-				<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
+				<div className="fr-col-12 fr-col-lg-6">
 					<MeilisearchRange
 						attribute="surface"
-						label="Surface (m²)"
-						placeholder="Surface"
+						labelMinimum="Surface minimum"
+						labelMaximum="Surface maximum"
 						unite={UNITE_SURFACE}
 						min={SURFACE_MINIMUM}
 						max={SURFACE_MAXIMUM} />
 				</div>
-				<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
+				<div className="fr-col-12 fr-col-lg-6">
 					<MeilisearchRange
 						attribute="prix"
-						label="Prix"
-						placeholder="Fourchette de prix"
+						labelMinimum="Prix minimum"
+						labelMaximum="Prix maximum"
 						unite={DEVISE}
 						min={PRIX_MINIMUM}
 						max={PRIX_MAXIMUM} />
