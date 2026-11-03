@@ -45,7 +45,7 @@ describe('FormulaireRechercheAnnonceLogement', () => {
 
 		expect(screen.getByRole('textbox', { name: /Ville/ })).toHaveValue('Lyon');
 		expect(screen.getByRole('combobox', { name: 'Type d‘offre Exemple : Location' })).toHaveTextContent('1 choix sélectionné');
-		expect(screen.getByRole('button', { name: 'Prix' })).toHaveTextContent('Jusqu‘à 800 €');
+		expect(screen.getByRole('spinbutton', { name: 'Prix maximum (€)' })).toHaveValue(800);
 	});
 
 	it('à la soumission, met les critères de recherche dans l‘URL et revient à la première page', async () => {
@@ -57,10 +57,8 @@ describe('FormulaireRechercheAnnonceLogement', () => {
 		await user.type(screen.getByRole('textbox', { name: /Ville/ }), 'Lyon');
 		await user.click(screen.getByRole('combobox', { name: 'Type de bien Exemple : Appartement' }));
 		await user.click(screen.getByRole('option', { name: 'Appartement' }));
-		await user.click(screen.getByRole('button', { name: 'Prix' }));
-		await user.type(screen.getByLabelText('Minimum'), '300');
-		await user.type(screen.getByLabelText('Maximum'), '800');
-		await user.click(screen.getByRole('button', { name: 'Appliquer' }));
+		await user.type(screen.getByRole('spinbutton', { name: 'Prix minimum (€)' }), '300');
+		await user.type(screen.getByRole('spinbutton', { name: 'Prix maximum (€)' }), '800');
 		await user.click(screen.getByRole('button', { name: 'Rechercher' }));
 
 		expect(push).toHaveBeenCalledWith({ query: 'ville=Lyon&typesBien=appartement&prixMin=300&prixMax=800&page=1' }, undefined, { scroll: false });

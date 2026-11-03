@@ -7,12 +7,13 @@ interface ChampIntervalleProps {
 	unite: string
 	min: number
 	max: number
+	name: string // les bornes sont envoyées dans le formulaire sous les noms `${name}Min` et `${name}Max`
 	valeurMinInitiale?: number
 	valeurMaxInitiale?: number
 }
 
 export function ChampIntervalle(props: ChampIntervalleProps) {
-	const { labelMinimum,labelMaximum, unite, min, max, valeurMinInitiale, valeurMaxInitiale } = props;
+	const { labelMinimum, labelMaximum, unite, min, max, name, valeurMinInitiale, valeurMaxInitiale } = props;
 
 	type EmptyInput = "";
 	const [minValue, setMinValue] = useState<number | EmptyInput>(valeurMinInitiale ?? '');
@@ -38,6 +39,7 @@ export function ChampIntervalle(props: ChampIntervalleProps) {
 					<Label htmlFor={inputMinId}>{labelMinimum} ({unite})</Label>
 					<input
 						id={inputMinId}
+						name={`${name}Min`}
 						className="fr-input"
 						type="number"
 						min={min}
@@ -51,6 +53,7 @@ export function ChampIntervalle(props: ChampIntervalleProps) {
 					<Label htmlFor={inputMaxId}>{labelMaximum} ({unite})</Label>
 					<input
 						id={inputMaxId}
+						name={`${name}Max`}
 						className="fr-input"
 						type="number"
 						min={min}

@@ -68,6 +68,7 @@ export function FormulaireRechercheAnnonceLogement({ facettes }: FormulaireReche
 				</div>
 				<div className="fr-col-12 fr-col-lg-6">
 					<ChampIntervalle
+						name="surface"
 						labelMinimum="Surface minimum"
 						labelMaximum="Surface maximum"
 						unite={UNITE_SURFACE}
@@ -78,6 +79,7 @@ export function FormulaireRechercheAnnonceLogement({ facettes }: FormulaireReche
 				</div>
 				<div className="fr-col-12 fr-col-lg-6">
 					<ChampIntervalle
+						name="prix"
 						labelMinimum="Prix minimum"
 						labelMaximum="Prix maximum"
 						unite={DEVISE}
