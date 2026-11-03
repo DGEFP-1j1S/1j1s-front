@@ -97,8 +97,14 @@ function versFacettes(distribution: CategoriesDistribution = {}): Array<Facette>
 	return Object.entries(distribution).map(([valeur, nombre]) => ({ nombre, valeur }));
 }
 
-/** valeurs d‘une facette correspondant à une saisie (ex : localisations proposées pendant la frappe) */
 export async function rechercherValeursDeFacette(client: Meilisearch, indexUid: string, facette: string, saisie: string, nombreMaximum: number): Promise<Array<string>> {
+	if (saisie === '') {
+		const { facetDistribution } = await client.index(indexUid).search('', { facets: [facette], limit: 0 });
+		return versFacettes(facetDistribution?.[facette])
+			.sort((a, b) => b.nombre - a.nombre || a.valeur.localeCompare(b.valeur))
+			.map(({ valeur }) => valeur)
+			.slice(0, nombreMaximum);
+	}
 	const { facetHits } = await client.index(indexUid).searchForFacetValues({ facetName: facette, facetQuery: saisie });
 	return facetHits.map(({ value }) => value).slice(0, nombreMaximum);
 }

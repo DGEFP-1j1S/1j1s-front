@@ -89,4 +89,16 @@ describe('rechercherValeursDeFacette', () => {
 		expect(searchForFacetValues).toHaveBeenCalledWith({ facetName: 'lieu', facetQuery: 'vi' });
 		expect(valeurs).toStrictEqual(facetHits.slice(0, 20).map(({ value }) => value));
 	});
+
+	it('sans saisie, renvoie les valeurs les plus fréquentes puis par ordre alphabétique', async () => {
+		const search = vi.fn().mockResolvedValue({
+			facetDistribution: { lieu: { Annecy: 3, Lyon: 130, Paris: 3, Rennes: 1 } },
+		});
+		const client = { index: vi.fn().mockReturnValue({ search }) } as unknown as Meilisearch;
+
+		const valeurs = await rechercherValeursDeFacette(client, 'index', 'lieu', '', 3);
+
+		expect(search).toHaveBeenCalledWith('', { facets: ['lieu'], limit: 0 });
+		expect(valeurs).toStrictEqual(['Lyon', 'Annecy', 'Paris']);
+	});
 });
