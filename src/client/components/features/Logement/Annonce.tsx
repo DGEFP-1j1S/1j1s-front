@@ -24,19 +24,23 @@ export function AnnonceDeLogement(props: HitProps<AnnonceDeLogementIndexee>) {
 			descriptionAs="div"
 		>
 			<dl className="fr-pl-0">
-				<div className="fr-grid-row">
-					<dt>Surface :</dt>
-					<dd className="fr-pl-1v">{annonce.surfaceAAfficher}</dd>
-				</div>
-				<div className="fr-grid-row">
-					<dt>Prix :</dt>
-					<dd className="fr-pl-1v">{annonce.prix} {annonce.devise} charges comprises</dd>
-				</div>
-				<div className="fr-grid-row">
-					<dt>Emplacement :</dt>
-					<dd className="fr-pl-1v">{annonce.localisationAAfficher}</dd>
-				</div>
+				<Information label="Surface">{annonce.surfaceAAfficher}</Information>
+				<Information label="Prix">{formatterPrix(annonce)}</Information>
+				<Information label="Emplacement">{annonce.localisationAAfficher}</Information>
 			</dl>
 		</Carte>
+	);
+}
+
+function formatterPrix({ prix, devise }: AnnonceDeLogementIndexee) {
+	return prix > 0 ? `${prix} ${devise} charges comprises` : "non renseigné";
+}
+
+function Information({ label, children }: { label: string, children: React.ReactNode }) {
+	return (
+		<div className="fr-grid-row">
+			<dt>{label} :</dt>
+			<dd className="fr-pl-1v">{children}</dd>
+		</div>
 	);
 }
