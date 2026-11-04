@@ -2,7 +2,7 @@ import React from "react";
 
 export function PourquoiLUtiliser() {
 	return (
-		<section className="fr-container fr-pt-5w">
+		<section className="fr-container fr-py-10w">
 			<h2 className="fr-mb-5w">Pourquoi l&#39;utiliser</h2>
 			{ pourquois.map(pourquoi => (
 				<React.Fragment key={pourquoi.titre}>
@@ -25,17 +25,17 @@ type Pourquoi = {
 const pourquois: Pourquoi[] = [
 	{
 		titre: "Tout au même endroit",
-		iconClass: "fr-icon-phone-find-fill",
+		iconClass: "fr-icon-phone-find-line",
 		texte: "Offres, événements et pistes d'actions pour ton projet réunis dans une seule application. Si tu es accompagné, tes rendez-vous et tes messages s'y ajoutent."
 	},
 	{
 		titre: "Ne rate aucune offre",
-		iconClass: "fr-icon-gift-fill",
+		iconClass: "fr-icon-gift-line",
 		texte: "Crée une alerte sur ta recherche et reçois une notification dès qu'une nouvelle offre d'emploi, d'immersion, d'alternance ou de service civique correspond à ce que tu cherches."
 	},
 	{
 		titre: "Un service public, tes données protégées",
-		iconClass: "fr-icon-shield-fill",
+		iconClass: "fr-icon-shield-line",
 		texte: "L'application sera éditée par l'État : gratuite, sans publicité. Tes informations servent uniquement à t'aider dans ton projet."
 	},
 ]

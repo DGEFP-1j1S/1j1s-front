@@ -24,7 +24,7 @@ export default function Entreprendre() {
 				robots="index,follow" />
 			<main id="contenu">
 				<BannerWithIllustration image="/images/entrepreneurs.webp" isCover>
-					<h1 className="fr-h1">
+					<h1>
 						Je découvre les solutions qui s’offrent à moi, pour créer mon entreprise… 
 						quel que soit le stade de mon projet de création !
 					</h1>

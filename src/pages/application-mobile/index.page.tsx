@@ -4,10 +4,7 @@ import React from 'react';
 import useAnalytics from '~/client/hooks/useAnalytics';
 import analytics from '~/pages/application-mobile/index.analytics';
 import { Head } from "~/client/components/head/Head";
-import { HeroApplicationMobileLive } from "~/client/components/features/ApplicationMobile/HeroApplicationMobileLive";
-import {
-	HeroApplicationMobileAvantLancement
-} from "~/client/components/features/ApplicationMobile/HeroApplicationMobileAvantLancement";
+import { HeroApplicationMobile } from "~/client/components/features/ApplicationMobile/HeroApplicationMobile";
 import { CeQueTuPourrasFaireSurLApp } from "~/client/components/features/ApplicationMobile/CeQueTuPourrasFaireSurLApp";
 import { FonctionnalitesPrincipales } from "~/client/components/features/ApplicationMobile/FonctionnalitesPrincipales";
 import { PourquoiLUtiliser } from "~/client/components/features/ApplicationMobile/PourquoiLUtiliser";
@@ -27,7 +24,7 @@ export default function ApplicationMobilePage({ estLive }: ApplicationMobilePage
 				description="L‘application mobile 1jeune1solution"
 				robots="index,follow" />
 			<main id="contenu">
-				{estLive ? <HeroApplicationMobileLive /> : <HeroApplicationMobileAvantLancement />}
+				<HeroApplicationMobile estLive={estLive} />
 				<CeQueTuPourrasFaireSurLApp/>
 				<FonctionnalitesPrincipales/>
 				<PourquoiLUtiliser/>

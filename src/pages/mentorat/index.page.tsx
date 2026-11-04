@@ -35,7 +35,7 @@ export default function MentoratPage() {
 				robots="index,follow" />
 			<main id="contenu">
 				<Banner>
-					<h1 className="fr-h1">
+					<h1>
 						1 jeune 1 mentor, être accompagné par un mentor pour réussir
 					</h1>
 					<p className="fr-text--lead fr-mb-0">Faites la rencontre qui change tout !</p>
