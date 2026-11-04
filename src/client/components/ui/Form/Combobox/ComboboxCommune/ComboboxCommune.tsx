@@ -24,6 +24,7 @@ type ComboboxCommuneProps = {
 	defaultCommune?: Commune
 	defaultDistance?: string
 	showRadiusInput?: boolean
+	filterArrondissements?: boolean
 } & ComboboxPropsWithOmit
 
 const MINIMUM_CHARACTER_NUMBER_FOR_SEARCH = 3;
@@ -63,6 +64,7 @@ export const ComboboxCommune = React.forwardRef<ComboboxRef, ComboboxCommuneProp
 		defaultDistance: defaultDistanceProps,
 		debounceTimeout = DEFAULT_DEBOUNCE_TIMEOUT,
 		showRadiusInput = false,
+		filterArrondissements = false,
 		...rest
 	} = props;
 	const localisationService = useDependency<LocalisationService>('localisationService');
@@ -78,11 +80,15 @@ export const ComboboxCommune = React.forwardRef<ComboboxRef, ComboboxCommuneProp
 		const response = await localisationService.rechercherCommune(userInputCommune);
 		if (response && isSuccess(response)) {
 			setStatus('success');
-			setCommuneOptions(response.result.résultats);
+			if (filterArrondissements) {
+				setCommuneOptions(response.result.résultats.filter((commune) => !commune.ville.includes("Arrondissement")));
+			} else {
+				setCommuneOptions(response.result.résultats);
+			}
 		} else {
 			setStatus('failure');
 		}
-	}, [localisationService, setCommuneOptions]);
+	}, [localisationService, setCommuneOptions, filterArrondissements]);
 
 	const handleRechercherWithDebounce = useMemo(() => {
 		return debounce(rechercherCommunesWithUserInputValid, debounceTimeout);
