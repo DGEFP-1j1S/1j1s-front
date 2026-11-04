@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { BackButton } from '~/client/components/features/ButtonRetour/BackButton';
 import { Link } from '~/client/components/ui/Link/Link';
 import { TagList } from '~/client/components/ui/Tag/TagList';
 import useSanitize from '~/client/hooks/useSanitize';
@@ -15,7 +14,6 @@ export function ConsulterOffreEmploi({offreEmploi}: ConsulterOffreEmploiProps) {
 	const salaireOffreEmploi = useSanitize(offreEmploi.salaire);
 	return (
 		<main id="contenu" className="fr-container">
-			<BackButton/>
 			<h1 className="fr-my-2w">{offreEmploi.intitulé}</h1>
 			{offreEmploi.entreprise.nom && <h2>{offreEmploi.entreprise.nom}</h2>}
 			<TagList list={offreEmploi.étiquetteList} aria-label="Caractéristiques de l‘offre d‘emploi"/>

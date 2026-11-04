@@ -1,37 +1,33 @@
-import {
-	render,
-	screen,
-	within,
-} from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
-import React from 'react';
+import { render, screen } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
+import React from "react";
 
-import { MeilisearchRange } from '~/client/components/ui/Meilisearch/MeilisearchRange/MeilisearchRange';
+import { MeilisearchRange } from "~/client/components/ui/Meilisearch/MeilisearchRange/MeilisearchRange";
 import {
 	mockUseRangeInput,
-} from '~/client/components/ui/Meilisearch/mockMeilisearchUseFunctions';
+} from "~/client/components/ui/Meilisearch/mockMeilisearchUseFunctions";
 
-import { useRange } from 'react-instantsearch';
-import { RangeBoundaries } from 'instantsearch.js/es/connectors/range/connectRange';
-vi.mock('react-instantsearch');
+import { useRange } from "react-instantsearch";
+import { RangeBoundaries } from "instantsearch.js/es/connectors/range/connectRange";
+vi.mock("react-instantsearch");
 
 const spyOnUseRange = vi.mocked(useRange);
 
 let refineMock: ReturnType<typeof vi.fn<(rangeValue: RangeBoundaries) => void>>;
 
-const renderMeilisearchCustomRangeInputComponent = () => {
+const renderMeilisearchRange = () => {
 	render(
 		<MeilisearchRange
-			attribute='test'
-			label='test-label'
-			placeholder='test-placeholder'
-			unite='test-unité'
+			attribute="test"
+			labelMinimum="Test minimum"
+			labelMaximum="Test maximum"
+			unite="u"
 			min={20}
 			max={200} />,
 	);
 };
 
-describe('<MeilisearchRange/>', ()=> {
+describe("<MeilisearchRange/>", () => {
 	beforeEach(() => {
 		refineMock = vi.fn<(rangeValue: RangeBoundaries) => void>();
 		spyOnUseRange.mockImplementation(() => mockUseRangeInput({
@@ -39,161 +35,63 @@ describe('<MeilisearchRange/>', ()=> {
 		}));
 	});
 
-	it('monte le composant', ()=> {
-		renderMeilisearchCustomRangeInputComponent();
-		const meilisearchCustomRangeInputComponent = screen.getByLabelText('test-label');
-		expect(meilisearchCustomRangeInputComponent).toBeInTheDocument();
+	it("affiche deux champs de type number avec l'unité dans le label", () => {
+		// GIVEN / WHEN
+		renderMeilisearchRange();
+
+		// THEN
+		const inputMin = screen.getByRole("spinbutton", { name: "Test minimum (u)" });
+		const inputMax = screen.getByRole("spinbutton", { name: "Test maximum (u)" });
+		expect(inputMin).toBeVisible();
+		expect(inputMax).toBeVisible();
 	});
 
-	it('contient deux champs inputs de type number', async () => {
-		const user = userEvent.setup();
-		renderMeilisearchCustomRangeInputComponent();
-		const button = screen.getByRole('button');
-
-		await user.click(button);
-		const inputMin = screen.getByLabelText('Minimum');
-		const inputMax = screen.getByLabelText('Maximum');
-
-		expect(inputMin).toBeInTheDocument();
-		expect(inputMin).toHaveAttribute('type','number');
-
-		expect(inputMax).toBeInTheDocument();
-		expect(inputMax).toHaveAttribute('type','number');
-	});
-
-	it('contient un bouton Appliquer', async () => {
-		const user = userEvent.setup();
-		renderMeilisearchCustomRangeInputComponent();
-		const meilisearchCustomRangeInputComponent = screen.getByRole('button');
-
-		await user.click(meilisearchCustomRangeInputComponent);
-
-		const groupInputs = screen.getByRole('group');
-		const submitButton = within(groupInputs).getByRole('button');
-
-		expect(submitButton).toBeInTheDocument();
-	});
-
-	describe('quand on renseigne les champs minimum et maximum', () => {
-		it('appelle la fonction refine avec les valeurs renseignées', async () => {
+	describe("quand on renseigne les champs minimum et maximum", () => {
+		it("appelle la fonction refine avec les valeurs renseignées", async () => {
+			// GIVEN
 			const user = userEvent.setup();
-			renderMeilisearchCustomRangeInputComponent();
-			const meilisearchCustomRangeInputComponent = screen.getByRole('button');
+			renderMeilisearchRange();
 
-			await user.click(meilisearchCustomRangeInputComponent);
+			// WHEN
+			await user.type(screen.getByRole("spinbutton", { name: "Test minimum (u)" }), "12");
+			await user.type(screen.getByRole("spinbutton", { name: "Test maximum (u)" }), "50");
+			await user.tab();
 
-			const inputMin = screen.getByLabelText('Minimum');
-			await user.type(inputMin, '12');
-			const inputMax = screen.getByLabelText('Maximum');
-			await user.type(inputMax, '50');
-
-			const groupInputs = screen.getByRole('group');
-			const submitButton = within(groupInputs).getByRole('button');
-			await user.click(submitButton);
-
-			expect(refineMock).toHaveBeenCalledTimes(1);
-			expect(refineMock).toHaveBeenCalledWith([12, 50]);
-		});
-
-		it('affiche dans le placeholder la bonne saisie', async () => {
-			const user = userEvent.setup();
-			renderMeilisearchCustomRangeInputComponent();
-			const meilisearchCustomRangeInputComponent = screen.getByRole('button');
-
-			await user.click(meilisearchCustomRangeInputComponent);
-
-			const inputMin = screen.getByLabelText('Minimum');
-			await user.type(inputMin, '12');
-			const inputMax = screen.getByLabelText('Maximum');
-			await user.type(inputMax, '50');
-
-			expect(meilisearchCustomRangeInputComponent).toHaveTextContent('De 12 test-unité à 50 test-unité');
-		});
-
-		it('ferme l‘affichage des champs au click sur le bouton Appliquer', async () => {
-			const user = userEvent.setup();
-			renderMeilisearchCustomRangeInputComponent();
-			const meilisearchCustomRangeInputComponent = screen.getByRole('button');
-
-			await user.click(meilisearchCustomRangeInputComponent);
-
-			const inputMin = screen.getByLabelText('Minimum');
-			await user.type(inputMin, '12');
-			const inputMax = screen.getByLabelText('Maximum');
-			await user.type(inputMax, '50');
-
-			const groupInputs = screen.getByRole('group');
-			const submitButton = within(groupInputs).getByRole('button');
-			await user.click(submitButton);
-
-			expect(groupInputs).not.toBeInTheDocument();
+			// THEN
+			expect(refineMock).toHaveBeenCalledTimes(2);
+			expect(refineMock).toHaveBeenLastCalledWith([12, 50]);
 		});
 	});
 
-	describe('quand on renseigne seulement le champ minimum', () => {
-		it('appelle la fonction refine avec la valeur min et undefined pour le max', async () => {
+	describe("quand on renseigne seulement le champ minimum", () => {
+		it("appelle la fonction refine avec la valeur min et undefined pour le max", async () => {
+			// GIVEN
 			const user = userEvent.setup();
-			renderMeilisearchCustomRangeInputComponent();
-			const meilisearchCustomRangeInputComponent = screen.getByRole('button');
+			renderMeilisearchRange();
 
-			await user.click(meilisearchCustomRangeInputComponent);
+			// WHEN
+			await user.type(screen.getByRole("spinbutton", { name: "Test minimum (u)" }), "12");
+			await user.tab();
 
-			const inputMin = screen.getByLabelText('Minimum');
-			await user.type(inputMin, '12');
-
-
-			const groupInputs = screen.getByRole('group');
-			const submitButton = within(groupInputs).getByRole('button');
-			await user.click(submitButton);
-
+			// THEN
 			expect(refineMock).toHaveBeenCalledTimes(1);
 			expect(refineMock).toHaveBeenCalledWith([12, undefined]);
 		});
-
-		it('affiche dans le placeholder la bonne saisie', async () => {
-			const user = userEvent.setup();
-			renderMeilisearchCustomRangeInputComponent();
-			const meilisearchCustomRangeInputComponent = screen.getByRole('button');
-
-			await user.click(meilisearchCustomRangeInputComponent);
-
-			const inputMin = screen.getByLabelText('Minimum');
-			await user.type(inputMin, '12');
-			expect(meilisearchCustomRangeInputComponent).toHaveTextContent('A partir de 12 test-unité');
-		});
 	});
 
-	describe('quand on renseigne seulement le champ maximum', () => {
-		it('appelle la fonction refine avec la valeur max et undefined pour le min', async () => {
+	describe("quand on renseigne seulement le champ maximum", () => {
+		it("appelle la fonction refine avec la valeur max et undefined pour le min", async () => {
+			// GIVEN
 			const user = userEvent.setup();
-			renderMeilisearchCustomRangeInputComponent();
-			const meilisearchCustomRangeInputComponent = screen.getByRole('button');
+			renderMeilisearchRange();
 
-			await user.click(meilisearchCustomRangeInputComponent);
+			// WHEN
+			await user.type(screen.getByRole("spinbutton", { name: "Test maximum (u)" }), "50");
+			await user.tab();
 
-			const inputMax = screen.getByLabelText('Maximum');
-			await user.type(inputMax, '50');
-
-
-			const groupInputs = screen.getByRole('group');
-			const submitButton = within(groupInputs).getByRole('button');
-			await user.click(submitButton);
-
+			// THEN
 			expect(refineMock).toHaveBeenCalledTimes(1);
 			expect(refineMock).toHaveBeenCalledWith([undefined, 50]);
 		});
-
-		it('affiche dans le placeholder la bonne saisie', async () => {
-			const user = userEvent.setup();
-			renderMeilisearchCustomRangeInputComponent();
-			const meilisearchCustomRangeInputComponent = screen.getByRole('button');
-
-			await user.click(meilisearchCustomRangeInputComponent);
-
-			const inputMax = screen.getByLabelText('Maximum');
-			await user.type(inputMax, '50');
-			expect(meilisearchCustomRangeInputComponent).toHaveTextContent('Jusqu‘à 50 test-unité');
-		});
 	});
-  
 });

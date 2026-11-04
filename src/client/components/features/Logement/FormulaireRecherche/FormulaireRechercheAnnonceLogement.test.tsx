@@ -36,7 +36,9 @@ describe('FormulaireRechercheAnnonceLogement', () => {
 		expect(screen.getByRole('textbox', { name: /Ville/ })).toBeVisible();
 		expect(screen.getByRole('combobox', { name: 'Type d‘offre Exemple : Location' })).toBeVisible();
 		expect(screen.getByRole('combobox', { name: 'Type de bien Exemple : Appartement' })).toBeVisible();
-		expect(screen.getByRole('button', { name: 'Surface (m²)' })).toBeVisible();
-		expect(screen.getByRole('button', { name: 'Prix' })).toBeVisible();
+		expect(screen.getByRole("spinbutton", { name: "Surface minimum (m²)" })).toBeVisible();
+		expect(screen.getByRole("spinbutton", { name: "Surface maximum (m²)" })).toBeVisible();
+		expect(screen.getByRole("spinbutton", { name: "Prix minimum (€)" })).toBeVisible();
+		expect(screen.getByRole("spinbutton", { name: "Prix maximum (€)" })).toBeVisible();
 	});
 });

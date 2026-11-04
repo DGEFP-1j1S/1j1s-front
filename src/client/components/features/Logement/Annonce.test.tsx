@@ -59,7 +59,7 @@ describe('Annonce Component', () => {
 	});
 
 	describe('quand il y a plusieurs images', () => {
-		it('contient un carousel d‘images', () => {
+		it("contient uniquement la premiere image", () => {
 			render(
 				<DependenciesProvider dateService={aDateService()}>
 					<AnnonceDeLogement
@@ -67,8 +67,9 @@ describe('Annonce Component', () => {
 						sendEvent={vi.fn()} />
 				</DependenciesProvider>,
 			);
-			const listDesSlides = screen.getByText((content, element) => element?.getAttribute('aria-live') === 'polite');
-			expect(listDesSlides).toBeInTheDocument();
+			const images: HTMLImageElement[] = screen.getAllByRole("presentation");
+			expect(images).toHaveLength(1);
+			expect(images[0].src).toContain("image-0.jpg");
 		});
 	});
 
@@ -147,7 +148,7 @@ describe('Annonce Component', () => {
 		const surface = screen.getByText(intervalleSurface);
 		expect(surface).toBeInTheDocument();
 
-		const loyer = '1200 €';
+		const loyer = "1200 € charges comprises";
 		const prix = screen.getByText(loyer);
 		expect(prix).toBeInTheDocument();
 	});
@@ -166,8 +167,6 @@ describe('Annonce Component', () => {
 	});
 
 	it('contient le lien externe de l‘annonce', () => {
-		const ariaLabelledbyValue = anAnnonceDeLogement().slug;
-
 		render(
 			<DependenciesProvider dateService={aDateService()}>
 				<AnnonceDeLogement
@@ -175,9 +174,8 @@ describe('Annonce Component', () => {
 					sendEvent={vi.fn()} />
 			</DependenciesProvider>,
 		);
-		const url = screen.getByRole('link');
+		const url = screen.getByRole("link", { name: "Appartement à louer" });
 		expect(url).toBeInTheDocument();
 		expect(url).toHaveAttribute('href', '/logements/annonces/un-slug-appart-a-louer');
-		expect(url).toHaveAttribute('aria-labelledby', `${ariaLabelledbyValue}`);
 	});
 });

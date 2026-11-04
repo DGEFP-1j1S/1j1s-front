@@ -264,11 +264,11 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 					<div className="fr-container">
 						<div className="fr-grid-row fr-grid-row--no-gutters align-items--center">
 							<div className="fr-col-12 fr-col-lg-6 fr-hidden fr-unhidden-lg">
-								<Image src="/images/banner-alternance-handshake.png" alt="" width={660} height={330} className="img-cover"/>
+								<Image src="/images/banner-employeur-home.jpg" alt="" width={660} height={330} className="img-cover"/>
 							</div>
 							<div className="fr-col-12 fr-col-lg-6 fr-p-4w">
-								<h2>Employeurs : Trouvez vos futurs apprentis sur 1jeune1solution</h2>
-								<p>Déposez gratuitement vos offres en apprentissage et gagnez en visibilité auprès des jeunes en recherche d’une opportunité</p>
+								<h2>Employeurs : Recrutez vos futurs apprentis !</h2>
+								<p>Déposez gratuitement vos offres en apprentissage, gagnez en visibilité auprès des jeunes et découvrez les aides auxquelles vous pouvez prétendre.</p>
 								<div className="fr-grid-row fr-grid-row--center">
 									<Link className="fr-btn " onClick={() => evenementAnalyticsService.envoyerEvenement({ action: "clic", categorie: "accueil", nom: "deposer_une_offre_lba" })} href="https://labonnealternance.apprentissage.beta.gouv.fr/1jeune1solution-recruteurs?utm_source=1j1s&utm_medium=website&utm_campaign=recruteurs_landinglba1j1s">Déposer une offre</Link>
 								</div>

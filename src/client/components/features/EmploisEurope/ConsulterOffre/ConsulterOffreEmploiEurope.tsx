@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { BackButton } from '~/client/components/features/ButtonRetour/BackButton';
 import { getTagsFromAnnonce } from '~/client/components/features/EmploisEurope/tags.utils';
 import { Link } from '~/client/components/ui/Link/Link';
 import { TagList } from '~/client/components/ui/Tag/TagList';
@@ -39,10 +38,10 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 	function getCompetencesLinguistiquesRequises() {
 		return competencesLinguistiques?.map((competence) => {
 			return (
-				<div key={competence.langage} className="fr-mt-1w" lang={codeLangueDeLOffre}>
+				<li key={competence.langage} className="fr-mt-1w" lang={codeLangueDeLOffre}>
 					<strong>{capitalizeFirstLetter(competence.langage)}</strong> ({competence.codeDuNiveauDeLangue} - {competence.nomDuNiveauDeLangue})
 					{getDetailLanguageCompetence(competence.detailCompetenceLanguistique)}
-				</div>
+				</li>
 			);
 		});
 	}
@@ -91,7 +90,6 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 
 	return (
 		<main id="contenu" className="fr-container">
-			<BackButton/>
 			{annonceEmploiEurope.titre ? <h1 className="fr-h1 fr-my-2w" lang={codeLangueDeLOffre}>{annonceEmploiEurope.titre}</h1>
 				: <h1 className="fr-h1 fr-my-2w">Offre d’emploi sans titre</h1>}
 			{annonceEmploiEurope.nomEntreprise && <p className="fr-text--lead">{annonceEmploiEurope.nomEntreprise}</p>}
@@ -123,7 +121,7 @@ export function DetailEmploiEurope({ annonceEmploiEurope }: ConsulterOffreEmploi
 				{competencesLinguistiques?.length > 0 && (
 					<div className="fr-mb-2w">
 						<h2 className="fr-h3 fr-mb-1w">Compétences linguistiques requises</h2>
-						<div>{getCompetencesLinguistiquesRequises()}</div>
+						<ul>{getCompetencesLinguistiquesRequises()}</ul>
 					</div>
 				)}
 				{annonceEmploiEurope.laPlusLongueExperienceNecessaire !== undefined && (
