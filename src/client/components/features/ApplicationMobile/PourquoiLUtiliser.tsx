@@ -4,14 +4,16 @@ export function PourquoiLUtiliser() {
 	return (
 		<section className="fr-container fr-py-10w">
 			<h2 className="fr-mb-5w">Pourquoi l&#39;utiliser</h2>
-			{ pourquois.map(pourquoi => (
-				<React.Fragment key={pourquoi.titre}>
-					<h3 className={`fr-h5 fr-mb-3v ${pourquoi.iconClass}`}>
-						<span className="fr-ml-1w">{pourquoi.titre}</span>
-					</h3>
-					<p className="fr-mb-5v">{pourquoi.texte}</p>
-				</React.Fragment>
-			))}
+			<ul className="fr-grid-row fr-grid-row--gutters">
+				{ pourquois.map(pourquoi => (
+					<li key={pourquoi.titre} className="fr-col-12">
+						<h3 className={`fr-h5 fr-mb-3v ${pourquoi.iconClass}`}>
+							<span className="fr-ml-1w">{pourquoi.titre}</span>
+						</h3>
+						<p className="fr-mb-0">{pourquoi.texte}</p>
+					</li>
+				))}
+			</ul>
 		</section>
 	);
 }

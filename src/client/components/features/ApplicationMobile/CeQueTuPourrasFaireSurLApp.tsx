@@ -33,15 +33,13 @@ type CarteAppMobile	= {
 const cartesAppMobile: CarteAppMobile[] = [
 	{
 		titre: "Explorer des pistes d’actions personnalisées",
-		description: "Reçois des suggestions d'actions à réaliser, adaptées à ton projet. " +
-			"Coche les actions au fur et à mesure de ton avancement, et supprime celles qui ne t'intéressent pas.",
+		description: "Reçois des suggestions d'actions à réaliser, adaptées à ton projet. Coche les actions au fur et à mesure de ton avancement, et supprime celles qui ne t'intéressent pas.",
 		tags: ["Mes pistes à explorer"],
 		imageSrc: "/images/dsfr/environment.svg"
 	},
 	{
 		titre: "Rechercher des offres d’emploi, d’alternance, d’immersion et de service civique",
-		description: "Emploi, alternance, immersion, service civique et formation : explore par type d'offre, " +
-			"garde ta recherche en mémoire, suis les offres auxquelles tu as postulé et crée des alertes.",
+		description: "Emploi, alternance, immersion, service civique et formation : explore par type d'offre, garde ta recherche en mémoire, suis les offres auxquelles tu as postulé et crée des alertes.",
 		tags: ["Mes recherches de solution"],
 		imageSrc: "/images/dsfr/search.svg"
 	},
@@ -53,9 +51,7 @@ const cartesAppMobile: CarteAppMobile[] = [
 	},
 	{
 		titre: "Saisir tes démarches et tes rendez-vous",
-		description: "Construis ta liste d'actions à réaliser et ne rate plus aucun rendez-vous grâce aux rappels " +
-			"une semaine avant et la veille de l'entretien. Tes démarches saisies au fil de l'eau enrichissent ton dossier " +
-			"et servent de base d'échange avec ton conseiller.",
+		description: "Construis ta liste d'actions à réaliser et ne rate plus aucun rendez-vous grâce aux rappels une semaine avant et la veille de l'entretien. Tes démarches saisies au fil de l'eau enrichissent ton dossier et servent de base d'échange avec ton conseiller.",
 		tags: ["Mes démarches"],
 		imageSrc: "/images/dsfr/conclusion.svg"
 	},
