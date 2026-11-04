@@ -1,30 +1,48 @@
-import { SearchResults } from 'algoliasearch-helper';
-import { SortBy } from 'instantsearch.js/es/types';
+import React from 'react';
 
-import { MeilisearchInput } from '~/client/components/ui/Meilisearch/MeilisearchInput/MeilisearchInput';
-import { MeilisearchSelectMultiple } from '~/client/components/ui/Meilisearch/MeilisearchSelectMultiple/MeilisearchSelectMultiple';
-import React from "react";
+import { Champ } from '~/client/components/ui/Form/Champ/Champ';
+import { ChampFacette } from '~/client/components/ui/Form/ChampFacette/ChampFacette';
+import { Input } from '~/client/components/ui/Form/Input';
+import { Button } from '~/client/dsfr';
+import { useFicheMetierQuery } from '~/client/hooks/useFicheMetierQuery';
+import { useSoumissionRechercheIndexee } from '~/client/hooks/useSoumissionRechercheIndexee';
+import { Facette } from '~/server/services/meilisearch/rechercheIndexee';
 
-const MEILISEARCH_SORT_BY_LABEL_ASC: SortBy<SearchResults.FacetValue> = ['name:asc'];
+interface FormulaireRechercheFicheMetierProps {
+	facettes: {
+		centresInteret: Array<Facette>
+	}
+}
 
-export function FormulaireRechercheFicheMetier() {
+export function FormulaireRechercheFicheMetier({ facettes }: FormulaireRechercheFicheMetierProps) {
+	const queryParams = useFicheMetierQuery();
+
+	const rechercher = useSoumissionRechercheIndexee(queryParams);
+
 	return (
-		<form className="border--blue fr-p-5w" onSubmit={(event) => event.preventDefault()}>
+		<form className="border--blue fr-p-5w" role="search" aria-label="Rechercher un métier" onSubmit={rechercher}>
 			<div className="fr-grid-row fr-grid-row--gutters">
 				<div className="fr-col-12 fr-col-md-6">
-					<MeilisearchInput
-						label="Métier"
-						name="metier"
-						labelComplement="Exemple : cuisinier" />
+					<Champ className="fr-input-group">
+						<Champ.Label>
+							Métier
+							<Champ.Label.Complement>Exemple : cuisinier</Champ.Label.Complement>
+						</Champ.Label>
+						<Champ.Input render={Input} name="motCle" defaultValue={queryParams.motCle} />
+						<Champ.Error />
+					</Champ>
 				</div>
 				<div className="fr-col-12 fr-col-md-6">
-					<MeilisearchSelectMultiple
-						attribute="centres_interet"
-						limit={100}
+					<ChampFacette
 						label="Centres d‘intérêt"
 						labelComplement="Exemple : J'ai le sens du contact"
-						sortBy={MEILISEARCH_SORT_BY_LABEL_ASC} />
+						name="centresInteret"
+						facettes={facettes.centresInteret}
+						valeursInitiales={queryParams.centresInteret ?? []} />
 				</div>
+			</div>
+			<div className="fr-grid-row fr-grid-row--center fr-mt-4w">
+				<Button className="fr-btn--lg" label="Rechercher" type="submit" />
 			</div>
 		</form>
 	);

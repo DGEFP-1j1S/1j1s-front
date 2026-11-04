@@ -4,7 +4,7 @@ import { OffreDeStage } from '~/client/components/features/OffreDeStage/OffreDeS
 import {
 	aLocalisationStageIndexee,
 	anOffreDeStageIndexee,
-} from '~/client/components/features/OffreDeStage/offreDeStageIndexee.fixture';
+} from '~/server/stages/domain/offreDeStageIndexee.fixture';
 import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { mockSmallScreen } from '~/client/components/window.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
@@ -18,10 +18,6 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 		mockUseRouter({});
 	});
 
-	function someDummy() {
-		return;
-	}
-
 	describe('concernant les domaines du stage', () => {
 		it('un domaine "Non renseigné" n’est pas affiché', () => {
 			const displayedDomain = DomainesStage.MAINTENANCE;
@@ -29,7 +25,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 			const offreStage = anOffreDeStageIndexee({ domaines: [displayedDomain, DomainesStage.NON_RENSEIGNE] });
 
 			render(<DependenciesProvider dateService={aDateService()}>
-				<OffreDeStage hit={offreStage} sendEvent={someDummy} />
+				<OffreDeStage offreDeStage={offreStage} />
 			</DependenciesProvider>,
 			);
 
@@ -47,7 +43,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 			const offreStage = anOffreDeStageIndexee({ localisation: localisationWithCity });
 
 			render(<DependenciesProvider dateService={aDateService()}>
-				<OffreDeStage hit={offreStage} sendEvent={someDummy} />
+				<OffreDeStage offreDeStage={offreStage} />
 			</DependenciesProvider>,
 			);
 
@@ -61,7 +57,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 			const offreStage = anOffreDeStageIndexee({ localisation: localisationWithDepartment });
 
 			render(<DependenciesProvider dateService={aDateService()}>
-				<OffreDeStage hit={offreStage} sendEvent={someDummy} />
+				<OffreDeStage offreDeStage={offreStage} />
 			</DependenciesProvider>);
 
 			const displayedTagsList = screen.getByRole('list');
@@ -79,7 +75,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 			const offreStage = anOffreDeStageIndexee({ localisation: localisationWithRegion });
 
 			render(<DependenciesProvider dateService={aDateService()}>
-				<OffreDeStage hit={offreStage} sendEvent={someDummy} />
+				<OffreDeStage offreDeStage={offreStage} />
 			</DependenciesProvider>);
 
 			const displayedTagsList = screen.getByRole('list');
@@ -94,7 +90,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 			const offreStage = anOffreDeStageIndexee({ dureeCategorisee: 'Non renseigné' });
 
 			render(<DependenciesProvider dateService={aDateService()}>
-				<OffreDeStage hit={offreStage} sendEvent={someDummy} />
+				<OffreDeStage offreDeStage={offreStage} />
 			</DependenciesProvider>);
 
 			const displayedTagsList = screen.getByRole('list');
@@ -113,7 +109,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 				vi.spyOn(dateService, 'formatToHumanReadableDate').mockReturnValue('1 septembre 2024');
 
 				render(<DependenciesProvider dateService={dateService}>
-					<OffreDeStage hit={offreStage} sendEvent={someDummy} />
+					<OffreDeStage offreDeStage={offreStage} />
 				</DependenciesProvider>);
 
 				const tags = screen.getByRole('list');
@@ -138,7 +134,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 					.mockReturnValueOnce('30 septembre 2024');
 
 				render(<DependenciesProvider dateService={dateService}>
-					<OffreDeStage hit={offreStage} sendEvent={someDummy} />
+					<OffreDeStage offreDeStage={offreStage} />
 				</DependenciesProvider>);
 
 				const tags = screen.getByRole('list');
@@ -153,7 +149,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 				const offreStage = anOffreDeStageIndexee({ dateDeDebutMin: undefined });
 
 				render(<DependenciesProvider dateService={aDateService()}>
-					<OffreDeStage hit={offreStage} sendEvent={someDummy} />
+					<OffreDeStage offreDeStage={offreStage} />
 				</DependenciesProvider>);
 
 				const tags = screen.getByRole('list');
@@ -179,7 +175,7 @@ describe('Une carte d’offre de stage affiche des étiquettes', () => {
 			vi.spyOn(dateService, 'formatToHumanReadableDate').mockReturnValue('1 septembre 2024');
 
 			render(<DependenciesProvider dateService={dateService}>
-				<OffreDeStage hit={offreStage} sendEvent={someDummy} />
+				<OffreDeStage offreDeStage={offreStage} />
 			</DependenciesProvider>);
 
 			const displayedTagsList = screen.getByRole('list');

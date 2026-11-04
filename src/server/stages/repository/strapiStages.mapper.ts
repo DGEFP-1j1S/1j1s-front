@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto';
 
 import { RemunerationPeriode } from '~/server/stages/domain/remunerationPeriode';
 import { OffreDeStage, OffreDeStageDepot } from '~/server/stages/domain/stages';
-import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonneesStage';
+import { SourceDesDonnees } from '~/server/stages/repository/sourceDesDonneesStage';
 import { OffreStageDepotStrapi, OffreStageResponseStrapi } from '~/server/stages/repository/strapiStages';
 
 export function mapOffreStage(response: OffreStageResponseStrapi): OffreDeStage {
@@ -69,7 +69,7 @@ export function mapToStrapiDepotOffreDeStage(body: OffreDeStageDepot): OffreStag
 		remunerationMax: body.remuneration,
 		remunerationMin: body.remuneration,
 		remunerationPeriode: body.remuneration ? RemunerationPeriode.MONTHLY : undefined,
-		source: SourceDesDonnées.INTERNE,
+		source: SourceDesDonnees.INTERNE,
 		teletravailPossible: body.teletravailPossible,
 		titre: body.titre,
 		urlDeCandidature: body.urlDeCandidature,
