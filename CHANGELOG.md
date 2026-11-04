@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.364.0](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.363.0...v3.364.0) (2026-11-04)
+
+
+### Features
+
+* migration dsfr recherche logement ([#3780](https://github.com/DGEFP-1j1S/1j1s-front/issues/3780)) ([e3b0b0e](https://github.com/DGEFP-1j1S/1j1s-front/commit/e3b0b0e0242f5e3bc0a93b79e88d1e88873a66ac))
+* mise à jour wording et image de la bannière employeur ([#3781](https://github.com/DGEFP-1j1S/1j1s-front/issues/3781)) ([9243832](https://github.com/DGEFP-1j1S/1j1s-front/commit/92438324062a53e3b884903b3af6212fc1017f07))
+* **ui:** Retirer les boutons Retour des pages détail ([#3776](https://github.com/DGEFP-1j1S/1j1s-front/issues/3776)) ([803da15](https://github.com/DGEFP-1j1S/1j1s-front/commit/803da1517cdb8944d091d0ca868babbca07c73d5))
+
 ## [3.363.0](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.362.4...v3.363.0) (2026-10-29)
 
 
