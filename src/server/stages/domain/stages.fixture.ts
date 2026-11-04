@@ -1,6 +1,6 @@
 import { RemunerationPeriode } from '~/server/stages/domain/remunerationPeriode';
 import { OffreDeStage, OffreDeStageLocalisation } from '~/server/stages/domain/stages';
-import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonneesStage';
+import { SourceDesDonnees } from '~/server/stages/repository/sourceDesDonneesStage';
 
 export function anOffreDeStage(overrides?: Partial<OffreDeStage>): OffreDeStage {
 	return {
@@ -28,7 +28,7 @@ export function anOffreDeStage(overrides?: Partial<OffreDeStage>): OffreDeStage 
 		remunerationMin: 1000,
 		remunerationPeriode: RemunerationPeriode.MONTHLY,
 		slug: 'alternance-audit-tours-h-f-036780b7-95ba-4711-bf26-471d1f95051c',
-		source: SourceDesDonnées.JOBTEASER,
+		source: SourceDesDonnees.JOBTEASER,
 		teletravailPossible: true,
 		titre: 'Alternance Audit - Tours ( H/F)',
 		urlDeCandidature: 'https://www.jobteaser.com/en/job-offers/10067252',

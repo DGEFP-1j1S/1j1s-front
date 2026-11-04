@@ -1,6 +1,3 @@
-import { instantMeiliSearch } from '@meilisearch/instant-meilisearch';
-import { CompositionClient, SearchClient } from 'algoliasearch-helper/types/algoliasearch';
-
 import { EvenementAnalyticsService, ManualAnalyticsService } from '~/client/services/analytics/analytics.service';
 import { EulerianAnalyticsService } from '~/client/services/analytics/eulerian/eulerian.analytics.service';
 import { MatomoAnalyticsService } from '~/client/services/analytics/matomo/matomo.analytics.service';
@@ -40,6 +37,8 @@ import { BffAlternanceMetierService } from '~/client/services/metiers/bff.altern
 import { MetierService } from '~/client/services/metiers/metier.service';
 import { BffMissionEngagementService } from '~/client/services/missionEngagement/bff.missionEngagement.service';
 import { MissionEngagementService } from '~/client/services/missionEngagement/missionEngagement.service';
+import { BffEvenementService } from '~/client/services/evenement/bff.evenement.service';
+import { EvenementService } from '~/client/services/evenement/evenement.service';
 import { BffStageService } from '~/client/services/stage/bff.stage.service';
 import { StageService } from '~/client/services/stage/stage.service';
 import { BffStage3eEt2deService } from '~/client/services/stage3eEt2de/bff.stage3eEt2de.service';
@@ -70,7 +69,6 @@ import { StorageService } from '~/client/services/storage/storage.service';
 import { VideoService } from '~/client/services/video/video.service';
 import { YoutubeVideoService } from '~/client/services/video/youtube/youtube.video.service';
 
-export type RechercheClientService = SearchClient | CompositionClient;
 
 export type Dependency = Dependencies[keyof Dependencies];
 export type Dependencies = {
@@ -83,8 +81,8 @@ export type Dependencies = {
 	metierLbaService: MetierService
 	metierStage3eEt2deService: MetierService
 	missionEngagementService: MissionEngagementService
-	rechercheClientService: RechercheClientService
 	stageService: StageService
+	evenementService: EvenementService
 	youtubeService: VideoService
 	établissementAccompagnementService: EtablissementAccompagnementService
 	dateService: DateService
@@ -95,12 +93,6 @@ export type Dependencies = {
 	stageDeposerOffreEtape3PersistenceService: StageDeposerOffreEtape3PersistenceService
 	localStorageService: StorageService
 	sessionStorageService: StorageService
-}
-
-class DependencyInitException extends Error {
-	constructor(dependencyName: string, reason: string) {
-		super(`Cannot init ${dependencyName} dependency, reason: ${reason}`);
-	}
 }
 
 const getCookieService = () => {
@@ -121,6 +113,7 @@ export default function dependenciesContainer(sessionId?: string): Dependencies 
 	const établissementAccompagnementService = new BffEtablissementAccompagnementService(httpClientService);
 	const emploiEuropeService = new BffEmploiEuropeService(httpClientService);
 	const stageService = new BffStageService(httpClientService);
+	const evenementService = new BffEvenementService(httpClientService);
 	const cookiesService = getCookieService();
 	if (process.env.NEXT_PUBLIC_CAMPAGNE_2026_10_FEATURE === "1") {
 		new AdformMarketingService(cookiesService);
@@ -142,25 +135,6 @@ export default function dependenciesContainer(sessionId?: string): Dependencies 
 
 	const youtubeService = new YoutubeVideoService(cookiesService);
 	const dateService = new JsDateService();
-
-	const meiliSearchBaseUrl = process.env.NEXT_PUBLIC_STAGE_SEARCH_ENGINE_BASE_URL;
-	const meiliSearchApiKey = process.env.NEXT_PUBLIC_STAGE_SEARCH_ENGINE_API_KEY;
-
-	if (!meiliSearchApiKey || !meiliSearchBaseUrl) {
-		throw new DependencyInitException(
-			'rechercheClientService',
-			'NEXT_PUBLIC_STAGE_SEARCH_ENGINE_BASE_URL or NEXT_PUBLIC_STAGE_SEARCH_ENGINE_API_KEY environment variable is missing',
-		);
-	}
-	const instantMeiliSearchObject  = instantMeiliSearch(
-		meiliSearchBaseUrl,
-		meiliSearchApiKey,
-		{
-			keepZeroFacets: true,
-			primaryKey: 'slug',
-		},
-	);
-	const rechercheClientService = instantMeiliSearchObject.searchClient;
 
 	const stage3eEt2deService = new BffStage3eEt2deService(httpClientService);
 
@@ -186,12 +160,12 @@ export default function dependenciesContainer(sessionId?: string): Dependencies 
 		metierLbaService,
 		metierStage3eEt2deService,
 		missionEngagementService,
-		rechercheClientService,
 		sessionStorageService,
 		stage3eEt2deService,
 		stageDeposerOffreEtape1PersistenceService,
 		stageDeposerOffreEtape2PersistenceService,
 		stageDeposerOffreEtape3PersistenceService,
+		evenementService,
 		stageService,
 		youtubeService,
 		établissementAccompagnementService,

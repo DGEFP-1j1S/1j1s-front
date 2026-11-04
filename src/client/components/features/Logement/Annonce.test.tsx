@@ -4,7 +4,7 @@ import {
 } from '@testing-library/react';
 
 import { AnnonceDeLogement } from '~/client/components/features/Logement/Annonce';
-import { AnnonceDeLogementIndexee } from '~/client/components/features/Logement/AnnonceDeLogementIndexee';
+import { AnnonceDeLogementIndexee } from '~/server/logements/domain/annonceDeLogementIndexee';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
 import { aDateService } from '~/client/services/date/date.service.fixture';
 
@@ -35,8 +35,7 @@ describe('Annonce Component', () => {
 			render(
 				<DependenciesProvider dateService={aDateService()}>
 					<AnnonceDeLogement
-						hit={anAnnonceDeLogement({ imagesUrl: [] })}
-						sendEvent={vi.fn()} />
+						annonce={anAnnonceDeLogement({ imagesUrl: [] })} />
 				</DependenciesProvider>,
 			);
 			const image: HTMLImageElement = screen.getByRole('presentation');
@@ -49,8 +48,7 @@ describe('Annonce Component', () => {
 			render(
 				<DependenciesProvider dateService={aDateService()}>
 					<AnnonceDeLogement
-						hit={anAnnonceDeLogement({ imagesUrl: ['/image-0.jpg'] })}
-						sendEvent={vi.fn()} />
+						annonce={anAnnonceDeLogement({ imagesUrl: ['/image-0.jpg'] })} />
 				</DependenciesProvider>,
 			);
 			const image: HTMLImageElement = screen.getByRole('presentation');
@@ -63,8 +61,7 @@ describe('Annonce Component', () => {
 			render(
 				<DependenciesProvider dateService={aDateService()}>
 					<AnnonceDeLogement
-						hit={anAnnonceDeLogement()}
-						sendEvent={vi.fn()} />
+						annonce={anAnnonceDeLogement()} />
 				</DependenciesProvider>,
 			);
 			const images: HTMLImageElement[] = screen.getAllByRole("presentation");
@@ -80,8 +77,7 @@ describe('Annonce Component', () => {
 				render(
 					<DependenciesProvider dateService={aDateService()}>
 						<AnnonceDeLogement
-							hit={anAnnonceDeLogement({ type: 'habitation intergénérationnelle' })}
-							sendEvent={vi.fn()} />
+							annonce={anAnnonceDeLogement({ type: 'habitation intergénérationnelle' })} />
 					</DependenciesProvider>,
 				);
 				const type = screen.getByText(/intergénérationnel/i);
@@ -94,8 +90,7 @@ describe('Annonce Component', () => {
 				render(
 					<DependenciesProvider dateService={aDateService()}>
 						<AnnonceDeLogement
-							hit={anAnnonceDeLogement()}
-							sendEvent={vi.fn()} />
+							annonce={anAnnonceDeLogement()} />
 					</DependenciesProvider>,
 				);
 				const appartement = 'appartement';
@@ -115,8 +110,7 @@ describe('Annonce Component', () => {
 		render(
 			<DependenciesProvider dateService={dateService}>
 				<AnnonceDeLogement
-					hit={annoncesLogement}
-					sendEvent={vi.fn()} />
+					annonce={annoncesLogement} />
 			</DependenciesProvider>,
 		);
 		const dateDePublication = 'postée le 12 avril 2022';
@@ -128,8 +122,7 @@ describe('Annonce Component', () => {
 		render(
 			<DependenciesProvider dateService={aDateService()}>
 				<AnnonceDeLogement
-					hit={anAnnonceDeLogement()}
-					sendEvent={vi.fn()} />
+					annonce={anAnnonceDeLogement()} />
 			</DependenciesProvider>,
 		);
 		const titre = screen.getByRole('heading', { level: 3 });
@@ -140,8 +133,7 @@ describe('Annonce Component', () => {
 		render(
 			<DependenciesProvider dateService={aDateService()}>
 				<AnnonceDeLogement
-					hit={anAnnonceDeLogement()}
-					sendEvent={vi.fn()} />
+					annonce={anAnnonceDeLogement()} />
 			</DependenciesProvider>,
 		);
 		const intervalleSurface = 'de 70 à 71m2';
@@ -157,8 +149,7 @@ describe('Annonce Component', () => {
 		render(
 			<DependenciesProvider dateService={aDateService()}>
 				<AnnonceDeLogement
-					hit={anAnnonceDeLogement()}
-					sendEvent={vi.fn()} />
+					annonce={anAnnonceDeLogement()} />
 			</DependenciesProvider>,
 		);
 		const ville = 'Paris';
@@ -170,8 +161,7 @@ describe('Annonce Component', () => {
 		render(
 			<DependenciesProvider dateService={aDateService()}>
 				<AnnonceDeLogement
-					hit={anAnnonceDeLogement()}
-					sendEvent={vi.fn()} />
+					annonce={anAnnonceDeLogement()} />
 			</DependenciesProvider>,
 		);
 		const url = screen.getByRole("link", { name: "Appartement à louer" });

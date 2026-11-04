@@ -6,7 +6,6 @@ import React, {
 	SyntheticEvent,
 	useCallback,
 	useId,
-	useLayoutEffect,
 	useMemo,
 	useReducer,
 	useRef,
@@ -17,6 +16,7 @@ import { Input } from '~/client/components/ui/Form/Input';
 import { Icon } from '~/client/components/ui/Icon/Icon';
 import { useSynchronizedRef } from '~/client/hooks/useSynchronizedRef';
 import { useTouchedInput } from '~/client/hooks/useTouchedInput';
+import { useIsomorphicLayoutEffect } from '~/client/hooks/useIsomorphicLayoutEffect';
 
 import { ChangeEvent } from './ChangeEvent';
 import styles from './Combobox.module.scss';
@@ -115,7 +115,7 @@ export const Combobox = React.forwardRef<HTMLInputElement, ComboboxProps>(functi
 		return 'Veuillez sélectionner une option dans la liste';
 	}, [findMatchingOption, requireValidOption, required]);
 
-	useLayoutEffect(function scrollOptionIntoView() {
+	useIsomorphicLayoutEffect(function scrollOptionIntoView() {
 		if (activeDescendant) {
 			document.getElementById(activeDescendant)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 		}

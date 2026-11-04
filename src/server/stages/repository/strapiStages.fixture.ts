@@ -1,6 +1,6 @@
 import { RemunerationPeriode } from '~/server/stages/domain/remunerationPeriode';
 import { DomainesStage } from '~/server/stages/repository/domainesStage';
-import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonneesStage';
+import { SourceDesDonnees } from '~/server/stages/repository/sourceDesDonneesStage';
 import { OffreStageDepotStrapi, OffreStageResponseStrapi } from '~/server/stages/repository/strapiStages';
 
 export function aStrapiOffreDeStage(override?: Partial<OffreStageResponseStrapi>): OffreStageResponseStrapi {
@@ -34,7 +34,7 @@ export function aStrapiOffreDeStage(override?: Partial<OffreStageResponseStrapi>
 		remunerationMin: 1000,
 		remunerationPeriode: RemunerationPeriode.MONTHLY,
 		slug: 'alternance-audit-tours-h-f-036780b7-95ba-4711-bf26-471d1f95051c',
-		source: 'jobteaser' as SourceDesDonnées,
+		source: 'jobteaser' as SourceDesDonnees,
 		sourceCreatedAt: '',
 		sourcePublishedAt: '',
 		sourceUpdatedAt: '',
@@ -75,7 +75,7 @@ export function aStrapiOffreDeStageDepot(overrides?: Partial<OffreStageDepotStra
 		remunerationMax: 560,
 		remunerationMin: 560,
 		remunerationPeriode: RemunerationPeriode.MONTHLY,
-		source: SourceDesDonnées.INTERNE,
+		source: SourceDesDonnees.INTERNE,
 		teletravailPossible: true,
 		titre: 'Assistant conducteur train',
 		urlDeCandidature: 'mailto:admin@example.com',
