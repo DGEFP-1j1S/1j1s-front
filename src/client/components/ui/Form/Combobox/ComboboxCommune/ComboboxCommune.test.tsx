@@ -286,6 +286,36 @@ describe('<ComboboxCommune/>', () => {
 			expect(screen.getByRole('option', { name: 'Toulon (83000)' })).toBeVisible();
 		});
 
+		it('lorsque les arrondissements sont filtrés', async () => {
+			const user = userEvent.setup();
+			const communeList = aRésultatsRechercheCommune([
+				aCommune({ code: '75001', codePostal: '75001', ville: 'Paris' }),
+				aCommune({
+					code: '75115',
+					codePostal: '75015',
+					coordonnées: {
+						latitude: 48.863367,
+						longitude: 2.397152,
+					},
+					ville: 'Paris 15e Arrondissement',
+				}),
+			]);
+			const localisationService = aLocalisationService({
+				rechercherCommune: vi.fn().mockResolvedValue(createSuccess(communeList)),
+			});
+			render(<DependenciesProvider localisationService={localisationService}>
+				<ComboboxCommune label={'comboboxLabel'} filterArrondissements={true} />
+			</DependenciesProvider>);
+			const combobox = screen.getByRole('combobox', { name: 'comboboxLabel Exemples : Paris, Béziers…' });
+
+			await user.type(combobox, 'par');
+
+			const options = await screen.findAllByRole('option');
+			expect(options.length).toBe(1);
+			expect(options[0]).toBeInTheDocument();
+			expect(options[0]).toHaveTextContent('Paris');
+		});
+
 		describe('lorsque je sélectionne une valeur valide', () => {
 			it('l‘input est valide et n‘affiche pas de message d‘erreur', async () => {
 				const user = userEvent.setup();
