@@ -59,7 +59,7 @@ export async function getStaticProps(context: GetStaticPropsContext<FAQRéponse>
 		props: {
 			faqRéponse: removeUndefinedKeys(result),
 		},
-		revalidate: dependencies.cmsDependencies.duréeDeValiditéEnSecondes(),
+		revalidate: dependencies.cmsDependencies.dureeDeValiditeEnSecondes(),
 	};
 
 }

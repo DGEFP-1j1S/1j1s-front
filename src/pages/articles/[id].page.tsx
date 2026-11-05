@@ -49,7 +49,7 @@ export async function getStaticProps(context: GetStaticPropsContext<ArticleConte
 		props: {
 			article: JSON.parse(JSON.stringify(response.result)),
 		},
-		revalidate: dependencies.cmsDependencies.duréeDeValiditéEnSecondes(),
+		revalidate: dependencies.cmsDependencies.dureeDeValiditeEnSecondes(),
 	};
 
 }

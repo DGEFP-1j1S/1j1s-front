@@ -1,7 +1,7 @@
 import { ConfigurationService } from '~/server/services/configuration.service';
 
 export interface CmsDependencies {
-	duréeDeValiditéEnSecondes: () => number
+	dureeDeValiditeEnSecondes: () => number
 }
 
 export function cmsDependenciesContainer(configurationService: ConfigurationService): CmsDependencies {
@@ -9,6 +9,6 @@ export function cmsDependenciesContainer(configurationService: ConfigurationServ
 	const duréeDeValiditéEnSecondes = DUREE_VALIDITE_CACHE_CMS_EN_SECONDES;
 
 	return {
-		duréeDeValiditéEnSecondes: () => duréeDeValiditéEnSecondes,
+		dureeDeValiditeEnSecondes: () => duréeDeValiditéEnSecondes,
 	};
 }

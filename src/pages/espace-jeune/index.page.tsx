@@ -95,6 +95,6 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<EspaceJeune
 			cartesActualites: JSON.parse(JSON.stringify(cartesActualitesResponse.result)),
 			serviceJeuneList: JSON.parse(JSON.stringify(serviceJeuneList.result)),
 		},
-		revalidate: dependencies.cmsDependencies.duréeDeValiditéEnSecondes(),
+		revalidate: dependencies.cmsDependencies.dureeDeValiditeEnSecondes(),
 	};
 }
