@@ -45,7 +45,7 @@ const cartesAppMobile: CarteAppMobile[] = [
 	},
 	{
 		titre: "Rechercher des événements",
-		description: <>Ateliers, réunions d&#39;information et <span lang="en">job datings</span> : la date, le lieu et le nombre de places restantes s&#39;affichent avant l&#39;inscription.</>,
+		description: <>Ateliers, réunions d’information et <span lang="en">job datings</span> : la date, le lieu et le nombre de places restantes s’affichent avant l’inscription.</>,
 		tags: ["Mes événements"],
 		imageSrc: "/images/dsfr/location-france.svg"
 	},
