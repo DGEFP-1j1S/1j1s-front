@@ -19,7 +19,7 @@ function afficherLaPage(estLive: boolean) {
 describe('<ApplicationMobilePage />', () => {
 	describe.each([
 		['avant le lancement', false, 'Bientôt disponible sur App Store et Google Play !'],
-		['une fois l‘application disponible', true, "Télécharge l'application dès maintenant !"],
+		['une fois l‘application disponible', true, "Télécharge l’application dès maintenant !"],
 	])('%s', (_, estLive, titre) => {
 		it('affiche la version correspondante', () => {
 			afficherLaPage(estLive);
