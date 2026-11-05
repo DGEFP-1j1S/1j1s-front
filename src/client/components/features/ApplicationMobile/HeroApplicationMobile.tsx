@@ -50,7 +50,7 @@ export function HeroApplicationMobile({ estLive }: HeroApplicationMobileProps) {
 							<p className="fr-h5">Bientôt disponible sur App Store et Google Play !</p>
 						)}
 					</div>
-					<div className="fr-col-lg-5 fr-hidden fr-unhidden-lg justify-center">
+					<div className="fr-col-lg-5 fr-hidden fr-unhidden-lg justify--center">
 						<Image
 							src="/images/application-mobile/screen-app-mobile.png"
 							alt="Écran d'accueil de l'application mobile 1jeune1solution"
