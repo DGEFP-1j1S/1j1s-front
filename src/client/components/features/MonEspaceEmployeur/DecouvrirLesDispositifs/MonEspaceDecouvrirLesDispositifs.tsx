@@ -7,11 +7,11 @@ export function MonEspaceDecouvrirLesDispositifs() {
 		<section className="fr-py-3w">
 			<h2>Découvrir les dispositifs</h2>
 			<div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
-				<div className="fr-col-2 fr-hidden fr-unhidden-lg align-items--center">
+				<div className="fr-col-2 fr-hidden fr-unhidden-md align-items--center">
 					<Image src="/images/logos/les-entreprises-s-engagent.svg" alt="" width={150} height={150}
 								 className='img-contain'/>
 				</div>
-				<div className="fr-col-12 fr-col-lg-10 fr-pl-lg-4w">
+				<div className="fr-col-12 fr-col-md-10 fr-pl-md-4w">
 					<p>
 						Rejoignez une communauté d’entreprises mobilisées pour favoriser l’insertion des jeunes La communauté “Les
 						entreprises s’engagent” a été lancée par le Président de la République en juillet 2018 dans l’objectif de
@@ -38,11 +38,11 @@ export function MonEspaceDecouvrirLesDispositifs() {
 			</div>
 
 			<div className="fr-grid-row fr-grid-row--gutters">
-				<div className="fr-col-2 fr-hidden fr-unhidden-lg align-items--center">
+				<div className="fr-col-2 fr-hidden fr-unhidden-md align-items--center">
 					<Image src="/images/logos/la-bonne-alternance.svg" alt="" width={150} height={150}
 								 className='img-contain'/>
 				</div>
-				<div className="fr-col-12 fr-col-lg-10 fr-pl-lg-4w">
+				<div className="fr-col-12 fr-col-md-10 fr-pl-md-4w">
 					<p>
 						La plateforme “La bonne alternance” a été créée pour simplifier la mise en relation entre jeunes,
 						entreprises et centres de formation dans l’objectif de faciliter les entrées en alternance.
