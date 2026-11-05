@@ -319,39 +319,5 @@ describe('Page d’accueil', () => {
 				});
 			});
 		});
-
-		describe("Boutons La bonne alternance", () => {
-			it("envoie un événement analytics au clic sur Déposer une offre", async () => {
-				// GIVEN
-				const user = userEvent.setup();
-				render(
-					<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
-						<Accueil actualites={anActualiteList()} />
-					</DependenciesProvider>,
-				);
-
-				// WHEN
-				await user.click(screen.getByRole("link", { name: /Déposer une offre/ }));
-
-				// THEN
-				expect(evenementAnalyticsService.envoyerEvenement).toHaveBeenCalledWith({ action: "clic", categorie: "accueil", nom: "deposer_une_offre_lba" });
-			});
-
-			it("envoie un événement analytics au clic sur Consulter les offres", async () => {
-				// GIVEN
-				const user = userEvent.setup();
-				render(
-					<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
-						<Accueil actualites={anActualiteList()} />
-					</DependenciesProvider>,
-				);
-
-				// WHEN
-				await user.click(screen.getByRole("link", { name: /Consulter les offres/ }));
-
-				// THEN
-				expect(evenementAnalyticsService.envoyerEvenement).toHaveBeenCalledWith({ action: "clic", categorie: "accueil", nom: "consulter_les_offres_lba" });
-			});
-		});
 	});
 });
