@@ -101,7 +101,7 @@ function CTAsMdDevices({estLive}: HeroApplicationMobileProps) {
 					<Link
 						className="fr-btn"
 						href="https://doc.pass-emploi.beta.gouv.fr/telechargement-application-du-cej/">
-						Télécharger sur l’application
+						Télécharger l’application
 					</Link>
 				</li>
 				<li>
