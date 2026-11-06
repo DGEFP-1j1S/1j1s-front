@@ -23,7 +23,6 @@ export function Header() {
 											className="fr-btn--menu fr-btn"
 											data-fr-opened="false"
 											aria-controls="header-menu"
-											aria-haspopup="menu"
 											id="header-menu-button"
 											title="Menu"
 										>
