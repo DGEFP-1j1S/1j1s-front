@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 
 import { ComboboxCommune } from '~/client/components/ui/Form/Combobox/ComboboxCommune/ComboboxCommune';
@@ -56,7 +56,7 @@ describe('<ComboboxCommune/>', () => {
 							latitude: 48.8,
 							longitude: 2.2,
 						},
-						ville: 'Paris 15e Arrondissement',
+						ville: 'Paris 15e Arrondissement (75015)',
 					})} />
 				</DependenciesProvider>);
 				const combobox = screen.getByRole('combobox');
@@ -79,7 +79,7 @@ describe('<ComboboxCommune/>', () => {
 						latitude: 48.8,
 						longitude: 2.2,
 					},
-					ville: 'Paris 15e Arrondissement',
+					ville: 'Paris 15e Arrondissement (75015)',
 				});
 				const communeList = aRésultatsRechercheCommune([commune]);
 				vi.spyOn(localisationService, 'rechercherCommune').mockResolvedValue(createSuccess(communeList));
@@ -109,7 +109,7 @@ describe('<ComboboxCommune/>', () => {
 							latitude: 48.8,
 							longitude: 2.2,
 						},
-						ville: 'Paris 15e Arrondissement',
+						ville: 'Paris 15e Arrondissement (75015)',
 					})}
 					showRadiusInput
 					defaultDistance={radiusExpected.valeur} />
@@ -266,7 +266,7 @@ describe('<ComboboxCommune/>', () => {
 		it('affiche les options', async () => {
 			const user = userEvent.setup();
 			const communeList = aRésultatsRechercheCommune([
-				aCommune({ code: '75001', codePostal: '75001', ville: 'Paris' }),
+				aCommune({ code: '75056', codePostal: '75001', ville: 'Paris' }),
 				aCommune({ code: '83000', codePostal: '83000', ville: 'Toulon' }),
 			]);
 			const localisationService = aLocalisationService({
@@ -282,7 +282,7 @@ describe('<ComboboxCommune/>', () => {
 
 			const options = await screen.findAllByRole('option');
 			expect(options.length).toBe(2);
-			expect(screen.getByRole('option', { name: 'Paris (75001)' })).toBeVisible();
+			expect(screen.getByRole('option', { name: 'Paris' })).toBeVisible();
 			expect(screen.getByRole('option', { name: 'Toulon (83000)' })).toBeVisible();
 		});
 
@@ -311,44 +311,12 @@ describe('<ComboboxCommune/>', () => {
 			expect(await screen.findByRole("option", { name: ville })).toBeVisible();
 		});
 
-		describe('lorsque les arrondissements sont filtrés', () => {
-			it('n\'affiche pas les arrondissements dans les propositions', async () => {
-				const user = userEvent.setup();
-				const communeList = aRésultatsRechercheCommune([
-					aCommune({ code: '75001', codePostal: '75001', ville: 'Paris' }),
-					aCommune({
-						code: '75115',
-						codePostal: '75015',
-						coordonnées: {
-							latitude: 48.863367,
-							longitude: 2.397152,
-						},
-						ville: 'Paris 15e Arrondissement',
-					}),
-				]);
-				const localisationService = aLocalisationService({
-					rechercherCommune: vi.fn().mockResolvedValue(createSuccess(communeList)),
-				});
-				render(<DependenciesProvider localisationService={localisationService}>
-					<ComboboxCommune label={'comboboxLabel'} filterArrondissements={true} />
-				</DependenciesProvider>);
-				const combobox = screen.getByRole('combobox', { name: 'comboboxLabel Exemples : Paris, Béziers…' });
-
-				await user.type(combobox, 'par');
-
-				const options = await screen.findAllByRole('option');
-				expect(options.length).toBe(1);
-				expect(options[0]).toBeInTheDocument();
-				expect(options[0]).toHaveTextContent('Paris');
-			});
-		})
-
 		describe('lorsque je sélectionne une valeur valide', () => {
 			it('l‘input est valide et n‘affiche pas de message d‘erreur', async () => {
 				const user = userEvent.setup();
 				const messageErreur = 'Veuillez sélectionner une option dans la liste';
 				const communeList = aRésultatsRechercheCommune([
-					aCommune({ code: '91000', codePostal: '75001', ville: 'Paris' }),
+					aCommune(),
 				]);
 				const localisationService = aLocalisationService({
 					rechercherCommune: vi.fn(),
@@ -360,7 +328,7 @@ describe('<ComboboxCommune/>', () => {
 				const combobox = screen.getByRole('combobox', { name: 'comboboxLabel Exemples : Paris, Béziers…' });
 
 				await user.type(combobox, 'abc');
-				const parisOption = await screen.findByRole('option', { name: 'Paris (75001)' });
+				const parisOption = await screen.findByRole('option', { name: 'Paris' });
 				await user.click(parisOption);
 
 				expect(combobox).toBeValid();
@@ -370,7 +338,7 @@ describe('<ComboboxCommune/>', () => {
 			it('met à jour la valeur du code commune', async () => {
 				const user = userEvent.setup();
 				const communeList = aRésultatsRechercheCommune([
-					aCommune({ code: '91000', codePostal: '75001', ville: 'Paris' }),
+					aCommune({ code: '75112', codePostal: '75012', ville: 'Paris 12 Arrondissement' }),
 				]);
 				const localisationService = aLocalisationService({
 					rechercherCommune: vi.fn(),
@@ -382,9 +350,9 @@ describe('<ComboboxCommune/>', () => {
 				const combobox = screen.getByRole('combobox', { name: 'comboboxLabel Exemples : Paris, Béziers…' });
 
 				await user.type(combobox, 'abc');
-				await user.click(await screen.findByRole('option', { name: 'Paris (75001)' }));
+				await user.click(await screen.findByRole('option', { name: 'Paris 12 Arrondissement (75012)' }));
 
-				const inputCode = screen.getByDisplayValue('91000');
+				const inputCode = screen.getByDisplayValue('75112');
 				expect(inputCode).toBeInTheDocument();
 			});
 
@@ -403,7 +371,7 @@ describe('<ComboboxCommune/>', () => {
 				const combobox = screen.getByRole('combobox', { name: 'comboboxLabel Exemples : Paris, Béziers…' });
 
 				await user.type(combobox, 'abc');
-				await user.click(await screen.findByRole('option', { name: 'Paris (75001)' }));
+				await user.click(await screen.findByRole('option', { name: 'Paris' }));
 
 				const inputCode = screen.getByDisplayValue('1.23');
 				expect(inputCode).toBeInTheDocument();
@@ -424,7 +392,7 @@ describe('<ComboboxCommune/>', () => {
 				const combobox = screen.getByRole('combobox', { name: 'comboboxLabel Exemples : Paris, Béziers…' });
 
 				await user.type(combobox, 'abc');
-				await user.click(await screen.findByRole('option', { name: 'Paris (75001)' }));
+				await user.click(await screen.findByRole('option', { name: 'Paris' }));
 
 				const inputCode = screen.getByDisplayValue('4.56');
 				expect(inputCode).toBeInTheDocument();
@@ -433,7 +401,7 @@ describe('<ComboboxCommune/>', () => {
 			it('met à jour la valeur de la ville', async () => {
 				const user = userEvent.setup();
 				const communeList = aRésultatsRechercheCommune([
-					aCommune({ codePostal: '75019', ville: 'Paris' }),
+					aCommune({code: '75019', codePostal: '75019', ville: 'Paris 19e Arrondissement' }),
 				]);
 				const localisationService = aLocalisationService();
 				vi.spyOn(localisationService, 'rechercherCommune').mockResolvedValue(createSuccess(communeList));
@@ -443,9 +411,9 @@ describe('<ComboboxCommune/>', () => {
 				const combobox = screen.getByRole('combobox', { name: 'comboboxLabel Exemples : Paris, Béziers…' });
 
 				await user.type(combobox, 'abc');
-				await user.click(await screen.findByText('Paris (75019)'));
+				await user.click(await screen.findByRole('option', {name: 'Paris 19e Arrondissement (75019)'}));
 
-				const inputCode = screen.getByDisplayValue('Paris');
+				const inputCode = screen.getByDisplayValue('Paris 19e Arrondissement (75019)');
 				expect(inputCode).toBeInTheDocument();
 			});
 
@@ -462,7 +430,7 @@ describe('<ComboboxCommune/>', () => {
 				const combobox = screen.getByRole('combobox', { name: 'comboboxLabel Exemples : Paris, Béziers…' });
 
 				await user.type(combobox, 'abc');
-				await user.click(await screen.findByRole('option', { name: 'Paris (75006)' }));
+				await user.click(await screen.findByRole('option', { name: 'Paris' }));
 
 				const inputCode = screen.getByDisplayValue('75006');
 				expect(inputCode).toBeInTheDocument();
@@ -484,7 +452,7 @@ describe('<ComboboxCommune/>', () => {
 					const combobox = screen.getByRole('combobox', { name: 'comboboxLabel Exemples : Paris, Béziers…' });
 
 					await user.type(combobox, 'abc');
-					await user.click(await screen.findByRole('option', { name: 'Paris (75001)' }));
+					await user.click(await screen.findByRole('option', { name: 'Paris' }));
 
 					expect(screen.getByRole('combobox', { name: 'Rayon Exemple : 30 km' })).toBeVisible();
 					expect(screen.getByDisplayValue(radiusList[0].libellé)).toBeInTheDocument();
@@ -506,7 +474,7 @@ describe('<ComboboxCommune/>', () => {
 					const combobox = screen.getByRole('combobox', { name: 'comboboxLabel Exemples : Paris, Béziers…' });
 
 					await user.type(combobox, 'abc');
-					await user.click(await screen.findByRole('option', { name: 'Paris (75001)' }));
+					await user.click(await screen.findByRole('option', { name: 'Paris' }));
 
 					const rayonSelect = screen.getByRole('combobox', { name: 'Rayon Exemple : 30 km' });
 					await user.selectOptions(rayonSelect, radiusToSelect.valeur);
@@ -530,7 +498,7 @@ describe('<ComboboxCommune/>', () => {
 				const combobox = screen.getByRole('combobox');
 
 				await user.type(combobox, 'abc');
-				await user.click(await screen.findByRole('option', { name: 'Paris (75006)' }));
+				await user.click(await screen.findByRole('option', { name: 'Paris' }));
 				await user.tab();
 
 				await user.clear(combobox);

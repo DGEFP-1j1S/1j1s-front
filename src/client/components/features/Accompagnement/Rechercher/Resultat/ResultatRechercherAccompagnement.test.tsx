@@ -25,7 +25,7 @@ const formulaireContact = {
 	nom: 'Tintin',
 	prenom: 'Mario',
 	telephone: '0123456789',
-	ville: 'Paris (75006)',
+	ville: 'Paris',
 };
 
 describe('<RésultatRechercherAccompagnement/>', () => {
