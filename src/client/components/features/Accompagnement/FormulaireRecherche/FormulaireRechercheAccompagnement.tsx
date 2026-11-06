@@ -60,7 +60,7 @@ export function FormulaireRechercheAccompagnement() {
 					<div className="fr-col-12 fr-col-md-6">
 						<ComboboxCommune
 							defaultCommune={defaultCommuneValue}
-							filterArrondissements={true}
+							// filterArrondissements={true}
 							required/>
 					</div>
 					<div className="fr-col-12 fr-col-md-6">
