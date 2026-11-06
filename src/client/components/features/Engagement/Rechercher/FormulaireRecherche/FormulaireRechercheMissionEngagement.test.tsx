@@ -30,7 +30,7 @@ describe('FormulaireRechercheMissionEngagement', () => {
 			);
 			const user = userEvent.setup();
 			await user.type(screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' }), 'Pari');
-			const communeOption = await screen.findByRole('option', { name: 'Paris (75006)' });
+			const communeOption = await screen.findByRole('option', { name: 'Paris' });
 			await user.click(communeOption);
 
 			const sélectionnerUnDomaineButton = screen.getByRole('combobox', { name: 'Domaine Exemple : Culture et loisirs' });
@@ -60,7 +60,7 @@ describe('FormulaireRechercheMissionEngagement', () => {
 			);
 			const user = userEvent.setup();
 			await user.type(screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' }), 'Pari');
-			const communeOption = await screen.findByRole('option', { name: 'Paris (75006)' });
+			const communeOption = await screen.findByRole('option', { name: 'Paris' });
 			await user.click(communeOption);
 
 			const ouvertsAuxMineursCheckbox = screen.getByRole('checkbox', { name: 'Dès 16 ans' });
@@ -92,7 +92,7 @@ describe('FormulaireRechercheMissionEngagement', () => {
 			const comboboxCommune = screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' });
 			await user.type(comboboxCommune, 'Pari');
 
-			const communeOption = await screen.findByRole('option', { name: 'Paris (75006)' });
+			const communeOption = await screen.findByRole('option', { name: 'Paris' });
 			await user.click(communeOption);
 
 			const rechercherMissionButton = screen.getByRole('button', { name: 'Rechercher' });
@@ -125,7 +125,7 @@ describe('FormulaireRechercheMissionEngagement', () => {
 				const comboboxCommune = screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' });
 				await user.type(comboboxCommune, 'Pari');
 
-				const communeOption = await screen.findByRole('option', { name: 'Paris (75006)' });
+				const communeOption = await screen.findByRole('option', { name: 'Paris' });
 				await user.click(communeOption);
 
 
@@ -154,7 +154,7 @@ describe('FormulaireRechercheMissionEngagement', () => {
 				const comboboxCommune = screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' });
 				await user.type(comboboxCommune, 'Pari');
 
-				const communeOption = await screen.findByRole('option', { name: 'Paris (75006)' });
+				const communeOption = await screen.findByRole('option', { name: 'Paris' });
 				await user.click(communeOption);
 
 				const selectButtonRadius = screen.getByRole('combobox', { name: 'Rayon Exemple : 30 km' });
