@@ -1,134 +1,205 @@
-import classNames from 'classnames';
 import React from 'react';
 
 import { BilanEnergetiqueLogement } from '~/client/components/features/Logement/Consulter/BilanEnergetiqueLogement';
-import { DescriptionDuLogement } from '~/client/components/features/Logement/Consulter/DescriptionDuLogement';
-import { InformationsGénérales } from '~/client/components/features/Logement/Consulter/InformationsGenerales';
-import { Services } from '~/client/components/features/Logement/Consulter/Services';
-import { Container } from '~/client/components/layouts/Container/Container';
-import { Image as ImageProps } from '~/client/components/props';
-import { Carousel } from '~/client/components/ui/Carousel/Carousel';
-import { Image } from '~/client/components/ui/Img';
+import { Image } from "~/client/components/ui/Img";
 import { Link } from '~/client/components/ui/Link/Link';
-import { AnnonceDeLogement, AnnonceDeLogementSource } from '~/server/logements/domain/annonceDeLogement';
-
-import styles from './ConsulterAnnonce.module.scss';
-import { DateMiseÀJour } from './DateMiseAJour';
+import { SquareMeter } from "~/client/components/ui/SquareMeter/SquareMeter";
+import { useDependency } from "~/client/context/dependenciesContainer.context";
+import { DateService } from "~/client/services/date/date.service";
+import formatLocalisation from "~/client/utils/formatLocalisation.util";
+import { AnnonceDeLogement, AnnonceDeLogementService, NOMS_DES_SOURCES } from "~/server/logements/domain/annonceDeLogement";
 
 interface ConsulterAnnonceDeLogementProps {
 	annonceDeLogement: AnnonceDeLogement
+	slug: string
 }
 
-function AnnonceEntête({ children }: { children: React.ReactNode }) {
+function formatterEtage(etage: number) {
+	if (etage === 0) return "Rez-de-chaussée";
+	if (etage === 1) return "1er";
+	return `${etage}ème`;
+}
+
+function formatterNombreDePieces(nombreDePieces: number) {
+	return nombreDePieces || "non renseigné";
+}
+
+type ServiceAffichable = Exclude<AnnonceDeLogementService, AnnonceDeLogementService.NON_RENSEIGNE>
+
+function ListeDeServices({ services, messageSiVide }: { services: Array<AnnonceDeLogementService>, messageSiVide: string }) {
+	const servicesAffichables = services.filter(
+		(service): service is ServiceAffichable => service !== AnnonceDeLogementService.NON_RENSEIGNE,
+	);
+	if (servicesAffichables.length === 0) {
+		return <p className="fr-mb-0">{messageSiVide}</p>;
+	}
 	return (
-		<Container className={styles.entête}>
-			<header className={styles.displayContents}>
-				{children}
-			</header>
-		</Container>
+		<ul className="fr-grid-row fr-p-0 fr-m-0 list-style-none">
+			{servicesAffichables.map((service) => (
+				<li key={service} className="fr-col-6 fr-pb-2w">
+					{service.charAt(0).toUpperCase() + service.slice(1)}
+				</li>
+			))}
+		</ul>
 	);
 }
 
-function TypeBien({ children }: { children: React.ReactNode }) {
-	return <span className={styles.type}>{children}</span>;
-}
-
-export function ConsulterAnnonce({ annonceDeLogement }: ConsulterAnnonceDeLogementProps) {
+export function ConsulterAnnonce({ annonceDeLogement, slug }: ConsulterAnnonceDeLogementProps) {
 	const {
 		dateDeMiseAJour,
-		type,
 		typeBien,
 		titre,
 		description,
-		imageList,
 		source,
 		urlDeCandidature,
 		bilanEnergetique,
+		nombreDePièces,
+		surface,
+		surfaceMax,
+		étage,
+		meublé,
+		localisation,
+		prix,
+		devise,
+		garantie,
+		charge,
+		dateDeDisponibilité,
+		imageList,
 	} = annonceDeLogement;
+
+	const nomDeLaSource: string | undefined = NOMS_DES_SOURCES[source];
+	const localisationAffichable = formatLocalisation(localisation);
+	const dateService = useDependency<DateService>("dateService");
+	const lienVersLesPhotos = `/logements/annonces/${slug}/photos`;
+	const imageApercu = imageList[0];
+
 	return (
-		<main id="contenu" className={styles.gridLayout}>
-			<AnnonceSource source={source} className={styles.mobileOnly} data-testid="source-annonce-mobile" />
-			<AnnonceCarousel imageUrlList={imageList} />
-			<AnnonceEntête>
-				<h1>{titre}</h1>
-				<DateMiseÀJour date={dateDeMiseAJour} />
-				<TypeBien>{type} - {typeBien}</TypeBien>
-			</AnnonceEntête>
-			<Container className={styles.annonceBody}>
-				<div>
-					<InformationsGénérales annonce={annonceDeLogement} />
-					<DescriptionDuLogement>{description}</DescriptionDuLogement>
-					<Services inclus={annonceDeLogement.servicesInclus} optionnels={annonceDeLogement.servicesOptionnels} />
+		<div className="fr-container">
+			<h1>{titre}</h1>
+			<div className="fr-grid-row fr-grid-row--gutters align-items--center fr-mb-2w">
+				<div className="fr-col-auto">
+					<p className="fr-mb-0">
+						{nomDeLaSource && <>Ce bien est diffusé par {nomDeLaSource} : </>}Annonce mise à jour le <time dateTime={dateDeMiseAJour.toISOString()}>{dateService.formatToHumanReadableDate(dateDeMiseAJour)}</time>
+					</p>
+				</div>
+				<div className="fr-col-auto fr-ml-auto">
+					<Link
+						className="fr-btn fr-btn--lg"
+						href={urlDeCandidature}>
+						Voir l‘annonce
+					</Link>
+				</div>
+			</div>
+			{imageApercu && (
+				<div className="fr-grid-row fr-grid-row--center background--blue-france fr-mb-4w">
+					<div className="fr-col-12 fr-col-md-8" style={{ position: "relative" }}>
+						<Image
+							src={imageApercu.src}
+							alt={imageApercu.alt || ""}
+							width={800}
+							height={400}
+							className="img-contain"
+							style={{ display: "block" }} />
+						{imageList.length > 1 && (
+							<div style={{ backgroundColor: "var(--background-default-grey)", bottom: "0.75rem", position: "absolute", right: "0.75rem" }}>
+								<Link
+									href={lienVersLesPhotos}
+									className="fr-btn fr-btn--secondary fr-btn--icon-right fr-icon-image-line">
+									Voir les photos<span className="sr-only"> ({imageList.length})</span>
+								</Link>
+							</div>
+						)}
+					</div>
+				</div>
+			)}
+			<div className="fr-grid-row fr-grid-row--gutters">
+				<div className="fr-col-12 fr-col-md-4">
+					<div className="border--blue fr-p-3w">
+						<h2 className="fr-h4">Informations générales</h2>
+						<div className="background--blue-ecume fr-p-3v fr-mb-3w">
+							<h3 className="fr-text--md">Type de bien</h3>
+							<dl className="fr-p-0 fr-m-0">
+								<div className="fr-grid-row">
+									<dt>Nombre de pièces</dt>
+									<dd className="fr-ml-auto fr-text--bold">{formatterNombreDePieces(nombreDePièces)}</dd>
+								</div>
+								<div className="fr-grid-row">
+									<dt>Surface</dt>
+									{(surfaceMax != null && surfaceMax !== 0)
+										? <dd className="fr-ml-auto fr-text--bold">{surface} à {surfaceMax} <SquareMeter /></dd>
+										: <dd className="fr-ml-auto fr-text--bold">{surface} <SquareMeter /></dd>}
+								</div>
+								{étage != null && (
+									<div className="fr-grid-row">
+										<dt>Étage</dt>
+										<dd className="fr-ml-auto fr-text--bold">{formatterEtage(étage)}</dd>
+									</div>
+								)}
+								<div className="fr-grid-row">
+									<dt>Type de bien</dt>
+									<dd className="fr-ml-auto fr-text--bold">{typeBien}</dd>
+								</div>
+								<div className="fr-grid-row">
+									<dt>Meublé</dt>
+									<dd className="fr-ml-auto fr-text--bold">{meublé ? "Oui" : "Non"}</dd>
+								</div>
+							</dl>
+						</div>
+						{localisationAffichable && (
+							<div className="background--blue-ecume fr-p-3v fr-mb-3w">
+								<h3 className="fr-text--md">Localisation</h3>
+								<p className="fr-mb-0">{localisationAffichable}</p>
+							</div>
+						)}
+						<div className="background--blue-ecume fr-p-3v fr-mb-3w">
+							<h3 className="fr-text--md">Coûts</h3>
+							<dl className="fr-p-0 fr-m-0">
+								<div className="fr-grid-row">
+									<dt>Prix</dt>
+									<dd className="fr-ml-auto fr-text--bold">{prix} {devise} <abbr title="Charges Comprises">CC</abbr>/mois</dd>
+								</div>
+								{garantie != null && (
+									<div className="fr-grid-row">
+										<dt>Caution</dt>
+										<dd className="fr-ml-auto fr-text--bold">{garantie} {devise}</dd>
+									</div>
+								)}
+								{charge != null && (
+									<div className="fr-grid-row">
+										<dt>Charges</dt>
+										<dd className="fr-ml-auto fr-text--bold">{charge} {devise}</dd>
+									</div>
+								)}
+							</dl>
+						</div>
+						<div className="background--blue-ecume fr-p-3v">
+							<h3 className="fr-text--md">Disponibilité</h3>
+							<p className="fr-mb-0">
+								Disponible le <time dateTime={dateDeDisponibilité.toISOString()}>
+									{dateService.formatToHumanReadableDate(dateDeDisponibilité)}
+								</time>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div className="fr-col-12 fr-col-md-8">
+					<div className="border--blue fr-p-3w fr-mb-4w">
+						<h2 className="fr-h4">Description du logement</h2>
+						<p className="fr-mb-0">{description}</p>
+					</div>
+					<div className="border--blue fr-p-3w fr-mb-4w">
+						<h2 className="fr-h4">Équipements et services inclus</h2>
+						<ListeDeServices services={annonceDeLogement.servicesInclus} messageSiVide="Aucun service inclus" />
+					</div>
+					<div className="border--blue fr-p-3w fr-mb-4w">
+						<h2 className="fr-h4">Équipements et services optionnels</h2>
+						<ListeDeServices services={annonceDeLogement.servicesOptionnels} messageSiVide="Aucun service optionnel" />
+					</div>
 					<BilanEnergetiqueLogement
 						consommationEnergetique={bilanEnergetique.consommationEnergetique}
 						emissionDeGaz={bilanEnergetique.emissionDeGaz} />
 				</div>
-				<CandidaterDesktop source={source} urlDeCandidature={urlDeCandidature} data-testid="source-annonce-desktop" />
-			</Container>
-			<div className={styles.lienDeCandidatureMobile}>
-				<Link appearance="asPrimaryButton" href={urlDeCandidature}>
-					Voir l‘annonce
-					<Link.Icon />
-				</Link>
 			</div>
-		</main>
-	);
-}
-
-const AnnonceCarousel = ({ imageUrlList }: { imageUrlList: Array<ImageProps> | [] }) => {
-	const MAX_IMAGE_WIDTH = 720;
-	const MAX_IMAGE_HEIGHT = 400;
-
-	return (
-		<div className={styles.carouselWrapper}>
-			<Carousel
-				imageList={imageUrlList}
-				className={styles.carousel}
-				hideIndicators
-				imagesSize={{ height: MAX_IMAGE_HEIGHT, width: MAX_IMAGE_WIDTH }}
-				aria-label="Photos du logement" />
-		</div>
-	);
-};
-
-type AnnonceSourceProps = {
-	source: AnnonceDeLogementSource
-	className?: string
-}
-
-function AnnonceSource({ source, className, ...rest }: AnnonceSourceProps) {
-	switch (source) {
-		case 'immojeune':
-			return (
-				<span className={classNames(styles.source, className)} {...rest}>
-						Ce bien est diffusé par <Image src="/images/logement/immojeune.webp" alt="immojeune" width="95" height="44" />
-				</span>
-			);
-		case 'studapart':
-			return (
-				<span className={classNames(styles.source, className)} {...rest}>
-						Ce bien est diffusé par <Image src="/images/logement/studapart.webp"
-						alt="studapart"
-						width="95"
-																					 height="44" />
-				</span>
-			);
-		default:
-			return null;
-	}
-}
-
-type CandidaterDesktopProps = { source: AnnonceDeLogementSource, urlDeCandidature: string }
-function CandidaterDesktop({ source, urlDeCandidature, ...rest }: CandidaterDesktopProps) {
-	return (
-		<div className={classNames(styles.cardCandidater)} {...rest}>
-			<AnnonceSource source={source} />
-			<Link
-				appearance="asPrimaryButton"
-				href={urlDeCandidature}>
-				Voir l‘annonce
-				<Link.Icon />
-			</Link>
 		</div>
 	);
 }

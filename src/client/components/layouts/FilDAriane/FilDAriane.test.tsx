@@ -83,6 +83,20 @@ describe("<FilDAriane />", () => {
 			expect(screen.getByText("Développeur React H/F")).toHaveAttribute("aria-current", "page");
 		});
 
+		it("affiche une page parente issue des props de la page", () => {
+			// GIVEN
+			mockUseRouter({ pathname: "/logements/annonces/[id]/photos" });
+			const pageProps = { annonce: { slug: "super-t3-paris", titre: "Super T3 dans le centre de Paris" } };
+
+			// WHEN
+			render(<FilDAriane pageProps={pageProps} />);
+
+			// THEN
+			expect(screen.getByRole("link", { name: "Annonces de logement" })).toHaveAttribute("href", "/logements/annonces");
+			expect(screen.getByRole("link", { name: "Super T3 dans le centre de Paris" })).toHaveAttribute("href", "/logements/annonces/super-t3-paris");
+			expect(screen.getByText("Photos du logement")).toHaveAttribute("aria-current", "page");
+		});
+
 		it("n'affiche rien lorsque le titre est absent des props", () => {
 			// GIVEN
 			mockUseRouter({ pathname: "/emplois/[id]" });
