@@ -64,6 +64,6 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<FaqPageProp
 		props: {
 			listeDeQuestionRéponse: listeDeQuestionRéponse.result,
 		},
-		revalidate: dependencies.cmsDependencies.duréeDeValiditéEnSecondes(),
+		revalidate: dependencies.cmsDependencies.dureeDeValiditeEnSecondes(),
 	};
 }

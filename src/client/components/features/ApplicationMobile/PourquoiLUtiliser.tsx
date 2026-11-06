@@ -3,7 +3,7 @@ import React from "react";
 export function PourquoiLUtiliser() {
 	return (
 		<section className="fr-container fr-py-10w">
-			<h2 className="fr-mb-5w">Pourquoi l&#39;utiliser</h2>
+			<h2 className="fr-mb-5w">Pourquoi l’utiliser</h2>
 			<ul className="fr-grid-row fr-grid-row--gutters">
 				{ pourquois.map(pourquoi => (
 					<li key={pourquoi.titre} className="fr-col-12">
