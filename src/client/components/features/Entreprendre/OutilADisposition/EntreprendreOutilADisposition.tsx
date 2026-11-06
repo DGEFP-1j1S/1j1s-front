@@ -4,8 +4,8 @@ import { Carte } from "~/client/dsfr";
 
 interface EntreprendreOutilADispositionProps {
   link: string
-  linkLabel: string
-  description: string
+  linkLabel: string | React.ReactElement
+  description: string | React.ReactElement
 }
 
 export function EntreprendreOutilADisposition({ link, linkLabel, description }: EntreprendreOutilADispositionProps) {
