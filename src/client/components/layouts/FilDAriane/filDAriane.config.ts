@@ -3,9 +3,10 @@ import { type BreadcrumbItem } from "~/client/dsfr";
 export type FilDArianePageProps = Record<string, unknown>;
 
 type LabelResolver = string | ((pageProps: FilDArianePageProps) => string | undefined);
+type ParentsResolver = BreadcrumbItem[] | ((pageProps: FilDArianePageProps) => BreadcrumbItem[]);
 
 export interface FilDArianeEntry {
-	parents: BreadcrumbItem[];
+	parents: ParentsResolver;
 	label: LabelResolver;
 }
 
@@ -93,6 +94,15 @@ export const filDArianeConfig: Record<string, FilDArianeEntry> = {
 	"/logements/aides-logement": { label: "Aides financières au logement", parents: [] },
 	"/logements/annonces": { label: "Annonces de logement", parents: [] },
 	"/logements/annonces/[id]": { label: fromProp("annonceDeLogement", "titre"), parents: [annoncesLogement] },
+	"/logements/annonces/[id]/photos": {
+		label: "Photos du logement",
+		parents: (pageProps) => {
+			const titre = fromProp("annonce", "titre")(pageProps);
+			const slug = fromProp("annonce", "slug")(pageProps);
+			if (!titre || !slug) return [annoncesLogement];
+			return [annoncesLogement, { href: `/logements/annonces/${slug}`, label: titre }];
+		},
+	},
 	"/logements/conseils": { label: "Conseils logement", parents: [] },
 	"/mentions-legales": { label: "Mentions légales", parents: [] },
 	"/mentorat": { label: "Échanger avec un mentor", parents: [] },

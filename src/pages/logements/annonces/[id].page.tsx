@@ -1,5 +1,4 @@
 import { GetServerSidePropsContext } from 'next';
-import { ParsedUrlQuery } from 'querystring';
 import { useMemo } from 'react';
 
 import { ConsulterAnnonce } from '~/client/components/features/Logement/Consulter/ConsulterAnnonce';
@@ -8,13 +7,11 @@ import ErrorUnavailableService from '~/client/components/layouts/Error/ErrorUnav
 import useAnalytics from '~/client/hooks/useAnalytics';
 import { usePopstate } from '~/client/hooks/usePopstate';
 import analytics from '~/pages/logements/annonces/[id].analytics';
+import { AnnonceDeLogementContext, chargerAnnonceDeLogement } from "~/pages/logements/annonces/chargerAnnonceDeLogement";
 import { GetServerSidePropsResult } from '~/server/errors/getServerSidePropsResultWithError';
-import { handleGetServerSidePropsError } from '~/server/errors/handleGetServerSidePropsError';
-import { PageContextParamsException } from '~/server/exceptions/pageContextParams.exception';
 import { AnnonceDeLogement } from '~/server/logements/domain/annonceDeLogement';
-import { dependencies } from '~/server/start';
 
-export default function ConsulterAnnonceLogementPage({ annonceDeLogement, isFeatureActive }: ConsulterAnnonceLogementPageProps) {
+export default function ConsulterAnnonceLogementPage({ annonceDeLogement, slug, isFeatureActive }: ConsulterAnnonceLogementPageProps) {
 	useAnalytics(analytics);
 	usePopstate();
 
@@ -30,46 +27,28 @@ export default function ConsulterAnnonceLogementPage({ annonceDeLogement, isFeat
 		<>
 			<Head
 				title={`${annonce.titre} | 1jeune1solution`}
-				robots="noindex" />
-			<ConsulterAnnonce annonceDeLogement={annonce} />
+				robots="noindex"
+			/>
+			<main id="contenu">
+				<ConsulterAnnonce annonceDeLogement={annonce} slug={slug} />
+			</main>
 		</>
 	);
 }
 
-interface LogementContext extends ParsedUrlQuery {
-	id: string;
-}
-
 type ConsulterAnnonceLogementPageProps = {
 	annonceDeLogement: AnnonceDeLogement;
+	slug: string;
 	isFeatureActive: true
 } | {
 	annonceDeLogement?: never;
+	slug?: never;
 	isFeatureActive: false
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext<LogementContext>): Promise<GetServerSidePropsResult<ConsulterAnnonceLogementPageProps>> {
-	const displayAnnoncesLogement = process.env.NEXT_PUBLIC_LOGEMENT_FEATURE === '1';
-	if (!displayAnnoncesLogement) return {
-		props: {
-			isFeatureActive: false,
-		},
-	};
-
-	if (!context.params) {
-		throw new PageContextParamsException();
-	}
-	const { id: slug } = context.params;
-
-	const annonceDeLogement = await dependencies.annonceDeLogementDependencies.consulterAnnonceLogementUseCase.handle(slug);
-	if (annonceDeLogement.instance === 'failure') {
-		return handleGetServerSidePropsError(context, annonceDeLogement.errorType);
-	}
-
-	return {
-		props: {
-			annonceDeLogement: JSON.parse(JSON.stringify(annonceDeLogement.result)),
-			isFeatureActive: true,
-		},
-	};
+export async function getServerSideProps(context: GetServerSidePropsContext<AnnonceDeLogementContext>): Promise<GetServerSidePropsResult<ConsulterAnnonceLogementPageProps>> {
+	return chargerAnnonceDeLogement(context, (annonceDeLogement, slug) => ({
+		annonceDeLogement: JSON.parse(JSON.stringify(annonceDeLogement)),
+		slug,
+	}));
 }

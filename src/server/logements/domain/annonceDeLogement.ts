@@ -69,3 +69,8 @@ export enum AnnonceDeLogementService {
 }
 
 export type AnnonceDeLogementSource = 'immojeune' | 'studapart'
+
+export const NOMS_DES_SOURCES: Record<AnnonceDeLogementSource, string> = {
+	immojeune: "ImmoJeune",
+	studapart: "Studapart",
+};
