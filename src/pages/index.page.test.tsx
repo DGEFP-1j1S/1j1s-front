@@ -28,6 +28,9 @@ describe('Page d’accueil', () => {
 		analyticsService = aManualAnalyticsService();
 		evenementAnalyticsService = anEvenementAnalyticsService();
 	});
+	afterEach(() => {
+		vi.unstubAllEnvs();
+	});
 
 	it('doit rendre du HTML respectant la specification', () => {
 		const { container } = render(
@@ -353,5 +356,39 @@ describe('Page d’accueil', () => {
 				expect(evenementAnalyticsService.envoyerEvenement).toHaveBeenCalledWith({ action: "clic", categorie: "accueil", nom: "consulter_les_offres_lba" });
 			});
 		});
+		
+		describe("Bannière application mobile 1jeune1solution", () => {
+			beforeEach(() => {
+				vi.stubEnv('NEXT_PUBLIC_APP_MOBILE_1J1S_HOMEPAGE_BANNER', '1');
+			})
+			
+			it("affiche un lien vers la page de découverte de l'application tant qu'elle n'est pas live", () => {
+				// GIVEN
+				render(
+					<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
+						<Accueil actualites={[]} />
+					</DependenciesProvider>
+				);
+				
+				// THEN
+				expect(screen.getAllByRole("link", { name: "Découvrir l’application" })[0]).toBeVisible();
+				expect(screen.queryByRole("link", { name: "Télécharger l’application - nouvelle fenêtre" })).not.toBeInTheDocument();
+			})
+
+			it("affiche un lien de téléchargement lorsque l'application est live", () => {
+				// GIVEN
+				vi.stubEnv('NEXT_PUBLIC_APP_MOBILE_1J1S_LIVE', '1');
+
+				// WHEN
+				render(
+					<DependenciesProvider analyticsService={analyticsService} evenementAnalyticsService={evenementAnalyticsService}>
+						<Accueil actualites={[]} />
+					</DependenciesProvider>
+				);
+
+				// THEN
+				expect(screen.getByRole("link", { name: "Télécharger l’application - nouvelle fenêtre" })).toBeVisible();
+			})
+		})
 	});
 });

@@ -75,8 +75,16 @@ hr {
   width: 100%;
 }
 
+.max-width--full {
+  max-width: 100%;
+}
+
 .width--fill-content {
   width: fit-content;
+}
+
+.block {
+  display: block;
 }
 
 .flex {
@@ -87,7 +95,7 @@ hr {
   flex-grow: 1;
 }
 
-.justify-center {
+.justify--center {
   justify-content: center;
 }
 
@@ -115,6 +123,18 @@ hr {
 
 .border--plain-grey {
   border: 1px solid var(--border-plain-grey);
+}
+
+.border-left {
+  border-left: 1px solid;
+}
+
+.border-left--large {
+  border-left-width: .5rem;
+}
+
+.border-left--high-blue {
+  border-left-color: var(--border-action-high-blue-france);
 }
 
 .list-style-none {
@@ -145,8 +165,24 @@ hr {
   background-color: var(--background-action-low-blue-france);
 }
 
+.background--purple-glycine {
+  background-color: #F983F1;
+}
+
 .text-align--right {
   text-align: right;
+}
+
+.text-align--center {
+  text-align: center;
+}
+
+.text--uppercase {
+  text-transform: uppercase;
+}
+
+.color--inherit {
+  color: inherit;
 }
 
 #tarteaucitronRoot,

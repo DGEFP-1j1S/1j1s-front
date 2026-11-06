@@ -21,7 +21,7 @@ vi.mock('~/server/start', () => ({
 			},
 		},
 		cmsDependencies: {
-			duréeDeValiditéEnSecondes: vi.fn(),
+			dureeDeValiditeEnSecondes: vi.fn(),
 		},
 	},
 }));

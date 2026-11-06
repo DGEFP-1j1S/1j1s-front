@@ -4,7 +4,7 @@ import { Citation } from "~/client/dsfr/Citation";
 export function CitationsApp() {
 	return (
 		<section className="fr-container fr-mb-10w">
-			<h2 className="fr-mb-9w">Ce qu&#39;en disent les jeunes qui l&#39;ont testée</h2>
+			<h2 className="fr-mb-9w">Ce qu’en disent les jeunes qui l’ont testée</h2>
 			<ul className="fr-grid-row fr-grid-row--gutters">
 				{ citations.map(citation => (
 					<li key={citation.texte} className="fr-col-lg-4 fr-col-md-6 fr-col-12">

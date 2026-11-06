@@ -69,7 +69,7 @@ export default function SeeMoreItemList(props: SeeMoreProps) {
 				
 			)}
 			{itemList.length > numberOfVisibleItems && (
-				<div className='flex justify-center fr-mt-4w'>
+				<div className='flex justify--center fr-mt-4w'>
 					<Button className={classNames(className)}
 						appearance="tertiary"
 						label={buttonLabel}

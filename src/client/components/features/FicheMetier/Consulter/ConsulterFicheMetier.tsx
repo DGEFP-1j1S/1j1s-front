@@ -66,7 +66,7 @@ export function ConsulterFicheMetier({ ficheMetier }: { ficheMetier: FicheMétie
 							)}
 							{ centresInteret && centresInteret.length > 0 && (
 								<li className="list-style-none fr-icon-eye-line fr-col-6 fr-pl-1w">
-									<span className="fr-ml-2w">Centres d&#39;intérêt : <span className='fr-text--bold'>{displayedCentresInteret}</span></span>
+									<span className="fr-ml-2w">Centres d’intérêt : <span className='fr-text--bold'>{displayedCentresInteret}</span></span>
 								</li>
 							)}
 						</ul>

@@ -28,6 +28,6 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<ConsulterCo
 			contenu,
 			titre,
 		},
-		revalidate: dependencies.cmsDependencies.duréeDeValiditéEnSecondes(),
+		revalidate: dependencies.cmsDependencies.dureeDeValiditeEnSecondes(),
 	};
 }

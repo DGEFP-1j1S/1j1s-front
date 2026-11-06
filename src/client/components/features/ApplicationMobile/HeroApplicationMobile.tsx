@@ -21,7 +21,7 @@ export function HeroApplicationMobile({ estLive }: HeroApplicationMobileProps) {
 										<Link
 											className="fr-btn fr-btn--secondary"
 											href="https://apps.apple.com/fr/app/contrat-dengagement-jeune/id1581603519">
-											Télécharger sur l&#39;App Store
+											Télécharger sur l’App Store
 										</Link>
 									</li>
 									<li>
@@ -42,7 +42,7 @@ export function HeroApplicationMobile({ estLive }: HeroApplicationMobileProps) {
 											height="100"
 											priority
 										/>
-										<p className="fr-mb-0 fr-ml-5v fr-text--bold">Télécharge l&#39;application dès maintenant !</p>
+										<p className="fr-mb-0 fr-ml-5v fr-text--bold">Télécharge l’application dès maintenant !</p>
 									</div>
 								</div>
 							</div>
@@ -50,7 +50,7 @@ export function HeroApplicationMobile({ estLive }: HeroApplicationMobileProps) {
 							<p className="fr-h5">Bientôt disponible sur App Store et Google Play !</p>
 						)}
 					</div>
-					<div className="fr-col-lg-5 fr-hidden fr-unhidden-lg justify-center">
+					<div className="fr-col-lg-5 fr-hidden fr-unhidden-lg justify--center">
 						<Image
 							src="/images/application-mobile/screen-app-mobile.png"
 							alt="Écran d'accueil de l'application mobile 1jeune1solution"

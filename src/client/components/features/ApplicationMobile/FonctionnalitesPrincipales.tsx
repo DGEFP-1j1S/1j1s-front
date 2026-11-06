@@ -4,7 +4,7 @@ import { Image } from "~/client/components/ui/Img";
 export function FonctionnalitesPrincipales() {
 	return (
 		<section className="fr-container fr-p-4w fr-p-md-10w background--blue-light">
-			<h2>Les principales fonctionnalités de l&#39;application</h2>
+			<h2>Les principales fonctionnalités de l’application</h2>
 			<ul className="fr-grid-row fr-grid-row--gutters">
 				{ fonctionnalitesAppMobile.map(fonc => (
 					<li key={fonc.imageSrc} className="fr-col-lg-3 fr-col-md-6 fr-col-12">
