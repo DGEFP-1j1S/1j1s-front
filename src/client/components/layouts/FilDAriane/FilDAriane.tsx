@@ -15,10 +15,11 @@ export function FilDAriane({ pageProps = {} }: FilDArianeProps) {
 
 	const label = typeof entry.label === "function" ? entry.label(pageProps) : entry.label;
 	if (!label) return null;
+	const parents = typeof entry.parents === "function" ? entry.parents(pageProps) : entry.parents;
 
 	return (
 		<div className="fr-container">
-			<Breadcrumb items={[...entry.parents, { label }]} />
+			<Breadcrumb items={[...parents, { label }]} />
 		</div>
 	);
 }

@@ -23,7 +23,7 @@ describe('<ConsulterAnnonce />', () => {
 
 		render(
 			<DependenciesProvider dateService={aDateService()} sessionStorageService={aStorageService()}>
-				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 			</DependenciesProvider>,
 		);
 
@@ -42,7 +42,7 @@ describe('<ConsulterAnnonce />', () => {
 
 		render(
 			<DependenciesProvider dateService={aDateService()} sessionStorageService={aStorageService()}>
-				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 			</DependenciesProvider>,
 		);
 
@@ -57,7 +57,7 @@ describe('<ConsulterAnnonce />', () => {
 
 		render(
 			<DependenciesProvider dateService={dateService} sessionStorageService={aStorageService()}>
-				<ConsulterAnnonce annonceDeLogement={anAnnonceDeLogement()} />
+				<ConsulterAnnonce annonceDeLogement={anAnnonceDeLogement()} slug="super-t3-paris" />
 			</DependenciesProvider>,
 		);
 
@@ -66,77 +66,84 @@ describe('<ConsulterAnnonce />', () => {
 		expect(date).toHaveTextContent(/Annonce mise à jour le 1 février 2020/i);
 	});
 
-	describe('carousel', () => {
-		let annonceDeLogement = anAnnonceDeLogement();
-		beforeEach(() => {
-			annonceDeLogement = anAnnonceDeLogement();
-		});
+	describe("photos", () => {
+		it("affiche la première photo en aperçu", () => {
+			// GIVEN
+			const annonceDeLogement = anAnnonceDeLogement({
+				imageList: [
+					{ alt: "photo du salon", src: "/salon.webp" },
+					{ alt: "photo de la cuisine", src: "/cuisine.webp" },
+					{ alt: "photo de la chambre", src: "/chambre.webp" },
+				],
+			});
 
-		it('affiche correctement le carousel', () => {
-			annonceDeLogement.imageList = [
-				{ alt: '', src: '/une-première-image.webp' },
-				{ alt: '', src: '/une-deuxième-image.webp' },
-			];
+			// WHEN
 			render(
 				<DependenciesProvider dateService={aDateService()} sessionStorageService={aStorageService()}>
-					<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+					<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 				</DependenciesProvider>,
 			);
 
-			const carousel = screen.getByText((content, element) => element?.getAttribute('aria-roledescription') === 'carousel');
-			expect(carousel).toBeVisible();
-			expect(carousel).toHaveAttribute('aria-roledescription', 'carousel');
-			expect(carousel).not.toHaveAttribute('aria-hidden');
+			// THEN
+			const apercu = screen.getByRole("img", { name: "photo du salon" });
+			expect(apercu).toBeVisible();
+			expect(screen.queryByRole("img", { name: "photo de la cuisine" })).not.toBeInTheDocument();
 		});
 
-		describe('quand il n‘y a pas d‘image a afficher', () => {
-			it('n‘affiche pas le carousel', () => {
-				annonceDeLogement.imageList = [];
-
-				render(
-					<DependenciesProvider dateService={aDateService()} sessionStorageService={aStorageService()}>
-						<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
-					</DependenciesProvider>,
-				);
-
-				const listDeSlides = screen.queryByRole('list', { name: 'liste des photos' });
-				expect(listDeSlides).not.toBeInTheDocument();
+		it("affiche un lien vers toutes les photos lorsqu'il y en a plusieurs", () => {
+			// GIVEN
+			const annonceDeLogement = anAnnonceDeLogement({
+				imageList: [
+					{ alt: "", src: "/salon.webp" },
+					{ alt: "", src: "/cuisine.webp" },
+					{ alt: "", src: "/chambre.webp" },
+				],
 			});
+
+			// WHEN
+			render(
+				<DependenciesProvider dateService={aDateService()} sessionStorageService={aStorageService()}>
+					<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
+				</DependenciesProvider>,
+			);
+
+			// THEN
+			const lien = screen.getByRole("link", { name: "Voir les photos (3)" });
+			expect(lien).toHaveAttribute("href", "/logements/annonces/super-t3-paris/photos");
 		});
 
-		describe('quand il y a une seule image a afficher', () => {
-			it('n‘affiche pas le carousel, juste une image', () => {
-				annonceDeLogement.imageList = [{ alt: 'une seule image', src: '/une-seule-image.webp' }];
-
-				render(
-					<DependenciesProvider dateService={aDateService()} sessionStorageService={aStorageService()}>
-						<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
-					</DependenciesProvider>,
-				);
-
-				const listDeSlides = screen.queryByRole('list', { name: 'liste des photos' });
-				expect(listDeSlides).not.toBeInTheDocument();
-				const image = screen.getByRole('img', { name: 'une seule image' });
-				expect(image).toBeVisible();
-				expect(image).toHaveAttribute('src', expect.stringMatching(/une-seule-image\.webp/));
+		it("n'affiche pas de lien vers les photos lorsqu'il n'y en a qu'une", () => {
+			// GIVEN
+			const annonceDeLogement = anAnnonceDeLogement({
+				imageList: [{ alt: "photo du salon", src: "/salon.webp" }],
 			});
+
+			// WHEN
+			render(
+				<DependenciesProvider dateService={aDateService()} sessionStorageService={aStorageService()}>
+					<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
+				</DependenciesProvider>,
+			);
+
+			// THEN
+			expect(screen.getByRole("img", { name: "photo du salon" })).toBeVisible();
+			expect(screen.queryByRole("link", { name: /Voir les photos/ })).not.toBeInTheDocument();
 		});
 
-		describe('quand il y a plusieurs images a afficher', () => {
-			it('affiche le carousel', () => {
-				annonceDeLogement.imageList = [
-					{ alt: '', src: '/une-première-image.webp' },
-					{ alt: '', src: '/une-deuxième-image.webp' },
-				];
-				render(
-					<DependenciesProvider dateService={aDateService()} sessionStorageService={aStorageService()}>
-						<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
-					</DependenciesProvider>,
-				);
+		it("n'affiche ni photo ni lien lorsqu'il n'y a pas de photo", () => {
+			// GIVEN
+			const annonceDeLogement = anAnnonceDeLogement({ imageList: [] });
 
-				const listDesSlides = screen.getByText((content, element) => element?.getAttribute('aria-live') === 'polite');
-				expect(listDesSlides).toBeVisible();
-			});
+			// WHEN
+			render(
+				<DependenciesProvider dateService={aDateService()} sessionStorageService={aStorageService()}>
+					<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
+				</DependenciesProvider>,
+			);
+
+			// THEN
+			expect(screen.queryByRole("img", { name: /photo/i })).not.toBeInTheDocument();
+			expect(screen.queryByRole("link", { name: /Voir les photos/ })).not.toBeInTheDocument();
 		});
 	});
 	it('affiche la description du logement', () => {
@@ -146,7 +153,7 @@ describe('<ConsulterAnnonce />', () => {
 
 		render(
 			<DependenciesProvider dateService={aDateService()} sessionStorageService={aStorageService()}>
-				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 			</DependenciesProvider>,
 		);
 
@@ -158,7 +165,7 @@ describe('<ConsulterAnnonce />', () => {
 
 		render(
 			<DependenciesProvider dateService={aDateService()} sessionStorageService={aStorageService()}>
-				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 			</DependenciesProvider>,
 		);
 
@@ -173,7 +180,7 @@ describe('<ConsulterAnnonce />', () => {
 
 			render(
 				<DependenciesProvider dateService={aDateService()} sessionStorageService={aStorageService()}>
-					<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+					<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 				</DependenciesProvider>,
 			);
 			
@@ -185,7 +192,7 @@ describe('<ConsulterAnnonce />', () => {
 			annonceDeLogement.bilanEnergetique.consommationEnergetique = 'A';
 
 			render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
-				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 			</DependenciesProvider>);
 			const tag = screen.getByRole('img', { name: /A/i });
 			const description = screen.getByText(/Excellente performance énergétique/i);
@@ -197,7 +204,7 @@ describe('<ConsulterAnnonce />', () => {
 			annonceDeLogement.bilanEnergetique.consommationEnergetique = 'A';
 
 			render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
-				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 			</DependenciesProvider>);
 			const tag = screen.getByRole('img', { name: /A/i });
 
@@ -208,7 +215,7 @@ describe('<ConsulterAnnonce />', () => {
 			annonceDeLogement.bilanEnergetique.emissionDeGaz = 'G';
 
 			render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
-				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 			</DependenciesProvider>);
 			const emissionDeGaz = screen.getByRole('img', { name: /G/i });
 
@@ -219,7 +226,7 @@ describe('<ConsulterAnnonce />', () => {
 			annonceDeLogement.bilanEnergetique.emissionDeGaz = 'G';
 
 			render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
-				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 			</DependenciesProvider>);
 			const tag = screen.getByRole('img', { name: /G/i });
 
@@ -230,7 +237,7 @@ describe('<ConsulterAnnonce />', () => {
 			annonceDeLogement.bilanEnergetique.emissionDeGaz = 'G';
 
 			render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
-				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 			</DependenciesProvider>);
 			const tag = screen.getByRole('img', { name: /G/i });
 
@@ -241,7 +248,7 @@ describe('<ConsulterAnnonce />', () => {
 			annonceDeLogement.bilanEnergetique.emissionDeGaz = 'G';
 
 			render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
-				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 			</DependenciesProvider>);
 
 			const titre = screen.getByRole('heading', { level: 2, name: 'Émissions de GES' });
@@ -256,7 +263,7 @@ describe('<ConsulterAnnonce />', () => {
 			it('retourne le logo immojeune', () => {
 				const annonceDeLogement = anAnnonceDeLogement({ source: 'immojeune' });
 				render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
-					<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+					<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 				</DependenciesProvider>);
 				const diffuseurMobile = screen.getByTestId('source-annonce-mobile');
 				const diffuseurDesktop = screen.getByTestId('source-annonce-desktop');
@@ -276,7 +283,7 @@ describe('<ConsulterAnnonce />', () => {
 			it('retourne le logo studapart', () => {
 				const annonceDeLogement = anAnnonceDeLogement({ source: 'studapart' });
 				render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
-					<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+					<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 				</DependenciesProvider>);
 				const diffuseurMobile = screen.getByTestId('source-annonce-mobile');
 				const diffuseurDesktop = screen.getByTestId('source-annonce-desktop');
@@ -297,7 +304,7 @@ describe('<ConsulterAnnonce />', () => {
 				// @ts-expect-error TS(2322)
 				const annonceDeLogement = anAnnonceDeLogement({ source: 'seloger' });
 				render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
-					<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+					<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 				</DependenciesProvider>);
 				const diffuseur = screen.queryByText('Ce bien est diffusé par');
 
@@ -311,7 +318,7 @@ describe('<ConsulterAnnonce />', () => {
 		it('affiche un lien externe Voir l‘annonce', () => {
 			const annonceDeLogement = anAnnonceDeLogement({ urlDeCandidature: 'https://example.com' });
 			render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
-				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 			</DependenciesProvider>);
 			const lienExterneCandidaterMobileEtDesktop = screen.getAllByRole('link', { name: 'Voir l‘annonce - nouvelle fenêtre' });
 
@@ -323,7 +330,7 @@ describe('<ConsulterAnnonce />', () => {
 		const annonceDeLogement = anAnnonceDeLogement();
 
 		render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
-			<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
+			<ConsulterAnnonce annonceDeLogement={annonceDeLogement} slug="super-t3-paris" />
 		</DependenciesProvider>);
 		const section = screen.getByRole('region', { name: /Équipements et services/i });
 
