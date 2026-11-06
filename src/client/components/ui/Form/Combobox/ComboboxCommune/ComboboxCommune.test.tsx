@@ -286,6 +286,31 @@ describe('<ComboboxCommune/>', () => {
 			expect(screen.getByRole('option', { name: 'Toulon (83000)' })).toBeVisible();
 		});
 
+		it.each([
+			["75056", "75001", "Paris"],
+			["69123", "69001", "Lyon"],
+			["13055", "13001", "Marseille"],
+		])("n'affiche pas le code postal pour la ville entière à arrondissements %s", async (code, codePostal, ville) => {
+			// GIVEN
+			const user = userEvent.setup();
+			const communeList = aRésultatsRechercheCommune([
+				aCommune({ code, codePostal, ville }),
+			]);
+			const localisationService = aLocalisationService({
+				rechercherCommune: vi.fn().mockResolvedValue(createSuccess(communeList)),
+			});
+			render(<DependenciesProvider localisationService={localisationService}>
+				<ComboboxCommune label={"comboboxLabel"} />
+			</DependenciesProvider>);
+			const combobox = screen.getByRole("combobox", { name: "comboboxLabel Exemples : Paris, Béziers…" });
+
+			// WHEN
+			await user.type(combobox, ville);
+
+			// THEN
+			expect(await screen.findByRole("option", { name: ville })).toBeVisible();
+		});
+
 		describe('lorsque les arrondissements sont filtrés', () => {
 			it('n\'affiche pas les arrondissements dans les propositions', async () => {
 				const user = userEvent.setup();
