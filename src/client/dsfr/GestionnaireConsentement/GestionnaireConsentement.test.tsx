@@ -201,6 +201,23 @@ describe('GestionnaireConsentement', () => {
 			expect(service.saveChoices).toHaveBeenCalledWith({ matomo: true, youtube: true });
 		});
 
+		it('indique la langue des termes anglais dans le nom des services', async () => {
+			const user = userEvent.setup();
+			const finalitesAvecTermeAnglais: Array<Finalite> = [{
+				id: 'analytic',
+				obligatoire: false,
+				services: [{ autorise: undefined, id: 'matomocloud', nom: 'Matomo Cloud (privacy by design)' }],
+				titre: 'Mesure d’audience',
+			}];
+			const { service } = aCookiesServiceObservable({ panneauOuvert: true }, { getFinalites: () => finalitesAvecTermeAnglais });
+			renderGestionnaire(service);
+
+			await user.click(screen.getByRole('button', { name: 'Voir plus de détails' }));
+
+			const groupe = screen.getByRole('group', { name: /Matomo Cloud/ });
+			expect(within(groupe).getByText('privacy by design')).toHaveAttribute('lang', 'en');
+		});
+
 		it('ferme le panneau tarteaucitron quand la modale DSFR est fermée', () => {
 			const { service } = aCookiesServiceObservable({ panneauOuvert: true }, { getFinalites: () => finalites });
 			renderGestionnaire(service);

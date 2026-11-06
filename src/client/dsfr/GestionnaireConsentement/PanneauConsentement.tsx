@@ -209,7 +209,7 @@ function ServiceConsentementDetail({ service, autorise, onChoisir }: ServiceCons
 			<fieldset
 				className="fr-fieldset fr-fieldset--inline"
 				aria-labelledby={service.description ? `${idLegende} ${idDescription}` : idLegende}>
-				<legend id={idLegende} className="fr-consent-service__title">{service.nom}</legend>
+				<legend id={idLegende} className="fr-consent-service__title"><NomService nom={service.nom} /></legend>
 				<div className="fr-consent-service__radios fr-fieldset--inline">
 					<RadioConsentement
 						id={`consentement-service-${service.id}-accepter`}
@@ -230,6 +230,16 @@ function ServiceConsentementDetail({ service, autorise, onChoisir }: ServiceCons
 			</fieldset>
 		</div>
 	);
+}
+
+const TERME_ANGLAIS = 'privacy by design';
+
+function NomService({ nom }: { nom: string }) {
+	if (!nom.includes(TERME_ANGLAIS)) {
+		return nom;
+	}
+	const [avant, apres] = nom.split(TERME_ANGLAIS);
+	return <>{avant}<span lang="en">{TERME_ANGLAIS}</span>{apres}</>;
 }
 
 type RadioConsentementProps = {
