@@ -78,8 +78,8 @@ export default function Entreprendre() {
 						<li className="fr-col-12 fr-col-md-6 fr-col-lg-3">
 							<EntreprendreOutilADisposition
 								link="https://bpifrance-creation.fr/encyclopedie/previsions-financieres-business-plan/business-plan/faire-son-business-plan"
-								linkLabel="Construire mon Business Plan"
-								description="Construisez votre Business Plan, gratuitement en ligne" />
+								linkLabel="Construire mon Plan d’affaires"
+								description={<>Construisez votre <span lang="en">Business Plan</span>, gratuitement en ligne</>} />
 						</li>
 						<li className="fr-col-12 fr-col-md-6 fr-col-lg-3">
 							<EntreprendreOutilADisposition
@@ -127,7 +127,7 @@ export default function Entreprendre() {
 }
 
 const phasesProjet = [
-	{ description: "Etudier le marché et construire le business plan", titre: "Ante-création" },
+	{ description: <>Etudier le marché et construire le <span lang="en">business plan</span></>, titre: "Ante-création" },
 	{ description: "Tester son idée au contact du marché", titre: "Test" },
 	{ description: "Accompagnement dans les premières années suivant la création", titre: "Post-création" },
 ];
