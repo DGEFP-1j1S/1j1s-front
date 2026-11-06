@@ -58,6 +58,39 @@ describe('ApiÉtablissementPublicRepository', () => {
 
 				expect(httpClient.get).toHaveBeenCalledWith(expect.stringContaining('suggest(adresse,%22code_postal%20750*%22)'));
 			});
+
+			describe("lorsque je fais une recherche France Travail sur un arrondissement", () => {
+				it.each([
+					["75115", "75015"],
+					["69383", "69003"],
+					["13208", "13008"],
+				])("appelle l'api avec le code postal de l'arrondissement %s", async (codeCommune, codePostal) => {
+					// GIVEN
+					const httpClient = aPublicHttpClientService();
+					const repository = new ApiEtablissementPublicRepository(httpClient, anErrorManagementService());
+					const typeAccompagnement = TypeEtablissement.FRANCE_TRAVAIL;
+
+					// WHEN
+					await repository.search({ codeCommune, typeAccompagnement });
+
+					// THEN
+					expect(httpClient.get).toHaveBeenCalledWith(expect.stringContaining(`suggest(adresse,%22code_postal%20${codePostal}%22)`));
+				});
+			});
+
+			it("lorsque je fais une recherche Mission Locale sur un arrondissement, appelle l'api avec le code insee de l'arrondissement", async () => {
+				// GIVEN
+				const httpClient = aPublicHttpClientService();
+				const repository = new ApiEtablissementPublicRepository(httpClient, anErrorManagementService());
+				const codeCommune = "75115";
+				const typeAccompagnement = TypeEtablissement.MISSION_LOCALE;
+
+				// WHEN
+				await repository.search({ codeCommune, typeAccompagnement });
+
+				// THEN
+				expect(httpClient.get).toHaveBeenCalledWith(expect.stringContaining("suggest(pivot,%22code_insee_commune%2075115%22)"));
+			});
 		});
 
 		it('lorsque l‘utilisateur recherche une ville sans arrondissement, fait la recherche avec le code commune insee', async () => {

@@ -42,14 +42,14 @@ describe('Parcours formulaire cej', () => {
 								latitude: 48.859,
 								longitude: 2.347,
 							},
-							libelle: 'Paris (75006)',
+							libelle: 'Paris',
 							ville: 'Paris',
 						},
 					],
 				}),
 			).as('get-communes');
 			cy.findByRole('combobox', { name: /Ville/i }).type('paris');
-			cy.findByRole('option', { name: 'Paris (75006)' }).click();
+			cy.findByRole('option', { name: 'Paris' }).click();
 
 			interceptPost(
 				{
@@ -98,13 +98,13 @@ describe('Parcours formulaire cej', () => {
 								latitude: 48.859,
 								longitude: 2.347,
 							},
-							libelle: 'Paris (75006)',
+							libelle: 'Paris',
 							ville: 'Paris',
 						},
 					],
 				}),
 			).as('get-communes');
-			cy.findByRole('option', { name: 'Paris (75006)' }).click();
+			cy.findByRole('option', { name: 'Paris' }).click();
 
 			cy.findByRole('button', { name: /Envoyer la demande/i }).click();
 

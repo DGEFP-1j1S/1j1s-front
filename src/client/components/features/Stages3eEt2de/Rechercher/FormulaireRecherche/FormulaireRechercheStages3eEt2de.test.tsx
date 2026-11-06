@@ -48,7 +48,7 @@ describe('FormulaireRechercheStages3eEt2de', () => {
 
 		const combobox = screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' });
 		expect(combobox).toBeVisible();
-		expect(combobox).toHaveValue('Paris (75006)');
+		expect(combobox).toHaveValue('Paris');
 		expect(screen.getByDisplayValue('2.347')).toBeInTheDocument();
 		expect(screen.getByDisplayValue('48.859')).toBeInTheDocument();
 		expect(screen.getByDisplayValue('75056')).toBeInTheDocument();
@@ -127,7 +127,7 @@ describe('FormulaireRechercheStages3eEt2de', () => {
 		const comboboxLocalisation = screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' });
 		await user.type(comboboxLocalisation, 'Paris');
 
-		const boulangerOption = await screen.findByRole('option', { name: 'Paris (75006)' });
+		const boulangerOption = await screen.findByRole('option', { name: 'Paris' });
 		await user.click(boulangerOption);
 
 		const buttonRechercher = screen.getByRole('button', { name: 'Rechercher' });
