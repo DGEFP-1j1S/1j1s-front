@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React from "react";
 
 interface TagProps {
@@ -7,6 +8,6 @@ interface TagProps {
 
 export function Tag({children, className, ...rest}: TagProps): React.ReactNode {
 	return (
-		<p className={`fr-tag ${className}`} {...rest}>{children}</p>
+		<p className={classNames("fr-tag", className)} {...rest}>{children}</p>
 	);
 }

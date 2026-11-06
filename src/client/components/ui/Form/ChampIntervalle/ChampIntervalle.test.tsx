@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import React from 'react';
 
@@ -8,6 +8,7 @@ const renderChampIntervalleComponent = (props?: { valeurMinInitiale?: number, va
 	render(
 		<form aria-label="formulaire">
 			<ChampIntervalle
+				legend="test-legende"
 				name='test'
 				labelMinimum='test-minimum'
 				labelMaximum='test-maximum'
@@ -35,6 +36,16 @@ describe('<ChampIntervalle/>', () => {
 		expect(inputMax).toBeVisible();
 		expect(inputMax).toHaveAttribute('min', '20');
 		expect(inputMax).toHaveAttribute('max', '200');
+	});
+
+	it("regroupe les deux champs dans un groupe nommé par la légende", () => {
+		// WHEN
+		renderChampIntervalleComponent();
+
+		// THEN
+		const groupe = screen.getByRole("group", { name: "test-legende" });
+		expect(within(groupe).getByRole("spinbutton", { name: "test-minimum (test-unité)" })).toBeVisible();
+		expect(within(groupe).getByRole("spinbutton", { name: "test-maximum (test-unité)" })).toBeVisible();
 	});
 
 	it('reprend les valeurs initiales', () => {
