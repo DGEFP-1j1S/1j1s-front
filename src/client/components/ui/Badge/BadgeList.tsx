@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React, { ReactNode } from 'react';
 
 import { Badge } from "~/client/dsfr/Badge";
@@ -9,7 +10,7 @@ interface BadgeListProps extends React.ComponentPropsWithoutRef<'ul'> {
 
 export function BadgeList({list, colorClass, ...rest }: BadgeListProps) {
 	return (
-		<ul {...rest} className={`fr-badges-group ${rest.className ?? ''}`} >
+		<ul {...rest} className={classNames("fr-badges-group", rest.className)} >
 			{
 				list
 					.filter((tag) => !!tag)
