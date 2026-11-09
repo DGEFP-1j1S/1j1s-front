@@ -22,6 +22,7 @@ export function ChampIntervalle(props: ChampIntervalleProps) {
 
 	const inputMinId = useId();
 	const inputMaxId = useId();
+	const legendId = legend.trim().replace(/\s+/g, "-");
 
 	const onMaxInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
@@ -34,8 +35,8 @@ export function ChampIntervalle(props: ChampIntervalleProps) {
 	}, []);
 
 	return (
-		<fieldset className="fr-fieldset">
-			<legend className="fr-fieldset__legend">{legend}</legend>
+		<fieldset className="fr-fieldset" aria-labelledby={legendId}>
+			<legend className="fr-fieldset__legend" id={legendId}>{legend}</legend>
 			<div className="fr-fieldset__element fr-fieldset__element--inline flex-grow--1">
 				<div className="fr-input-group">
 					<Label htmlFor={inputMinId}>{labelMinimum} ({unite})</Label>
