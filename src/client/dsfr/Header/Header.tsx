@@ -37,6 +37,11 @@ export function Header() {
 									</Link>
 								</div>
 							</div>
+							<div className="fr-header__tools">
+								<div className="fr-header__tools-links">
+									<a href="/application-mobile" className="fr-icon-smartphone-line fr-btn">Découvrir l’application mobile</a>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
