@@ -204,7 +204,7 @@ describe('FormulaireRechercheAlternance', () => {
 		const inputMetiers = screen.getByRole('combobox', { name: 'Domaine Exemples : boulangerie, enseignement' });
 		expect(inputMetiers).toHaveValue('Boulangerie, pâtisserie, chocolaterie');
 		const localisation = screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' });
-		expect(localisation).toHaveValue('Paris (75001)');
+		expect(localisation).toHaveValue('Paris');
 
 		const comboboxRayon = screen.getByRole('combobox', { name: 'Rayon Exemple : 30 km' });
 		expect(comboboxRayon).toHaveTextContent('10 km');

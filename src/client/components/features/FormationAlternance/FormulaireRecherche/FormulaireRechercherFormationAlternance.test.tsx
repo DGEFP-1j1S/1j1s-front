@@ -87,7 +87,7 @@ describe('FormulaireRechercherFormationAlternance', () => {
 
 			const comboboxCommune = screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' });
 			await user.type(comboboxCommune, 'Pari');
-			await user.click(await screen.findByRole('option', { name: 'Paris (75006)' }));
+			await user.click(await screen.findByRole('option', { name: 'Paris' }));
 
 			await user.click(screen.getByRole('button', { name: 'Rechercher' }));
 
@@ -264,7 +264,7 @@ describe('FormulaireRechercherFormationAlternance', () => {
 
 			const comboboxCommune = screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' });
 			await user.type(comboboxCommune, 'Pari');
-			await user.click((await screen.findByRole('option', { name: 'Paris (75006)' })));
+			await user.click((await screen.findByRole('option', { name: 'Paris' })));
 
 			await user.click(screen.getByRole('button', { name: 'Rechercher' }));
 
@@ -298,7 +298,7 @@ describe('FormulaireRechercherFormationAlternance', () => {
 		expect(domaine).toHaveValue('Boulangerie, pâtisserie, chocolaterie');
 
 		const localisation = await screen.findByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' });
-		expect(localisation).toHaveValue('Paris (75001)');
+		expect(localisation).toHaveValue('Paris');
 
 		const selectRayon = screen.getByRole('combobox', { name: /Rayon/i });
 		expect(selectRayon).toHaveTextContent('30 km');

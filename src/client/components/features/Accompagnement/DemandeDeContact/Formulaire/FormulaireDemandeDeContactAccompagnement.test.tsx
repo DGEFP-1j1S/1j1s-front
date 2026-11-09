@@ -139,7 +139,7 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 			await user.selectOptions(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }), '23 ans');
 
 			await user.type(screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' }), 'Paris');
-			await user.click(await screen.findByRole('option', { name: 'Paris (75006)' }));
+			await user.click(await screen.findByRole('option', { name: 'Paris' }));
 
 			await user.click(screen.getByRole('button', { name: 'Envoyer mes informations afin d‘être rappelé(e)' }));
 
@@ -182,7 +182,7 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 			await user.selectOptions(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }), '23 ans');
 
 			await user.type(screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' }), 'Paris');
-			await user.click(await screen.findByRole('option', { name: 'Paris (75006)' }));
+			await user.click(await screen.findByRole('option', { name: 'Paris' }));
 
 			await user.click(screen.getByRole('button', { name: 'Envoyer mes informations afin d‘être rappelé(e)' }));
 
@@ -212,7 +212,7 @@ describe('FormulaireDemandeDeContactAccompagnement', () => {
 			await user.selectOptions(screen.getByRole('combobox', { name: 'Age Exemple : 16 ans' }), '23 ans');
 
 			await user.type(screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' }), 'Paris');
-			await user.click(await screen.findByRole('option', { name: 'Paris (75006)' }));
+			await user.click(await screen.findByRole('option', { name: 'Paris' }));
 
 			await user.click(screen.getByRole('button', { name: 'Envoyer mes informations afin d‘être rappelé(e)' }));
 
