@@ -34,7 +34,7 @@ export function FormulaireRechercheAnnonceLogement({ facettes }: FormulaireReche
 
 	return (
 		<form
-			className="border--blue fr-p-5w"
+			className="border--blue fr-p-md-5w fr-p-2w"
 			role="search"
 			aria-label="Rechercher un logement"
 			onSubmit={rechercher}>
@@ -68,6 +68,7 @@ export function FormulaireRechercheAnnonceLogement({ facettes }: FormulaireReche
 				</div>
 				<div className="fr-col-12 fr-col-lg-6">
 					<ChampIntervalle
+						legend="Surface"
 						name="surface"
 						labelMinimum="Surface minimum"
 						labelMaximum="Surface maximum"
@@ -79,6 +80,7 @@ export function FormulaireRechercheAnnonceLogement({ facettes }: FormulaireReche
 				</div>
 				<div className="fr-col-12 fr-col-lg-6">
 					<ChampIntervalle
+						legend="Prix"
 						name="prix"
 						labelMinimum="Prix minimum"
 						labelMaximum="Prix maximum"

@@ -2,6 +2,7 @@ import React, { useCallback, useId, useState } from "react";
 import { Label } from "~/client/components/ui/Form/Label";
 
 interface ChampIntervalleProps {
+	legend: string
 	labelMinimum: string
 	labelMaximum: string
 	unite: string
@@ -13,7 +14,7 @@ interface ChampIntervalleProps {
 }
 
 export function ChampIntervalle(props: ChampIntervalleProps) {
-	const { labelMinimum, labelMaximum, unite, min, max, name, valeurMinInitiale, valeurMaxInitiale } = props;
+	const { legend, labelMinimum, labelMaximum, unite, min, max, name, valeurMinInitiale, valeurMaxInitiale } = props;
 
 	type EmptyInput = "";
 	const [minValue, setMinValue] = useState<number | EmptyInput>(valeurMinInitiale ?? '');
@@ -21,6 +22,7 @@ export function ChampIntervalle(props: ChampIntervalleProps) {
 
 	const inputMinId = useId();
 	const inputMaxId = useId();
+	const legendId = legend.trim().replace(/\s+/g, "-");
 
 	const onMaxInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
@@ -33,8 +35,9 @@ export function ChampIntervalle(props: ChampIntervalleProps) {
 	}, []);
 
 	return (
-		<div className="fr-grid-row fr-grid-row--gutters">
-			<div className="fr-col-6">
+		<fieldset className="fr-fieldset" aria-labelledby={legendId}>
+			<legend className="fr-fieldset__legend" id={legendId}>{legend}</legend>
+			<div className="fr-fieldset__element fr-fieldset__element--inline flex-grow--1">
 				<div className="fr-input-group">
 					<Label htmlFor={inputMinId}>{labelMinimum} ({unite})</Label>
 					<input
@@ -48,7 +51,7 @@ export function ChampIntervalle(props: ChampIntervalleProps) {
 						onChange={onMinInputChange}/>
 				</div>
 			</div>
-			<div className="fr-col-6">
+			<div className="fr-fieldset__element fr-fieldset__element--inline flex-grow--1">
 				<div className="fr-input-group">
 					<Label htmlFor={inputMaxId}>{labelMaximum} ({unite})</Label>
 					<input
@@ -62,6 +65,6 @@ export function ChampIntervalle(props: ChampIntervalleProps) {
 						onChange={onMaxInputChange}/>
 				</div>
 			</div>
-		</div>
+		</fieldset>
 	);
 }
