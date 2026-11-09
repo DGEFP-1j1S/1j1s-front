@@ -24,7 +24,6 @@ type ComboboxCommuneProps = {
 	defaultCommune?: Commune
 	defaultDistance?: string
 	showRadiusInput?: boolean
-	filterArrondissements?: boolean
 } & ComboboxPropsWithOmit
 
 const MINIMUM_CHARACTER_NUMBER_FOR_SEARCH = 3;
@@ -44,12 +43,17 @@ function isUserInputValid(userInput: string) {
 	return userInputWithoutSearchCharToIgnoreTrimed.length >= MINIMUM_CHARACTER_NUMBER_FOR_SEARCH;
 }
 
-function formatLibelle(ville: string, codePostal: string) {
-	return `${ville} (${codePostal})`;
+const CODES_COMMUNE_VILLE_A_ARRONDISSEMENTS = ["75056", "69123", "13055"];
+
+function formatLibelle(commune: Commune) {
+	if (CODES_COMMUNE_VILLE_A_ARRONDISSEMENTS.includes(commune.code)) {
+		return commune.ville;
+	}
+	return `${commune.ville} (${commune.codePostal})`;
 }
 
 function findMatchingOptionFromUserInput(userInput: string, communeList: Array<Commune>) {
-	return communeList.find((commune) => userInput === `${commune.ville} (${commune.codePostal})`);
+	return communeList.find((commune) => userInput === formatLibelle(commune));
 }
 
 function doNothing() {
@@ -64,13 +68,12 @@ export const ComboboxCommune = React.forwardRef<ComboboxRef, ComboboxCommuneProp
 		defaultDistance: defaultDistanceProps,
 		debounceTimeout = DEFAULT_DEBOUNCE_TIMEOUT,
 		showRadiusInput = false,
-		filterArrondissements = false,
 		...rest
 	} = props;
 	const localisationService = useDependency<LocalisationService>('localisationService');
 
 	const [communeOptions, setCommuneOptions] = useState<Array<Commune>>(defaultCommuneProps ? [defaultCommuneProps] : []);
-	const [userInput, setUserInput] = useState<string>(defaultCommuneProps ? formatLibelle(defaultCommuneProps.ville, defaultCommuneProps.codePostal) : '');
+	const [userInput, setUserInput] = useState<string>(defaultCommuneProps ? formatLibelle(defaultCommuneProps) : '');
 
 	const [status, setStatus] = useState<FetchStatus>('init');
 
@@ -80,15 +83,11 @@ export const ComboboxCommune = React.forwardRef<ComboboxRef, ComboboxCommuneProp
 		const response = await localisationService.rechercherCommune(userInputCommune);
 		if (response && isSuccess(response)) {
 			setStatus('success');
-			if (filterArrondissements) {
-				setCommuneOptions(response.result.résultats.filter((commune) => !commune.ville.includes("Arrondissement")));
-			} else {
 				setCommuneOptions(response.result.résultats);
-			}
 		} else {
 			setStatus('failure');
 		}
-	}, [localisationService, setCommuneOptions, filterArrondissements]);
+	}, [localisationService, setCommuneOptions]);
 
 	const handleRechercherWithDebounce = useMemo(() => {
 		return debounce(rechercherCommunesWithUserInputValid, debounceTimeout);
@@ -134,7 +133,7 @@ export const ComboboxCommune = React.forwardRef<ComboboxRef, ComboboxCommuneProp
 					{
 						(communeOptions.map((commune: Commune) => (
 							<Combobox.Option key={commune.code} value={commune.code}>
-								{formatLibelle(commune.ville, commune.codePostal)}
+								{formatLibelle(commune)}
 							</Combobox.Option>
 						)))
 					}
