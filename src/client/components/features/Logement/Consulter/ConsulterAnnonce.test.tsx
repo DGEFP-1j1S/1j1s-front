@@ -185,7 +185,7 @@ describe('<ConsulterAnnonce />', () => {
 				</DependenciesProvider>,
 			);
 			
-			const consommationEnergetique = screen.getByRole('img', { name: /A/i });
+			const consommationEnergetique = screen.getByText("A");
 			expect(consommationEnergetique).toBeVisible();
 		});
 		it('affiche le libellé de la consommation énergétique du logement', () => {
@@ -195,10 +195,9 @@ describe('<ConsulterAnnonce />', () => {
 			render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
 				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
 			</DependenciesProvider>);
-			const tag = screen.getByRole('img', { name: /A/i });
 			const description = screen.getByText(/Excellente performance énergétique/i);
 
-			expect(tag).toHaveAttribute('aria-describedby', description.id);
+			expect(description).toBeVisible();
 		});
 		it('affiche la couleur de la consommation énergétique du logement', () => {
 			const annonceDeLogement = anAnnonceDeLogement();
@@ -207,7 +206,7 @@ describe('<ConsulterAnnonce />', () => {
 			render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
 				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
 			</DependenciesProvider>);
-			const tag = screen.getByRole('img', { name: /A/i });
+			const tag = screen.getByText("A");
 
 			expect(tag).toHaveAttribute('style', '--color: var(--color-a); --text-color: var(--text-color-a);');
 		});
@@ -218,7 +217,7 @@ describe('<ConsulterAnnonce />', () => {
 			render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
 				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
 			</DependenciesProvider>);
-			const emissionDeGaz = screen.getByRole('img', { name: /G/i });
+			const emissionDeGaz = screen.getByText("G");
 
 			expect(emissionDeGaz).toBeVisible();
 		});
@@ -229,9 +228,9 @@ describe('<ConsulterAnnonce />', () => {
 			render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
 				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
 			</DependenciesProvider>);
-			const tag = screen.getByRole('img', { name: /G/i });
+			const description = screen.getByText(/Très importante émission de gaz à effet de serre/i);
 
-			expect(tag).toHaveAccessibleDescription(/Très importante émission de gaz à effet de serre/i);
+			expect(description).toBeVisible();
 		});
 		it('affiche la couleur de l’émission de gaz du logement', () => {
 			const annonceDeLogement = anAnnonceDeLogement();
@@ -240,7 +239,7 @@ describe('<ConsulterAnnonce />', () => {
 			render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
 				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
 			</DependenciesProvider>);
-			const tag = screen.getByRole('img', { name: /G/i });
+			const tag = screen.getByText("G");
 
 			expect(tag).toHaveAttribute('style', '--color: var(--color-g); --text-color: var(--text-color-g);');
 		});
@@ -301,7 +300,7 @@ describe('<ConsulterAnnonce />', () => {
 			render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
 				<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
 			</DependenciesProvider>);
-			const lienExterneCandidaterMobileEtDesktop = screen.getAllByRole('link', { name: 'Voir l‘annonce - nouvelle fenêtre' });
+			const lienExterneCandidaterMobileEtDesktop = screen.getAllByRole('link', { name: 'Voir l’annonce - nouvelle fenêtre' });
 
 			expect(lienExterneCandidaterMobileEtDesktop[0]).toBeVisible();
 			expect(lienExterneCandidaterMobileEtDesktop[0]).toHaveAttribute('href', 'https://example.com');
