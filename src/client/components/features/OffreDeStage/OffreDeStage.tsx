@@ -1,15 +1,14 @@
 import React from 'react';
 
-import { OffreDeStageIndexée } from '~/client/components/features/OffreDeStage/OffreDeStageIndexee';
-import { HitProps } from '~/client/components/layouts/InstantSearch/InstantSearchLayout';
+import { OffreDeStageIndexee } from '~/server/stages/domain/offreDeStageIndexee';
 import { Carte } from '~/client/dsfr';
-import { getCapitalizedItems } from '~/client/components/ui/Meilisearch/getCapitalizedItems';
+import { getCapitalizedItems } from '~/client/utils/getCapitalizedItems';
 import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { DateService } from '~/client/services/date/date.service';
 import { DomainesStage } from '~/server/stages/repository/domainesStage';
 
-export function OffreDeStage(props: HitProps<OffreDeStageIndexée>) {
-	const stage = props.hit;
+export function OffreDeStage(props: { offreDeStage: OffreDeStageIndexee }) {
+	const stage = props.offreDeStage;
 	const dateService = useDependency<DateService>('dateService');
 
 	function formatDate(dateDebutMin: string, dateDebutMax?: string) {

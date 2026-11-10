@@ -1,5 +1,5 @@
 import { DomainesStage } from '~/server/stages/repository/domainesStage';
-import { SourceDesDonnées } from '~/server/stages/repository/sourceDesDonneesStage';
+import { SourceDesDonnees } from '~/server/stages/repository/sourceDesDonneesStage';
 
 import { RemunerationPeriode } from './remunerationPeriode';
 
@@ -26,7 +26,7 @@ export interface OffreDeStage {
 	remunerationMin?: number
 	remunerationMax?: number
 	remunerationPeriode?: RemunerationPeriode
-	source?: SourceDesDonnées
+	source?: SourceDesDonnees
 	teletravailPossible?: boolean
 }
 

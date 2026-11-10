@@ -1,21 +1,15 @@
 const STRAPI_MEDIA_HOST = new URL(process.env.STRAPI_MEDIA_URL).hostname;
-const TRUSTED_SOURCES = '*.fabrique.social.gouv.fr *.meilisearch.io/multi-search *.meilisearch.com/multi-search *.meilisearch.io/indexes/ *.meilisearch.com/indexes/ 1j1s-front.osc-fr1.scalingo.io *.1jeune1solution.gouv.fr';
+const TRUSTED_SOURCES = '*.fabrique.social.gouv.fr 1j1s-front.osc-fr1.scalingo.io *.1jeune1solution.gouv.fr';
 const ANALYTICS_SOURCES = `${process.env.NEXT_PUBLIC_ANALYTICS_DOMAIN} ${process.env.NEXT_PUBLIC_ANALYTICS_MATOMO_HOST}`;
 const MARKETING_SCRIPT_SOURCES = "https://www.googletagmanager.com https://tags.srv.stackadapt.com https://*.goldenbees.fr";
-const MARKETING_IMG_SOURCES = "https://*.doubleclick.net https://www.googletagmanager.com https://*.adform.net https://tags.srv.stackadapt.com https://*.goldenbees.fr";
+// Script inline The Trade Desk injecte par le tag GoldenBees dans son iframe (qui herite de notre CSP)
+const MARKETING_SCRIPT_HASHES = "'sha256-P7ZqOUHcNKjc8O4oDt0FnDpTDP7KcUtP2YykzVA44zA='";
+const MARKETING_IMG_SOURCES = "https://*.doubleclick.net https://www.googletagmanager.com https://*.adform.net https://tags.srv.stackadapt.com https://*.goldenbees.fr https://match.adsrvr.org";
 const MARKETING_CONNECT_SOURCES = "https://*.doubleclick.net https://www.google.com https://www.googletagmanager.com https://*.stackadapt.com https://*.goldenbees.fr";
-
-function getLocalSearchEngineOrigin() {
-	try {
-		return new URL(process.env.NEXT_PUBLIC_STAGE_SEARCH_ENGINE_BASE_URL).origin;
-	} catch {
-		return '';
-	}
-}
 
 const contentSecurityPolicy = `
   default-src 'self' ${TRUSTED_SOURCES} *.myjobglasses.com https://fonts.gstatic.com/ ${MARKETING_CONNECT_SOURCES};
-  script-src 'self' ${ANALYTICS_SOURCES} https://*.adform.net *.myjobglasses.com ${MARKETING_SCRIPT_SOURCES};
+  script-src 'self' ${ANALYTICS_SOURCES} https://*.adform.net *.myjobglasses.com ${MARKETING_SCRIPT_SOURCES} ${MARKETING_SCRIPT_HASHES};
   img-src 'self' *.google.com data: ${STRAPI_MEDIA_HOST} ${ANALYTICS_SOURCES} img.youtube.com jedonnemonavis.numerique.gouv.fr *.myjobglasses.com ${MARKETING_IMG_SOURCES};
   style-src 'self' 'unsafe-inline' ${ANALYTICS_SOURCES} *.myjobglasses.com https://fonts.googleapis.com https://tags.srv.stackadapt.com;
   frame-ancestors 'none';
@@ -59,10 +53,7 @@ const LOCAL_MODE_HEADERS = [{
 		value: 'no-referrer, strict-origin-when-cross-origin',
 	}, {
 		key: 'Content-Security-Policy',
-		value: contentSecurityPolicy
-			.replace('default-src', `default-src ${getLocalSearchEngineOrigin()}`)
-			.replace('script-src', "script-src 'unsafe-eval'")
-			.replace(/\s{2,}/g, ' ').trim(),
+		value: contentSecurityPolicy.replace('script-src', "script-src 'unsafe-eval'").replace(/\s{2,}/g, ' ').trim(),
 	}],
 	source: '/:path*',
 }];

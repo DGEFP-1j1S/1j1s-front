@@ -28,7 +28,7 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<MesuresEmpl
 		props: {
 			mesureEmployeurList: JSON.parse(JSON.stringify(response.result)),
 		},
-		revalidate: dependencies.cmsDependencies.duréeDeValiditéEnSecondes(),
+		revalidate: dependencies.cmsDependencies.dureeDeValiditeEnSecondes(),
 	};
 }
 

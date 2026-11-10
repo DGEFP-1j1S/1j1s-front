@@ -5,7 +5,7 @@ export function ExperiencesEnEurope() {
 	return (
 		<section>
 			<Banner>
-				<h1 className="fr-h1">
+				<h1>
 					Je cherche une expérience en Europe
 				</h1>
 				<p className="fr-text--lead">

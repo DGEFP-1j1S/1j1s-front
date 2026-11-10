@@ -71,7 +71,7 @@ export default function JeRecrutePage() {
 								className="height--full"
 								titre="Découvrez les mesures du plan 1jeune1solution pour vous aider à recruter plus facilement"
 								footer={
-									<div className="flex justify-center">
+									<div className="flex justify--center">
 										<Link href="/mesures-employeurs" className="fr-btn">
 											Découvrir les mesures employeurs
 										</Link>
@@ -85,7 +85,7 @@ export default function JeRecrutePage() {
 								className="height--full"
 								titre="Les entreprises s’engagent, une mobilisation des entreprises pour l’emploi des jeunes"
 								footer={
-									<div className="flex justify-center">
+									<div className="flex justify--center">
 										<Link href="/les-entreprises-s-engagent" className="fr-btn">
 											Rejoindre la mobilisation
 										</Link>

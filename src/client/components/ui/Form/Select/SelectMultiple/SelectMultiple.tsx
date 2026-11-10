@@ -7,7 +7,6 @@ import React, {
 	useCallback,
 	useEffect,
 	useId,
-	useLayoutEffect,
 	useMemo,
 	useReducer,
 	useRef,
@@ -32,6 +31,7 @@ import {
 import { SelectOption } from '~/client/components/ui/Form/Select/SelectOption/SelectOption';
 import { Icon } from '~/client/components/ui/Icon/Icon';
 import { useTouchedInput } from '~/client/hooks/useTouchedInput';
+import { useIsomorphicLayoutEffect } from '~/client/hooks/useIsomorphicLayoutEffect';
 
 import styles from '../Select.module.scss';
 import { SelectContext } from '../SelectContext';
@@ -104,7 +104,7 @@ export function SelectMultiple({
 		}
 	}, [value, touched]);
 
-	useLayoutEffect(function scrollOptionIntoView() {
+	useIsomorphicLayoutEffect(function scrollOptionIntoView() {
 		if (activeDescendant) {
 			document.getElementById(activeDescendant)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 		}

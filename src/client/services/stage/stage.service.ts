@@ -7,5 +7,6 @@ import { Either } from '~/server/errors/either';
 
 export interface StageService {
 	enregistrerOffreDeStage(informationsEntreprise: OffreDeStageDeposeeEntreprise, informationsStage: OffreDeStageDeposeeStage, informationsLocalisation: OffreDeStageDeposeeLocalisation): Promise<Either<void>>
+	rechercherLocalisations(saisie: string): Promise<Either<Array<string>>>
 }
 

@@ -1,3 +1,5 @@
+import { Meilisearch } from 'meilisearch';
+
 import {
 	ActualitesDependencies,
 	actualitesDependenciesContainer,
@@ -79,6 +81,11 @@ import {
 	FicheMetierDependencies,
 	ficheMetierDependenciesContainer,
 } from '~/server/fiche-metier/configuration/dependencies.container';
+import { EvenementDependencies, evenementDependenciesContainer } from '~/server/evenements/configuration/dependencies.container';
+import { MeilisearchRechercheEvenementRepository } from '~/server/evenements/infra/meilisearchRechercheEvenement.repository';
+import { listeDesHotesAutorises } from '~/server/logements/infra/imagesAutorisees';
+import { MeilisearchRechercheAnnonceDeLogementRepository } from '~/server/logements/infra/meilisearchRechercheAnnonceDeLogement.repository';
+import { MeilisearchRechercheFicheMetierRepository } from '~/server/fiche-metier/infra/meilisearchRechercheFicheMetier.repository';
 import { StrapiFicheMetierRepository } from '~/server/fiche-metier/infra/strapiFicheMetier.repository';
 import {
 	getApiLaBonneAlternanceConfig,
@@ -219,11 +226,14 @@ import {
 	ApiImmersionFacileStage3eEt2deErrorManagementService,
 } from '~/server/stage-3e-et-2de/infra/repositories/apiImmersionFacileStage3eEt2deErrorManagement.service';
 import { StagesDependencies, stagesDependenciesContainer } from '~/server/stages/configuration/dependencies.container';
+import { MeilisearchErrorManagementService } from '~/server/services/meilisearch/meilisearchErrorManagement.service';
+import { MeilisearchRechercheOffreStageRepository } from '~/server/stages/repository/meilisearchRechercheOffreStage.repository';
 import { StrapiStagesRepository } from '~/server/stages/repository/strapiStages.repository';
 
 export type Dependencies = {
 	actualitesDependencies: ActualitesDependencies;
 	articleDependencies: ArticleDependencies;
+	evenementDependencies: EvenementDependencies;
 	ficheMetierDependencies: FicheMetierDependencies;
 	faqDependencies: FAQDependencies;
 	stagesDependencies: StagesDependencies;
@@ -274,6 +284,12 @@ export function dependenciesContainer(): Dependencies {
 	}
 
 	const defaultErrorManagementService = new DefaultErrorManagementService(loggerService);
+	const configuration = serverConfigurationService.getConfiguration();
+	const meilisearchClient = new Meilisearch({
+		apiKey: configuration.MEILISEARCH_API_KEY,
+		host: configuration.MEILISEARCH_BASE_URL,
+	});
+	const meilisearchErrorManagementService = new MeilisearchErrorManagementService(loggerService);
 
 	const strapiAuthenticatedHttpClientService = new AuthenticatedHttpClientService(getAuthApiStrapiConfig(serverConfigurationService), loggerService);
 	const strapiPublicHttpClientService = new PublicHttpClientService(getApiStrapiConfig(serverConfigurationService));
@@ -366,16 +382,35 @@ export function dependenciesContainer(): Dependencies {
 	const établissementAccompagnementDependencies = etablissementAccompagnementDependenciesContainer(apiEtablissementPublicRepository);
 
 	const ficheMetierRepository = new StrapiFicheMetierRepository(cmsService);
-	const ficheMetierDependencies = ficheMetierDependenciesContainer(ficheMetierRepository);
+	const evenementDependencies = evenementDependenciesContainer(
+		new MeilisearchRechercheEvenementRepository(meilisearchClient, meilisearchErrorManagementService),
+	);
+	const ficheMetierDependencies = ficheMetierDependenciesContainer(
+		ficheMetierRepository,
+		new MeilisearchRechercheFicheMetierRepository(meilisearchClient, meilisearchErrorManagementService),
+	);
 
 	const faqRepository = new StrapiFAQRepository(cmsService);
 	const faqDependencies = FAQDependenciesContainer(faqRepository);
 
 	const annonceDeLogementRepository = new StrapiAnnonceDeLogementRepository(cmsService, defaultErrorManagementService);
-	const annonceDeLogementDependencies = annonceDeLogementDependenciesContainer(annonceDeLogementRepository);
+	const annonceDeLogementDependencies = annonceDeLogementDependenciesContainer(
+		annonceDeLogementRepository,
+		new MeilisearchRechercheAnnonceDeLogementRepository(
+			meilisearchClient,
+			configuration.MEILISEARCH_INDEX_ANNONCE_DE_LOGEMENT,
+			listeDesHotesAutorises(configuration.LOGEMENT_IMAGE_URL_LIST),
+			meilisearchErrorManagementService,
+		),
+	);
 
 	const stagesRepository = new StrapiStagesRepository(cmsService, defaultErrorManagementService);
-	const stagesDependencies = stagesDependenciesContainer(stagesRepository);
+	const rechercheOffreStageRepository = new MeilisearchRechercheOffreStageRepository(
+		meilisearchClient,
+		configuration.MEILISEARCH_INDEX_OFFRE_DE_STAGE,
+		meilisearchErrorManagementService,
+	);
+	const stagesDependencies = stagesDependenciesContainer(stagesRepository, rechercheOffreStageRepository);
 
 	const videoCampagneApprentissageRepository = new StrapiVideoCampagneApprentissageRepository(cmsService, defaultErrorManagementService);
 	const campagneApprentissageDependencies = campagneApprentissageDependenciesContainer(videoCampagneApprentissageRepository);
@@ -429,6 +464,7 @@ export function dependenciesContainer(): Dependencies {
 		emploiEuropeDependencies,
 		engagementDependencies,
 		faqDependencies,
+		evenementDependencies,
 		ficheMetierDependencies,
 		formationDependencies,
 		formationInitialeDependencies,

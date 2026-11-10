@@ -24,7 +24,7 @@ export default function Entreprendre() {
 				robots="index,follow" />
 			<main id="contenu">
 				<BannerWithIllustration image="/images/entrepreneurs.webp" isCover>
-					<h1 className="fr-h1">
+					<h1>
 						Je découvre les solutions qui s’offrent à moi, pour créer mon entreprise… 
 						quel que soit le stade de mon projet de création !
 					</h1>
@@ -35,7 +35,7 @@ export default function Entreprendre() {
 							<React.Fragment key={titre}>
 								{index > 0 && (
 									<>
-										<li className="fr-col-12 fr-hidden-md flex justify-center fr-py-1w fr-icon-arrow-down-line fr-icon--lg" aria-hidden="true" />
+										<li className="fr-col-12 fr-hidden-md flex justify--center fr-py-1w fr-icon-arrow-down-line fr-icon--lg" aria-hidden="true" />
 										<li className="fr-hidden fr-unhidden-md align-items--center fr-px-2w fr-icon-arrow-right-line fr-icon--lg" aria-hidden="true" />
 									</>
 								)}
@@ -56,7 +56,7 @@ export default function Entreprendre() {
 							projet
 						</h2>
 
-						<div className="fr-accordions-group">
+						<div className="fr-accordions-group" data-fr-group="false">
 							<Accordion titre="Je cherche à être accompagné">
 								<RéseauAccompagnementList />
 							</Accordion>

@@ -47,7 +47,7 @@ export default function EspaceJeunePage({ cartesActualites, serviceJeuneList }: 
 				<div className="fr-container">
 					<h1>Actualités et services jeune</h1>
 				</div>
-				<section aria-label="les actualités">
+				<section aria-label="les actualités" className="fr-pb-5v">
 					<Banner>
 						<h2>Retrouvez une sélection des dernières actualités relatives aux jeunes</h2>
 					</Banner>
@@ -95,6 +95,6 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<EspaceJeune
 			cartesActualites: JSON.parse(JSON.stringify(cartesActualitesResponse.result)),
 			serviceJeuneList: JSON.parse(JSON.stringify(serviceJeuneList.result)),
 		},
-		revalidate: dependencies.cmsDependencies.duréeDeValiditéEnSecondes(),
+		revalidate: dependencies.cmsDependencies.dureeDeValiditeEnSecondes(),
 	};
 }

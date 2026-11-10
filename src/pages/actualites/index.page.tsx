@@ -70,7 +70,7 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<ActualitesP
 		props: {
 			cartesActualites: JSON.parse(JSON.stringify(cartesActualitesResponse.result)),
 		},
-		revalidate: dependencies.cmsDependencies.duréeDeValiditéEnSecondes(),
+		revalidate: dependencies.cmsDependencies.dureeDeValiditeEnSecondes(),
 	};
 }
 

@@ -110,7 +110,7 @@ describe('RechercherMission', () => {
 				const user = userEvent.setup();
 				const comboboxCommune = screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' });
 				await user.type(comboboxCommune, 'Pari');
-				const communeOption = await screen.findByRole('option', { name: 'Paris (75006)' });
+				const communeOption = await screen.findByRole('option', { name: 'Paris' });
 				await user.click(communeOption);
 				const selectRadius = screen.getByRole('combobox', { name: 'Rayon Exemple : 30 km' });
 				expect(selectRadius).toHaveDisplayValue('30 km');
@@ -185,7 +185,7 @@ describe('RechercherMission', () => {
 				const user = userEvent.setup();
 				const comboboxCommune = screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' });
 				await user.type(comboboxCommune, 'Pari');
-				const communeOption = await screen.findByRole('option', { name: 'Paris (75006)' });
+				const communeOption = await screen.findByRole('option', { name: 'Paris' });
 				await user.click(communeOption);
 				const selectRadius = screen.getByRole('combobox', { name: 'Rayon Exemple : 30 km' });
 				expect(selectRadius).toHaveDisplayValue('100 km');

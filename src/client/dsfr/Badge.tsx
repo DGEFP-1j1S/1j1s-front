@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import React from "react";
 
 interface BadgeProps {
@@ -7,6 +8,6 @@ interface BadgeProps {
 
 export function Badge({children, className, ...rest}: BadgeProps): React.ReactNode {
 	return (
-		<p className={`fr-badge ${className}`} {...rest}>{children}</p>
+		<p className={classNames("fr-badge", className)} {...rest}>{children}</p>
 	);
 }

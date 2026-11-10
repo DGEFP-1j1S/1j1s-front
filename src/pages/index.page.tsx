@@ -25,6 +25,7 @@ import { LBA_CANDIDAT_URL } from '~/shared/lbaLandingUrls';
 
 import analytics from './index.analytics';
 import styles from './index.module.scss';
+import { BandeauAccueilApplicationMobile } from "~/client/components/features/ApplicationMobile/BandeauAccueilApplicationMobile";
 
 
 interface CardContent {
@@ -49,6 +50,8 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 	const isMyJobGlassesVisible = process.env.NEXT_PUBLIC_MY_JOB_GLASSES_FEATURE === '1';
 
 	const isOldEspaceJeuneActif = process.env.NEXT_PUBLIC_OLD_ESPACE_JEUNE_FEATURE === '1';
+	const isAppMobileLive = process.env.NEXT_PUBLIC_APP_MOBILE_1J1S_LIVE === '1';
+	const isAppMobileBannerVisible = process.env.NEXT_PUBLIC_APP_MOBILE_1J1S_HOMEPAGE_BANNER === '1';
 
 	const actualitesCardListContent: CardContent[] = accueilProps.actualites.map((carte: Actualite): CardContent => {
 		return {
@@ -311,20 +314,24 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 								seeLessAriaLabel={'Voir moins de résultats sur les offres d‘emplois'} 
 							/>
 					</section>
-					
-					<section className="background--blue-light fr-my-5v">
-						<div className="fr-grid-row fr-grid-row--no-gutters align-items--center">
-							<div className="fr-col-12 fr-col-lg-6 fr-p-4w">
-								<h2>Trouvez votre alternance</h2>
-								<p>Avec la bonne alternance, accédez à 38 000 offres d’apprentissage et trouvez celle qui vous correspond. Déjà 6 000 offres déposées et 4 000 candidatures pour vous aider à passer à l’action.</p>
-								<div className="fr-grid-row fr-grid-row--center">
-									<Link className="fr-btn" onClick={() => evenementAnalyticsService.envoyerEvenement({ action: "clic", categorie: "accueil", nom: "consulter_les_offres_lba" })} href="https://labonnealternance.apprentissage.beta.gouv.fr/1jeune1solution?utm_source=1j1s&utm_medium=website&utm_campaign=landinglba1j1s">Consulter les offres</Link>
+
+					{ isAppMobileBannerVisible ?
+						<BandeauAccueilApplicationMobile estLive={isAppMobileLive}/>
+						:
+						<section className="background--blue-light fr-my-5v">
+							<div className="fr-grid-row fr-grid-row--no-gutters align-items--center">
+								<div className="fr-col-12 fr-col-lg-6 fr-p-4w">
+									<h2>Trouvez votre alternance</h2>
+									<p>Avec la bonne alternance, accédez à 38 000 offres d’apprentissage et trouvez celle qui vous correspond. Déjà 6 000 offres déposées et 4 000 candidatures pour vous aider à passer à l’action.</p>
+									<div className="fr-grid-row fr-grid-row--center">
+										<Link className="fr-btn" onClick={() => evenementAnalyticsService.envoyerEvenement({ action: "clic", categorie: "accueil", nom: "consulter_les_offres_lba" })} href="https://labonnealternance.apprentissage.beta.gouv.fr/1jeune1solution?utm_source=1j1s&utm_medium=website&utm_campaign=landinglba1j1s">Consulter les offres</Link>
+									</div>
+								</div>
+								<div className={`${styles.bgConsultation} fr-col-12 fr-col-lg-6 fr-hidden fr-unhidden-lg`}>
 								</div>
 							</div>
-							<div className={`${styles.bgConsultation} fr-col-12 fr-col-lg-6 fr-hidden fr-unhidden-lg`}>
-							</div>
-						</div>
-					</section>
+						</section>
+					}
 
 					<section className='fr-py-5v'>
 						<h2 id="formation" className="fr-h2 flex align-items--center fr-mb-2w">
@@ -397,7 +404,7 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<AccueilPage
 	if (!doitAfficherActualitesSurAccueil) {
 		return {
 			props: { actualites: [] },
-			revalidate: dependencies.cmsDependencies.duréeDeValiditéEnSecondes(),
+			revalidate: dependencies.cmsDependencies.dureeDeValiditeEnSecondes(),
 		};
 	}
 
@@ -409,6 +416,6 @@ export async function getStaticProps(): Promise<GetStaticPropsResult<AccueilPage
 
 	return {
 		props: { actualites: JSON.parse(JSON.stringify(cartesActualitesResponse.result)) },
-		revalidate: dependencies.cmsDependencies.duréeDeValiditéEnSecondes(),
+		revalidate: dependencies.cmsDependencies.dureeDeValiditeEnSecondes(),
 	};
 }
