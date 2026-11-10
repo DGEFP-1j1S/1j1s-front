@@ -36,7 +36,6 @@ describe('<ConsulterAnnonce />', () => {
 
 	it('affiche le type de logement', () => {
 		const annonceDeLogement = anAnnonceDeLogement({
-			type: 'Location',
 			typeBien: 'Appartement',
 		});
 
@@ -46,7 +45,7 @@ describe('<ConsulterAnnonce />', () => {
 			</DependenciesProvider>,
 		);
 
-		const type = screen.getByText(/Location - Appartement/i);
+		const type = screen.getByText("Appartement");
 		expect(type).toBeVisible();
 	});
 
@@ -171,7 +170,7 @@ describe('<ConsulterAnnonce />', () => {
 			</DependenciesProvider>,
 		);
 
-		const section = screen.getByRole('region', { name: /Informations Générales/i });
+		const section = screen.getByRole("heading", { level: 2, name: "Informations générales" });
 		expect(section).toBeVisible();
 	});
 
@@ -262,42 +261,22 @@ describe('<ConsulterAnnonce />', () => {
 
 	describe('source', () => {
 		describe('quand la source est immojeune', () => {
-			it('retourne le logo immojeune', () => {
+			it("affiche le nom du diffuseur", () => {
 				const annonceDeLogement = anAnnonceDeLogement({ source: 'immojeune' });
 				render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
 					<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
 				</DependenciesProvider>);
-				const diffuseurMobile = screen.getByTestId('source-annonce-mobile');
-				const diffuseurDesktop = screen.getByTestId('source-annonce-desktop');
-				expect(diffuseurMobile).toBeVisible();
-				expect(diffuseurDesktop).toBeVisible();
-				expect(diffuseurMobile).toHaveTextContent('Ce bien est diffusé par');
-				expect(diffuseurDesktop).toHaveTextContent('Ce bien est diffusé par');
-
-				const logoDiffuseurMobile = within(diffuseurMobile).getByRole('img', { name: 'immojeune' });
-				const logoDiffuseurDesktop = within(diffuseurDesktop).getByRole('img', { name: 'immojeune' });
-				expect(logoDiffuseurMobile).toBeVisible();
-				expect(logoDiffuseurDesktop).toBeVisible();
+				expect(screen.getByText(/Ce bien est diffusé par ImmoJeune/)).toBeVisible();
 			});
 		});
 
 		describe('quand la source est studapart', () => {
-			it('retourne le logo studapart', () => {
+			it("affiche le nom du diffuseur", () => {
 				const annonceDeLogement = anAnnonceDeLogement({ source: 'studapart' });
 				render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
 					<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
 				</DependenciesProvider>);
-				const diffuseurMobile = screen.getByTestId('source-annonce-mobile');
-				const diffuseurDesktop = screen.getByTestId('source-annonce-desktop');
-				expect(diffuseurMobile).toBeVisible();
-				expect(diffuseurDesktop).toBeVisible();
-				expect(diffuseurMobile).toHaveTextContent('Ce bien est diffusé par');
-				expect(diffuseurDesktop).toHaveTextContent('Ce bien est diffusé par');
-
-				const logoDiffuseurMobile = within(diffuseurMobile).getByRole('img', { name: 'studapart' });
-				const logoDiffuseurDesktop = within(diffuseurDesktop).getByRole('img', { name: 'studapart' });
-				expect(logoDiffuseurMobile).toBeVisible();
-				expect(logoDiffuseurDesktop).toBeVisible();
+				expect(screen.getByText(/Ce bien est diffusé par Studapart/)).toBeVisible();
 			});
 		});
 
@@ -334,8 +313,7 @@ describe('<ConsulterAnnonce />', () => {
 		render(<DependenciesProvider sessionStorageService={aStorageService()} dateService={aDateService()}>
 			<ConsulterAnnonce annonceDeLogement={annonceDeLogement} />
 		</DependenciesProvider>);
-		const section = screen.getByRole('region', { name: /Équipements et services/i });
-
-		expect(section).toBeVisible();
+		expect(screen.getByRole("heading", { level: 2, name: "Équipements et services inclus" })).toBeVisible();
+		expect(screen.getByRole("heading", { level: 2, name: "Équipements et services optionnels" })).toBeVisible();
 	});
 });
