@@ -56,7 +56,7 @@ export default function Entreprendre() {
 							projet
 						</h2>
 
-						<div className="fr-accordions-group">
+						<div className="fr-accordions-group" data-fr-group="false">
 							<Accordion titre="Je cherche à être accompagné">
 								<RéseauAccompagnementList />
 							</Accordion>

@@ -74,7 +74,7 @@ export function ConsulterFicheMetier({ ficheMetier }: { ficheMetier: FicheMétie
 				)}
 			</section>
 
-			<div className="fr-accordions-group fr-mb-7w">
+			<div className="fr-accordions-group fr-mb-7w" data-fr-group="false">
 				{ natureTravail && (
 					<Accordion titreAs="h2" titre="Nature du travail" expanded={true}>
 						<MarkdownToHtml markdown={natureTravail} />
