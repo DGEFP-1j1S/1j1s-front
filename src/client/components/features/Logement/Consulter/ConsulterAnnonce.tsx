@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useId } from "react";
 
 import { BilanEnergetiqueLogement } from '~/client/components/features/Logement/Consulter/BilanEnergetiqueLogement';
 import { Image } from "~/client/components/ui/Img";
 import { Link } from '~/client/components/ui/Link/Link';
 import { SquareMeter } from "~/client/components/ui/SquareMeter/SquareMeter";
 import { useDependency } from "~/client/context/dependenciesContainer.context";
+import { Button, Modal } from "~/client/dsfr";
 import { DateService } from "~/client/services/date/date.service";
 import formatLocalisation from "~/client/utils/formatLocalisation.util";
 import { AnnonceDeLogement, AnnonceDeLogementService, NOMS_DES_SOURCES } from "~/server/logements/domain/annonceDeLogement";
 
 interface ConsulterAnnonceDeLogementProps {
 	annonceDeLogement: AnnonceDeLogement
-	slug: string
 }
 
 function formatterEtage(etage: number) {
@@ -44,7 +44,7 @@ function ListeDeServices({ services, messageSiVide }: { services: Array<AnnonceD
 	);
 }
 
-export function ConsulterAnnonce({ annonceDeLogement, slug }: ConsulterAnnonceDeLogementProps) {
+export function ConsulterAnnonce({ annonceDeLogement }: ConsulterAnnonceDeLogementProps) {
 	const {
 		dateDeMiseAJour,
 		typeBien,
@@ -70,7 +70,7 @@ export function ConsulterAnnonce({ annonceDeLogement, slug }: ConsulterAnnonceDe
 	const nomDeLaSource: string | undefined = NOMS_DES_SOURCES[source];
 	const localisationAffichable = formatLocalisation(localisation);
 	const dateService = useDependency<DateService>("dateService");
-	const lienVersLesPhotos = `/logements/annonces/${slug}/photos`;
+	const idModaleGalerie = `galerie-photos-${useId().replace(/:/g, "")}`;
 	const imageApercu = imageList[0];
 
 	return (
@@ -102,12 +102,30 @@ export function ConsulterAnnonce({ annonceDeLogement, slug }: ConsulterAnnonceDe
 							style={{ display: "block" }} />
 						{imageList.length > 1 && (
 							<div style={{ backgroundColor: "var(--background-default-grey)", bottom: "0.75rem", position: "absolute", right: "0.75rem" }}>
-								<Link
-									href={lienVersLesPhotos}
-									className="fr-btn fr-btn--secondary fr-btn--icon-right fr-icon-image-line">
-									Voir les photos<span className="sr-only"> ({imageList.length})</span>
-								</Link>
+								<Button
+									type="button"
+									appearance="secondary"
+									className="fr-btn--icon-right fr-icon-image-line"
+									aria-controls={idModaleGalerie}
+									data-fr-opened="false"
+									label={<>Voir les photos<span className="sr-only"> ({imageList.length})</span></>} />
 							</div>
+						)}
+						{imageList.length > 1 && (
+							<Modal id={idModaleGalerie} titre="Photos du logement">
+								<ul className="fr-grid-row fr-grid-row--gutters list-style-none fr-p-0">
+									{imageList.map((image, index) => (
+										<li key={`${index}-${image.src}`} className="fr-col-12 fr-col-md-6">
+											<Image
+												src={image.src}
+												alt={image.alt || ""}
+												width={800}
+												height={450}
+												className="fr-responsive-img fr-ratio-16x9 img-cover" />
+										</li>
+									))}
+								</ul>
+							</Modal>
 						)}
 					</div>
 				</div>
