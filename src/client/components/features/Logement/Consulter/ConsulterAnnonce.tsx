@@ -53,17 +53,17 @@ export function ConsulterAnnonce({ annonceDeLogement }: ConsulterAnnonceDeLogeme
 		source,
 		urlDeCandidature,
 		bilanEnergetique,
-		nombreDePièces,
+		nombreDePieces,
 		surface,
 		surfaceMax,
-		étage,
-		meublé,
+		etage,
+		meuble,
 		localisation,
 		prix,
 		devise,
 		garantie,
 		charge,
-		dateDeDisponibilité,
+		dateDeDisponibilite,
 		imageList,
 	} = annonceDeLogement;
 
@@ -86,7 +86,7 @@ export function ConsulterAnnonce({ annonceDeLogement }: ConsulterAnnonceDeLogeme
 					<Link
 						className="fr-btn fr-btn--lg"
 						href={urlDeCandidature}>
-						Voir l‘annonce
+						Voir l’annonce
 					</Link>
 				</div>
 			</div>
@@ -139,7 +139,7 @@ export function ConsulterAnnonce({ annonceDeLogement }: ConsulterAnnonceDeLogeme
 							<dl className="fr-p-0 fr-m-0">
 								<div className="fr-grid-row">
 									<dt>Nombre de pièces</dt>
-									<dd className="fr-ml-auto fr-text--bold">{formatterNombreDePieces(nombreDePièces)}</dd>
+									<dd className="fr-ml-auto fr-text--bold">{formatterNombreDePieces(nombreDePieces)}</dd>
 								</div>
 								<div className="fr-grid-row">
 									<dt>Surface</dt>
@@ -147,10 +147,10 @@ export function ConsulterAnnonce({ annonceDeLogement }: ConsulterAnnonceDeLogeme
 										? <dd className="fr-ml-auto fr-text--bold">{surface} à {surfaceMax} <SquareMeter /></dd>
 										: <dd className="fr-ml-auto fr-text--bold">{surface} <SquareMeter /></dd>}
 								</div>
-								{étage != null && (
+								{etage != null && (
 									<div className="fr-grid-row">
 										<dt>Étage</dt>
-										<dd className="fr-ml-auto fr-text--bold">{formatterEtage(étage)}</dd>
+										<dd className="fr-ml-auto fr-text--bold">{formatterEtage(etage)}</dd>
 									</div>
 								)}
 								<div className="fr-grid-row">
@@ -159,7 +159,7 @@ export function ConsulterAnnonce({ annonceDeLogement }: ConsulterAnnonceDeLogeme
 								</div>
 								<div className="fr-grid-row">
 									<dt>Meublé</dt>
-									<dd className="fr-ml-auto fr-text--bold">{meublé ? "Oui" : "Non"}</dd>
+									<dd className="fr-ml-auto fr-text--bold">{meuble ? "Oui" : "Non"}</dd>
 								</div>
 							</dl>
 						</div>
@@ -193,8 +193,8 @@ export function ConsulterAnnonce({ annonceDeLogement }: ConsulterAnnonceDeLogeme
 						<div className="background--blue-ecume fr-p-3v">
 							<h3 className="fr-text--md">Disponibilité</h3>
 							<p className="fr-mb-0">
-								Disponible le <time dateTime={dateDeDisponibilité.toISOString()}>
-									{dateService.formatToHumanReadableDate(dateDeDisponibilité)}
+								Disponible le <time dateTime={dateDeDisponibilite.toISOString()}>
+									{dateService.formatToHumanReadableDate(dateDeDisponibilite)}
 								</time>
 							</p>
 						</div>

@@ -21,7 +21,7 @@ export default function ConsulterAnnonceLogementPage({ annonceDeLogement, isFeat
 	const annonce = useMemo(() => ({
     ...annonceDeLogement,
     dateDeMiseAJour: new Date(annonceDeLogement.dateDeMiseAJour),
-    dateDeDisponibilité: new Date(annonceDeLogement.dateDeDisponibilité)
+    dateDeDisponibilite: new Date(annonceDeLogement.dateDeDisponibilite)
   }), [annonceDeLogement]);
 
 	if (!isFeatureActive) return <ErrorUnavailableService />;

@@ -41,17 +41,17 @@ export function BilanEnergetiqueLogement(props: BilanEnergetiqueLogementProps) {
 	const { consommationEnergetique, emissionDeGaz } = props;
 	return (
 		<>
-			<section className="border--blue fr-p-3w fr-mb-4w" aria-labelledby="classe-energie-title">
-				<h2 id="classe-energie-title" className="fr-h4">Classe énergie</h2>
-				<EtiquetteEnergetique categorie={consommationEnergetique} descriptionId="consommation-energetique" />
+			<section className="border--blue fr-p-3w fr-mb-4w">
+				<h2 className="fr-h4">Classe énergie</h2>
+				<EtiquetteEnergetique categorie={consommationEnergetique} />
 				{consommationEnergetique && (
 					<p id="consommation-energetique" className="fr-mt-2w">{CONSOMMATION_ENERGETIQUE[consommationEnergetique]}</p>
 				)}
 				<p className="fr-text--sm fr-mb-0">{consommationTexte}</p>
 			</section>
-			<section className="border--blue fr-p-3w fr-mb-4w" aria-labelledby="emission-de-gaz-title">
-				<h2 id="emission-de-gaz-title" className="fr-h4">Émissions de <abbr title="Gaz à Effet de Serre">GES</abbr></h2>
-				<EtiquetteEnergetique categorie={emissionDeGaz} descriptionId="emission-de-gaz" />
+			<section className="border--blue fr-p-3w fr-mb-4w">
+				<h2 className="fr-h4">Émissions de <abbr title="Gaz à Effet de Serre">GES</abbr></h2>
+				<EtiquetteEnergetique categorie={emissionDeGaz} />
 				{emissionDeGaz && (
 					<p id="emission-de-gaz" className="fr-mt-2w">{EMISSION_DE_GAZ[emissionDeGaz]}</p>
 				)}
@@ -61,18 +61,15 @@ export function BilanEnergetiqueLogement(props: BilanEnergetiqueLogementProps) {
 	);
 }
 
-function EtiquetteEnergetique({ categorie, descriptionId }: { categorie?: AnnonceDeLogementCategorieEnergetique, descriptionId: string }) {
+function EtiquetteEnergetique({ categorie }: { categorie?: AnnonceDeLogementCategorieEnergetique }) {
 	return (
-		<div
-			role="img"
-			aria-label={categorie ?? "Non renseigné"}
-			aria-describedby={categorie && descriptionId}
+		<p
 			className={styles.tag}
 			style={{
 				"--color": `var(--color-${categorie?.toLowerCase()})`,
 				"--text-color": `var(--text-color-${categorie?.toLowerCase()})`,
 			} as React.CSSProperties}>
 			{categorie ?? "Non renseigné"}
-		</div>
+		</p>
 	);
 }
