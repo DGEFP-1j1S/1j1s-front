@@ -52,15 +52,15 @@ describe('Strapi annonce de logement mapper', () => {
 				emissionDeGaz: 'B',
 			},
 			charge: 100,
-			dateDeDisponibilité: new Date('11/11/11'),
+			dateDeDisponibilite: new Date('11/11/11'),
 			dateDeMiseAJour: new Date('1/1/2022'),
 			description: 'appart à saisir',
 			devise: '€',
 			garantie: 50,
 			imageList: [],
 			localisation: { ville: 'paris' },
-			meublé: true,
-			nombreDePièces: 1,
+			meuble: true,
+			nombreDePieces: 1,
 			prix: 1000,
 			prixHT: 980,
 			servicesInclus: [
@@ -78,7 +78,7 @@ describe('Strapi annonce de logement mapper', () => {
 			type: 'Location',
 			typeBien: 'Appartement',
 			urlDeCandidature: 'lien-immo-jeune.com',
-			étage: 1,
+			etage: 1,
 		}));
 	});
 	it('la liste d’images est correctement mappée', () => {

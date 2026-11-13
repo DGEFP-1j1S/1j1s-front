@@ -1,10 +1,7 @@
-import classNames from 'classnames';
 import React from 'react';
 
 import styles from '~/client/components/features/Logement/Consulter/BilanEnergetiqueLogement.module.scss';
-import cardStyles from '~/client/components/features/Logement/Consulter/ConsulterAnnonce.module.scss';
 import { SquareMeter } from '~/client/components/ui/SquareMeter/SquareMeter';
-import { TipDisclosure } from '~/client/components/ui/TipDisclosure/TipDisclosure';
 import { AnnonceDeLogementCategorieEnergetique } from '~/server/logements/domain/annonceDeLogement';
 
 const LessOrEqual = () => <>{'\u{02A7D}'}</>;
@@ -43,42 +40,36 @@ interface BilanEnergetiqueLogementProps {
 export function BilanEnergetiqueLogement(props: BilanEnergetiqueLogementProps) {
 	const { consommationEnergetique, emissionDeGaz } = props;
 	return (
-		<section className={classNames(styles.energy, cardStyles.card)} aria-label="bilan énergétique du logement">
-			<figure>
-				<figcaption>
-					<h2>Classe énergie</h2>
-				</figcaption>
-				<TipDisclosure disclosureAriaLabel='informations supplémentaires' tipId='informations-supplementaires-classe-energie'>
-					{consommationTexte}
-				</TipDisclosure>
-				<div role="img"
-					aria-label={consommationEnergetique ?? 'Non renseigné'}
-				 aria-describedby={consommationEnergetique && 'consommation-energetique'}
-					className={styles.tag}
-					style={{
-						'--color': `var(--color-${consommationEnergetique?.toLowerCase()})`,
-						'--text-color': `var(--text-color-${consommationEnergetique?.toLowerCase()})`,
-					} as React.CSSProperties}>{consommationEnergetique ?? 'Non renseigné'}</div>
+		<>
+			<section className="border--blue fr-p-3w fr-mb-4w">
+				<h2 className="fr-h4">Classe énergie</h2>
+				<EtiquetteEnergetique categorie={consommationEnergetique} />
 				{consommationEnergetique && (
-					<p id="consommation-energetique">
-						{CONSOMMATION_ENERGETIQUE[consommationEnergetique] } </p>
+					<p id="consommation-energetique" className="fr-mt-2w">{CONSOMMATION_ENERGETIQUE[consommationEnergetique]}</p>
 				)}
-			</figure>
-			<figure>
-				<figcaption><h2>Émissions de <abbr title="Gaz à Effet de Serre">GES</abbr></h2></figcaption>
-				<TipDisclosure disclosureAriaLabel='informations supplémentaires' tipId='informations-supplementaires-gaz-effet-serre'>
-					{emissionTexte}
-				</TipDisclosure>
-				<div role="img"
-					aria-label={emissionDeGaz ?? 'Non renseigné'}
-					aria-describedby={emissionDeGaz && 'emission-de-gaz'}
-					className={styles.tag}
-					style={{
-						'--color': `var(--color-${emissionDeGaz?.toLowerCase()})`,
-						'--text-color': `var(--text-color-${emissionDeGaz?.toLowerCase()})`,
-					} as React.CSSProperties}>{emissionDeGaz ?? 'Non renseigné'}</div>
-				{emissionDeGaz && <p id="emission-de-gaz">{EMISSION_DE_GAZ[emissionDeGaz] } </p>}
-			</figure>
-		</section>
+				<p className="fr-text--sm fr-mb-0">{consommationTexte}</p>
+			</section>
+			<section className="border--blue fr-p-3w fr-mb-4w">
+				<h2 className="fr-h4">Émissions de <abbr title="Gaz à Effet de Serre">GES</abbr></h2>
+				<EtiquetteEnergetique categorie={emissionDeGaz} />
+				{emissionDeGaz && (
+					<p id="emission-de-gaz" className="fr-mt-2w">{EMISSION_DE_GAZ[emissionDeGaz]}</p>
+				)}
+				<p className="fr-text--sm fr-mb-0">{emissionTexte}</p>
+			</section>
+		</>
+	);
+}
+
+function EtiquetteEnergetique({ categorie }: { categorie?: AnnonceDeLogementCategorieEnergetique }) {
+	return (
+		<p
+			className={styles.tag}
+			style={{
+				"--color": `var(--color-${categorie?.toLowerCase()})`,
+				"--text-color": `var(--text-color-${categorie?.toLowerCase()})`,
+			} as React.CSSProperties}>
+			{categorie ?? "Non renseigné"}
+		</p>
 	);
 }
