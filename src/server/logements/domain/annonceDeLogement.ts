@@ -7,14 +7,14 @@ export interface AnnonceDeLogement {
 	dateDeMiseAJour: Date
 	surface: number
 	surfaceMax?: number
-	nombreDePièces: number
-	étage?: number
+	nombreDePieces: number
+	etage?: number
 	prix: number
 	prixHT?: number
 	charge?: number
 	garantie?: number
-	dateDeDisponibilité: Date
-	meublé: boolean
+	dateDeDisponibilite: Date
+	meuble: boolean
 	localisation: AnnonceDeLogementLocalisation
 	description: string
 	devise: string
@@ -29,9 +29,9 @@ export interface AnnonceDeLogement {
 export interface AnnonceDeLogementLocalisation {
     ville?: string
     adresse?: string
-    département?: string
+    departement?: string
     codePostal?: string
-    région?: string
+    region?: string
     pays?: string
 }
 
@@ -69,3 +69,8 @@ export enum AnnonceDeLogementService {
 }
 
 export type AnnonceDeLogementSource = 'immojeune' | 'studapart'
+
+export const NOMS_DES_SOURCES: Record<AnnonceDeLogementSource, string> = {
+	immojeune: "ImmoJeune",
+	studapart: "Studapart",
+};

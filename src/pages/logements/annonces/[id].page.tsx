@@ -21,7 +21,7 @@ export default function ConsulterAnnonceLogementPage({ annonceDeLogement, isFeat
 	const annonce = useMemo(() => ({
     ...annonceDeLogement,
     dateDeMiseAJour: new Date(annonceDeLogement.dateDeMiseAJour),
-    dateDeDisponibilité: new Date(annonceDeLogement.dateDeDisponibilité)
+    dateDeDisponibilite: new Date(annonceDeLogement.dateDeDisponibilite)
   }), [annonceDeLogement]);
 
 	if (!isFeatureActive) return <ErrorUnavailableService />;
@@ -31,7 +31,9 @@ export default function ConsulterAnnonceLogementPage({ annonceDeLogement, isFeat
 			<Head
 				title={`${annonce.titre} | 1jeune1solution`}
 				robots="noindex" />
-			<ConsulterAnnonce annonceDeLogement={annonce} />
+			<main id="contenu">
+				<ConsulterAnnonce annonceDeLogement={annonce} />
+			</main>
 		</>
 	);
 }

@@ -5,6 +5,7 @@ import "@gouvfr/dsfr/dist/utility/icons/icons-finance/icons-finance.min.css";
 import "@gouvfr/dsfr/dist/utility/icons/icons-business/icons-business.min.css";
 import "@gouvfr/dsfr/dist/utility/icons/icons-buildings/icons-buildings.min.css";
 import "@gouvfr/dsfr/dist/utility/icons/icons-device/icons-device.min.css";
+import "@gouvfr/dsfr/dist/utility/icons/icons-media/icons-media.min.css";
 import '~/styles/main.scss';
 import '../client/dsfr/styles.css';
 

@@ -7,15 +7,15 @@ export function mapAnnonceLogement(annonceLogementResponse: StrapiAnnonceDeLogem
 	return {
 		bilanEnergetique: annonceLogementResponse.bilanEnergetique,
 		charge: annonceLogementResponse.charge,
-		dateDeDisponibilité: new Date(annonceLogementResponse.dateDeDisponibilite),
+		dateDeDisponibilite: new Date(annonceLogementResponse.dateDeDisponibilite),
 		dateDeMiseAJour: new Date(annonceLogementResponse.sourceUpdatedAt),
 		description: annonceLogementResponse.description,
 		devise: annonceLogementResponse.devise,
 		garantie: annonceLogementResponse.garantie,
 		imageList: annonceLogementResponse.imagesUrl?.map(mapImage) || [],
 		localisation: annonceLogementResponse.localisation,
-		meublé: annonceLogementResponse.meuble,
-		nombreDePièces: annonceLogementResponse.nombreDePieces,
+		meuble: annonceLogementResponse.meuble,
+		nombreDePieces: annonceLogementResponse.nombreDePieces,
 		prix: annonceLogementResponse.prix,
 		prixHT: annonceLogementResponse.prixHT,
 		servicesInclus: annonceLogementResponse.servicesInclus.map((service) => service.nom),
@@ -27,7 +27,7 @@ export function mapAnnonceLogement(annonceLogementResponse: StrapiAnnonceDeLogem
 		type: annonceLogementResponse.type,
 		typeBien: annonceLogementResponse.typeBien,
 		urlDeCandidature: annonceLogementResponse.url,
-		étage: annonceLogementResponse.etage,
+		etage: annonceLogementResponse.etage,
 	};
 }
 

@@ -1,7 +1,7 @@
 @use "@styles/utilities-deprecated";
 
-.energy .tag {
-  min-width: 12.5rem;
+.tag {
+  max-width: 12.5rem;
   min-height: 2.5rem;
   @extend %bold;
   padding-top: calc(2.5rem/2 - 0.75rem);
@@ -18,32 +18,4 @@
   --color-f: #FF9900;
   --color-g: #FF0000;
   clip-path: polygon(0% 0%, 90% 0%, 100% 50%, 90% 100%, 0% 100%);
-}
-
-.energy {
-  display: grid;
-  gap: 2rem;
-
-  @include utilities-deprecated.media(large) {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.energy figcaption {
-  display: inline;
-  width: fit-content;
-  color: utilities-deprecated.$color-primary;
-  font-size: 1.25rem;
-  line-height: 2rem;
-  margin-bottom: 0.75rem;
-
-  @include utilities-deprecated.media(medium) {
-    font-size: 1.5rem;
-  }
-}
-
-.energy > p {
-  padding-top: 0.75rem;
-  font-size: 0.875rem;
-  max-width: 18.5rem;
 }

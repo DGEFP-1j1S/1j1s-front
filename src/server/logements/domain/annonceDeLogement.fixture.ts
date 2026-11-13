@@ -9,15 +9,15 @@ export function anAnnonceDeLogement(override?: Partial<AnnonceDeLogement>): Anno
 			emissionDeGaz: 'B',
 		},
 		charge: 100,
-		dateDeDisponibilité: new Date('11/11/11'),
+		dateDeDisponibilite: new Date('11/11/11'),
 		dateDeMiseAJour: new Date('1/1/2022'),
 		description: 'appart à saisir',
 		devise: '€',
 		garantie: 50,
 		imageList: [],
 		localisation: { ville: 'paris' },
-		meublé: true,
-		nombreDePièces: 1,
+		meuble: true,
+		nombreDePieces: 1,
 		prix: 1000,
 		prixHT: 980,
 		servicesInclus: [
@@ -35,7 +35,7 @@ export function anAnnonceDeLogement(override?: Partial<AnnonceDeLogement>): Anno
 		type: 'Location',
 		typeBien: 'Appartement',
 		urlDeCandidature: 'https://www.lien-immo-jeune.com',
-		étage: 1,
+		etage: 1,
 		...override,
 	};
 }
