@@ -160,13 +160,6 @@ const config = {
 						target: '_self',
 					},
 					{
-						label: 'Design System',
-						position: 'left',
-						// Avoid optimisation for external application on same domain
-						target: '_parent',
-						to: './storybook',
-					},
-					{
 						position: 'right',
 						type: 'docsVersionDropdown',
 					},

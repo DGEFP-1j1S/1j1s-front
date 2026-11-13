@@ -54,9 +54,6 @@ yarn-error.log*
 # terraform
 .terraform
 
-# storybook
-/storybook-static
-
 # env
 .env.local
 CLAUDE.md

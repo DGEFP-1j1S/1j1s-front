@@ -26,8 +26,8 @@ module "front_app" {
     # est désormais explicite via les workflows GitHub Actions
     # (terraform-recette.yml pour develop et mise-en-production.yml pour main)
     # qui appellent `scalingo integration-link-manual-deploy` après le terraform apply.
-    # Cela évite le blocage silencieux quand un check ancillaire (Docusaurus,
-    # Storybook) tourne au rouge : Scalingo attendait alors tous les checks
+    # Cela évite le blocage silencieux quand un check ancillaire (Docusaurus)
+    # tourne au rouge : Scalingo attendait alors tous les checks
     # verts pour déclencher l'auto-deploy via webhook.
     auto_deploy_enabled = false
   }
