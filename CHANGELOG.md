@@ -1,5 +1,26 @@
 # Changelog
 
+## [3.365.0](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.364.0...v3.365.0) (2026-11-10)
+
+
+### Features
+
+* **app-mobile:** bandeau page d'accueil avec feature flip ([#3787](https://github.com/DGEFP-1j1S/1j1s-front/issues/3787)) ([8dd7f43](https://github.com/DGEFP-1j1S/1j1s-front/commit/8dd7f43604bb0edf49b0481c4eac7fd146351694))
+* **app-mobile:** découvrir l'app mobile depuis le header ([#3795](https://github.com/DGEFP-1j1S/1j1s-front/issues/3795)) ([1b02e42](https://github.com/DGEFP-1j1S/1j1s-front/commit/1b02e42f1e26e5c25a8d0b7f9a807a43721164ec))
+* **app-mobile:** nouvelle page ([#3779](https://github.com/DGEFP-1j1S/1j1s-front/issues/3779)) ([8029b7a](https://github.com/DGEFP-1j1S/1j1s-front/commit/8029b7a828b06227551784c72a0bca384620d725))
+* **instant-search:** bascule recherches indexées côté serveur ([#3777](https://github.com/DGEFP-1j1S/1j1s-front/issues/3777)) ([3195da1](https://github.com/DGEFP-1j1S/1j1s-front/commit/3195da1b6b745ecef1196b3d6d0e055e4830c580))
+* Remplacement image Hero page recherche offres emploi ([#3794](https://github.com/DGEFP-1j1S/1j1s-front/issues/3794)) ([3f90cb7](https://github.com/DGEFP-1j1S/1j1s-front/commit/3f90cb77b738d8a422069dd419c8e4de36bdfb2e))
+
+
+### Bug Fixes
+
+* Autoscroll des accordéons ([#3792](https://github.com/DGEFP-1j1S/1j1s-front/issues/3792)) ([74aca28](https://github.com/DGEFP-1j1S/1j1s-front/commit/74aca28532dadb79f52cdd5fb5595cf4ebc9d8e3))
+* bug recherche arrondissements ([#3785](https://github.com/DGEFP-1j1S/1j1s-front/issues/3785)) ([8333144](https://github.com/DGEFP-1j1S/1j1s-front/commit/83331446423b5ad209f55146feac63fe624cf7d5))
+* Espacement page articles ([#3793](https://github.com/DGEFP-1j1S/1j1s-front/issues/3793)) ([16181fb](https://github.com/DGEFP-1j1S/1j1s-front/commit/16181fb3dae517053d019bba11d419d1c92da908))
+* Recherche par arrondissement ([#3789](https://github.com/DGEFP-1j1S/1j1s-front/issues/3789)) ([e85ffbb](https://github.com/DGEFP-1j1S/1j1s-front/commit/e85ffbb4cf7c10d4600fc1978003da7cc269ea32))
+* review recherche logement ([#3788](https://github.com/DGEFP-1j1S/1j1s-front/issues/3788)) ([6e1e268](https://github.com/DGEFP-1j1S/1j1s-front/commit/6e1e26848efcd6cfe875a3bee0c5b981aec6f33b))
+* tracking goldeen bees ([#3796](https://github.com/DGEFP-1j1S/1j1s-front/issues/3796)) ([03bdfd5](https://github.com/DGEFP-1j1S/1j1s-front/commit/03bdfd55c5732ad88cfbeaeb5894577575161499))
+
 ## [3.364.0](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.363.0...v3.364.0) (2026-11-04)
 
 
