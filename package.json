@@ -20,9 +20,7 @@
     "test:watch": "vitest",
     "e2e:open": "cypress open",
     "e2e": "cypress run --headless",
-    "e2e:headed": "cypress run --headed",
-    "analyze": "ANALYZE=true next build",
-    "analyze:server": "BUNDLE_ANALYZE=server next build"
+    "e2e:headed": "cypress run --headed"
   },
   "dependencies": {
     "@gouvfr/dsfr": "^1.15.2",
@@ -44,13 +42,11 @@
     "pino": "^10.3.1",
     "pino-sentry": "^0.15.0",
     "react": "^18.3.1",
-    "react-autosuggest": "^10.1.0",
     "react-dom": "^18.3.1",
     "reflect-metadata": "^0.2.2",
     "sharp": "^0.35.4"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^15.5.26",
     "@testing-library/cypress": "^10.1.0",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.2",
@@ -59,9 +55,7 @@
     "@types/markdown-it": "^14.1.2",
     "@types/node": "^24.10.13",
     "@types/react": "^18.3.28",
-    "@types/react-autosuggest": "^10.1.11",
     "@types/react-dom": "^18.3.7",
-    "@types/uuid": "^10.0.0",
     "@vitejs/plugin-react-swc": "^4.2.3",
     "@vitest/eslint-plugin": "^1.6.27",
     "cypress": "^16.1.0",
