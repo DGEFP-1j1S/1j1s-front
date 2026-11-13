@@ -6,7 +6,7 @@ interface Entreprise {
   logo: string
   lien: string
   nom: string
-  description: string
+  description: string | React.ReactElement
   tagline?: string
 }
 
@@ -19,7 +19,7 @@ export interface Phases {
 export interface EntreprendreRéseauProps {
   entreprise: Entreprise
   phases: Phases
-  publicConcerné?: string
+  publicConcerné?: string | React.ReactElement
 }
 
 function EntreprendreReseau(props: EntreprendreRéseauProps) {
@@ -164,7 +164,7 @@ const RÉSEAU_ACCOMPAGNEMENT: EntreprendreRéseauProps[] = [{
 	publicConcerné: 'Tous les jeunes à partir de 18 ans souhaitant créer leur entreprise.',
 }, {
 	entreprise: {
-		description: 'Les Groupements de Créateurs proposent un accompagnement à l‘Émergence, pour passer de l‘idée au projet. Certains Groupements de Créateurs proposent également la Formation DUCA-Entrepreneur TPE, accessible sans le Bac, pour acquérir les compétences nécessaires à la gestion d‘une activité et élaborer son Business Plan. Le réseau regroupe une quarantaine de Groupements de Créateurs portés par des structures d‘accompagnement socio-professionnel (mission locale, maison de l‘emploi, PLIE, etc.) en partenariat avec des universités et des organismes d‘accompagnement à la création d‘activité.',
+		description: <>Les Groupements de Créateurs proposent un accompagnement à l‘Émergence, pour passer de l‘idée au projet. Certains Groupements de Créateurs proposent également la Formation DUCA-Entrepreneur TPE, accessible sans le Bac, pour acquérir les compétences nécessaires à la gestion d‘une activité et élaborer son <span lang="en">Business Plan</span>. Le réseau regroupe une quarantaine de Groupements de Créateurs portés par des structures d‘accompagnement socio-professionnel (mission locale, maison de l‘emploi, PLIE, etc.) en partenariat avec des universités et des organismes d‘accompagnement à la création d‘activité.</>,
 		lien: 'https://groupement-de-createurs.fr/',
 		logo: '/images/entreprendre/groupement_createurs.png',
 		nom: 'Les Groupements de créateurs',
@@ -260,7 +260,7 @@ export const RÉSEAU_FINANCEMENT: EntreprendreRéseauProps[] = [{
 	publicConcerné: 'Public concerné : Tout entrepreneur, créateur ou repreneur à fort potentiel de création d‘emploi (min. 5 emplois en 3 ans ; 5 à 10 emplois à 5 ans).',
 }, {
 	entreprise: {
-		description: 'Le Village by CA est un réseau d‘accélérateurs de start-up qui s‘appuie sur des écosystèmes d‘innovation pour accompagner la transformation des entreprises en région. Porté par le Crédit Agricole et un panel de partenaires depuis 2014, le Village by CA, implanté au cœur des territoires, offre dans un cadre d‘open innovation, des lieux d‘échanges, rencontres business et parcours de développement répondant aux besoins des entrepreneurs. Egalement présent au Luxembourg et en Italie avec de nombreux relais à l‘international, le Village by CA est aujourd‘hui le premier accélérateur d‘innovation.',
+		description: <>Le Village by CA est un réseau d‘accélérateurs de start-up qui s‘appuie sur des écosystèmes d‘innovation pour accompagner la transformation des entreprises en région. Porté par le Crédit Agricole et un panel de partenaires depuis 2014, le Village by CA, implanté au cœur des territoires, offre dans un cadre d’<span lang="en">open innovation</span>, des lieux d‘échanges, rencontres business et parcours de développement répondant aux besoins des entrepreneurs. Egalement présent au Luxembourg et en Italie avec de nombreux relais à l‘international, le Village by CA est aujourd‘hui le premier accélérateur d‘innovation.</>,
 		lien: 'https://levillagebyca.com/?utm_source=1jeune1solution.gouv&utm_medium=site&utm_campaign=accompagnement%20jeunes',
 		logo: '/images/entreprendre/le_village.png',
 		nom: 'Le Village by CA',
@@ -270,7 +270,7 @@ export const RÉSEAU_FINANCEMENT: EntreprendreRéseauProps[] = [{
 		postCréation: false,
 		test: true,
 	},
-	publicConcerné: 'Public concerné : Start-up en phase de croissance (scale-up).',
+	publicConcerné: <>Public concerné : Start-up en phase de croissance (<span lang="en">scale up</span>).</>,
 }];
 
 export const RÉSEAU_ÉCONOMIE_SOCIALE_ET_SOLIDAIRE: EntreprendreRéseauProps[] = [{

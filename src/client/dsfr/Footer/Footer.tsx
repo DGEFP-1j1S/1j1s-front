@@ -74,7 +74,7 @@ export function Footer() {
 									{socialLinks.map((link) => (
 										<li key={link.id}>
 											<Link
-												title={`Suivez-nous sur ${link.label}`}
+												title={`Suivez-nous sur ${link.label} - nouvelle fenêtre`}
 												id={link.id}
 												href={link.url}
 												target="_blank"
