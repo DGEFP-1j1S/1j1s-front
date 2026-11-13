@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.366.0](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.365.0...v3.366.0) (2026-11-13)
+
+
+### Features
+
+* migration dsfr page logement detail ([#3791](https://github.com/DGEFP-1j1S/1j1s-front/issues/3791)) ([c7cc3d0](https://github.com/DGEFP-1j1S/1j1s-front/commit/c7cc3d0c11e3c7543649d9325ae157301ddc1b82))
+* suppression tag goldn bees ([#3800](https://github.com/DGEFP-1j1S/1j1s-front/issues/3800)) ([c901be3](https://github.com/DGEFP-1j1S/1j1s-front/commit/c901be3072b9969a7c4a0f25148039fc1ec789c1))
+
 ## [3.365.0](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.364.0...v3.365.0) (2026-11-10)
 
 
