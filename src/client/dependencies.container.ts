@@ -30,7 +30,6 @@ import { LocalisationService } from '~/client/services/localisation/localisation
 import { LoggerService } from '~/client/services/logger.service';
 import { AdformMarketingService } from '~/client/services/marketing/adform/adform.marketing.service';
 import { FloodlightMarketingService } from "~/client/services/marketing/floodlight/floodlight.marketing.service";
-import { GoldenBeesMarketingService } from "~/client/services/marketing/goldenbees/goldenbees.marketing.service";
 import { SeedtagMarketingService } from "~/client/services/marketing/seedtag/seedtag.marketing.service";
 import { StackAdaptMarketingService } from "~/client/services/marketing/stackadapt/stackadapt.marketing.service";
 import { BffAlternanceMetierService } from '~/client/services/metiers/bff.alternance.metier.service';
@@ -120,7 +119,6 @@ export default function dependenciesContainer(sessionId?: string): Dependencies 
 		new SeedtagMarketingService(cookiesService);
 		new FloodlightMarketingService(cookiesService);
 		new StackAdaptMarketingService(cookiesService);
-		new GoldenBeesMarketingService(cookiesService);
 	}
 
 	const evenementAnalyticsService: EvenementAnalyticsService = process.env.NEXT_PUBLIC_ANALYTICS_MATOMO_FEATURE === "1"
