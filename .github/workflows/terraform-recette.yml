@@ -31,7 +31,7 @@ jobs:
       url: https://recette.1jeune1solution.gouv.fr
     steps:
       - name: Configurer la CLI Scalingo
-        uses: scalingo-community/setup-scalingo@v0.1.1
+        uses: scalingo-community/setup-scalingo@v0.1.2
         with:
           version: 1.34.0
           api_token: ${{ secrets.SCALINGO_API_TOKEN }}
