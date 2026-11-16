@@ -1,18 +1,16 @@
-import { GetServerSidePropsResult } from 'next';
-import React, { useEffect, useRef, useState } from 'react';
+import { GetServerSidePropsResult } from "next";
+import React from "react";
 
-import { Head } from '~/client/components/head/Head';
-import { Container } from '~/client/components/layouts/Container/Container';
-import useAnalytics from '~/client/hooks/useAnalytics';
+import { Head } from "~/client/components/head/Head";
+import { HeroWithButtonLink } from "~/client/components/ui/Hero/HeroWithButtonLink";
+import useAnalytics from "~/client/hooks/useAnalytics";
 
-import analyticsPageConfig from './index.analytics';
-import styles from './index.module.scss';
+import analyticsPageConfig from "./index.analytics";
 
-const URL_IFRAME_1JEUNE_1PERMIS = 'https://mes-aides.francetravail.fr/export/1-jeune-1-permis';
-const DOMAINE_1JEUNE_1PERMIS = 'https://mes-aides.francetravail.fr';
+const URL_1JEUNE_1PERMIS = "https://mes-aides.francetravail.fr/export/1-jeune-1-permis";
 
 export async function getStaticProps(): Promise<GetServerSidePropsResult<Record<never, never>>> {
-	const isFeatureActive = process.env.NEXT_PUBLIC_1JEUNE1PERMIS_FEATURE === '1';
+	const isFeatureActive = process.env.NEXT_PUBLIC_1JEUNE1PERMIS_FEATURE === "1";
 
 	if (!isFeatureActive) return { notFound: true };
 
@@ -20,92 +18,33 @@ export async function getStaticProps(): Promise<GetServerSidePropsResult<Record<
 		props: {},
 	};
 }
-const SIZE_REQUEST_INTERVAL_IN_MS = 500;
-const EXCESS_TOLERANCE_IN_PIXELS = 2;
-const MAX_HEIGHT_IN_PIXELS = 4000;
-interface MessageEventData { type: string; height: number }
-
-function heightFromMessage(event: MessageEvent<string>): number | undefined {
-	let data: MessageEventData;
-
-	if (event.origin !== DOMAINE_1JEUNE_1PERMIS) return undefined;
-
-	try {
-		data = JSON.parse(event.data);
-	} catch {
-		return undefined;
-	}
-
-	if (typeof data !== 'object' || data.type !== 'resize-iframe') return undefined;
-
-	return data.height;
-}
-
-/* NOTE (JUFE - 2026-10-07): le contenu distant est dans un conteneur en `min-height: 100vh` et il communique
-*  `document.body.offsetHeight + 50`. La hauteur reçue vaut donc `max(hauteur du contenu, hauteur de l'iframe) + une
-*  constante`, constante qui dépend de leur mise en page (142px mesurés en desktop, 224px en mobile).
-*  Tant que l'iframe est plus haute que son contenu, la hauteur reçue n'est que l'écho de la nôtre : l'appliquer fait
-*  grandir l'iframe à l'infini, un cran par aller-retour. */
-function isEchoOfRenderedHeight(excess: number, previousExcess: number | undefined) {
-	if (previousExcess === undefined) return false;
-
-	return excess <= previousExcess + EXCESS_TOLERANCE_IN_PIXELS;
-}
 
 export default function UnJeuneUnPermis() {
-
 	useAnalytics(analyticsPageConfig);
-	const [iframeHeight, setIframeHeight] = useState<number | undefined>(undefined);
-	const iRef = useRef<HTMLIFrameElement>(null);
-	const previousExcess = useRef<number | undefined>(undefined);
-
-	useEffect(() => {
-		const onMessage = (event: MessageEvent<string>) => {
-			const receivedHeight = heightFromMessage(event);
-
-			if (receivedHeight === undefined || iRef.current === null) return;
-
-			const excess = receivedHeight - iRef.current.offsetHeight;
-			const isEcho = isEchoOfRenderedHeight(excess, previousExcess.current);
-			previousExcess.current = excess;
-
-			if (isEcho) return;
-
-			setIframeHeight(Math.min(receivedHeight, MAX_HEIGHT_IN_PIXELS));
-		};
-
-		window.addEventListener(
-			'message',
-			onMessage,
-		);
-
-		return () => {
-			window.removeEventListener('message', onMessage);
-		};
-	}, []);
-
-	useEffect(() => {
-		const interval = setInterval(() => {
-			// Polling pour déclencher l'envoi de la taille de l'iframe
-			iRef.current?.contentWindow?.postMessage('size-request', '*');
-		}, SIZE_REQUEST_INTERVAL_IN_MS);
-		return () => clearInterval(interval);
-	}, []);
 
 	return (
 		<main id="contenu">
 			<Head
-				title={'1jeune1permis | 1jeune1solution'}
+				title="1jeune1permis | 1jeune1solution"
 				robots="index,follow" />
-			<Container>
-				<iframe className={styles.iframe}
-					title="Informations sur le dispositif 1 jeune 1 permis"
-					src={URL_IFRAME_1JEUNE_1PERMIS}
-					style={iframeHeight ? { '--1jeune1permis-iframe-height' : `${iframeHeight}px` } as React.CSSProperties : {}}
-					ref={iRef} />
-			</Container>
+			<HeroWithButtonLink
+				title="Aides au permis de conduire"
+				content={
+					<strong>
+						{"Découvrez 1 jeune 1 permis, le service officiel en partenariat avec Mes aides France Travail pour trouver chaque aide au permis de conduire adaptée à votre profil."}
+					</strong>
+				}
+				description={
+					<>
+						{"1jeune1permis facilite l'accès aux aides financières pour passer le permis de conduire (permis B). Le service permet d'identifier les dispositifs disponibles selon la localisation. Il rassemble les informations essentielles pour comprendre les démarches. Des conseils pratiques accompagnent la préparation du code et de la conduite."}
+						<br />
+						{"Une solution simple pour faciliter la mobilité et l'accès à l'emploi."}
+					</>
+				}
+				buttonLabel="Découvrir les aides au permis"
+				buttonHref={URL_1JEUNE_1PERMIS}
+				imgSrc="/images/1jeune1permis-aides.webp"
+				imgContain />
 		</main>
 	);
 }
-
-
