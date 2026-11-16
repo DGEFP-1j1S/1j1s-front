@@ -6,6 +6,12 @@ function isAnchor(url: string | number | null): boolean {
 	return url.startsWith('#');
 }
 
+const PUCE_EN_DEBUT_DE_LIGNE = /^[ \t]*●[ \t]*/gm;
+
+function convertirPucesEnListe(markdown: string): string {
+	return markdown.replace(PUCE_EN_DEBUT_DE_LIGNE, '- ');
+}
+
 export function getHtmlFromMd(markdown: string): string {
 	const md = markdownit({
 		html: true,
@@ -36,5 +42,5 @@ export function getHtmlFromMd(markdown: string): string {
 		return self.renderToken(tokens, idx, options);
 	};
 
-	return md.render(markdown);
+	return md.render(convertirPucesEnListe(markdown));
 }

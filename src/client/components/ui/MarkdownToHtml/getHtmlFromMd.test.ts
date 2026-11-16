@@ -59,6 +59,26 @@ describe('getHtmlFromMd', () => {
 		expect(result).toBe("<h1 id=\"titre-principal\">Titre principal</h1>\n<h2 id=\"sous-titre\">Sous-titre</h2>\n");
 	});
 
+	describe('quand des lignes commencent par une puce ●', () => {
+		it('les transforme en liste', () => {
+			const markdown = '### Technologies utilisées\n●\tHTML 5\n● CSS\n●Javascript';
+			const result = getHtmlFromMd(markdown);
+			expect(result).toBe('<h3 id="technologies-utilis%C3%A9es">Technologies utilisées</h3>\n<ul>\n<li>HTML 5</li>\n<li>CSS</li>\n<li>Javascript</li>\n</ul>\n');
+		});
+
+		it('les transforme en liste même juste après un paragraphe', () => {
+			const markdown = 'Les outils suivants :\n●\tNVDA\n●\tJAWS';
+			const result = getHtmlFromMd(markdown);
+			expect(result).toBe('<p>Les outils suivants :</p>\n<ul>\n<li>NVDA</li>\n<li>JAWS</li>\n</ul>\n');
+		});
+
+		it('ne touche pas aux puces au milieu d’une ligne', () => {
+			const markdown = 'Paris ● Lyon';
+			const result = getHtmlFromMd(markdown);
+			expect(result).toBe('<p>Paris ● Lyon</p>\n');
+		});
+	});
+
 	it('accepte le html', () => {
 		const markdown = '# 1. Avantages du travail\n <p>je suis le paragraphe</p>';
 		const result = getHtmlFromMd(markdown);
