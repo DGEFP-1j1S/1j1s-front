@@ -3,8 +3,6 @@ import React, { useMemo } from 'react';
 import { TimeRange } from '~/client/components/ui/TimeRange/TimeRange';
 import { EtablissementAccompagnementHoraire } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 
-import styles from './HorairesResultatRechercherAccompagnement.module.scss';
-
 interface HorairesResultatRechercherAccompagnementProps {
   horaire: EtablissementAccompagnementHoraire
 }
@@ -36,8 +34,7 @@ export function HorairesResultatRechercherAccompagnement(props: HorairesResultat
 
 	return (
 		<>
-			<span className={styles.horaireJour}>{jour}</span>&nbsp;:
-      &nbsp;<span className={styles.horaireHeure}>{heuresOuverture}</span>
+			<span>{jour}</span>&nbsp;:&nbsp;<span>{heuresOuverture}&nbsp;;&nbsp;</span>
 		</>
 	);
 }
