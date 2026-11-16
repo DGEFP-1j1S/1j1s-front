@@ -379,7 +379,7 @@ describe('RechercherMission', () => {
 
 			renderRechercherMission(missionEngagementServiceMock, EngagementCategory.SERVICE_CIVIQUE);
 
-			await waitFor(() => expect(document.title).toBe('42 missions de service civique pour Culture et Loisirs, Paris | 1jeune1solution'));
+			await waitFor(() => expect(document.title).toBe('42 missions de service civique pour Culture et Loisirs, Paris (page 1/3) | 1jeune1solution'));
 		});
 
 		it('indique qu’il n’y a aucun résultat', async () => {

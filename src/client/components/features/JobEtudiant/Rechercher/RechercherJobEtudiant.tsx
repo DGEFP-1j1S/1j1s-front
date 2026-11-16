@@ -54,6 +54,7 @@ export function RechercherJobÉtudiant(props: RechercherJobEtudiantProps) {
 		erreur: erreurRecherche,
 		intitules: INTITULES_RESULTATS,
 		nombreResultats: isEtatInitial ? undefined : nombreRésultats,
+		pagination: { nombrePagesMax: MAX_PAGE_ALLOWED_BY_FRANCE_TRAVAIL, nombreResultatsParPage: NOMBRE_RÉSULTATS_OFFRE_PAR_PAGE, pageCourante: offreEmploiQuery.page },
 		titreParDefaut: TITRE_PAR_DEFAUT,
 	});
 

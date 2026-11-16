@@ -60,6 +60,7 @@ export default function RechercherEmploisEurope() {
 					criteres: [emploiEuropeQuery.motCle, emploiEuropeQuery.libellePays],
 					intitules: INTITULES_RESULTATS,
 					nombreResultats: response.result.nombreResultats,
+					pagination: { nombrePagesMax: EMPLOIS_EUROPE_LAST_VISIBLE_PAGE_ALLOWED, nombreResultatsParPage: EMPLOIS_EUROPE_ITEMS_PER_PAGE, pageCourante: emploiEuropeQuery.page },
 					titreParDefaut: TITRE_PAR_DEFAUT,
 				}));
 				setEmploiEuropeList(response.result.offreList);

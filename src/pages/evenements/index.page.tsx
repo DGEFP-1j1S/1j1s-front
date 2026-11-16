@@ -18,6 +18,7 @@ import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { changeStatusCodeWhenErrorOcurred } from '~/server/errors/handleGetServerSidePropsError';
 import { FiltreRechercheEvenement, ResultatsRechercheEvenement } from '~/server/evenements/domain/rechercheEvenement';
 import { dependencies } from '~/server/start';
+import { NOMBRE_RESULTATS_EVENEMENT_PAR_PAGE } from '~/server/evenements/domain/rechercheEvenement';
 
 interface PageEvenementsProps {
 	erreurRecherche?: Erreur
@@ -39,6 +40,7 @@ export default function PageEvenements(props: PageEvenementsProps) {
 		erreur: props.erreurRecherche,
 		intitules: INTITULES_RESULTATS,
 		nombreResultats: empty({ ...query, page: undefined }) ? undefined : props.resultats?.nombreDeResultats,
+		pagination: { nombreResultatsParPage: NOMBRE_RESULTATS_EVENEMENT_PAR_PAGE, pageCourante: query.page },
 		titreParDefaut: 'Rechercher un évènement',
 	});
 

@@ -50,6 +50,7 @@ export function RechercherJobEte(props: RechercherJobEteProps) {
 		erreur: erreurRecherche,
 		intitules: INTITULES_RESULTATS,
 		nombreResultats: isEtatInitial ? undefined : nombreResultats,
+		pagination: { nombrePagesMax: MAX_PAGE_ALLOWED_BY_FRANCE_TRAVAIL, nombreResultatsParPage: NOMBRE_RÉSULTATS_OFFRE_PAR_PAGE, pageCourante: offreEmploiQuery.page },
 		titreParDefaut: TITRE_PAR_DEFAUT,
 	});
 

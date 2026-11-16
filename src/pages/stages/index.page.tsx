@@ -17,6 +17,7 @@ import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { changeStatusCodeWhenErrorOcurred } from '~/server/errors/handleGetServerSidePropsError';
 import { FiltreRechercheOffreStage, ResultatsRechercheOffreStage } from '~/server/stages/domain/rechercheOffreStage';
 import { dependencies } from '~/server/start';
+import { NOMBRE_RESULTATS_OFFRE_STAGE_PAR_PAGE } from '~/server/stages/domain/rechercheOffreStage';
 
 interface RechercherOffreStagePageProps {
 	erreurRecherche?: Erreur
@@ -33,6 +34,7 @@ export default function RechercherOffreStagePage(props: RechercherOffreStagePage
 		erreur: props.erreurRecherche,
 		intitules: INTITULES_RESULTATS,
 		nombreResultats: empty({ ...query, page: undefined }) ? undefined : props.resultats?.nombreDeResultats,
+		pagination: { nombreResultatsParPage: NOMBRE_RESULTATS_OFFRE_STAGE_PAR_PAGE, pageCourante: query.page },
 		titreParDefaut: 'Rechercher un stage',
 	});
 

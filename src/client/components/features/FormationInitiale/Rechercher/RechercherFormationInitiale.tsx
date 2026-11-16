@@ -60,6 +60,7 @@ export function RechercherFormationInitiale() {
 					criteres: [formationInitialeQuery.motCle],
 					intitules: INTITULES_RESULTATS,
 					nombreResultats: response.result.nombreDeResultat,
+					pagination: { nombreResultatsParPage: NOMBRE_RÉSULTATS_FORMATIONS_INITIALES_PAR_PAGE, pageCourante: formationInitialeQuery.page },
 					titreParDefaut: TITRE_PAR_DEFAUT,
 				}));
 				const formationInitiales = response.result.formationsInitiales;

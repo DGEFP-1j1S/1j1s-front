@@ -91,6 +91,7 @@ export function RechercherMission(props: RechercherMissionProps) {
 					criteres: [domaine, missionEngagementQuery.ville],
 					intitules: INTITULES_RESULTATS[category],
 					nombreResultats: response.result.nombreRésultats,
+					pagination: { nombreResultatsParPage: NOMBRE_RÉSULTATS_MISSION_PAR_PAGE, pageCourante: missionEngagementQuery.page },
 					titreParDefaut: TITRE_PAR_DEFAUT[category],
 				}));
 				setMissionList(response.result.résultats);

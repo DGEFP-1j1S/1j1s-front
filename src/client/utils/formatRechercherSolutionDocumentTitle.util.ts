@@ -12,19 +12,42 @@ export type IntitulesResultats = {
 	aucun: string
 };
 
+type Pagination = {
+	pageCourante?: number | string
+	nombreResultatsParPage: number
+	nombrePagesMax?: number
+};
+
 type RechercheDocumentTitle = {
 	titreParDefaut: string
 	intitules: IntitulesResultats
 	nombreResultats?: number
 	criteres?: Array<string | undefined>
+	pagination?: Pagination
 	erreur?: Erreur
 };
+
+function formatPagination(nombreResultats: number, pagination?: Pagination): string {
+	if (!pagination) {
+		return '';
+	}
+	const nombreDePages = Math.min(
+		Math.ceil(nombreResultats / pagination.nombreResultatsParPage),
+		pagination.nombrePagesMax ?? Infinity,
+	);
+	if (nombreDePages <= 1) {
+		return '';
+	}
+	const pageCourante = Number(pagination.pageCourante) || 1;
+	return ` (page ${pageCourante}/${nombreDePages})`;
+}
 
 export function formatRechercherSolutionDocumentTitle({
 	titreParDefaut,
 	intitules,
 	nombreResultats,
 	criteres = [],
+	pagination,
 	erreur,
 }: RechercheDocumentTitle): string {
 	if (erreur === ErreurMetier.DEMANDE_INCORRECTE) {
@@ -43,5 +66,5 @@ export function formatRechercherSolutionDocumentTitle({
 	const criteresRenseignes = criteres.filter((critere) => critere);
 	const pourCriteres = criteresRenseignes.length > 0 ? ` pour ${criteresRenseignes.join(', ')}` : '';
 
-	return `${resultats}${pourCriteres}${NOM_DU_SITE}`;
+	return `${resultats}${pourCriteres}${formatPagination(nombreResultats, pagination)}${NOM_DU_SITE}`;
 }

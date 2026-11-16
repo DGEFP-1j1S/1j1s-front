@@ -105,7 +105,13 @@ describe('<AnnoncesPage />', () => {
 		it('reprend le nombre de résultats et la ville de la recherche', () => {
 			afficherLaPage({ typesBien: 'appartement', ville: 'Lyon' }, { resultats: { ...desResultats(), nombreDeResultats: 25 } });
 
-			expect(document.title).toBe('25 annonces de logement pour Lyon | 1jeune1solution');
+			expect(document.title).toBe('25 annonces de logement pour Lyon (page 1/3) | 1jeune1solution');
+		});
+
+		it('indique la page courante quand il y a plusieurs pages', () => {
+			afficherLaPage({ page: '2', ville: 'toulouse' }, { resultats: { ...desResultats(), nombreDeResultats: 1416 } });
+
+			expect(document.title).toBe('1 416 annonces de logement pour toulouse (page 2/158) | 1jeune1solution');
 		});
 
 		it('indique qu‘il n‘y a aucun résultat', () => {

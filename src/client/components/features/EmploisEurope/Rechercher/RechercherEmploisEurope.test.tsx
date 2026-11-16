@@ -955,7 +955,7 @@ describe('RechercherEmploisEurope', () => {
 
 			renderRechercherEmploisEurope(emploiEuropeServiceMock);
 
-			await waitFor(() => expect(document.title).toBe('1 500 offres d’emploi en Europe pour boulanger, Allemagne | 1jeune1solution'));
+			await waitFor(() => expect(document.title).toBe('1 500 offres d’emploi en Europe pour boulanger, Allemagne (page 1/100) | 1jeune1solution'));
 		});
 
 		it('indique qu’il n’y a aucun résultat', async () => {

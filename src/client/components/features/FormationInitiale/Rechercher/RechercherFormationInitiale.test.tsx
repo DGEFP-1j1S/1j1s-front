@@ -339,7 +339,7 @@ describe('RechercherFormationInitiale', () => {
 				<RechercherFormationInitiale />
 			</DependenciesProvider>);
 
-			await waitFor(() => expect(document.title).toBe('150 formations initiales pour boulanger | 1jeune1solution'));
+			await waitFor(() => expect(document.title).toBe('150 formations initiales pour boulanger (page 1/10) | 1jeune1solution'));
 		});
 
 		it('indique qu’il n’y a aucun résultat', async () => {

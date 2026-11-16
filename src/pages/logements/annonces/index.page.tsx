@@ -21,6 +21,7 @@ import {
 	ResultatsRechercheAnnonceDeLogement,
 } from '~/server/logements/domain/rechercheAnnonceDeLogement';
 import { dependencies } from '~/server/start';
+import { NOMBRE_RESULTATS_ANNONCE_DE_LOGEMENT_PAR_PAGE } from '~/server/logements/domain/rechercheAnnonceDeLogement';
 
 interface AnnoncesPageProps {
 	erreurRecherche?: Erreur
@@ -41,6 +42,7 @@ export default function AnnoncesPage(props: AnnoncesPageProps) {
 		erreur: props.erreurRecherche,
 		intitules: INTITULES_RESULTATS,
 		nombreResultats: empty({ ...query, page: undefined }) ? undefined : props.resultats?.nombreDeResultats,
+		pagination: { nombreResultatsParPage: NOMBRE_RESULTATS_ANNONCE_DE_LOGEMENT_PAR_PAGE, pageCourante: query.page },
 		titreParDefaut: 'Rechercher un logement',
 	});
 
