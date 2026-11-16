@@ -95,6 +95,12 @@ hr {
   flex-grow: 1;
 }
 
+.flex--column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .justify--center {
   justify-content: center;
 }

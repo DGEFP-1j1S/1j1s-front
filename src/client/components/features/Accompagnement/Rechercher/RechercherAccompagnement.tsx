@@ -167,7 +167,7 @@ function ListeEtablissementAccompagnement({ resultatList: resultatList }: ListeR
 	return (
 		<ul className="fr-grid-row fr-grid-row--gutters" aria-label="Établissements d’accompagnement">
 			{resultatList.map((etablissementAccompagnement: EtablissementAccompagnement) => (
-				<li key={etablissementAccompagnement.id} className="fr-col-12">
+				<li key={etablissementAccompagnement.id} className="fr-col-12 fr-col-lg-6">
 					<ResultatRechercherAccompagnement etablissement={etablissementAccompagnement} />
 				</li>
 			))}
