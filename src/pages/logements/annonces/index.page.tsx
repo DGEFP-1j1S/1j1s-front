@@ -6,6 +6,9 @@ import { RechercherAnnonceDeLogement } from '~/client/components/features/Logeme
 import { Head } from '~/client/components/head/Head';
 import ErrorUnavailableService from '~/client/components/layouts/Error/ErrorUnavailableService';
 import useAnalytics from '~/client/hooks/useAnalytics';
+import { useAnnonceDeLogementQuery } from '~/client/hooks/useAnnonceDeLogementQuery';
+import empty from '~/client/utils/empty';
+import { formatRechercherSolutionDocumentTitle } from '~/client/utils/formatRechercherSolutionDocumentTitle.util';
 import { transformQueryToArray } from '~/pages/api/utils/joi/joi.util';
 import { queryToValeurs } from '~/pages/api/utils/queryToArray.util';
 import analytics from '~/pages/logements/annonces/index.analytics';
@@ -28,14 +31,24 @@ function isRechercheLogementActive() {
 	return process.env.NEXT_PUBLIC_LOGEMENT_FEATURE === '1';
 }
 
+const INTITULES_RESULTATS = { aucun: 'Aucune annonce de logement', pluriel: 'annonces de logement', singulier: 'annonce de logement' };
+
 export default function AnnoncesPage(props: AnnoncesPageProps) {
 	useAnalytics(analytics);
+	const query = useAnnonceDeLogementQuery();
+	const title = formatRechercherSolutionDocumentTitle({
+		criteres: [query.ville],
+		erreur: props.erreurRecherche,
+		intitules: INTITULES_RESULTATS,
+		nombreResultats: empty({ ...query, page: undefined }) ? undefined : props.resultats?.nombreDeResultats,
+		titreParDefaut: 'Rechercher un logement',
+	});
 
 	if (!isRechercheLogementActive()) return <ErrorUnavailableService />;
 	return (
 		<>
 			<Head
-				title="Rechercher un logement | 1jeune1solution"
+				title={title}
 				description="Logement étudiant et location jeune actif partout en France"
 				robots="index,follow" />
 			<RechercherAnnonceDeLogement resultats={props.resultats} erreurRecherche={props.erreurRecherche} />

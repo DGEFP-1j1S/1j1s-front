@@ -25,7 +25,12 @@ import {
 } from '~/server/offres/domain/offre';
 import { Banner } from '~/client/components/ui/Hero/Hero';
 
-const PREFIX_TITRE_PAGE = 'Rechercher un job d’été';
+const TITRE_PAR_DEFAUT = 'Rechercher un job d’été';
+const INTITULES_RESULTATS = {
+	aucun: 'Aucune offre de job d’été',
+	pluriel: 'offres de jobs d’été',
+	singulier: 'offre de job d’été',
+};
 
 interface RechercherJobEteProps {
 	erreurRecherche?: Erreur
@@ -35,10 +40,18 @@ interface RechercherJobEteProps {
 export function RechercherJobEte(props: RechercherJobEteProps) {
 	const offreEmploiQuery = useOffreQuery();
 
-	const title = formatRechercherSolutionDocumentTitle(`${PREFIX_TITRE_PAGE}${props.resultats?.nombreRésultats === 0 ? ' - Aucun résultat' : ''}`);
 	const jobEteList = props.resultats?.résultats || [];
 	const nombreResultats = props.resultats?.nombreRésultats || 0;
 	const erreurRecherche = props.erreurRecherche;
+	const isEtatInitial = empty(offreEmploiQuery);
+
+	const title = formatRechercherSolutionDocumentTitle({
+		criteres: [offreEmploiQuery.motCle, offreEmploiQuery.nomLocalisation],
+		erreur: erreurRecherche,
+		intitules: INTITULES_RESULTATS,
+		nombreResultats: isEtatInitial ? undefined : nombreResultats,
+		titreParDefaut: TITRE_PAR_DEFAUT,
+	});
 
 	const messageResultatRecherche: string = useMemo(() => {
 		const messageResultatRechercheSplit: string[] = [`${nombreResultats}`];
@@ -82,7 +95,7 @@ export function RechercherJobEte(props: RechercherJobEteProps) {
 					etiquettesRecherche={etiquettesRecherche}
 					formulaireRecherche={<FormulaireRechercheJobEte />}
 					isChargement={false}
-					isEtatInitial={empty(offreEmploiQuery)}
+					isEtatInitial={isEtatInitial}
 					messageResultatRecherche={messageResultatRecherche}
 					nombreTotalSolutions={nombreResultats}
 					paginationOffset={NOMBRE_RÉSULTATS_OFFRE_PAR_PAGE}

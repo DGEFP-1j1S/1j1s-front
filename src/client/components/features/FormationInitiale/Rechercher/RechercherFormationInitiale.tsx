@@ -26,13 +26,21 @@ import { MonCompteFormationPartner } from '~/client/components/features/ServiceC
 import { ParcourSupPartner } from '~/client/components/features/ServiceCard/ParcourSupPartner';
 import { PixPartner } from '~/client/components/features/ServiceCard/PixPartner';
 
-const PREFIX_TITRE_PAGE = 'Rechercher une formation initiale';
+const TITRE_PAR_DEFAUT = 'Rechercher une formation initiale';
+const INTITULES_RESULTATS = {
+	aucun: 'Aucune formation initiale',
+	pluriel: 'formations initiales',
+	singulier: 'formation initiale',
+};
 
 export function RechercherFormationInitiale() {
 	const router = useRouter();
 
 	const formationInitialeService = useDependency<FormationInitialeService>('formationInitialeService');
-	const [title, setTitle] = useState<string>(`${PREFIX_TITRE_PAGE} | 1jeune1solution`);
+	const [title, setTitle] = useState<string>(formatRechercherSolutionDocumentTitle({
+		intitules: INTITULES_RESULTATS,
+		titreParDefaut: TITRE_PAR_DEFAUT,
+	}));
 	const [erreurRecherche, setErreurRecherche] = useState<Erreur | undefined>(undefined);
 	const [isLoading, setIsLoading] = useState(false);
 
@@ -48,12 +56,21 @@ export function RechercherFormationInitiale() {
 		try {
 			const response = await formationInitialeService.rechercherFormationInitiale(formationInitialeQuery);
 			if (isSuccess(response)) {
-				setTitle(formatRechercherSolutionDocumentTitle(`${PREFIX_TITRE_PAGE}${response.result.nombreDeResultat === 0 ? ' - Aucun résultat' : ''}`));
+				setTitle(formatRechercherSolutionDocumentTitle({
+					criteres: [formationInitialeQuery.motCle],
+					intitules: INTITULES_RESULTATS,
+					nombreResultats: response.result.nombreDeResultat,
+					titreParDefaut: TITRE_PAR_DEFAUT,
+				}));
 				const formationInitiales = response.result.formationsInitiales;
 				setResultatList(formationInitiales);
 				setNombreDeResultat(response.result.nombreDeResultat);
 			} else {
-				setTitle(formatRechercherSolutionDocumentTitle(PREFIX_TITRE_PAGE, response.errorType));
+				setTitle(formatRechercherSolutionDocumentTitle({
+					erreur: response.errorType,
+					intitules: INTITULES_RESULTATS,
+					titreParDefaut: TITRE_PAR_DEFAUT,
+				}));
 				setErreurRecherche(response.errorType);
 			}
 		} finally {

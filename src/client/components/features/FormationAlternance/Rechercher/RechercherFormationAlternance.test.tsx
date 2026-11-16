@@ -1,5 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 
+import { HeadMock } from '~/client/components/head.mock';
 import RechercherFormationAlternance
 	from '~/client/components/features/FormationAlternance/Rechercher/RechercherFormationAlternance';
 import { mockUseRouter } from '~/client/components/useRouter.mock';
@@ -8,8 +9,11 @@ import { DependenciesProvider } from '~/client/context/dependenciesContainer.con
 import { aCommuneQuery } from '~/client/hooks/useCommuneQuery';
 import { aLocalisationService } from '~/client/services/localisation/localisation.service.fixture';
 import { aMetierService } from '~/client/services/metiers/metier.fixture';
+import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { NiveauRequisLibelle } from '~/server/formations/domain/formation';
 import { aResultatRechercheFormation } from '~/server/formations/domain/formation.fixture';
+
+vi.mock('next/head', () => ({ default: HeadMock }));
 
 describe('RechercherFormation', () => {
 	beforeEach(() => {
@@ -172,5 +176,50 @@ describe('RechercherFormation', () => {
 		expect(nbRésultats).not.toBeInTheDocument();
 		expect(screen.queryByRole('list', { name: 'Formations en alternance' })).not.toBeInTheDocument();
 	});
-});
 
+	describe('titre du document', () => {
+		it('reprend le nombre de résultats et les critères de la recherche', () => {
+			mockUseRouter({ query: { ...aCommuneQuery({ ville: 'Paris' }), codeRomes: ['M1805'], libelleMetier: 'Gestion de projets informatiques' } });
+			render(
+				<DependenciesProvider metierLbaService={aMetierService()} localisationService={aLocalisationService()}>
+					<RechercherFormationAlternance resultats={[aResultatRechercheFormation(), aResultatRechercheFormation({ id: '2' })]} />
+				</DependenciesProvider>,
+			);
+
+			expect(document.title).toBe('2 formations en alternance pour Gestion de projets informatiques, Paris | 1jeune1solution');
+		});
+
+		it('indique qu’il n’y a aucun résultat', () => {
+			mockUseRouter({ query: { ...aCommuneQuery({ ville: 'Béziers' }), codeRomes: ['M1805'], libelleMetier: 'Gestion de projets informatiques' } });
+			render(
+				<DependenciesProvider metierLbaService={aMetierService()} localisationService={aLocalisationService()}>
+					<RechercherFormationAlternance resultats={[]} />
+				</DependenciesProvider>,
+			);
+
+			expect(document.title).toBe('Aucune formation en alternance pour Gestion de projets informatiques, Béziers | 1jeune1solution');
+		});
+
+		it('signale une erreur quand la demande est incorrecte', () => {
+			mockUseRouter({ query: { libelleMetier: 'Gestion de projets informatiques' } });
+			render(
+				<DependenciesProvider metierLbaService={aMetierService()} localisationService={aLocalisationService()}>
+					<RechercherFormationAlternance erreurRecherche={ErreurMetier.DEMANDE_INCORRECTE} />
+				</DependenciesProvider>,
+			);
+
+			expect(document.title).toBe('Erreur : Rechercher une formation en apprentissage | 1jeune1solution');
+		});
+
+		it('garde le titre par défaut quand aucune recherche n’a été lancée', () => {
+			mockUseRouter({});
+			render(
+				<DependenciesProvider metierLbaService={aMetierService()} localisationService={aLocalisationService()}>
+					<RechercherFormationAlternance />
+				</DependenciesProvider>,
+			);
+
+			expect(document.title).toBe('Rechercher une formation en apprentissage | 1jeune1solution');
+		});
+	});
+});

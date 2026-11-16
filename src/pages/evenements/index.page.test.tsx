@@ -3,6 +3,7 @@ import '~/test-utils';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 
+import { HeadMock } from '~/client/components/head.mock';
 import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { mockScrollIntoView, mockSmallScreen } from '~/client/components/window.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
@@ -10,7 +11,10 @@ import { aManualAnalyticsService } from '~/client/services/analytics/analytics.s
 import { anEvenementService } from '~/client/services/evenement/evenementService.fixture';
 import PageEvenements from '~/pages/evenements/index.page';
 import { createSuccess } from '~/server/errors/either';
+import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { ResultatsRechercheEvenement } from '~/server/evenements/domain/rechercheEvenement';
+
+vi.mock('next/head', () => ({ default: HeadMock }));
 
 function desResultats(): ResultatsRechercheEvenement {
 	return {
@@ -114,6 +118,42 @@ describe('<PageEvenements />', () => {
 			await user.click(screen.getByRole('button', { name: 'Rechercher' }));
 
 			expect(push).toHaveBeenCalledWith({ query: 'motCle=cuisinier&page=1' }, undefined, { scroll: false });
+		});
+
+		describe('titre de la page', () => {
+			it('reprend le titre par défaut quand aucune recherche n‘est lancée', async () => {
+				await afficherLaRecherche();
+
+				expect(document.title).toBe('Rechercher un évènement | 1jeune1solution');
+			});
+
+			it('reprend le nombre de résultats et les critères de la recherche', async () => {
+				afficherLaPage({ ...desResultats(), nombreDeResultats: 3 }, { lieux: 'Paris', motCle: 'forum' });
+				await screen.findByRole('option', { hidden: true, name: 'Lyon' });
+
+				expect(document.title).toBe('3 évènements pour forum, Paris | 1jeune1solution');
+			});
+
+			it('indique qu‘il n‘y a aucun résultat', async () => {
+				afficherLaPage({ nombreDeResultats: 0, resultats: [] }, { lieux: 'Béziers' });
+				await screen.findByRole('option', { hidden: true, name: 'Lyon' });
+
+				expect(document.title).toBe('Aucun évènement pour Béziers | 1jeune1solution');
+			});
+
+			it('indique une erreur quand la demande est incorrecte', async () => {
+				mockUseRouter({ query: { motCle: 'forum' } });
+				mockSmallScreen();
+				const evenementService = anEvenementService({ rechercherLieux: vi.fn().mockResolvedValue(createSuccess(['Lyon'])) });
+				render(
+					<DependenciesProvider analyticsService={aManualAnalyticsService()} evenementService={evenementService}>
+						<PageEvenements erreurRecherche={ErreurMetier.DEMANDE_INCORRECTE} />
+					</DependenciesProvider>,
+				);
+				await screen.findByRole('option', { hidden: true, name: 'Lyon' });
+
+				expect(document.title).toBe('Erreur : Rechercher un évènement | 1jeune1solution');
+			});
 		});
 	});
 });

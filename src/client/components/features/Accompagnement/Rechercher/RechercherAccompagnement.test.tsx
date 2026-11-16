@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import React from 'react';
 
 import {
@@ -7,6 +7,9 @@ import {
 import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { mockSmallScreen } from '~/client/components/window.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
+import {
+	EtablissementAccompagnementService,
+} from '~/client/services/etablissementAccompagnement/etablissementAccompagnement.service';
 import {
 	anEtablissementAccompagnementService,
 } from '~/client/services/etablissementAccompagnement/etablissementAccompagnement.fixture';
@@ -18,6 +21,8 @@ import {
 	anEtablissementAccompagnement,
 	anEtablissementAccompagnementList,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement.fixture';
+
+vi.mock('next/head', async () => ({ default: (await import('~/client/components/head.mock')).HeadMock }));
 
 describe('RechercherAccompagnement', () => {
 	beforeEach(() => {
@@ -232,6 +237,59 @@ describe('RechercherAccompagnement', () => {
 
 			// THEN
 			expect(boutonsContact[0]).toBeVisible();
+		});
+	});
+
+	describe('titre du document', () => {
+		beforeEach(() => {
+			mockUseRouter({
+				query: {
+					codeCommune: '75056',
+					codePostal: '75006',
+					typeAccompagnement: TypeEtablissement.INFO_JEUNE,
+					ville: 'Paris',
+				},
+			});
+		});
+
+		function renderRechercherAccompagnement(etablissementAccompagnementService: EtablissementAccompagnementService) {
+			render(
+				<DependenciesProvider
+					localisationService={aLocalisationService()}
+					établissementAccompagnementService={etablissementAccompagnementService}>
+					<RechercherAccompagnement />
+				</DependenciesProvider>,
+			);
+		}
+
+		it('reprend le nombre de résultats, le type d’accompagnement et la ville', async () => {
+			const etablissementAccompagnementService = anEtablissementAccompagnementService();
+			vi.spyOn(etablissementAccompagnementService, 'rechercher').mockResolvedValue(createSuccess([
+				anEtablissementAccompagnement({ id: '1' }),
+				anEtablissementAccompagnement({ id: '2' }),
+			]));
+
+			renderRechercherAccompagnement(etablissementAccompagnementService);
+
+			await waitFor(() => expect(document.title).toBe('2 établissements d’accompagnement pour les structures Infos Jeunes, Paris | 1jeune1solution'));
+		});
+
+		it('indique qu’il n’y a aucun résultat', async () => {
+			const etablissementAccompagnementService = anEtablissementAccompagnementService();
+			vi.spyOn(etablissementAccompagnementService, 'rechercher').mockResolvedValue(createSuccess([]));
+
+			renderRechercherAccompagnement(etablissementAccompagnementService);
+
+			await waitFor(() => expect(document.title).toBe('Aucun établissement d’accompagnement pour les structures Infos Jeunes, Paris | 1jeune1solution'));
+		});
+
+		it('indique une erreur quand la demande est incorrecte', async () => {
+			const etablissementAccompagnementService = anEtablissementAccompagnementService();
+			vi.spyOn(etablissementAccompagnementService, 'rechercher').mockResolvedValue(createFailure(ErreurMetier.DEMANDE_INCORRECTE));
+
+			renderRechercherAccompagnement(etablissementAccompagnementService);
+
+			await waitFor(() => expect(document.title).toBe('Erreur : Trouver un accompagnement | 1jeune1solution'));
 		});
 	});
 });

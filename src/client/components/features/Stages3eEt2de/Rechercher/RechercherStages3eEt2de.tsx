@@ -19,13 +19,21 @@ import { Erreur } from '~/server/errors/erreur.types';
 import { ResultatRechercheStage3eEt2de } from '~/server/stage-3e-et-2de/domain/stage3eEt2de';
 import { Banner } from "~/client/components/ui/Hero/Hero";
 
-const PREFIX_TITRE_PAGE = 'Rechercher un stage de 3e et 2de';
+const TITRE_PAR_DEFAUT = 'Rechercher un stage de 3e et 2de';
+const INTITULES_RESULTATS = {
+	aucun: 'Aucune entreprise pour un stage de 3e et 2de',
+	pluriel: 'entreprises pour un stage de 3e et 2de',
+	singulier: 'entreprise pour un stage de 3e et 2de',
+};
 
 export default function RechercherStages3eEt2de() {
 	const stage3eEt2deQuery = useStage3eEt2deQuery();
 	const stage3eEt2deService = useDependency<Stage3eEt2deService>('stage3eEt2deService');
 
-	const [title, setTitle] = useState<string>(`${PREFIX_TITRE_PAGE} | 1jeune1solution`);
+	const [title, setTitle] = useState<string>(formatRechercherSolutionDocumentTitle({
+		intitules: INTITULES_RESULTATS,
+		titreParDefaut: TITRE_PAR_DEFAUT,
+	}));
 	const [isLoading, setIsLoading] = useState(!empty(stage3eEt2deQuery));
 	const [erreurRecherche, setErreurRecherche] = useState<Erreur | undefined>(undefined);
 	const [stage3eEt2deList, setStage3eEt2deList] = useState<ResultatRechercheStage3eEt2de | undefined>(undefined);
@@ -47,10 +55,19 @@ export default function RechercherStages3eEt2de() {
 		stage3eEt2deService.rechercherStage3eEt2de(stage3eEt2deQuery)
 			.then((response) => {
 				if (isSuccess(response)) {
-					setTitle(formatRechercherSolutionDocumentTitle(`${PREFIX_TITRE_PAGE}${response.result.nombreDeResultats === 0 ? ' - Aucun résultat' : ''}`));
+					setTitle(formatRechercherSolutionDocumentTitle({
+						criteres: [stage3eEt2deQuery.libelleMetier, stage3eEt2deQuery.ville],
+						intitules: INTITULES_RESULTATS,
+						nombreResultats: response.result.nombreDeResultats,
+						titreParDefaut: TITRE_PAR_DEFAUT,
+					}));
 					setStage3eEt2deList(response.result);
 				} else {
-					setTitle(formatRechercherSolutionDocumentTitle(PREFIX_TITRE_PAGE, response.errorType));
+					setTitle(formatRechercherSolutionDocumentTitle({
+						erreur: response.errorType,
+						intitules: INTITULES_RESULTATS,
+						titreParDefaut: TITRE_PAR_DEFAUT,
+					}));
 					setErreurRecherche(response.errorType);
 				}
 				setIsLoading(false);

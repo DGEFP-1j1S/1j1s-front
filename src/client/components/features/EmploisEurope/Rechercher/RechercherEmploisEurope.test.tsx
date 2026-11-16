@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 
 import RechercherEmploisEurope from '~/client/components/features/EmploisEurope/Rechercher/RechercherEmploisEurope';
@@ -7,6 +7,7 @@ import { mockSmallScreen } from '~/client/components/window.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
 import { EURES_POSITION_SCHEDULE_TYPE } from '~/client/domain/codesTempsTravailEures';
 import { EmploiEuropeQueryParams } from '~/client/hooks/useEmploiEuropeQuery';
+import { EmploiEuropeService } from '~/client/services/europe/emploiEurope.service';
 import { anEmploiEuropeService } from '~/client/services/europe/emploiEurope.service.fixture';
 import {
 	anEmploiEurope,
@@ -15,7 +16,10 @@ import {
 import { NiveauDEtudesLibelle,NiveauDEtudeValue } from '~/server/emplois-europe/domain/niveauDEtudes';
 import { SecteurActiviteCode } from '~/server/emplois-europe/infra/secteurActiviteEures';
 import { EURES_CONTRACT_TYPE } from '~/server/emplois-europe/infra/typesContratEures';
-import { createSuccess } from '~/server/errors/either';
+import { createFailure, createSuccess } from '~/server/errors/either';
+import { ErreurMetier } from '~/server/errors/erreurMetier.types';
+
+vi.mock('next/head', async () => ({ default: (await import('~/client/components/head.mock')).HeadMock }));
 
 describe('RechercherEmploisEurope', () => {
 	describe('quand le composant est affiché sans paramètres de recherche dans l’URL', () => {
@@ -928,6 +932,51 @@ describe('RechercherEmploisEurope', () => {
 			expect(links[1]).toHaveAttribute('href', 'https://info.erasmusplus.fr/');
 			expect(links[2]).toHaveAttribute('href', '/mes-aides');
 			expect(links[3]).toHaveAttribute('href', '/experience-europe');
+		});
+	});
+
+	describe('titre du document', () => {
+		beforeEach(() => {
+			mockSmallScreen();
+			mockUseRouter({ query: { codePays: 'DE', libellePays: 'Allemagne', motCle: 'boulanger', page: '1' } });
+		});
+
+		function renderRechercherEmploisEurope(emploiEuropeService: EmploiEuropeService) {
+			render(
+				<DependenciesProvider emploiEuropeService={emploiEuropeService}>
+					<RechercherEmploisEurope />
+				</DependenciesProvider>,
+			);
+		}
+
+		it('reprend le nombre de résultats, le mot-clé et le pays', async () => {
+			const emploiEuropeServiceMock = anEmploiEuropeService();
+			vi.spyOn(emploiEuropeServiceMock, 'rechercherEmploiEurope').mockResolvedValue(createSuccess(aResultatRechercheEmploiEuropeList({ nombreResultats: 1500 })));
+
+			renderRechercherEmploisEurope(emploiEuropeServiceMock);
+
+			await waitFor(() => expect(document.title).toBe('1 500 offres d’emploi en Europe pour boulanger, Allemagne | 1jeune1solution'));
+		});
+
+		it('indique qu’il n’y a aucun résultat', async () => {
+			const emploiEuropeServiceMock = anEmploiEuropeService();
+			vi.spyOn(emploiEuropeServiceMock, 'rechercherEmploiEurope').mockResolvedValue(createSuccess(aResultatRechercheEmploiEuropeList({
+				nombreResultats: 0,
+				offreList: [],
+			})));
+
+			renderRechercherEmploisEurope(emploiEuropeServiceMock);
+
+			await waitFor(() => expect(document.title).toBe('Aucune offre d’emploi en Europe pour boulanger, Allemagne | 1jeune1solution'));
+		});
+
+		it('indique une erreur quand la demande est incorrecte', async () => {
+			const emploiEuropeServiceMock = anEmploiEuropeService();
+			vi.spyOn(emploiEuropeServiceMock, 'rechercherEmploiEurope').mockResolvedValue(createFailure(ErreurMetier.DEMANDE_INCORRECTE));
+
+			renderRechercherEmploisEurope(emploiEuropeServiceMock);
+
+			await waitFor(() => expect(document.title).toBe('Erreur : Rechercher un emploi en Europe | 1jeune1solution'));
 		});
 	});
 });

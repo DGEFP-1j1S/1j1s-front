@@ -6,6 +6,9 @@ import { RechercherEvenement } from '~/client/components/features/Evenement/Rech
 import { Head } from '~/client/components/head/Head';
 import { HeroWithButtonLink } from '~/client/components/ui/Hero/HeroWithButtonLink';
 import useAnalytics from '~/client/hooks/useAnalytics';
+import { useEvenementQuery } from '~/client/hooks/useEvenementQuery';
+import empty from '~/client/utils/empty';
+import { formatRechercherSolutionDocumentTitle } from '~/client/utils/formatRechercherSolutionDocumentTitle.util';
 import { transformQueryToArray } from '~/pages/api/utils/joi/joi.util';
 import { queryToValeurs } from '~/pages/api/utils/queryToArray.util';
 import analytics from '~/pages/evenements/index.analytics';
@@ -25,9 +28,19 @@ function isRechercheEvenementActive() {
 	return process.env.NEXT_PUBLIC_RECHERCHE_EVENEMENT_FEATURE === '1';
 }
 
+const INTITULES_RESULTATS = { aucun: 'Aucun évènement', pluriel: 'évènements', singulier: 'évènement' };
+
 export default function PageEvenements(props: PageEvenementsProps) {
 	useAnalytics(analytics);
 	const displayRechercheEvenement = isRechercheEvenementActive();
+	const query = useEvenementQuery();
+	const title = formatRechercherSolutionDocumentTitle({
+		criteres: [query.motCle, ...(query.lieux ?? [])],
+		erreur: props.erreurRecherche,
+		intitules: INTITULES_RESULTATS,
+		nombreResultats: empty({ ...query, page: undefined }) ? undefined : props.resultats?.nombreDeResultats,
+		titreParDefaut: 'Rechercher un évènement',
+	});
 
 	return (
 		<>
@@ -55,7 +68,7 @@ export default function PageEvenements(props: PageEvenementsProps) {
 			{displayRechercheEvenement && (
 				<>
 					<Head
-						title={'Rechercher un évènement | 1jeune1solution'}
+						title={title}
 						description="Des centaines d‘évènements de recrutement pour tous les jeunes, partout en France"
 						robots="index,follow" />
 					<RechercherEvenement resultats={props.resultats} erreurRecherche={props.erreurRecherche} />

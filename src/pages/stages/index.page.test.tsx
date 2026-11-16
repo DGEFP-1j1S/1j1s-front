@@ -4,6 +4,7 @@ import { render, screen, waitFor, within } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 
 import { anOffreDeStageIndexee } from '~/server/stages/domain/offreDeStageIndexee.fixture';
+import { HeadMock } from '~/client/components/head.mock';
 import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { mockScrollIntoView, mockSmallScreen } from '~/client/components/window.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
@@ -12,7 +13,10 @@ import { aDateService } from '~/client/services/date/date.service.fixture';
 import { aStageService } from '~/client/services/stage/stageService.fixture';
 import RechercherOffreStagePage from '~/pages/stages/index.page';
 import { createSuccess } from '~/server/errors/either';
+import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { ResultatsRechercheOffreStage } from '~/server/stages/domain/rechercheOffreStage';
+
+vi.mock('next/head', () => ({ default: HeadMock }));
 
 function desResultats(): ResultatsRechercheOffreStage {
 	return {
@@ -119,6 +123,40 @@ describe('<RechercherOffreStagePage />', () => {
 			const filtres = screen.getByRole('list', { name: 'Filtres de la recherche' });
 			expect(within(filtres).getAllByRole('listitem')).toHaveLength(1);
 			expect(filtres).toHaveTextContent('Lyon, Part-Dieu');
+		});
+	});
+
+	describe('titre de la page', () => {
+		it('reprend le titre par défaut quand aucune recherche n‘est lancée', async () => {
+			await renderPage(desResultats(), { page: '2' });
+
+			expect(document.title).toBe('Rechercher un stage | 1jeune1solution');
+		});
+
+		it('reprend le nombre de résultats et les critères de la recherche', async () => {
+			await renderPage({ ...desResultats(), nombreDeResultats: 12 }, { domaines: 'audit', localisations: ['Paris', 'Lyon'], motCle: 'juriste' });
+
+			expect(document.title).toBe('12 offres de stage pour juriste, Paris, Lyon | 1jeune1solution');
+		});
+
+		it('indique qu‘il n‘y a aucun résultat', async () => {
+			await renderPage({ ...desResultats(), nombreDeResultats: 0, resultats: [] }, { motCle: 'juriste' });
+
+			expect(document.title).toBe('Aucune offre de stage pour juriste | 1jeune1solution');
+		});
+
+		it('indique une erreur quand la demande est incorrecte', async () => {
+			mockUseRouter({ query: { motCle: 'juriste' } });
+			mockSmallScreen();
+			const stageService = aStageService({ rechercherLocalisations: vi.fn().mockResolvedValue(createSuccess([])) });
+			render(
+				<DependenciesProvider analyticsService={aManualAnalyticsService()} dateService={aDateService()} stageService={stageService}>
+					<RechercherOffreStagePage erreurRecherche={ErreurMetier.DEMANDE_INCORRECTE} />
+				</DependenciesProvider>,
+			);
+			await waitFor(() => expect(stageService.rechercherLocalisations).toHaveBeenCalled());
+
+			expect(document.title).toBe('Erreur : Rechercher un stage | 1jeune1solution');
 		});
 	});
 });

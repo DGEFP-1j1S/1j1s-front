@@ -21,6 +21,7 @@ import { useEmploiEuropeQuery } from '~/client/hooks/useEmploiEuropeQuery';
 import { EmploiEuropeService } from '~/client/services/europe/emploiEurope.service';
 import empty from '~/client/utils/empty';
 import { formatNumberWithSpace } from '~/client/utils/formatNumberWithSpace';
+import { formatRechercherSolutionDocumentTitle } from '~/client/utils/formatRechercherSolutionDocumentTitle.util';
 import { EmploiEurope } from '~/server/emplois-europe/domain/emploiEurope';
 import {
 	EMPLOIS_EUROPE_ITEMS_PER_PAGE,
@@ -29,6 +30,13 @@ import {
 import { isSuccess } from '~/server/errors/either';
 import { Erreur } from '~/server/errors/erreur.types';
 
+const TITRE_PAR_DEFAUT = 'Rechercher un emploi en Europe';
+const INTITULES_RESULTATS = {
+	aucun: 'Aucune offre d’emploi en Europe',
+	pluriel: 'offres d’emploi en Europe',
+	singulier: 'offre d’emploi en Europe',
+};
+
 export default function RechercherEmploisEurope() {
 	const emploiEuropeQuery = useEmploiEuropeQuery();
 	const emploiEuropeService = useDependency<EmploiEuropeService>('emploiEuropeService');
@@ -36,6 +44,10 @@ export default function RechercherEmploisEurope() {
 	const [nombreResultats, setNombreResultats] = useState(0);
 	const [isLoading, setIsLoading] = useState(false);
 	const [erreurRecherche, setErreurRecherche] = useState<Erreur | undefined>(undefined);
+	const [title, setTitle] = useState<string>(formatRechercherSolutionDocumentTitle({
+		intitules: INTITULES_RESULTATS,
+		titreParDefaut: TITRE_PAR_DEFAUT,
+	}));
 
 	const rechercherEmploiEurope = useCallback(async () => {
 		setIsLoading(true);
@@ -44,9 +56,20 @@ export default function RechercherEmploisEurope() {
 			// TODO (BRUJ 24/07/2024): Devrait être en SSR
 			const response = await emploiEuropeService.rechercherEmploiEurope(emploiEuropeQuery);
 			if (isSuccess(response)) {
+				setTitle(formatRechercherSolutionDocumentTitle({
+					criteres: [emploiEuropeQuery.motCle, emploiEuropeQuery.libellePays],
+					intitules: INTITULES_RESULTATS,
+					nombreResultats: response.result.nombreResultats,
+					titreParDefaut: TITRE_PAR_DEFAUT,
+				}));
 				setEmploiEuropeList(response.result.offreList);
 				setNombreResultats(response.result.nombreResultats);
 			} else {
+				setTitle(formatRechercherSolutionDocumentTitle({
+					erreur: response.errorType,
+					intitules: INTITULES_RESULTATS,
+					titreParDefaut: TITRE_PAR_DEFAUT,
+				}));
 				setErreurRecherche(response.errorType);
 			}
 		} finally {
@@ -79,7 +102,7 @@ export default function RechercherEmploisEurope() {
 	return (
 		<>
 			<Head
-				title="Rechercher un emploi en Europe | 1jeune1solution"
+				title={title}
 				description="Des milliers d’offres d’emplois en Europe sélectionnées pour vous par EURES"
 				robots="index,follow" />
 			<main id="contenu">

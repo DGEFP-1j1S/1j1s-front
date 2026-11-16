@@ -3,12 +3,16 @@ import '~/test-utils';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 
+import { HeadMock } from '~/client/components/head.mock';
 import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { mockScrollIntoView, mockSmallScreen } from '~/client/components/window.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
 import { aManualAnalyticsService } from '~/client/services/analytics/analytics.service.fixture';
 import RechercherFicheMetierPage from '~/pages/decouvrir-les-metiers/index.page';
+import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { ResultatsRechercheFicheMetier } from '~/server/fiche-metier/domain/rechercheFicheMetier';
+
+vi.mock('next/head', () => ({ default: HeadMock }));
 
 function desResultats(): ResultatsRechercheFicheMetier {
 	return {
@@ -74,5 +78,37 @@ describe('<RechercherFicheMetierPage />', () => {
 		afficherLaPage(desResultats(), { centresInteret: 'j‘aime bouger' });
 
 		expect(screen.getByRole('list', { name: 'Filtres de la recherche' })).toHaveTextContent('J‘aime bouger');
+	});
+
+	describe('titre de la page', () => {
+		it('reprend le titre par défaut quand aucune recherche n‘est lancée', () => {
+			afficherLaPage();
+
+			expect(document.title).toBe('Rechercher un métier | 1jeune1solution');
+		});
+
+		it('reprend le nombre de résultats et le mot-clé de la recherche', () => {
+			afficherLaPage({ ...desResultats(), nombreDeResultats: 4 }, { centresInteret: 'j‘aime bouger', motCle: 'cuisinier' });
+
+			expect(document.title).toBe('4 fiches métier pour cuisinier | 1jeune1solution');
+		});
+
+		it('indique qu‘il n‘y a aucun résultat', () => {
+			afficherLaPage({ ...desResultats(), nombreDeResultats: 0, resultats: [] }, { motCle: 'astronaute' });
+
+			expect(document.title).toBe('Aucune fiche métier pour astronaute | 1jeune1solution');
+		});
+
+		it('indique une erreur quand la demande est incorrecte', () => {
+			mockUseRouter({ query: { motCle: 'cuisinier' } });
+			mockSmallScreen();
+			render(
+				<DependenciesProvider analyticsService={aManualAnalyticsService()}>
+					<RechercherFicheMetierPage erreurRecherche={ErreurMetier.DEMANDE_INCORRECTE} />
+				</DependenciesProvider>,
+			);
+
+			expect(document.title).toBe('Erreur : Rechercher un métier | 1jeune1solution');
+		});
 	});
 });
