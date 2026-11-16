@@ -11,7 +11,7 @@ describe('getHtmlFromMd', () => {
 		it('transforme les liens en liens s‘ouvrant dans un nouvel onglet', () => {
 			const markdown = '[example de lien](https://example.com)';
 			const result = getHtmlFromMd(markdown);
-			expect(result).toBe('<p><a href="https://example.com" target="_blank">example de lien</a></p>\n');
+			expect(result).toBe('<p><a href="https://example.com" target="_blank">example de lien<span class="fr-sr-only">- nouvelle fenêtre</span></a></p>\n');
 		});
 	});
 
@@ -21,13 +21,19 @@ describe('getHtmlFromMd', () => {
 			const result = getHtmlFromMd(markdown);
 			expect(result).toBe('<p><a href="#exemple">exemple de lien</a></p>\n');
 		});
+
+		it('n’indique pas l’ouverture dans une nouvelle fenêtre, même après un lien externe', () => {
+			const markdown = '[lien externe](https://example.com) et [ancre](#exemple)';
+			const result = getHtmlFromMd(markdown);
+			expect(result).toBe('<p><a href="https://example.com" target="_blank">lien externe<span class="fr-sr-only">- nouvelle fenêtre</span></a> et <a href="#exemple">ancre</a></p>\n');
+		});
 	});
 
 
 	it('transforme les email en mailto', () => {
 		const markdown = 'email@example.com';
 		const result = getHtmlFromMd(markdown);
-		expect(result).toBe('<p><a href="mailto:email@example.com" target="_blank">email@example.com</a></p>\n');
+		expect(result).toBe('<p><a href="mailto:email@example.com" target="_blank">email@example.com<span class="fr-sr-only">- nouvelle fenêtre</span></a></p>\n');
 	});
 
 	it('ajoute un id sur les titres, pour être utiliser en ancre', () => {
