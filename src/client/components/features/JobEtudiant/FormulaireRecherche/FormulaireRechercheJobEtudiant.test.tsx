@@ -150,7 +150,7 @@ describe('FormulaireRechercheJobÉtudiant', () => {
 		const localisation = screen.getByRole('combobox', { name: /Localisation/i });
 		expect(localisation).toHaveValue('Paris (75010)');
 
-		expect(screen.getByRole('combobox', { name: 'Domaines Exemple : Commerce, Immobilier…' })).toHaveTextContent('1 choix sélectionné');
+		expect(screen.getByRole('combobox', { name: 'Domaines Exemple : Commerce, Immobilier…' })).toHaveTextContent('Achats / Comptabilité / Gestion');
 		expect(screen.getByDisplayValue(referentielDomaineList[0].code)).toBeInTheDocument();
 	});
 });

@@ -108,6 +108,23 @@ describe('FormulaireRechercheEmploisEurope', () => {
 			});
 		});
 
+		it('affiche les types de contrat choisis dans le bouton dès qu’ils sont modifiés', async () => {
+			const user = userEvent.setup();
+			mockUseRouter({});
+			render(<FormulaireRechercheEmploisEurope />);
+			const button = screen.getByRole('combobox', { name: 'Type de contrat Exemple : Alternance, Contrat déterminé' });
+
+			await user.click(button);
+			await user.click(screen.getByRole('option', { name: 'Bénévole' }));
+			expect(button).toHaveTextContent(/^Bénévole$/);
+
+			await user.click(screen.getByRole('option', { name: 'Apprentissage' }));
+			expect(button).toHaveTextContent(/^Apprentissage, Bénévole$/);
+
+			await user.click(screen.getByRole('option', { name: 'Bénévole' }));
+			expect(button).toHaveTextContent(/^Apprentissage$/);
+		});
+
 		describe('quand on recherche par temps de travail', () => {
 			it('ajoute les temps de travail aux query params', async () => {
 				// GIVEN

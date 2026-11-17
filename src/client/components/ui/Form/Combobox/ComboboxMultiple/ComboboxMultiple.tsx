@@ -129,7 +129,7 @@ export function ComboboxMultiple({
 				<input
 					type="text"
 					role="combobox"
-					className="fr-input"
+					className="fr-input text--ellipsis"
 					autoComplete="off"
 					aria-autocomplete="list"
 					aria-controls={listboxId}

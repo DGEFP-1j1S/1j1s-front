@@ -815,33 +815,43 @@ describe('<SelectMultiple/>', () => {
 			expect(screen.getByRole('combobox')).toHaveTextContent(SELECT_MULTIPLE_LABEL_DEFAULT_OPTION);
 		});
 
-		it('lorsqu‘une seule option est sélectionnée, je vois dans le placeholder au singulier', async () => {
+		it('lorsqu‘une seule option est sélectionnée, son libellé est dans le bouton', async () => {
 			const user = userEvent.setup();
 
 			render(<SelectMultiple optionsAriaLabel={'options'}>
-				<SelectMultiple.Option value="1">options 1</SelectMultiple.Option>
-				<SelectMultiple.Option value="2">options 2</SelectMultiple.Option>
+				<SelectMultiple.Option value="cdi">CDI</SelectMultiple.Option>
+				<SelectMultiple.Option value="saisonnier">Saisonnier</SelectMultiple.Option>
 			</SelectMultiple>);
 
 			await user.click(screen.getByRole('combobox'));
-			await user.click(screen.getByRole('option', { name: 'options 1' }));
+			await user.click(screen.getByRole('option', { name: 'Saisonnier' }));
 
-			expect(screen.getByRole('combobox')).toHaveTextContent('1 choix sélectionné');
+			expect(screen.getByRole('combobox')).toHaveTextContent(/^Saisonnier$/);
 		});
 
-		it('lorsqu‘au moins deux options sont sélectionnées, je vois le nombre d‘options sélectionnées au pluriel dans le placeholder', async () => {
+		it('lorsqu‘au moins deux options sont sélectionnées, leurs libellés sont concaténés', async () => {
 			const user = userEvent.setup();
 
 			render(<SelectMultiple optionsAriaLabel={'options'}>
-				<SelectMultiple.Option value="1">options 1</SelectMultiple.Option>
-				<SelectMultiple.Option value="2">options 2</SelectMultiple.Option>
+				<SelectMultiple.Option value="cdi">CDI</SelectMultiple.Option>
+				<SelectMultiple.Option value="cdd">CDD</SelectMultiple.Option>
+				<SelectMultiple.Option value="saisonnier">Saisonnier</SelectMultiple.Option>
 			</SelectMultiple>);
 
 			await user.click(screen.getByRole('combobox'));
-			await user.click(screen.getByRole('option', { name: 'options 1' }));
-			await user.click(screen.getByRole('option', { name: 'options 2' }));
+			await user.click(screen.getByRole('option', { name: 'Saisonnier' }));
+			await user.click(screen.getByRole('option', { name: 'CDI' }));
 
-			expect(screen.getByRole('combobox')).toHaveTextContent('2 choix sélectionnés');
+			expect(screen.getByRole('combobox')).toHaveTextContent(/^CDI, Saisonnier$/);
+		});
+
+		it('affiche les libellés des options sélectionnées par défaut', () => {
+			render(<SelectMultiple optionsAriaLabel={'options'} defaultValue={['cdi', 'saisonnier']}>
+				<SelectMultiple.Option value="cdi">CDI</SelectMultiple.Option>
+				<SelectMultiple.Option value="saisonnier">Saisonnier</SelectMultiple.Option>
+			</SelectMultiple>);
+
+			expect(screen.getByRole('combobox')).toHaveTextContent(/^CDI, Saisonnier$/);
 		});
 	});
 

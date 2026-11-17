@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 import { ComboboxMultiple } from '~/client/components/ui/Form/Combobox/ComboboxMultiple/ComboboxMultiple';
@@ -12,7 +12,6 @@ interface ChampSuggestionsMultiplesProps {
 	valeursInitiales: Array<string>
 	rechercher: (saisie: string) => Promise<Either<Array<string>>>
 	messagePasDeResultat: string
-	placeholder: (nombreDeValeursCochees: number) => string | undefined
 }
 
 export function ChampSuggestionsMultiples({
@@ -23,12 +22,12 @@ export function ChampSuggestionsMultiples({
 	valeursInitiales,
 	rechercher,
 	messagePasDeResultat,
-	placeholder,
 }: ChampSuggestionsMultiplesProps) {
 	const [valeursCochees, setValeursCochees] = useState(valeursInitiales);
 	const [saisie, setSaisie] = useState('');
 	const [suggestions, setSuggestions] = useState<Array<string>>([]);
 	const derniereRecherche = useRef(0);
+	const idValeursCochees = useId();
 
 	async function chargerSuggestions(nouvelleSaisie: string) {
 		// NOTE : on ignore les réponses arrivées après une recherche plus récente
@@ -69,12 +68,14 @@ export function ChampSuggestionsMultiples({
 				onChange={basculer}
 				inputValue={saisie}
 				onInputValueChange={modifierLaSaisie}
-				placeholder={placeholder(valeursCochees.length)}>
+				placeholder={valeursCochees.length > 0 ? valeursCochees.join(', ') : undefined}
+				aria-describedby={valeursCochees.length > 0 ? idValeursCochees : undefined}>
 				{[...valeursCochees, ...suggestionsNonCochees].map((valeur) => (
 					<ComboboxMultiple.Option key={valeur} value={valeur}>{valeur}</ComboboxMultiple.Option>
 				))}
 				{saisie && suggestionsNonCochees.length === 0 && <li role="status">{messagePasDeResultat}</li>}
 			</Champ.Input>
+			{valeursCochees.length > 0 && <p id={idValeursCochees} hidden>Valeurs sélectionnées : {valeursCochees.join(', ')}</p>}
 			{valeursCochees.map((valeur) => (
 				<input key={valeur} type="hidden" name={name} value={valeur} />
 			))}

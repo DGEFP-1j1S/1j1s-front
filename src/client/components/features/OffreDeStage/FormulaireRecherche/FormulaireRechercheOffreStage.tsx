@@ -79,8 +79,7 @@ export function FormulaireRechercheOffreStage({ facettes }: FormulaireRechercheO
 						optionsAriaLabel="villes"
 						valeursInitiales={queryParams.localisations ?? []}
 						rechercher={(saisie) => stageService.rechercherLocalisations(saisie)}
-						messagePasDeResultat={MESSAGE_PAS_DE_RESULTAT}
-						placeholder={placeholderLocalisations} />
+						messagePasDeResultat={MESSAGE_PAS_DE_RESULTAT} />
 				</div>
 				<div className="fr-col-12 fr-col-md-6">
 					<ChampFacette
@@ -104,10 +103,4 @@ export function FormulaireRechercheOffreStage({ facettes }: FormulaireRechercheO
 			</div>
 		</form>
 	);
-}
-
-function placeholderLocalisations(nombreDeLocalisations: number) {
-	if (nombreDeLocalisations === 0) return undefined;
-	if (nombreDeLocalisations === 1) return '1 localisation sélectionnée';
-	return `${nombreDeLocalisations} localisations sélectionnées`;
 }
