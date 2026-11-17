@@ -123,7 +123,7 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 				</fieldset>
 			</div>
 
-			<Champ className="fr-select-group fr-col-6">
+			<Champ className="fr-select-group fr-col-12 fr-col-lg-6">
 				<Champ.Label>
 				Durée du stage
 					<Champ.Label.Complement>Exemple : 3 mois</Champ.Label.Complement>
