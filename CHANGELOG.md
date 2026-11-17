@@ -1,5 +1,20 @@
 # Changelog
 
+## [3.366.0](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.365.0...v3.366.0) (2026-11-17)
+
+
+### Features
+
+* migration dsfr page logement detail ([#3791](https://github.com/DGEFP-1j1S/1j1s-front/issues/3791)) ([c7cc3d0](https://github.com/DGEFP-1j1S/1j1s-front/commit/c7cc3d0c11e3c7543649d9325ae157301ddc1b82))
+* plan de taggage campagne jeune ([#3807](https://github.com/DGEFP-1j1S/1j1s-front/issues/3807)) ([3b790d5](https://github.com/DGEFP-1j1S/1j1s-front/commit/3b790d554205dd25fa6b4b48e9ce14bc267a4ddc))
+* suppression tag goldn bees ([#3800](https://github.com/DGEFP-1j1S/1j1s-front/issues/3800)) ([c901be3](https://github.com/DGEFP-1j1S/1j1s-front/commit/c901be3072b9969a7c4a0f25148039fc1ec789c1))
+
+
+### Bug Fixes
+
+* recette sprint 5 ([#3804](https://github.com/DGEFP-1j1S/1j1s-front/issues/3804)) ([921b672](https://github.com/DGEFP-1j1S/1j1s-front/commit/921b6722bf221dba83b5a187204ebd586f976168))
+* **rgaa:** retours audit partie 1 ([#3790](https://github.com/DGEFP-1j1S/1j1s-front/issues/3790)) ([613ff6b](https://github.com/DGEFP-1j1S/1j1s-front/commit/613ff6b7229af8453d594f71ac87c660875abbfc))
+
 ## [3.365.0](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.364.0...v3.365.0) (2026-11-10)
 
 
