@@ -1,12 +1,16 @@
 import { render, screen, within } from '@testing-library/react';
 import React from 'react';
 
+import { HeadMock } from '~/client/components/head.mock';
 import { RechercherJobÉtudiant } from '~/client/components/features/JobEtudiant/Rechercher/RechercherJobEtudiant';
 import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { mockSmallScreen } from '~/client/components/window.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
 import { aLocalisationService } from '~/client/services/localisation/localisation.service.fixture';
+import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { anOffreEmploi, aRésultatsRechercheOffre } from '~/server/offres/domain/offre.fixture';
+
+vi.mock('next/head', () => ({ default: HeadMock }));
 
 describe('RechercherJobÉtudiant', () => {
 	beforeEach(() => {
@@ -221,6 +225,41 @@ describe('RechercherJobÉtudiant', () => {
 
 			// THEN
 			expect(errorMessage).toBeInTheDocument();
+		});
+	});
+
+	describe('titre du document', () => {
+		it('reprend le nombre de résultats et les critères de la recherche', () => {
+			mockUseRouter({ query: { codeLocalisation: '75056', motCle: 'boulanger', nomLocalisation: 'Paris', page: '1', typeLocalisation: 'COMMUNE' } });
+			render(
+				<DependenciesProvider localisationService={aLocalisationService()}>
+					<RechercherJobÉtudiant resultats={aRésultatsRechercheOffre()} />
+				</DependenciesProvider>,
+			);
+
+			expect(document.title).toBe('3 offres de jobs étudiants pour boulanger, Paris | 1jeune1solution');
+		});
+
+		it('indique qu’il n’y a aucun résultat', () => {
+			mockUseRouter({ query: { motCle: 'boulanger', page: '1' } });
+			render(
+				<DependenciesProvider localisationService={aLocalisationService()}>
+					<RechercherJobÉtudiant resultats={aRésultatsRechercheOffre({ nombreRésultats: 0, résultats: [] })} />
+				</DependenciesProvider>,
+			);
+
+			expect(document.title).toBe('Aucune offre de job étudiant pour boulanger | 1jeune1solution');
+		});
+
+		it('signale une erreur quand la demande est incorrecte', () => {
+			mockUseRouter({ query: { motCle: 'boulanger', page: 'abc' } });
+			render(
+				<DependenciesProvider localisationService={aLocalisationService()}>
+					<RechercherJobÉtudiant erreurRecherche={ErreurMetier.DEMANDE_INCORRECTE} />
+				</DependenciesProvider>,
+			);
+
+			expect(document.title).toBe('Erreur : Rechercher un job étudiant | 1jeune1solution');
 		});
 	});
 });

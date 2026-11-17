@@ -47,6 +47,15 @@ export function Carte({
 		<div className={classNames('fr-card', { 'fr-enlarge-link': lien }, { 'fr-card--horizontal': horizontal }, className)}>
 			<div className="fr-card__body">
 				<div className="fr-card__content">
+					{React.createElement(
+						titreAs,
+						{ className: 'fr-card__title' },
+						lien
+							? (isInternalLink
+								? <Link href={lien}>{titre}</Link>
+								: <a href={lien} target="_blank" rel="noreferrer" title={`${titre} - nouvelle fenêtre`}>{titre}</a>)
+							: titre
+					)}
 					{((tags && tags.length > 0) || pictogramme) && (
 						<div className="fr-card__start">
 							{tags && tags.length > 0 && (
@@ -64,15 +73,6 @@ export function Carte({
 								</div>
 							)}
 						</div>
-					)}
-					{React.createElement(
-						titreAs,
-						{ className: 'fr-card__title' },
-						lien
-							? (isInternalLink
-								? <Link href={lien}>{titre}</Link>
-								: <a href={lien} target="_blank" rel="noreferrer" title={`${titre} - nouvelle fenêtre`}>{titre}</a>)
-							: titre
 					)}
 					{React.createElement(descriptionAs, { className: 'fr-card__desc' }, children)}
 					{end && (

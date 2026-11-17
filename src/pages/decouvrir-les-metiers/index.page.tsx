@@ -7,6 +7,9 @@ import { ServiceCardList } from '~/client/components/features/ServiceCard/Card/S
 import { MetierDuSoinPartner } from '~/client/components/features/ServiceCard/MetiersDuSoinPartner';
 import { Head } from '~/client/components/head/Head';
 import useAnalytics from '~/client/hooks/useAnalytics';
+import { useFicheMetierQuery } from '~/client/hooks/useFicheMetierQuery';
+import empty from '~/client/utils/empty';
+import { formatRechercherSolutionDocumentTitle } from '~/client/utils/formatRechercherSolutionDocumentTitle.util';
 import { transformQueryToArray } from '~/pages/api/utils/joi/joi.util';
 import { queryToValeurs } from '~/pages/api/utils/queryToArray.util';
 import analytics from '~/pages/decouvrir-les-metiers/index.analytics';
@@ -16,19 +19,31 @@ import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { changeStatusCodeWhenErrorOcurred } from '~/server/errors/handleGetServerSidePropsError';
 import { FiltreRechercheFicheMetier, ResultatsRechercheFicheMetier } from '~/server/fiche-metier/domain/rechercheFicheMetier';
 import { dependencies } from '~/server/start';
+import { NOMBRE_RESULTATS_FICHE_METIER_PAR_PAGE } from '~/server/fiche-metier/domain/rechercheFicheMetier';
 
 interface RechercherFicheMetierPageProps {
 	erreurRecherche?: Erreur
 	resultats?: ResultatsRechercheFicheMetier
 }
 
+const INTITULES_RESULTATS = { aucun: 'Aucune fiche métier', pluriel: 'fiches métier', singulier: 'fiche métier' };
+
 export default function RechercherFicheMetierPage(props: RechercherFicheMetierPageProps) {
 	useAnalytics(analytics);
+	const query = useFicheMetierQuery();
+	const title = formatRechercherSolutionDocumentTitle({
+		criteres: [query.motCle],
+		erreur: props.erreurRecherche,
+		intitules: INTITULES_RESULTATS,
+		nombreResultats: empty(query) ? undefined : props.resultats?.nombreDeResultats,
+		pagination: { nombreResultatsParPage: NOMBRE_RESULTATS_FICHE_METIER_PAR_PAGE, pageCourante: query.page },
+		titreParDefaut: 'Rechercher un métier',
+	});
 
 	return (
 		<>
 			<Head
-				title={'Rechercher un métier | 1jeune1solution'}
+				title={title}
 				description="Trouver le métier qui vous correspond"
 				robots="index,follow" />
 			<RechercherFicheMetier resultats={props.resultats} erreurRecherche={props.erreurRecherche} />
