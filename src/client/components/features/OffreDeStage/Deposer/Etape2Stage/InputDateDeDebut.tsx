@@ -64,6 +64,7 @@ export function InputDateDeDebut(props: { displayDateDeDebutPrecise: boolean, in
 					<Champ className="fr-input-group fr-col-12 fr-col-lg-6 fr-pr-md-4v">
 						<Champ.Label>
 						Date précise du début de stage
+							<Champ.Label.Complement>Format attendu : jj/mm/aaaa, exemple : 10/01/2028</Champ.Label.Complement>
 						</Champ.Label>
 						<Champ.Input
 							render={Input}
@@ -85,7 +86,10 @@ export function InputDateDeDebut(props: { displayDateDeDebutPrecise: boolean, in
 					<>
 					<div className="fr-fieldset__element fr-fieldset__element--inline flex-grow--1 fr-mb-sm-0 align-self--start">
 						<Champ className="fr-input-group">
-							<Champ.Label>Date de début du stage au plus tôt</Champ.Label>
+							<Champ.Label>
+								Date de début du stage au plus tôt
+								<Champ.Label.Complement>Format attendu : jj/mm/aaaa, exemple : 10/01/2028</Champ.Label.Complement>
+							</Champ.Label>
 							<Champ.Input
 								render={Input}
 								type="date"
@@ -104,7 +108,8 @@ export function InputDateDeDebut(props: { displayDateDeDebutPrecise: boolean, in
 					<div className="fr-fieldset__element fr-fieldset__element--inline flex-grow--1 fr-mb-0 align-self--start">
 						<Champ className="fr-input-group">
 							<Champ.Label>
-						Date de début du stage au plus tard
+								Date de début du stage au plus tard
+								<Champ.Label.Complement>Format attendu : jj/mm/aaaa, exemple : 10/02/2028</Champ.Label.Complement>
 							</Champ.Label>
 							<Champ.Input
 								render={Input}
