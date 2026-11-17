@@ -67,7 +67,7 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 	const [displayDateDeDebutPrecise, setDisplayDateDeDebutPrecise] = useState<boolean>(props.informationsStage?.isDateDeDebutPrecise ? props.informationsStage.isDateDeDebutPrecise === IsDateDeDebutPrecise.OUI : true);
 
 	return (
-		<>
+		<div className="fr-grid-row fr-grid-row--gutters">
 			<Champ className="fr-input-group fr-col-12">
 				<Champ.Label>Nom de l’offre de stage
 					<Champ.Label.Complement>200 caractères maximum</Champ.Label.Complement>
@@ -136,7 +136,7 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 					defaultValue={props.informationsStage?.dureeStage} />
 				<Champ.Error />
 			</Champ>
-		</>
+		</div>
 	);
 }
 

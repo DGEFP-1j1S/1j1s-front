@@ -18,9 +18,7 @@ export function StageDeposerOffreFormulaireLayout({ inputsObligatoires, inputsop
 			onSubmit={handleFormSubmit}
 			{...rest}>
 			<p className="fr-text--lg">Sauf mention contraire, tous les champs sont obligatoires.</p>
-			<div className="fr-grid-row fr-grid-row--gutters">
-				{inputsObligatoires}
-			</div>
+			{inputsObligatoires}
 			<p className="fr-text--lg fr-mt-4w">Les champs suivants sont optionnels mais recommandés</p>
 			<div className="fr-grid-row fr-grid-row--gutters">
 				{inputsoptionnels}

@@ -43,7 +43,7 @@ export default function StageDeposerOffreFormulaireEtape1Entreprise() {
 	const informationsEntreprise = persistenceEntreprise.getInformationsEtape1();
 
 	const champsObligatoires = (
-		<>
+		<div className="fr-grid-row fr-grid-row--gutters">
 			<Champ className="fr-input-group fr-col-12 fr-col-lg-6 fr-col-offset-lg-6--right">
 				<Champ.Label>Nom de l’entreprise ou de l’employeur
 					<Champ.Label.Complement>255 caractères maximum</Champ.Label.Complement>
@@ -100,7 +100,7 @@ export default function StageDeposerOffreFormulaireEtape1Entreprise() {
 					maxLength={500} />
 				<Champ.Error />
 			</Champ>
-		</>
+		</div>
 	);
 
 	const champsoptionnels = (
