@@ -130,7 +130,7 @@ export const paysList: Pays[] = [
 	},
 	{
 		code: 'VG',
-		libellé: 'British Virgin Islands',
+		libellé: 'Îles Vierges britanniques',
 	},
 	{
 		code: 'IO',
@@ -170,7 +170,7 @@ export const paysList: Pays[] = [
 	},
 	{
 		code: 'KY',
-		libellé: 'Iles Cayman',
+		libellé: 'Îles Caïmans',
 	},
 	{
 		code: 'CF',
@@ -674,7 +674,7 @@ export const paysList: Pays[] = [
 	},
 	{
 		code: 'PW',
-		libellé: 'Palau',
+		libellé: 'Palaos',
 	},
 	{
 		code: 'PS',
@@ -714,7 +714,7 @@ export const paysList: Pays[] = [
 	},
 	{
 		code: 'PR',
-		libellé: 'Puerto Rico',
+		libellé: 'Porto Rico',
 	},
 	{
 		code: 'QA',

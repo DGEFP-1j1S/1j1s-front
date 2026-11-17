@@ -1,9 +1,9 @@
 const STRAPI_MEDIA_HOST = new URL(process.env.STRAPI_MEDIA_URL).hostname;
 const TRUSTED_SOURCES = '*.fabrique.social.gouv.fr 1j1s-front.osc-fr1.scalingo.io *.1jeune1solution.gouv.fr';
 const ANALYTICS_SOURCES = `${process.env.NEXT_PUBLIC_ANALYTICS_DOMAIN} ${process.env.NEXT_PUBLIC_ANALYTICS_MATOMO_HOST}`;
-const MARKETING_SCRIPT_SOURCES = "https://www.googletagmanager.com https://tags.srv.stackadapt.com";
-const MARKETING_IMG_SOURCES = "https://*.doubleclick.net https://www.googletagmanager.com https://*.adform.net https://tags.srv.stackadapt.com";
-const MARKETING_CONNECT_SOURCES = "https://*.doubleclick.net https://www.google.com https://www.googletagmanager.com https://*.stackadapt.com";
+const MARKETING_SCRIPT_SOURCES = "https://www.googletagmanager.com https://tags.srv.stackadapt.com https://sc-static.net https://connect.facebook.net https://analytics.tiktok.com https://snap.licdn.com https://js-tag.zemanta.com";
+const MARKETING_IMG_SOURCES = "https://*.doubleclick.net https://www.googletagmanager.com https://*.adform.net https://tags.srv.stackadapt.com https://www.facebook.com https://px.ads.linkedin.com https://*.outbrain.com https://*.zemanta.com https://*.tiktok.com https://*.snapchat.com";
+const MARKETING_CONNECT_SOURCES = "https://*.doubleclick.net https://www.google.com https://www.googletagmanager.com https://*.stackadapt.com https://*.snapchat.com https://*.facebook.com https://*.tiktok.com https://*.tiktokw.us https://px.ads.linkedin.com https://*.zemanta.com https://*.outbrain.com";
 
 const contentSecurityPolicy = `
   default-src 'self' ${TRUSTED_SOURCES} *.myjobglasses.com https://fonts.gstatic.com/ ${MARKETING_CONNECT_SOURCES};

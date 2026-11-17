@@ -63,7 +63,7 @@ export enum AnnonceDeLogementService {
     SALLE_DE_BAIN_PRIVATIVE = 'salle de bain privative',
     SALLE_DE_SPORT = 'salle de sport',
     SECHE_LINGE = 'sèche linge',
-    TERRACE = 'terrace',
+    TERRACE = 'terrasse',
     TV = 'télévision',
     NON_RENSEIGNE = 'non renseigné',
 }

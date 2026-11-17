@@ -29,9 +29,15 @@ import { BffLocalisationService } from '~/client/services/localisation/bff.local
 import { LocalisationService } from '~/client/services/localisation/localisation.service';
 import { LoggerService } from '~/client/services/logger.service';
 import { AdformMarketingService } from '~/client/services/marketing/adform/adform.marketing.service';
+import { AmnetMarketingService } from "~/client/services/marketing/amnet/amnet.marketing.service";
 import { FloodlightMarketingService } from "~/client/services/marketing/floodlight/floodlight.marketing.service";
+import { LinkedinMarketingService } from "~/client/services/marketing/linkedin/linkedin.marketing.service";
+import { MetaMarketingService } from "~/client/services/marketing/meta/meta.marketing.service";
 import { SeedtagMarketingService } from "~/client/services/marketing/seedtag/seedtag.marketing.service";
+import { SnapchatMarketingService } from "~/client/services/marketing/snapchat/snapchat.marketing.service";
 import { StackAdaptMarketingService } from "~/client/services/marketing/stackadapt/stackadapt.marketing.service";
+import { TeadsMarketingService } from "~/client/services/marketing/teads/teads.marketing.service";
+import { TiktokMarketingService } from "~/client/services/marketing/tiktok/tiktok.marketing.service";
 import { BffAlternanceMetierService } from '~/client/services/metiers/bff.alternance.metier.service';
 import { MetierService } from '~/client/services/metiers/metier.service';
 import { BffMissionEngagementService } from '~/client/services/missionEngagement/bff.missionEngagement.service';
@@ -114,11 +120,23 @@ export default function dependenciesContainer(sessionId?: string): Dependencies 
 	const stageService = new BffStageService(httpClientService);
 	const evenementService = new BffEvenementService(httpClientService);
 	const cookiesService = getCookieService();
-	if (process.env.NEXT_PUBLIC_CAMPAGNE_2026_10_FEATURE === "1") {
-		new AdformMarketingService(cookiesService);
+	const campagne2026_10 = process.env.NEXT_PUBLIC_CAMPAGNE_2026_10_FEATURE === "1";
+	const campagne2026_11 = process.env.NEXT_PUBLIC_CAMPAGNE_2026_11_FEATURE === "1";
+	if (campagne2026_10 || campagne2026_11) {
+		new AdformMarketingService(cookiesService, { campagne2026_10, campagne2026_11 });
+	}
+	if (campagne2026_10) {
 		new SeedtagMarketingService(cookiesService);
 		new FloodlightMarketingService(cookiesService);
 		new StackAdaptMarketingService(cookiesService);
+	}
+	if (campagne2026_11) {
+		new AmnetMarketingService(cookiesService);
+		new SnapchatMarketingService(cookiesService);
+		new MetaMarketingService(cookiesService);
+		new TiktokMarketingService(cookiesService);
+		new LinkedinMarketingService(cookiesService);
+		new TeadsMarketingService(cookiesService);
 	}
 
 	const evenementAnalyticsService: EvenementAnalyticsService = process.env.NEXT_PUBLIC_ANALYTICS_MATOMO_FEATURE === "1"

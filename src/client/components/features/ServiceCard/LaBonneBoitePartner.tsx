@@ -8,6 +8,7 @@ export function LaBonneBoitePartner() {
 			titre='Et si vous contactiez directement les entreprises ?'
 			lien='https://labonneboite.francetravail.fr/' 
 			imageSrc='/images/logos/la-bonne-boite.svg'
+			imageAlt='La bonne boite, Pôle emploi'
 		>
 			N’envoyez plus vos CV au hasard ! Identifiez et contactez les entreprises qui peuvent être susceptibles de
 		 	recruter même si elles n’ont pas déposé d’offres. Nos outils détectent
