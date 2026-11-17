@@ -16,7 +16,7 @@ import {
 const LABEL_OU_POSTULER = 'Lien sur lequel les candidats pourront postuler ou une adresse e-mail à laquelle envoyer sa candidature Exemples : https://candidat.francetravail.fr/offres/142Y OU candidature_PE_technicien@exemple.com';
 const LABEL_NOM_STAGE = 'Nom de l’offre de stage 200 caractères maximum Exemple : Assistant de recherche (6 mois) chez ABC.ENTREPRISE';
 const LABEL_DESCRIPTION_STAGE = 'Description de l’offre de stage 200 caractères minimum Informations sur le stage : les objectifs, les challenges, les missions…';
-const LABEL_REMUNERATION = 'Rémunération par mois en euros (optionnel) Exemple : 760';
+const LABEL_REMUNERATION = 'Rémunération par mois en euros (optionnel) Montant entier en euros sans centimes, exemple : 760';
 
 describe('<Stage />', () => {
 	beforeEach(() => {
@@ -243,6 +243,45 @@ describe('<Stage />', () => {
 			expect(screen.getByRole('textbox', { name: LABEL_NOM_STAGE })).toBeValid();
 			expect(screen.getByRole('textbox', { name: LABEL_OU_POSTULER })).toBeInvalid();
 			expect(screen.getByRole('textbox', { name: LABEL_DESCRIPTION_STAGE })).toBeInvalid();
+		});
+	});
+
+	describe('quand je saisis le lien ou l’adresse e-mail de candidature', () => {
+		it.each([
+			['www.exemple.fr', 'Veuillez saisir une URL commençant par http:// ou https://'],
+			['http//exemple.fr', 'Veuillez saisir une URL commençant par http:// ou https://'],
+			['candidature', 'Veuillez saisir une adresse e-mail contenant un @'],
+			['candidature@exemple', 'Veuillez saisir une adresse e-mail finissant par une extension. Par exemple : .com'],
+			['candidature@exemple.', 'Veuillez saisir une adresse e-mail finissant par une extension. Par exemple : .com'],
+			['@exemple.com', 'Veuillez saisir une adresse e-mail valide, au format bernard@email.fr'],
+		])('quand je saisis « %s », affiche le message « %s »', async (saisie, messageAttendu) => {
+			const user = userEvent.setup();
+			render(<DependenciesProvider
+				stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}
+				stageDeposerOffreEtape2PersistenceService={aStageDeposerOffreEtape2PersistenceService()}><Stage /></DependenciesProvider>);
+			const lienCandidature = screen.getByRole('textbox', { name: LABEL_OU_POSTULER });
+
+			await user.type(lienCandidature, saisie);
+			await user.tab();
+
+			expect(lienCandidature).toBeInvalid();
+			expect(screen.getByText(messageAttendu)).toBeVisible();
+		});
+
+		it.each([
+			'https://candidat.francetravail.fr/offres/142Y',
+			'candidature_PE_technicien@exemple.com',
+		])('quand je saisis « %s », n’affiche pas de message d’erreur', async (saisie) => {
+			const user = userEvent.setup();
+			render(<DependenciesProvider
+				stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}
+				stageDeposerOffreEtape2PersistenceService={aStageDeposerOffreEtape2PersistenceService()}><Stage /></DependenciesProvider>);
+			const lienCandidature = screen.getByRole('textbox', { name: LABEL_OU_POSTULER });
+
+			await user.type(lienCandidature, saisie);
+			await user.tab();
+
+			expect(lienCandidature).toBeValid();
 		});
 	});
 

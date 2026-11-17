@@ -80,7 +80,7 @@ describe('<Entreprise />', () => {
 
 				// THEN
 				expect(mailInput).toBeInvalid();
-				expect(screen.getByText("Veuillez saisir une adresse e-mail valide, au format camille@email.fr")).toBeVisible();
+				expect(screen.getByText("Veuillez saisir une adresse e-mail valide, au format bernard@email.fr")).toBeVisible();
 			});
 
 			it("lorsque je saisis une adresse mail au bon format, n’affiche pas de message d’erreur", async () => {
@@ -95,7 +95,7 @@ describe('<Entreprise />', () => {
 
 				// THEN
 				expect(mailInput).toBeValid();
-				expect(screen.queryByText("Veuillez saisir une adresse e-mail valide, au format camille@email.fr")).not.toBeInTheDocument();
+				expect(screen.queryByText("Veuillez saisir une adresse e-mail valide, au format bernard@email.fr")).not.toBeInTheDocument();
 			});
 		});
 
@@ -145,6 +145,21 @@ describe('<Entreprise />', () => {
 
 				// Then
 				expect(logoUrlInputText).toBeInvalid();
+				expect(screen.getByText('Veuillez saisir une URL commençant par http:// ou https://')).toBeVisible();
+			});
+
+			it('je vois le même message d’erreur quand l’URL ne commence pas par http:// ou https://', async () => {
+				// Given
+				render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
+
+				// When
+				const logoUrlInputText = screen.getByRole('textbox', { name: 'Logo de l’entreprise - lien/URL (optionnel) Exemple : https://www.1jeune1solution.gouv.fr/images/logos/r%C3…' });
+				await userEvent.type(logoUrlInputText, 'www.1jeune1solution.gouv.fr/logo.png');
+				await userEvent.tab();
+
+				// Then
+				expect(logoUrlInputText).toBeInvalid();
+				expect(screen.getByText('Veuillez saisir une URL commençant par http:// ou https://')).toBeVisible();
 			});
 		});
 
@@ -175,6 +190,7 @@ describe('<Entreprise />', () => {
 				await userEvent.tab();
 
 				expect(websiteUrlInputText).toBeInvalid();
+				expect(screen.getByText('Veuillez saisir une URL commençant par http:// ou https://')).toBeVisible();
 			});
 		});
 
