@@ -26,15 +26,15 @@ type CitationApp = {
 
 const citations: CitationApp[] = [
 	{
-		texte: "c'est très facile de communiquer avec ma conseillère, cela m'aide beaucoup pour les projets d'avenir et ce que je veux faire.",
-		auteurice: "jeune suivi en mission locale"
+		texte: "”C'est très facile de communiquer avec ma conseillère, cela m'aide beaucoup pour les projets d'avenir et ce que je veux faire.”",
+		auteurice: "Jeune suivi en mission locale"
 	},
 	{
-		texte: "L'application me permet d etre organisé et d'avoir tout un agenda des événements et ateliers qu'on fait chaque jour",
-		auteurice: "jeune suivi en mission locale"
+		texte: "”L'application me permet d'être organisé et d'avoir tout un agenda des événements et ateliers qu'on fait chaque jour.”",
+		auteurice: "Jeune suivi en mission locale"
 	},
 	{
-		texte: "les rendez-vous, les ateliers, les offres d'emploi, les démarches, les logements, tout y est j'adore ! ",
-		auteurice: "jeune suivi par France Travail"
+		texte: "”Les rendez-vous, les ateliers, les offres d'emploi, les démarches, les logements, tout y est j'adore !”",
+		auteurice: "Jeune suivi par France Travail"
 	},
 ]
