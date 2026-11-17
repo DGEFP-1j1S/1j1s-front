@@ -257,7 +257,7 @@ export function SelectMultiple({
 					data-touched={touched}
 					onClick={() => dispatch(new SelectMultipleActionToggleList(getOptions()))}
 					onFocus={onFocus}
-					aria-activedescendant={activeDescendant}
+					aria-activedescendant={isListOptionsOpen ? activeDescendant : undefined}
 					onKeyDown={onKeyDown}
 					onBlur={onBlur}
 					aria-required={required}

@@ -609,6 +609,24 @@ describe('<Combobox />', () => {
 				const suggestionsList = screen.getByRole('listbox', { hidden: true });
 				expect(suggestionsList).not.toBeVisible();
 			});
+			it('retire l’option active du champ quand la liste est fermée', async () => {
+				const user = userEvent.setup();
+				render(
+					<Combobox optionsAriaLabel="Pays">
+						<Combobox.Option>Option 1</Combobox.Option>
+						<Combobox.Option>Option 2</Combobox.Option>
+					</Combobox>,
+				);
+
+				const input = screen.getByRole('combobox');
+				await user.click(input);
+				await user.keyboard(`{${KeyBoard.ARROW_DOWN}}`);
+				expect(input).toHaveAttribute('aria-activedescendant');
+
+				await user.keyboard(`{${KeyBoard.ESCAPE}}`);
+
+				expect(input).not.toHaveAttribute('aria-activedescendant');
+			});
 			it('reset la selection', async () => {
 				const user = userEvent.setup();
 				render(

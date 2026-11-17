@@ -137,6 +137,23 @@ describe('<SelectMultiple/>', () => {
 					expect(screen.getByRole('combobox')).toHaveFocus();
 				});
 
+				it('retire l’option active du bouton tant que la liste est fermée', async () => {
+					const user = userEvent.setup();
+
+					render(<SelectMultiple optionsAriaLabel={'options'}>
+						<SelectMultiple.Option value="1">options 1</SelectMultiple.Option>
+						<SelectMultiple.Option value="2">options 2</SelectMultiple.Option>
+					</SelectMultiple>);
+
+					await user.click(screen.getByRole('combobox'));
+					await user.keyboard(KeyBoard.ARROW_DOWN);
+					expect(screen.getByRole('combobox')).toHaveAttribute('aria-activedescendant');
+
+					await user.keyboard(KeyBoard.ESCAPE);
+
+					expect(screen.getByRole('combobox')).not.toHaveAttribute('aria-activedescendant');
+				});
+
 				it('la précédente option qui avait le focus visuel est conservée', async () => {
 					const user = userEvent.setup();
 
