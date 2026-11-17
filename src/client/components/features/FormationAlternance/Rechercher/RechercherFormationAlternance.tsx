@@ -25,7 +25,12 @@ import { ResultatRechercheFormation } from '~/server/formations/domain/formation
 import { transformObjectToQueryString } from '~/server/services/utils/urlParams.util';
 import {Banner} from "~/client/components/ui/Hero/Hero";
 
-const PREFIX_TITRE_PAGE = 'Rechercher une formation en apprentissage';
+const TITRE_PAR_DEFAUT = 'Rechercher une formation en apprentissage';
+const INTITULES_RESULTATS = {
+	aucun: 'Aucune formation en alternance',
+	pluriel: 'formations en alternance',
+	singulier: 'formation en alternance',
+};
 
 type RechercherFormationProps = {
 	erreurRecherche?: never
@@ -42,8 +47,15 @@ export default function RechercherFormationAlternance({ resultats: formationAlte
 	const formationQuery = useFormationQuery();
 	const router = useRouter();
 	const nombreResultats = formationAlternanceList.length;
+	const isEtatInitial = empty(formationQuery);
 
-	const title = formatRechercherSolutionDocumentTitle(`${PREFIX_TITRE_PAGE}${nombreResultats === 0 ? ' - Aucun résultat' : ''}`);
+	const title = formatRechercherSolutionDocumentTitle({
+		criteres: [formationQuery.libelleMetier, formationQuery.ville],
+		erreur: erreurRecherche,
+		intitules: INTITULES_RESULTATS,
+		nombreResultats: isEtatInitial ? undefined : nombreResultats,
+		titreParDefaut: TITRE_PAR_DEFAUT,
+	});
 
 	const messageRésultatRecherche: string = useMemo(() => {
 		const messageRésultatRechercheSplit: string[] = [`${nombreResultats}`];
@@ -72,7 +84,7 @@ export default function RechercherFormationAlternance({ resultats: formationAlte
 					etiquettesRecherche={<EtiquettesFiltreFormationAlternance />}
 					formulaireRecherche={<FormulaireRechercherFormationAlternance enEtatErreur={erreurRecherche != null} />}
 					isChargement={false}
-					isEtatInitial={empty(formationQuery)}
+					isEtatInitial={isEtatInitial}
 					messageResultatRecherche={messageRésultatRecherche}
 					nombreTotalSolutions={nombreResultats}
 					listeSolutionElement={(

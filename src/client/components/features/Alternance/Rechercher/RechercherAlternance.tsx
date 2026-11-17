@@ -17,6 +17,7 @@ import {
 import { NoResultErrorMessage } from '~/client/components/ui/ErrorMessage/NoResultErrorMessage';
 import { TagList } from '~/client/components/ui/Tag/TagList';
 import { useAlternanceQuery } from '~/client/hooks/useAlternanceQuery';
+import empty from '~/client/utils/empty';
 import { formatRechercherSolutionDocumentTitle } from '~/client/utils/formatRechercherSolutionDocumentTitle.util';
 import {
 	AlternanceContrat,
@@ -27,7 +28,12 @@ import {
 } from '~/server/alternances/domain/alternance';
 import { Erreur } from '~/server/errors/erreur.types';
 
-const PREFIX_TITRE_PAGE = 'Rechercher une alternance';
+const TITRE_PAR_DEFAUT = 'Rechercher une alternance';
+const INTITULES_RESULTATS = {
+	aucun: 'Aucun résultat en alternance',
+	pluriel: 'résultats en alternance',
+	singulier: 'résultat en alternance',
+};
 
 export type RechercherAlternanceProps = {
 	erreurRecherche?: Erreur
@@ -42,12 +48,18 @@ export default function RechercherAlternance(props: RechercherAlternanceProps) {
 	const nombreResultatsEntreprises = props.resultats?.entrepriseList?.length || 0;
 	const nombreResultatsOffres = props.resultats?.offreList?.length || 0;
 	const nombreResultats = nombreResultatsEntreprises + nombreResultatsOffres;
-	const title = formatRechercherSolutionDocumentTitle(`${PREFIX_TITRE_PAGE}${nombreResultats === 0 ? ' - Aucun résultat' : ''}`);
 	const alternanceList = {
 		entrepriseList: props.resultats?.entrepriseList || [],
 		offreList: props.resultats?.offreList || [],
 	};
 	const erreurRecherche = props.erreurRecherche;
+	const title = formatRechercherSolutionDocumentTitle({
+		criteres: [alternanceQuery.libelleMetier, alternanceQuery.ville],
+		erreur: erreurRecherche,
+		intitules: INTITULES_RESULTATS,
+		nombreResultats: empty(alternanceQuery) ? undefined : nombreResultats,
+		titreParDefaut: TITRE_PAR_DEFAUT,
+	});
 
 	function getMessageResultatRecherche(nombreResultats: number) {
 		const messageResultatRechercheSplit: string[] = [`${nombreResultats}`];

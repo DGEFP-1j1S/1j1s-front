@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 
 import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { mockSmallScreen } from '~/client/components/window.mock';
@@ -7,10 +7,13 @@ import { aCommuneQuery } from '~/client/hooks/useCommuneQuery';
 import { aLocalisationService } from '~/client/services/localisation/localisation.service.fixture';
 import { aMetierService } from '~/client/services/metiers/metier.fixture';
 import { aStage3eEt2deService } from '~/client/services/stage3eEt2de/stage3eEt2de.service.fixture';
-import { createSuccess } from '~/server/errors/either';
+import { createFailure, createSuccess } from '~/server/errors/either';
+import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { aResultatRechercheStage3eEt2de, aStage3eEt2de } from '~/server/stage-3e-et-2de/domain/stage3eEt2de.fixture';
 
 import RechercherStages3eEt2de from './RechercherStages3eEt2de';
+
+vi.mock('next/head', async () => ({ default: (await import('~/client/components/head.mock')).HeadMock }));
 
 describe('La recherche des stages de 3e et 2de', () => {
 	describe('quand le composant est affiché sans paramètres de recherche dans l’URL', () => {
@@ -202,6 +205,51 @@ describe('La recherche des stages de 3e et 2de', () => {
 			const etiquetteList = screen.getByRole('list', { name: 'Filtres de la recherche' });
 			expect(etiquetteList).toBeVisible();
 			expect(within(etiquetteList).getByRole('listitem')).toHaveTextContent('Paris (75001)');
+		});
+	});
+
+	describe('titre du document', () => {
+		beforeEach(() => {
+			mockSmallScreen();
+			mockUseRouter({ query: { ...aCommuneQuery({ ville: 'Paris' }), codeMetier: 'D1102', libelleMetier: 'Boulangerie' } });
+		});
+
+		function renderRechercherStages3eEt2de(stage3eEt2deService = aStage3eEt2deService()) {
+			render(<DependenciesProvider stage3eEt2deService={stage3eEt2deService}
+																	 localisationService={aLocalisationService()}
+																	 metierStage3eEt2deService={aMetierService()}>
+				<RechercherStages3eEt2de />
+			</DependenciesProvider>);
+		}
+
+		it('reprend le nombre de résultats, le métier et la ville', async () => {
+			const stage3eEt2deServiceMock = aStage3eEt2deService();
+			vi.spyOn(stage3eEt2deServiceMock, 'rechercherStage3eEt2de').mockResolvedValue(createSuccess(aResultatRechercheStage3eEt2de({ nombreDeResultats: 12 })));
+
+			renderRechercherStages3eEt2de(stage3eEt2deServiceMock);
+
+			await waitFor(() => expect(document.title).toBe('12 entreprises pour un stage de 3e et 2de pour Boulangerie, Paris | 1jeune1solution'));
+		});
+
+		it('indique qu’il n’y a aucun résultat', async () => {
+			const stage3eEt2deServiceMock = aStage3eEt2deService();
+			vi.spyOn(stage3eEt2deServiceMock, 'rechercherStage3eEt2de').mockResolvedValue(createSuccess(aResultatRechercheStage3eEt2de({
+				nombreDeResultats: 0,
+				resultats: [],
+			})));
+
+			renderRechercherStages3eEt2de(stage3eEt2deServiceMock);
+
+			await waitFor(() => expect(document.title).toBe('Aucune entreprise pour un stage de 3e et 2de pour Boulangerie, Paris | 1jeune1solution'));
+		});
+
+		it('indique une erreur quand la demande est incorrecte', async () => {
+			const stage3eEt2deServiceMock = aStage3eEt2deService();
+			vi.spyOn(stage3eEt2deServiceMock, 'rechercherStage3eEt2de').mockResolvedValue(createFailure(ErreurMetier.DEMANDE_INCORRECTE));
+
+			renderRechercherStages3eEt2de(stage3eEt2deServiceMock);
+
+			await waitFor(() => expect(document.title).toBe('Erreur : Rechercher un stage de 3e et 2de | 1jeune1solution'));
 		});
 	});
 });

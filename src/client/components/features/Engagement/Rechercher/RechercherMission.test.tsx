@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import React from 'react';
 
@@ -7,11 +7,17 @@ import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { mockScrollIntoView, mockSmallScreen } from '~/client/components/window.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
 import { aLocalisationService } from '~/client/services/localisation/localisation.service.fixture';
+import { MissionEngagementService } from '~/client/services/missionEngagement/missionEngagement.service';
 import {
 	aMissionEngagementService,
 	aSingleResultMissionEngagementService,
 } from '~/client/services/missionEngagement/missionEngagement.service.fixture';
 import { EngagementCategory } from '~/client/utils/engagementsCategory.enum';
+import { anAmbassadeurDuDonDeVêtementMission } from '~/server/engagement/domain/missionEngagement.fixture';
+import { createFailure, createSuccess } from '~/server/errors/either';
+import { ErreurMetier } from '~/server/errors/erreurMetier.types';
+
+vi.mock('next/head', async () => ({ default: (await import('~/client/components/head.mock')).HeadMock }));
 
 describe('RechercherMission', () => {
 	beforeEach(() => {
@@ -349,6 +355,51 @@ describe('RechercherMission', () => {
 				name: 'Des missions de bénévolat toujours disponibles',
 			})).toBeVisible();
 			expect(within(serviceCards[0]).getByRole('link')).toHaveAttribute('href', '/articles/des-missions-de-benevolat-toujours-disponibles');
+		});
+	});
+
+	describe('titre du document', () => {
+		function renderRechercherMission(missionEngagementService: MissionEngagementService, category: EngagementCategory.BENEVOLAT | EngagementCategory.SERVICE_CIVIQUE) {
+			render(
+				<DependenciesProvider
+					localisationService={aLocalisationService()}
+					missionEngagementService={missionEngagementService}>
+					<RechercherMission category={category} />
+				</DependenciesProvider>,
+			);
+		}
+
+		it('reprend le nombre total de résultats, le domaine et la ville', async () => {
+			mockUseRouter({ query: { domain: 'culture-loisirs', page: '1', ville: 'Paris' } });
+			const missionEngagementServiceMock = aMissionEngagementService();
+			vi.spyOn(missionEngagementServiceMock, 'rechercherMission').mockResolvedValue(createSuccess({
+				nombreRésultats: 42,
+				résultats: [anAmbassadeurDuDonDeVêtementMission()],
+			}));
+
+			renderRechercherMission(missionEngagementServiceMock, EngagementCategory.SERVICE_CIVIQUE);
+
+			await waitFor(() => expect(document.title).toBe('42 missions de service civique pour Culture et Loisirs, Paris (page 1/3) | 1jeune1solution'));
+		});
+
+		it('indique qu’il n’y a aucun résultat', async () => {
+			mockUseRouter({ query: { page: '1', ville: 'Paris' } });
+			const missionEngagementServiceMock = aMissionEngagementService();
+			vi.spyOn(missionEngagementServiceMock, 'rechercherMission').mockResolvedValue(createSuccess({ nombreRésultats: 0, résultats: [] }));
+
+			renderRechercherMission(missionEngagementServiceMock, EngagementCategory.BENEVOLAT);
+
+			await waitFor(() => expect(document.title).toBe('Aucune mission de bénévolat pour Paris | 1jeune1solution'));
+		});
+
+		it('indique une erreur quand la demande est incorrecte', async () => {
+			mockUseRouter({ query: { page: '1' } });
+			const missionEngagementServiceMock = aMissionEngagementService();
+			vi.spyOn(missionEngagementServiceMock, 'rechercherMission').mockResolvedValue(createFailure(ErreurMetier.DEMANDE_INCORRECTE));
+
+			renderRechercherMission(missionEngagementServiceMock, EngagementCategory.BENEVOLAT);
+
+			await waitFor(() => expect(document.title).toBe('Erreur : Rechercher une mission de bénévolat | 1jeune1solution'));
 		});
 	});
 });

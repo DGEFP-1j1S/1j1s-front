@@ -2,6 +2,7 @@ import '~/test-utils';
 
 import { render, screen } from '@testing-library/react';
 
+import { HeadMock } from '~/client/components/head.mock';
 import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { mockSmallScreen } from '~/client/components/window.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
@@ -9,7 +10,10 @@ import { aManualAnalyticsService } from '~/client/services/analytics/analytics.s
 import { aDateService } from '~/client/services/date/date.service.fixture';
 import { aStorageService } from '~/client/services/storage/storage.service.fixture';
 import AnnoncesPage from '~/pages/logements/annonces/index.page';
+import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { ResultatsRechercheAnnonceDeLogement } from '~/server/logements/domain/rechercheAnnonceDeLogement';
+
+vi.mock('next/head', () => ({ default: HeadMock }));
 
 function desResultats(): ResultatsRechercheAnnonceDeLogement {
 	return {
@@ -35,12 +39,12 @@ function desResultats(): ResultatsRechercheAnnonceDeLogement {
 	};
 }
 
-function afficherLaPage(routerQuery = {}) {
+function afficherLaPage(routerQuery = {}, props: React.ComponentProps<typeof AnnoncesPage> = { resultats: desResultats() }) {
 	mockUseRouter({ query: routerQuery });
 	mockSmallScreen();
 	return render(
 		<DependenciesProvider analyticsService={aManualAnalyticsService()} dateService={aDateService()} sessionStorageService={aStorageService()}>
-			<AnnoncesPage resultats={desResultats()} />
+			<AnnoncesPage {...props} />
 		</DependenciesProvider>,
 	);
 }
@@ -89,5 +93,43 @@ describe('<AnnoncesPage />', () => {
 		afficherLaPage();
 
 		expect(screen.queryByRole('search')).not.toBeInTheDocument();
+	});
+
+	describe('titre de la page', () => {
+		it('reprend le titre par défaut quand aucune recherche n‘est lancée', () => {
+			afficherLaPage();
+
+			expect(document.title).toBe('Rechercher un logement | 1jeune1solution');
+		});
+
+		it('indique la page courante quand on parcourt les résultats sans critère', () => {
+			afficherLaPage({ page: '2' }, { resultats: { ...desResultats(), nombreDeResultats: 1416 } });
+
+			expect(document.title).toBe('1 416 annonces de logement (page 2/158) | 1jeune1solution');
+		});
+
+		it('reprend le nombre de résultats et la ville de la recherche', () => {
+			afficherLaPage({ typesBien: 'appartement', ville: 'Lyon' }, { resultats: { ...desResultats(), nombreDeResultats: 25 } });
+
+			expect(document.title).toBe('25 annonces de logement pour Lyon (page 1/3) | 1jeune1solution');
+		});
+
+		it('indique la page courante quand il y a plusieurs pages', () => {
+			afficherLaPage({ page: '2', ville: 'toulouse' }, { resultats: { ...desResultats(), nombreDeResultats: 1416 } });
+
+			expect(document.title).toBe('1 416 annonces de logement pour toulouse (page 2/158) | 1jeune1solution');
+		});
+
+		it('indique qu‘il n‘y a aucun résultat', () => {
+			afficherLaPage({ ville: 'Béziers' }, { resultats: { ...desResultats(), nombreDeResultats: 0, resultats: [] } });
+
+			expect(document.title).toBe('Aucune annonce de logement pour Béziers | 1jeune1solution');
+		});
+
+		it('indique une erreur quand la demande est incorrecte', () => {
+			afficherLaPage({ prixMin: '-1' }, { erreurRecherche: ErreurMetier.DEMANDE_INCORRECTE });
+
+			expect(document.title).toBe('Erreur : Rechercher un logement | 1jeune1solution');
+		});
 	});
 });

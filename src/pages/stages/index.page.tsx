@@ -5,6 +5,9 @@ import React from 'react';
 import { RechercherOffreStage } from '~/client/components/features/OffreDeStage/Rechercher/RechercherOffreStage';
 import { Head } from '~/client/components/head/Head';
 import useAnalytics from '~/client/hooks/useAnalytics';
+import { useStageQuery } from '~/client/hooks/useStageQuery';
+import empty from '~/client/utils/empty';
+import { formatRechercherSolutionDocumentTitle } from '~/client/utils/formatRechercherSolutionDocumentTitle.util';
 import { transformQueryToArray } from '~/pages/api/utils/joi/joi.util';
 import { queryToValeurs } from '~/pages/api/utils/queryToArray.util';
 import analytics from '~/pages/stages/index.analytics';
@@ -14,19 +17,31 @@ import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import { changeStatusCodeWhenErrorOcurred } from '~/server/errors/handleGetServerSidePropsError';
 import { FiltreRechercheOffreStage, ResultatsRechercheOffreStage } from '~/server/stages/domain/rechercheOffreStage';
 import { dependencies } from '~/server/start';
+import { NOMBRE_RESULTATS_OFFRE_STAGE_PAR_PAGE } from '~/server/stages/domain/rechercheOffreStage';
 
 interface RechercherOffreStagePageProps {
 	erreurRecherche?: Erreur
 	resultats?: ResultatsRechercheOffreStage
 }
 
+const INTITULES_RESULTATS = { aucun: 'Aucune offre de stage', pluriel: 'offres de stage', singulier: 'offre de stage' };
+
 export default function RechercherOffreStagePage(props: RechercherOffreStagePageProps) {
 	useAnalytics(analytics);
+	const query = useStageQuery();
+	const title = formatRechercherSolutionDocumentTitle({
+		criteres: [query.motCle, ...(query.localisations ?? [])],
+		erreur: props.erreurRecherche,
+		intitules: INTITULES_RESULTATS,
+		nombreResultats: empty(query) ? undefined : props.resultats?.nombreDeResultats,
+		pagination: { nombreResultatsParPage: NOMBRE_RESULTATS_OFFRE_STAGE_PAR_PAGE, pageCourante: query.page },
+		titreParDefaut: 'Rechercher un stage',
+	});
 
 	return (
 		<>
 			<Head
-				title={'Rechercher un stage | 1jeune1solution'}
+				title={title}
 				description="Des milliers d‘offres de stages sélectionnées pour vous"
 				robots="index,follow" />
 			<RechercherOffreStage resultats={props.resultats} erreurRecherche={props.erreurRecherche} />

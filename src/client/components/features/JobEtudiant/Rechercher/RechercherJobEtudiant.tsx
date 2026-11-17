@@ -29,7 +29,12 @@ import {
 	ResultatsRechercheOffre,
 } from '~/server/offres/domain/offre';
 
-const PREFIX_TITRE_PAGE = 'Rechercher un job étudiant';
+const TITRE_PAR_DEFAUT = 'Rechercher un job étudiant';
+const INTITULES_RESULTATS = {
+	aucun: 'Aucune offre de job étudiant',
+	pluriel: 'offres de jobs étudiants',
+	singulier: 'offre de job étudiant',
+};
 
 interface RechercherJobEtudiantProps {
 	erreurRecherche?: Erreur
@@ -39,10 +44,19 @@ interface RechercherJobEtudiantProps {
 export function RechercherJobÉtudiant(props: RechercherJobEtudiantProps) {
 	const offreEmploiQuery = useOffreQuery();
 
-	const title = formatRechercherSolutionDocumentTitle(`${PREFIX_TITRE_PAGE}${props.resultats?.nombreRésultats === 0 ? ' - Aucun résultat' : ''}`);
 	const jobÉtudiantList = props.resultats?.résultats || [];
 	const nombreRésultats = props.resultats?.nombreRésultats || 0;
 	const erreurRecherche = props.erreurRecherche;
+	const isEtatInitial = empty(offreEmploiQuery);
+
+	const title = formatRechercherSolutionDocumentTitle({
+		criteres: [offreEmploiQuery.motCle, offreEmploiQuery.nomLocalisation],
+		erreur: erreurRecherche,
+		intitules: INTITULES_RESULTATS,
+		nombreResultats: isEtatInitial ? undefined : nombreRésultats,
+		pagination: { nombrePagesMax: MAX_PAGE_ALLOWED_BY_FRANCE_TRAVAIL, nombreResultatsParPage: NOMBRE_RÉSULTATS_OFFRE_PAR_PAGE, pageCourante: offreEmploiQuery.page },
+		titreParDefaut: TITRE_PAR_DEFAUT,
+	});
 
 	const messageRésultatRecherche: string = useMemo(() => {
 		const messageRésultatRechercheSplit: string[] = [`${nombreRésultats}`];
@@ -86,7 +100,7 @@ export function RechercherJobÉtudiant(props: RechercherJobEtudiantProps) {
 					etiquettesRecherche={étiquettesRecherche}
 					formulaireRecherche={<FormulaireRechercheJobEtudiant />}
 					isChargement={false}
-					isEtatInitial={empty(offreEmploiQuery)}
+					isEtatInitial={isEtatInitial}
 					messageResultatRecherche={messageRésultatRecherche}
 					nombreTotalSolutions={nombreRésultats}
 					paginationOffset={NOMBRE_RÉSULTATS_OFFRE_PAR_PAGE}
