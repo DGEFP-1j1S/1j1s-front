@@ -35,7 +35,7 @@ export default function RechercherFicheMetierPage(props: RechercherFicheMetierPa
 		criteres: [query.motCle],
 		erreur: props.erreurRecherche,
 		intitules: INTITULES_RESULTATS,
-		nombreResultats: empty({ ...query, page: undefined }) ? undefined : props.resultats?.nombreDeResultats,
+		nombreResultats: empty(query) ? undefined : props.resultats?.nombreDeResultats,
 		pagination: { nombreResultatsParPage: NOMBRE_RESULTATS_FICHE_METIER_PAR_PAGE, pageCourante: query.page },
 		titreParDefaut: 'Rechercher un métier',
 	});

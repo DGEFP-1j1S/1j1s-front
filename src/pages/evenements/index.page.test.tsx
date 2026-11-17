@@ -127,6 +127,13 @@ describe('<PageEvenements />', () => {
 				expect(document.title).toBe('Rechercher un évènement | 1jeune1solution');
 			});
 
+			it('indique la page courante quand on parcourt les résultats sans critère', async () => {
+				afficherLaPage({ ...desResultats(), nombreDeResultats: 40 }, { page: '2' });
+				await screen.findByRole('option', { hidden: true, name: 'Lyon' });
+
+				expect(document.title).toBe('40 évènements (page 2/3) | 1jeune1solution');
+			});
+
 			it('reprend le nombre de résultats et les critères de la recherche', async () => {
 				afficherLaPage({ ...desResultats(), nombreDeResultats: 3 }, { lieux: 'Paris', motCle: 'forum' });
 				await screen.findByRole('option', { hidden: true, name: 'Lyon' });

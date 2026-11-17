@@ -128,15 +128,27 @@ describe('<RechercherOffreStagePage />', () => {
 
 	describe('titre de la page', () => {
 		it('reprend le titre par défaut quand aucune recherche n‘est lancée', async () => {
-			await renderPage(desResultats(), { page: '2' });
+			await renderPage();
 
 			expect(document.title).toBe('Rechercher un stage | 1jeune1solution');
+		});
+
+		it('indique la page courante quand on parcourt les résultats sans critère', async () => {
+			await renderPage({ ...desResultats(), nombreDeResultats: 100 }, { page: '2' });
+
+			expect(document.title).toBe('100 offres de stage (page 2/7) | 1jeune1solution');
 		});
 
 		it('reprend le nombre de résultats et les critères de la recherche', async () => {
 			await renderPage({ ...desResultats(), nombreDeResultats: 12 }, { domaines: 'audit', localisations: ['Paris', 'Lyon'], motCle: 'juriste' });
 
 			expect(document.title).toBe('12 offres de stage pour juriste, Paris, Lyon | 1jeune1solution');
+		});
+
+		it('indique la page courante quand il y a plusieurs pages', async () => {
+			await renderPage({ ...desResultats(), nombreDeResultats: 100 }, { motCle: 'juriste', page: '3' });
+
+			expect(document.title).toBe('100 offres de stage pour juriste (page 3/7) | 1jeune1solution');
 		});
 
 		it('indique qu‘il n‘y a aucun résultat', async () => {

@@ -87,6 +87,12 @@ describe('<RechercherFicheMetierPage />', () => {
 			expect(document.title).toBe('Rechercher un métier | 1jeune1solution');
 		});
 
+		it('indique la page courante quand on parcourt les résultats sans critère', () => {
+			afficherLaPage({ ...desResultats(), nombreDeResultats: 792 }, { page: '2' });
+
+			expect(document.title).toBe('792 fiches métier (page 2/53) | 1jeune1solution');
+		});
+
 		it('reprend le nombre de résultats et le mot-clé de la recherche', () => {
 			afficherLaPage({ ...desResultats(), nombreDeResultats: 4 }, { centresInteret: 'j‘aime bouger', motCle: 'cuisinier' });
 

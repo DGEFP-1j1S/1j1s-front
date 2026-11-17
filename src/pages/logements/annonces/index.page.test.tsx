@@ -102,6 +102,12 @@ describe('<AnnoncesPage />', () => {
 			expect(document.title).toBe('Rechercher un logement | 1jeune1solution');
 		});
 
+		it('indique la page courante quand on parcourt les résultats sans critère', () => {
+			afficherLaPage({ page: '2' }, { resultats: { ...desResultats(), nombreDeResultats: 1416 } });
+
+			expect(document.title).toBe('1 416 annonces de logement (page 2/158) | 1jeune1solution');
+		});
+
 		it('reprend le nombre de résultats et la ville de la recherche', () => {
 			afficherLaPage({ typesBien: 'appartement', ville: 'Lyon' }, { resultats: { ...desResultats(), nombreDeResultats: 25 } });
 

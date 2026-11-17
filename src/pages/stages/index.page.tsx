@@ -33,7 +33,7 @@ export default function RechercherOffreStagePage(props: RechercherOffreStagePage
 		criteres: [query.motCle, ...(query.localisations ?? [])],
 		erreur: props.erreurRecherche,
 		intitules: INTITULES_RESULTATS,
-		nombreResultats: empty({ ...query, page: undefined }) ? undefined : props.resultats?.nombreDeResultats,
+		nombreResultats: empty(query) ? undefined : props.resultats?.nombreDeResultats,
 		pagination: { nombreResultatsParPage: NOMBRE_RESULTATS_OFFRE_STAGE_PAR_PAGE, pageCourante: query.page },
 		titreParDefaut: 'Rechercher un stage',
 	});
