@@ -17,26 +17,14 @@ export function StageDeposerOffreFormulaireLayout({ inputsObligatoires, inputsop
 			className='border--blue fr-p-5v fr-p-md-5w'
 			onSubmit={handleFormSubmit}
 			{...rest}>
-			<fieldset className="fr-fieldset" aria-labelledby="legend-champs-obligatoires">
-				<legend id="legend-champs-obligatoires" className="fr-fieldset__legend fr-fieldset__legend--regular fr-text--lg">
-					Les champs suivants sont obligatoires
-				</legend>
-				<div className="fr-fieldset__element">
-					<div className="fr-grid-row fr-grid-row--gutters">
-						{inputsObligatoires}
-					</div>
-				</div>
-			</fieldset>
-			<fieldset className="fr-fieldset fr-mt-4w" aria-labelledby="legend-champs-optionnels">
-				<legend id="legend-champs-optionnels" className="fr-fieldset__legend fr-fieldset__legend--regular fr-text--lg">
-				Les champs suivants sont optionnels mais recommandés
-				</legend>
-				<div className="fr-fieldset__element">
-					<div className="fr-grid-row fr-grid-row--gutters">
-						{inputsoptionnels}
-					</div>
-				</div>
-			</fieldset>
+			<p className="fr-text--lg">Sauf mention contraire, tous les champs sont obligatoires.</p>
+			<div className="fr-grid-row fr-grid-row--gutters">
+				{inputsObligatoires}
+			</div>
+			<p className="fr-text--lg fr-mt-4w">Les champs suivants sont optionnels mais recommandés</p>
+			<div className="fr-grid-row fr-grid-row--gutters">
+				{inputsoptionnels}
+			</div>
 			<div className="text-align--right">
 				{boutonValidation}
 			</div>

@@ -1,7 +1,6 @@
 import {
 	render,
 	screen,
-	within,
 } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 
@@ -40,15 +39,15 @@ describe('<Entreprise />', () => {
 			expect(screen.getByText("Votre offre de stage", { exact: false })).toBeVisible();
 		});
 
-		it("regroupe les champs obligatoires et optionnels dans des groupes légendés", () => {
+		it("indique que les champs sont obligatoires sauf mention contraire", () => {
 			// GIVEN
 			render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
 
 			// THEN
-			const groupeObligatoire = screen.getByRole("group", { name: "Les champs suivants sont obligatoires" });
-			const groupeoptionnel = screen.getByRole("group", { name: "Les champs suivants sont optionnels mais recommandés" });
-			expect(within(groupeObligatoire).getByRole("textbox", { name: /Adresse mail/ })).toBeVisible();
-			expect(within(groupeoptionnel).getByRole("textbox", { name: /Logo de l/ })).toBeVisible();
+			expect(screen.getByText("Sauf mention contraire, tous les champs sont obligatoires.")).toBeVisible();
+			expect(screen.queryByRole("group", { name: /obligatoires|optionnels/ })).not.toBeInTheDocument();
+			expect(screen.getByRole("textbox", { name: /Adresse mail/ })).toBeRequired();
+			expect(screen.getByRole("textbox", { name: /Logo de l.*\(optionnel\)/ })).not.toBeRequired();
 		});
 
 		it('les champs contenant des données pouvant être saisie automatiquement ont un attribut autocomplete approprié', () => {
