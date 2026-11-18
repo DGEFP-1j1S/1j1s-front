@@ -8,6 +8,7 @@ import { NoResultErrorMessage } from '~/client/components/ui/ErrorMessage/NoResu
 import { Skeleton } from '~/client/components/ui/Loader/Skeleton/Skeleton';
 import { Pagination } from '~/client/components/ui/Pagination/Pagination';
 import { Erreur } from '~/server/errors/erreur.types';
+import { Image } from "~/client/components/ui/Img";
 
 interface RechercherSolutionLayoutProps {
 	banniere: React.ReactElement;
@@ -17,6 +18,7 @@ interface RechercherSolutionLayoutProps {
 	isChargement: boolean;
 	isEtatInitial: boolean;
 	messageResultatRecherche: string | ReactElement;
+	imageUrl?: string,
 	nombreTotalSolutions: number;
 	paginationOffset?: number;
 	maxPage?: number;
@@ -31,6 +33,7 @@ export function RechercherSolutionLayout(props: RechercherSolutionLayoutProps) {
 		etiquettesRecherche,
 		formulaireRecherche,
 		messageResultatRecherche,
+		imageUrl,
 		nombreTotalSolutions,
 		paginationOffset,
 		maxPage,
@@ -85,7 +88,8 @@ export function RechercherSolutionLayout(props: RechercherSolutionLayoutProps) {
 				<>
 					<div className="fr-container fr-py-5w">
 							{etiquettesRecherche}
-							<div role="status">
+							<div role="status" className="flex align-items--center">
+								{ imageUrl && (<Image className="fr-mr-2w" src={imageUrl} height={108} width={108} alt=""/>) }
 								<h2 className="fr-mb-0">{messageResultatRecherche}</h2>
 							</div>
 					</div>
