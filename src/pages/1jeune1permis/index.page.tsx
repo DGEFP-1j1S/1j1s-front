@@ -30,20 +30,15 @@ export default function UnJeuneUnPermis() {
 			<HeroWithButtonLink
 				title="Aides au permis de conduire"
 				content={
-					<strong>
+					<span className="fr-text--bold">
 						{"Découvrez 1 jeune 1 permis, le service officiel en partenariat avec Mes aides France Travail pour trouver chaque aide au permis de conduire adaptée à votre profil."}
-					</strong>
+					</span>
 				}
-				description={
-					<>
-						{"1jeune1permis facilite l'accès aux aides financières pour passer le permis de conduire (permis B). Le service permet d'identifier les dispositifs disponibles selon la localisation. Il rassemble les informations essentielles pour comprendre les démarches. Des conseils pratiques accompagnent la préparation du code et de la conduite."}
-						<br />
-						{"Une solution simple pour faciliter la mobilité et l'accès à l'emploi."}
-					</>
-				}
+				description={"1 jeune 1 permis facilite l’accès aux aides financières pour passer le permis de conduire (permis B). Le service permet d’identifier les dispositifs disponibles selon la localisation. Il rassemble les informations essentielles pour comprendre les démarches. Des conseils pratiques accompagnent la préparation du code et de la conduite.\nUne solution simple pour faciliter la mobilité et l’accès à l’emploi."}
 				buttonLabel="Découvrir les aides au permis"
 				buttonHref={URL_1JEUNE_1PERMIS}
 				imgSrc="/images/1jeune1permis-aides.webp"
+				imgAlt="1Jeune1Permis tout ce qu’il faut savoir pour passer le permis de conduire"
 				imgContain />
 		</main>
 	);

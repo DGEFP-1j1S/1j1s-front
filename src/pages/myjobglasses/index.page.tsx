@@ -16,11 +16,11 @@ export default function MyJobGlassesPage() {
 				<HeroWithButtonLink
 					title="Échanger avec des professionnels"
 					content={
-						<strong>
-							{"Un réseau professionnel à votre disposition\u00a0: 1Jeune1Solution s'est associé à My Job Glasses pour vous permettre de découvrir les métiers."}
-						</strong>
+						<span className="fr-text--bold">
+							Un réseau professionnel à votre disposition : 1jeune1solution s’est associé à My Job Glasses pour vous permettre de découvrir les métiers.
+						</span>
 					}
-					description={"Grâce à un réseau de 82\u00a0000 professionnels qui se rendent disponibles pour répondre à toutes vos questions sur leur métier. Ce service est gratuit et disponible pour tous, sans condition d'âge. Rien de tel que d'échanger avec une personne qui vous présentera son métier, son environnement professionnel et son parcours pour vous aider dans votre choix d'orientation\u00a0!"}
+					description={"Grâce à un réseau de 82 000 professionnels qui se rendent disponibles pour répondre à toutes vos questions sur leur métier. Ce service est gratuit et disponible pour tous, sans condition d’âge. Rien de tel que d’échanger avec une personne qui vous présentera son métier, son environnement professionnel et son parcours pour vous aider dans votre choix d’orientation !"}
 					buttonLabel="Trouver un professionnel"
 					buttonHref={URL_MY_JOB_GLASSES}
 					imgSrc="/images/myjobglasses-portail.webp"

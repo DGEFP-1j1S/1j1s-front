@@ -32,7 +32,7 @@ export function HeroWithButtonLink(props: HeroWithButtonLinkProps) {
 						<p className="fr-text--lead fr-mb-4w">
 							{content}
 						</p>
-						{description && <p className="fr-text--lg fr-mb-4w">{description}</p>}
+						{description && <p className="fr-text--lg fr-mb-4w whitespace--pre-line">{description}</p>}
 						{ (buttonLabelSecondary && buttonHrefSecondary) ?
 							(<ul className="fr-btns-group fr-btns-group--lg fr-btns-group--equisized">
 								<li>
