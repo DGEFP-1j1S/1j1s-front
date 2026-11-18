@@ -76,7 +76,8 @@ export default function StageDeposerOffreFormulaireEtape3Localisation() {
 	}, [router, informationsEntreprise, informationsStage]);
 
 	const champsObligatoires = (
-		<>
+		<fieldset className="fr-grid-row fr-grid-row--gutters fr-fieldset" aria-labelledby="legend-champs-adresse">
+			<legend className="fr-fieldset__legend fr-pb-0" id="legend-champs-adresse">Adresse du lieu de stage</legend>
 			<Champ className="fr-input-group fr-col-12 fr-col-xl-6 fr-col-offset-xl-6--right fr-mb-0">
 				<Champ.Label>
 					Adresse
@@ -122,7 +123,7 @@ export default function StageDeposerOffreFormulaireEtape3Localisation() {
 					valueName={LocalisationInputName.PAYS}
 					required />
 			</div>
-		</>
+		</fieldset>
 	);
 
 	const champsoptionnels = (

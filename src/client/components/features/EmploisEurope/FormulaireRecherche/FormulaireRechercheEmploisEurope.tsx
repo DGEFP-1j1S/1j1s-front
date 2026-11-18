@@ -47,13 +47,10 @@ export function FormulaireRechercheEmploisEurope() {
 	function onChangeMultipleSelect(option: HTMLElement, setInputValue: Dispatch<SetStateAction<Array<string>>>) {
 		const value = option.getAttribute('data-value') ?? '';
 		setInputValue((previous) => {
-			const indexOfValue = previous.indexOf(value);
-			if (value && indexOfValue === -1) {
-				previous.push(value);
-			} else {
-				previous.splice(indexOfValue, 1);
+			if (value && !previous.includes(value)) {
+				return [...previous, value];
 			}
-			return previous;
+			return previous.filter((previousValue) => previousValue !== value);
 		});
 	}
 

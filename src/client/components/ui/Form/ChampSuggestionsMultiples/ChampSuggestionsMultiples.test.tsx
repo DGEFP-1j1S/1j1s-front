@@ -16,8 +16,7 @@ async function afficherChamp(rechercher = vi.fn().mockResolvedValue(createSucces
 				optionsAriaLabel="villes"
 				valeursInitiales={valeursInitiales}
 				rechercher={rechercher}
-				messagePasDeResultat="Aucune localisation"
-				placeholder={(nombre) => (nombre ? `${nombre} cochée(s)` : undefined)} />
+				messagePasDeResultat="Aucune localisation" />
 		</form>,
 	);
 	await waitFor(() => expect(rechercher).toHaveBeenCalledWith(''));
@@ -60,7 +59,37 @@ describe('<ChampSuggestionsMultiples />', () => {
 
 		expect(valeursDuFormulaire()).toStrictEqual(['Marseille', 'Lyon']);
 		expect(screen.getAllByRole('option').map((option) => option.textContent)).toStrictEqual(['Marseille', 'Lyon', 'Paris']);
-		expect(screen.getByRole('combobox', { name: 'Localisation' })).toHaveAttribute('placeholder', '2 cochée(s)');
+		expect(screen.getByRole('combobox', { name: 'Localisation' })).toHaveAttribute('placeholder', 'Marseille, Lyon');
+	});
+
+	it('affiche les valeurs cochées dans le champ dès qu’elles sont modifiées', async () => {
+		const user = userEvent.setup();
+		await afficherChamp();
+		const combobox = screen.getByRole('combobox', { name: 'Localisation' });
+		expect(combobox).not.toHaveAttribute('placeholder');
+
+		await user.click(combobox);
+		await user.click(screen.getByRole('option', { name: 'Paris' }));
+		expect(combobox).toHaveAttribute('placeholder', 'Paris');
+
+		await user.click(screen.getByRole('option', { name: 'Lyon' }));
+		expect(combobox).toHaveAttribute('placeholder', 'Paris, Lyon');
+
+		await user.click(screen.getByRole('option', { name: 'Paris' }));
+		expect(combobox).toHaveAttribute('placeholder', 'Lyon');
+	});
+
+	it('restitue les valeurs cochées aux technologies d’assistance en description du champ', async () => {
+		const user = userEvent.setup();
+		await afficherChamp();
+		const combobox = screen.getByRole('combobox', { name: 'Localisation' });
+		expect(combobox).not.toHaveAccessibleDescription(/Valeurs sélectionnées/);
+
+		await user.click(combobox);
+		await user.click(screen.getByRole('option', { name: 'Paris' }));
+		await user.click(screen.getByRole('option', { name: 'Lyon' }));
+
+		expect(combobox).toHaveAccessibleDescription(/Valeurs sélectionnées : Paris, Lyon/);
 	});
 
 	it('au clavier, l‘option cochée reste active : un second Entrée la décoche', async () => {

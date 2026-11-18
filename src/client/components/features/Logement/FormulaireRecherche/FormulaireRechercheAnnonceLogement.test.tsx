@@ -44,7 +44,7 @@ describe('FormulaireRechercheAnnonceLogement', () => {
 		render(<FormulaireRechercheAnnonceLogement facettes={FACETTES} />);
 
 		expect(screen.getByRole('textbox', { name: /Ville/ })).toHaveValue('Lyon');
-		expect(screen.getByRole('combobox', { name: 'Type d‘offre Exemple : Location' })).toHaveTextContent('1 choix sélectionné');
+		expect(screen.getByRole('combobox', { name: 'Type d‘offre Exemple : Location' })).toHaveTextContent('Location');
 		expect(screen.getByRole('spinbutton', { name: 'Prix maximum (€)' })).toHaveValue(800);
 	});
 

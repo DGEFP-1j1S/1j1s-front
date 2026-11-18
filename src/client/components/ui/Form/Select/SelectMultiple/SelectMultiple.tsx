@@ -220,12 +220,10 @@ export function SelectMultiple({
 	}, [activeDescendant, handleFocusOnTypeLetterDebounce, isListOptionsOpen, selectOption]);
 
 	const placeholderSelectedOptions = useMemo(function placeholderSelectedOptions() {
-		const optionsSelectedValueLength = value.length;
-		if (optionsSelectedValueLength > 1) { return `${optionsSelectedValueLength} choix sélectionnés`; }
-		if (optionsSelectedValueLength === 1) { return '1 choix sélectionné'; }
+		if (value.length > 0) { return getLibellesOptionsSelectionnees(children, value).join(', '); }
 		if (placeholder) { return placeholder; }
 		return SELECT_PLACEHOLDER_MULTIPLE;
-	}, [value.length, placeholder]);
+	}, [children, value, placeholder]);
 
 	return (
 		<SelectContext.Provider value={{
@@ -259,12 +257,12 @@ export function SelectMultiple({
 					data-touched={touched}
 					onClick={() => dispatch(new SelectMultipleActionToggleList(getOptions()))}
 					onFocus={onFocus}
-					aria-activedescendant={activeDescendant}
+					aria-activedescendant={isListOptionsOpen ? activeDescendant : undefined}
 					onKeyDown={onKeyDown}
 					onBlur={onBlur}
 					aria-required={required}
 					{...rest}>
-					{placeholderSelectedOptions}
+					<span className="text--ellipsis">{placeholderSelectedOptions}</span>
 					<Icon name={'angle-down'} />
 				</button>
 				<ul
@@ -281,6 +279,13 @@ export function SelectMultiple({
 			</div>
 		</SelectContext.Provider>
 	);
+}
+
+function getLibellesOptionsSelectionnees(options: React.ReactNode, valeursSelectionnees: Array<string>): Array<string> {
+	const optionsList = React.Children.toArray(options) as Array<React.ReactElement<React.ComponentProps<typeof SelectOption>>>;
+	return optionsList
+		.filter((option) => valeursSelectionnees.includes(String(option.props.value)))
+		.map((option) => String(option.props.children));
 }
 
 function cancelEvent(event: SyntheticEvent) {

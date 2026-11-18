@@ -28,6 +28,20 @@ import { emailRegex } from '~/shared/emailRegex';
 import { urlRegex } from '~/shared/urlRegex';
 
 const EMAIL_OR_URL_REGEX = `${emailRegex}|${urlRegex}`;
+const MESSAGE_ERREUR_URL = 'Veuillez saisir une URL commençant par http:// ou https://';
+const MESSAGE_ERREUR_EMAIL_SANS_AROBASE = 'Veuillez saisir une adresse e-mail contenant un @';
+const MESSAGE_ERREUR_EMAIL_SANS_EXTENSION = 'Veuillez saisir une adresse e-mail finissant par une extension. Par exemple : .com';
+const MESSAGE_ERREUR_EMAIL = 'Veuillez saisir une adresse e-mail valide, au format bernard@email.fr';
+
+function validerLienCandidature(value: string | number | readonly string[] | undefined): string {
+	const lien = String(value ?? '').trim();
+	if (lien === '' || new RegExp(`^(?:${EMAIL_OR_URL_REGEX})$`).test(lien)) return '';
+	if (!lien.includes('@')) {
+		return /^https?:|^www\.|[./]/.test(lien) ? MESSAGE_ERREUR_URL : MESSAGE_ERREUR_EMAIL_SANS_AROBASE;
+	}
+	const domaine = lien.slice(lien.lastIndexOf('@') + 1);
+	return /\.[a-zA-Z]{2,}$/.test(domaine) ? MESSAGE_ERREUR_EMAIL : MESSAGE_ERREUR_EMAIL_SANS_EXTENSION;
+}
 const DUREE_MOIS_EN_JOUR = 30;
 const LONGUEUR_MAX_TITRE = 200;
 
@@ -67,7 +81,7 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 	const [displayDateDeDebutPrecise, setDisplayDateDeDebutPrecise] = useState<boolean>(props.informationsStage?.isDateDeDebutPrecise ? props.informationsStage.isDateDeDebutPrecise === IsDateDeDebutPrecise.OUI : true);
 
 	return (
-		<>
+		<div className="fr-grid-row fr-grid-row--gutters">
 			<Champ className="fr-input-group fr-col-12">
 				<Champ.Label>Nom de l’offre de stage
 					<Champ.Label.Complement>200 caractères maximum</Champ.Label.Complement>
@@ -90,6 +104,7 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 				<Champ.Input
 					render={Input}
 					pattern={EMAIL_OR_URL_REGEX}
+					validation={validerLienCandidature}
 					name={StageEnum.LIEN_CANDIDATURE}
 					defaultValue={props.informationsStage?.lienCandidature}
 					required />
@@ -123,7 +138,7 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 				</fieldset>
 			</div>
 
-			<Champ className="fr-select-group fr-col-6">
+			<Champ className="fr-select-group fr-col-12 fr-col-lg-6">
 				<Champ.Label>
 				Durée du stage
 					<Champ.Label.Complement>Exemple : 3 mois</Champ.Label.Complement>
@@ -136,7 +151,7 @@ function ChampsObligatoires(props: { informationsStage: OffreDeStageDeposeeStage
 					defaultValue={props.informationsStage?.dureeStage} />
 				<Champ.Error />
 			</Champ>
-		</>
+		</div>
 	);
 }
 
@@ -159,7 +174,7 @@ function Champsoptionnels(props: { informationsStage: OffreDeStageDeposeeStage |
 			<Champ className="fr-input-group fr-col-12 fr-col-xl-6">
 				<Champ.Label>
 				Rémunération par mois en euros (optionnel)
-					<Champ.Label.Complement>Exemple : 760</Champ.Label.Complement>
+					<Champ.Label.Complement>Montant entier en euros sans centimes, exemple : 760</Champ.Label.Complement>
 				</Champ.Label>
 				<div className="fr-input-wrap fr-icon-money-euro-circle-line">
 					<Champ.Input
