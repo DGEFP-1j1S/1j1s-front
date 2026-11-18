@@ -1,7 +1,6 @@
 import {
 	render,
 	screen,
-	within,
 } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 
@@ -40,15 +39,15 @@ describe('<Entreprise />', () => {
 			expect(screen.getByText("Votre offre de stage", { exact: false })).toBeVisible();
 		});
 
-		it("regroupe les champs obligatoires et optionnels dans des groupes légendés", () => {
+		it("indique que les champs sont obligatoires sauf mention contraire", () => {
 			// GIVEN
 			render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
 
 			// THEN
-			const groupeObligatoire = screen.getByRole("group", { name: "Les champs suivants sont obligatoires" });
-			const groupeoptionnel = screen.getByRole("group", { name: "Les champs suivants sont optionnels mais recommandés" });
-			expect(within(groupeObligatoire).getByRole("textbox", { name: /Adresse mail/ })).toBeVisible();
-			expect(within(groupeoptionnel).getByRole("textbox", { name: /Logo de l/ })).toBeVisible();
+			expect(screen.getByText("Sauf mention contraire, tous les champs sont obligatoires.")).toBeVisible();
+			expect(screen.queryByRole("group", { name: /obligatoires|optionnels/ })).not.toBeInTheDocument();
+			expect(screen.getByRole("textbox", { name: /Adresse mail/ })).toBeRequired();
+			expect(screen.getByRole("textbox", { name: /Logo de l.*\(optionnel\)/ })).not.toBeRequired();
 		});
 
 		it('les champs contenant des données pouvant être saisie automatiquement ont un attribut autocomplete approprié', () => {
@@ -81,7 +80,7 @@ describe('<Entreprise />', () => {
 
 				// THEN
 				expect(mailInput).toBeInvalid();
-				expect(screen.getByText("Veuillez saisir une adresse e-mail valide, au format camille@email.fr")).toBeVisible();
+				expect(screen.getByText("Veuillez saisir une adresse e-mail valide, au format bernard@email.fr")).toBeVisible();
 			});
 
 			it("lorsque je saisis une adresse mail au bon format, n’affiche pas de message d’erreur", async () => {
@@ -96,7 +95,7 @@ describe('<Entreprise />', () => {
 
 				// THEN
 				expect(mailInput).toBeValid();
-				expect(screen.queryByText("Veuillez saisir une adresse e-mail valide, au format camille@email.fr")).not.toBeInTheDocument();
+				expect(screen.queryByText("Veuillez saisir une adresse e-mail valide, au format bernard@email.fr")).not.toBeInTheDocument();
 			});
 		});
 
@@ -146,6 +145,21 @@ describe('<Entreprise />', () => {
 
 				// Then
 				expect(logoUrlInputText).toBeInvalid();
+				expect(screen.getByText('Veuillez saisir une URL commençant par http:// ou https://')).toBeVisible();
+			});
+
+			it('je vois le même message d’erreur quand l’URL ne commence pas par http:// ou https://', async () => {
+				// Given
+				render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
+
+				// When
+				const logoUrlInputText = screen.getByRole('textbox', { name: 'Logo de l’entreprise - lien/URL (optionnel) Exemple : https://www.1jeune1solution.gouv.fr/images/logos/r%C3…' });
+				await userEvent.type(logoUrlInputText, 'www.1jeune1solution.gouv.fr/logo.png');
+				await userEvent.tab();
+
+				// Then
+				expect(logoUrlInputText).toBeInvalid();
+				expect(screen.getByText('Veuillez saisir une URL commençant par http:// ou https://')).toBeVisible();
 			});
 		});
 
@@ -176,6 +190,7 @@ describe('<Entreprise />', () => {
 				await userEvent.tab();
 
 				expect(websiteUrlInputText).toBeInvalid();
+				expect(screen.getByText('Veuillez saisir une URL commençant par http:// ou https://')).toBeVisible();
 			});
 		});
 

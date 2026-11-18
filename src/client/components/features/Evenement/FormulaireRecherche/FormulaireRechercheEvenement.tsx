@@ -37,18 +37,11 @@ export function FormulaireRechercheEvenement() {
 					optionsAriaLabel="villes"
 					valeursInitiales={queryParams.lieux ?? []}
 					rechercher={(saisie) => evenementService.rechercherLieux(saisie)}
-					messagePasDeResultat={MESSAGE_PAS_DE_RESULTAT}
-					placeholder={placeholderLieux} />
+					messagePasDeResultat={MESSAGE_PAS_DE_RESULTAT} />
 			</div>
 			<div className="fr-grid-row fr-grid-row--center">
 				<Button className="fr-btn--lg" label="Rechercher" type="submit" />
 			</div>
 		</form>
 	);
-}
-
-function placeholderLieux(nombreDeLieux: number) {
-	if (nombreDeLieux === 0) return undefined;
-	if (nombreDeLieux === 1) return '1 localisation sélectionnée';
-	return `${nombreDeLieux} localisations sélectionnées`;
 }

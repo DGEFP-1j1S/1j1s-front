@@ -131,6 +131,20 @@ describe('<ComboboxMultiple />', () => {
 		expect(combobox).toHaveAttribute('aria-expanded', 'false');
 	});
 
+	it('retire l’option active du champ quand la liste est fermée', async () => {
+		const user = userEvent.setup();
+		render(<ComboboxMultipleAvecEtat />);
+
+		const combobox = screen.getByRole('combobox', { name: 'Ville' });
+		await user.click(combobox);
+		await user.keyboard(`{${KeyBoard.ARROW_DOWN}}`);
+		expect(combobox).toHaveAttribute('aria-activedescendant');
+
+		await user.keyboard(`{${KeyBoard.ESCAPE}}`);
+
+		expect(combobox).not.toHaveAttribute('aria-activedescendant');
+	});
+
 	it('ferme la liste quand le focus quitte le champ', async () => {
 		const user = userEvent.setup();
 		render(<><ComboboxMultipleAvecEtat /><button>ailleurs</button></>);

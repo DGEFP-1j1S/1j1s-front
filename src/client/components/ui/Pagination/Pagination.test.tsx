@@ -26,7 +26,7 @@ describe('Pagination', () => {
 				<Pagination numberOfResult={470} numberOfResultPerPage={30} />,
 			);
 
-			expect(screen.getByRole('link', { current: true, name: '3' })).toBeInTheDocument();
+			expect(screen.getByRole('link', { current: 'page', name: '3' })).toBeInTheDocument();
 		});
 	});
 
@@ -52,8 +52,8 @@ describe('Pagination', () => {
 					<Pagination numberOfResult={470} numberOfResultPerPage={30} />,
 				);
 
-				expect(screen.getByText("Première page").getAttribute('aria-disabled')).toBe('true');
-				expect(screen.getByText("Page précédente").getAttribute('aria-disabled')).toBe('true');
+				expect(screen.getByRole('link', { name: REVENIR_A_LA_PREMIERE_PAGE }).getAttribute('aria-disabled')).toBe('true');
+				expect(screen.getByRole('link', { name: REVENIR_A_LA_PAGE_PRECENDENTE }).getAttribute('aria-disabled')).toBe('true');
 				expect(screen.getByText('1')).toBeInTheDocument();
 				expect(screen.getByText('2')).toBeInTheDocument();
 				expect(screen.getByText('3')).toBeInTheDocument();
@@ -138,8 +138,8 @@ describe('Pagination', () => {
 				expect(screen.getByText('15')).toBeInTheDocument();
 				expect(screen.queryByText('…')).not.toBeInTheDocument();
 				expect(screen.getByText('16')).toBeInTheDocument();
-				expect(screen.getByText("Page suivante").getAttribute('aria-disabled')).toBe('true');
-				expect(screen.getByText("Dernière page").getAttribute('aria-disabled')).toBe('true');
+				expect(screen.getByRole('link', { name: ALLER_A_LA_PAGE_SUIVANTE }).getAttribute('aria-disabled')).toBe('true');
+				expect(screen.getByRole('link', { name: ALLER_A_LA_DERNIERE_PAGE }).getAttribute('aria-disabled')).toBe('true');
 			});
 		});
 
@@ -157,7 +157,7 @@ describe('Pagination', () => {
 				await userEvent.click(page3);
 
 				// met à jour avec la page 3 dans l‘url
-				expect(screen.getByRole('link', { current: true, name: '3' })).toBeInTheDocument();
+				expect(screen.getByRole('link', { current: 'page', name: '3' })).toBeInTheDocument();
 				expect(routerPush).toHaveBeenCalledWith({ query: { page: 3 } });
 
 				// l‘utilisateur clique sur la page suivante
@@ -166,7 +166,7 @@ describe('Pagination', () => {
 
 				// met à jour avec la page 4 dans l‘url
 				expect(screen.getByRole('link', { current: false, name: '3' })).toBeInTheDocument();
-				expect(screen.getByRole('link', { current: true, name: '4' })).toBeInTheDocument();
+				expect(screen.getByRole('link', { current: 'page', name: '4' })).toBeInTheDocument();
 				expect(routerPush).toHaveBeenCalledWith({ query: { page: 4 } });
 
 				// l‘utilisateur clique sur la page précédente
@@ -175,7 +175,7 @@ describe('Pagination', () => {
 
 				// met à jour avec la page 3 dans l‘url
 				expect(screen.getByRole('link', { current: false, name: '4' })).toBeInTheDocument();
-				expect(screen.getByRole('link', { current: true, name: '3' })).toBeInTheDocument();
+				expect(screen.getByRole('link', { current: 'page', name: '3' })).toBeInTheDocument();
 				expect(routerPush).toHaveBeenCalledWith({ query: { page: 3 } });
 
 				// l‘utilisateur clique sur go to last page
@@ -183,7 +183,7 @@ describe('Pagination', () => {
 				await userEvent.click(goToLastPage);
 
 				// met à jour avec la page 16 dans l‘url
-				expect(screen.getByRole('link', { current: true, name: '16' })).toBeInTheDocument();
+				expect(screen.getByRole('link', { current: 'page', name: '16' })).toBeInTheDocument();
 				expect(routerPush).toHaveBeenCalledWith({ query: { page: 16 } });
 
 				// l‘utilisateur clique sur return to fisrt page
@@ -191,7 +191,7 @@ describe('Pagination', () => {
 				await userEvent.click(returnToFirstPage);
 
 				// met à jour avec la page 1 dans l‘url
-				expect(screen.getByRole('link', { current: true, name: '1' })).toBeInTheDocument();
+				expect(screen.getByRole('link', { current: 'page', name: '1' })).toBeInTheDocument();
 				expect(routerPush).toHaveBeenCalledWith({ query: { page: 1 } });
 			});
 		});
@@ -214,7 +214,7 @@ describe('Pagination', () => {
 			render(
 				<Pagination numberOfResult={12} numberOfResultPerPage={10} />,
 			);
-			expect(screen.getByRole('link', { current: true, name: '1' })).toBeInTheDocument();
+			expect(screen.getByRole('link', { current: 'page', name: '1' })).toBeInTheDocument();
 			expect(screen.getByText('2')).toBeInTheDocument();
 			expect(screen.queryByText('3')).not.toBeInTheDocument();
 
