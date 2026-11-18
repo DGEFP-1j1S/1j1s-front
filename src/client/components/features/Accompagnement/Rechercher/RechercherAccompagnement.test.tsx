@@ -209,7 +209,7 @@ describe('RechercherAccompagnement', () => {
 	});
 
 	describe('quand le type d‘accompagnement est Mission Locale', () => {
-		it('affiche le bouton "Je souhaite être rappelé"', async () => {
+		it('affiche le bouton "Être contacté.e"', async () => {
 			const établissementAccompagnementService = anEtablissementAccompagnementService();
 			const anEtablissementMissionLocalList = anEtablissementAccompagnementList({ type: TypeEtablissement.MISSION_LOCALE });
 			vi.spyOn(établissementAccompagnementService, 'rechercher').mockResolvedValue(createSuccess(anEtablissementMissionLocalList));
@@ -233,7 +233,7 @@ describe('RechercherAccompagnement', () => {
 
 			// WHEN
 			await screen.findByText(/1 établissement/);
-			const boutonsContact = screen.getAllByRole("button", { name: "Je souhaite être contacté(e)" });
+			const boutonsContact = screen.getAllByRole("button", { name: "Être contacté.e" });
 
 			// THEN
 			expect(boutonsContact[0]).toBeVisible();

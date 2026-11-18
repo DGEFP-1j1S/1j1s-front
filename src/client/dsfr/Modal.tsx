@@ -15,7 +15,7 @@ export function Modal({ id, titre, children }: React.PropsWithChildren<ModalProp
 					<div className="fr-col-12 fr-col-md-10">
 						<div className="fr-modal__body">
 							<div className="fr-modal__header">
-								<button type="button" className="fr-btn--close fr-btn" aria-controls={id} title="Fermer la modale">
+								<button data-fr-close type="button" className="fr-btn--close fr-btn" aria-controls={id} title="Fermer la modale">
 									Fermer
 								</button>
 							</div>
