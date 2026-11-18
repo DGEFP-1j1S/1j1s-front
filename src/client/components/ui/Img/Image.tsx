@@ -1,8 +1,6 @@
 import NextImage from 'next/image';
 import React, { useState } from 'react';
 
-import { Required } from '~/client/components/ui/Form/Champ/Champ.stories';
-
 const PLACEHOLDER_SRC = '/images/placeholder.webp';
 
 type StaticSrc = Exclude<React.ComponentPropsWithoutRef<typeof NextImage>['src'], string>
