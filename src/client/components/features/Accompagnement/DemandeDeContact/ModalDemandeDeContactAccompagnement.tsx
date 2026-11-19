@@ -19,6 +19,14 @@ export function ModalDemandeDeContactAccompagnement({ contactÉtablissementAccom
 	const modaleSuccesId = `modale-formulaire-succes-${useId().replace(/:/g, '')}`;
 	const modaleEchecId = `modale-formulaire-echec-${useId().replace(/:/g, '')}`;
 
+	const ouvrirModal = (modalId: string) => {
+		const modal = document.getElementById(modalId);
+
+		if (modal && window.dsfr) {
+			window.dsfr(modal)?.modal?.disclose();
+		}
+	};
+	
 	return (
 		<>
 			<Modal
@@ -52,12 +60,4 @@ export function ModalDemandeDeContactAccompagnement({ contactÉtablissementAccom
 			</Modal>
 		</>
 	);
-
-	const ouvrirModal = (modalId: string) => {
-		const modal = document.getElementById(modalId);
-
-		if (modal && window.dsfr) {
-			window.dsfr(modal)?.modal?.disclose();
-		}
-	};
 }
