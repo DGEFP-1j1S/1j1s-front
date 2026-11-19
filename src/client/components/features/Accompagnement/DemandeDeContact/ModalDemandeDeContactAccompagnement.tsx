@@ -29,18 +29,8 @@ export function ModalDemandeDeContactAccompagnement({ contactÉtablissementAccom
 				<p className="fr-text--sm">Tous les champs sont obligatoires sauf mention contraire</p>
 				<FormulaireDemandeDeContactAccompagnement
 					contactEtablissementAccompagnement={contactÉtablissementAccompagnement}
-					onSuccess={() => {
-						const modal = document.getElementById(modaleSuccesId);
-						if (modal && window.dsfr) {
-							window.dsfr(modal).modal.disclose();
-						}
-					}}
-					onFailure={() => {
-						const modal = document.getElementById(modaleEchecId);
-						if (modal && window.dsfr) {
-							window.dsfr(modal).modal.disclose();
-						}
-					}}
+					onSuccess={() => ouvrirModal(modaleSuccesId)}
+					onFailure={() => ouvrirModal(modaleEchecId)}
 				/>
 			</Modal>
 
@@ -62,4 +52,12 @@ export function ModalDemandeDeContactAccompagnement({ contactÉtablissementAccom
 			</Modal>
 		</>
 	);
+
+	const ouvrirModal = (modalId: string) => {
+		const modal = document.getElementById(modalId);
+
+		if (modal && window.dsfr) {
+			window.dsfr(modal)?.modal?.disclose();
+		}
+	};
 }
