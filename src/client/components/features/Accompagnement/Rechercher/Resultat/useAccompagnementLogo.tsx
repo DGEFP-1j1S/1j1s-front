@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { TypeEtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 
-export function useAccompagnementLogo(typeÉtablissement: TypeEtablissement) {
+export function useAccompagnementLogo(typeÉtablissement?: TypeEtablissement) {
 	return useMemo(() => {
 		switch (typeÉtablissement) {
 			case TypeEtablissement.INFO_JEUNE:
