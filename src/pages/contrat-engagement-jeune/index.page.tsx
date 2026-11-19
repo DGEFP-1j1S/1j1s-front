@@ -36,8 +36,8 @@ export default function ContratEngagementJeune() {
 						imgContain />
 				</div>
 				<QuEstCeQueCEst />
-				<Actions />
 				<PourquoiCEstFaitPourMoi />
+				<Actions />
 				<QuEstCeQueJyGagne />
 				<Allocations />
 				<Témoignages />
