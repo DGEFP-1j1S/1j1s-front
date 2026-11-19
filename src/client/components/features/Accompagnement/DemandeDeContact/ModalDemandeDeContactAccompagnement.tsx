@@ -30,21 +30,27 @@ export function ModalDemandeDeContactAccompagnement({ contactÉtablissementAccom
 				<FormulaireDemandeDeContactAccompagnement
 					contactEtablissementAccompagnement={contactÉtablissementAccompagnement}
 					onSuccess={() => {
-						window.dsfr(document.getElementById(modaleSuccesId)).modal.disclose()
+						const modal = document.getElementById(modaleSuccesId);
+						if (modal && window.dsfr) {
+							window.dsfr(modal).modal.disclose();
+						}
 					}}
 					onFailure={() => {
-						window.dsfr(document.getElementById(modaleEchecId)).modal.disclose()
+						const modal = document.getElementById(modaleEchecId);
+						if (modal && window.dsfr) {
+							window.dsfr(modal).modal.disclose();
+						}
 					}}
 				/>
 			</Modal>
 
-			<Modal id={modaleSuccesId}>
+			<Modal id={modaleSuccesId} titre="">
 				<div className="text-align--center">
 					<h1 className="fr-h2">Votre demande a bien été transmise !</h1>
 				</div>
 			</Modal>
 
-			<Modal id={modaleEchecId}>
+			<Modal id={modaleEchecId} titre="">
 				<div className="text-align--center">
 					<h1 className="fr-h2">Une erreur est survenue lors de l‘envoi du formulaire</h1>
 					<Button className="fr-btn fr-mr-2w" label="Retour au formulaire" data-fr-opened="false"

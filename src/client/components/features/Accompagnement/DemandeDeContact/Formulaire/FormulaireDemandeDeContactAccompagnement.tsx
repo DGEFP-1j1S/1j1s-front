@@ -120,7 +120,6 @@ export function FormulaireDemandeDeContactAccompagnement({
 						<Champ.Label>Age<Champ.Label.Complement>Exemple : 16 ans</Champ.Label.Complement></Champ.Label>
 						<Champ.Input
 							render={SelectSimple}
-							type="text"
 							required
 							optionsList={ageOptions}
 							name="age" />
