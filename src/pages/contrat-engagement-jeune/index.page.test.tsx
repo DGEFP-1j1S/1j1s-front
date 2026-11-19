@@ -1,6 +1,6 @@
 import '~/test-utils';
 
-import { render } from '@testing-library/react';
+import { render, screen } from "@testing-library/react";
 import React from 'react';
 
 import { mockUseRouter } from '~/client/components/useRouter.mock';
@@ -35,5 +35,18 @@ describe('Contrat engagement jeune', () => {
 		);
 
 		await expect(container).toBeAccessible();
+	});
+
+	it("affiche le titre de la page", () => {
+		// GIVEN
+		// WHEN
+		render(
+			<DependenciesProvider analyticsService={analyticsService}>
+				<ContratEngagementJeune />
+			</DependenciesProvider>,
+		);
+
+		// THEN
+		expect(screen.getByRole("heading", { level: 1, name: "Le Contrat d’Engagement Jeune, la solution pour vous" })).toBeVisible();
 	});
 });
