@@ -28,19 +28,12 @@ import { emailRegex } from '~/shared/emailRegex';
 import { urlRegex } from '~/shared/urlRegex';
 
 const EMAIL_OR_URL_REGEX = `${emailRegex}|${urlRegex}`;
-const MESSAGE_ERREUR_URL = 'Veuillez saisir une URL commençant par http:// ou https://';
-const MESSAGE_ERREUR_EMAIL_SANS_AROBASE = 'Veuillez saisir une adresse e-mail contenant un @';
-const MESSAGE_ERREUR_EMAIL_SANS_EXTENSION = 'Veuillez saisir une adresse e-mail finissant par une extension. Par exemple : .com';
-const MESSAGE_ERREUR_EMAIL = 'Veuillez saisir une adresse e-mail valide, au format bernard@email.fr';
+const MESSAGE_ERREUR_LIEN_CANDIDATURE = 'Veuillez saisir une URL commençant par http:// ou https:// (par exemple https://monsite.fr) ou veuillez saisir une adresse e-mail contenant un @ et finissant par une extension (par exemple : bernard@email.com)';
 
 function validerLienCandidature(value: string | number | readonly string[] | undefined): string {
 	const lien = String(value ?? '').trim();
 	if (lien === '' || new RegExp(`^(?:${EMAIL_OR_URL_REGEX})$`).test(lien)) return '';
-	if (!lien.includes('@')) {
-		return /^https?:|^www\.|[./]/.test(lien) ? MESSAGE_ERREUR_URL : MESSAGE_ERREUR_EMAIL_SANS_AROBASE;
-	}
-	const domaine = lien.slice(lien.lastIndexOf('@') + 1);
-	return /\.[a-zA-Z]{2,}$/.test(domaine) ? MESSAGE_ERREUR_EMAIL : MESSAGE_ERREUR_EMAIL_SANS_EXTENSION;
+	return MESSAGE_ERREUR_LIEN_CANDIDATURE;
 }
 const DUREE_MOIS_EN_JOUR = 30;
 const LONGUEUR_MAX_TITRE = 200;
