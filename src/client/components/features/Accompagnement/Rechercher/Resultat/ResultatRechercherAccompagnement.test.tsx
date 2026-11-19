@@ -342,11 +342,10 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 
 				await user.click(screen.getByRole('button', { name: 'Envoyer mes informations afin d‘être rappelé(e)' }));
 
-				let modalEchec = await screen.findByRole('dialog');
+				const modalEchec = await screen.findByRole('dialog');
 				expect(within(modalEchec).getByRole('heading', { name: 'Une erreur est survenue lors de l‘envoi du formulaire', level: 1})).toBeVisible();
 				await user.click(within(modalEchec).getByRole('button', { name: 'Fermer' }));
-				modalEchec = screen.queryByRole('dialog');
-				expect(modalEchec).not.toBeInTheDocument();
+				expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 
 				expect(screen.queryByRole('dialog', { name: 'Formulaire de contact' })).not.toBeInTheDocument();
 			});

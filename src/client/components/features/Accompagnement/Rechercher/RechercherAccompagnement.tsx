@@ -122,6 +122,8 @@ export function RechercherAccompagnement() {
 				return "Infos jeunes";
 			case TypeEtablissement.MISSION_LOCALE:
 				return "Missions locales";
+			default:
+				return "";
 		}
 	}, [accompagnementQuery.typeAccompagnement]);
 

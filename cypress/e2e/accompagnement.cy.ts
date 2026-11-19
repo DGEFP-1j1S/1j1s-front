@@ -78,7 +78,7 @@ describe('Parcours Accompagnement', () => {
 					.children('li')
 					.should('have.length', 1);
 
-				cy.findByRole('button', { name: 'Je souhaite être contacté(e)' }).click();
+				cy.findByRole('button', { name: 'Être contacté.e' }).click();
 
 				cy.findByRole('textbox', { name: 'Prénom Exemple : Jean' }).type('John', { force: true });
 				cy.findByRole('textbox', { name: 'Nom Exemple : Dupont' }).type('Doe', { force: true });
