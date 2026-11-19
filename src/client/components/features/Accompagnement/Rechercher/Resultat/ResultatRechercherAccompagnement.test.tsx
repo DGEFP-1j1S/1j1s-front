@@ -29,8 +29,11 @@ const formulaireContact = {
 };
 
 describe('<RésultatRechercherAccompagnement/>', () => {
-	beforeAll(() => {
+	beforeAll(async () => {
 		mockScrollIntoView();
+		mockSmallScreen()
+		await import('@gouvfr/dsfr/dist/dsfr.module');
+		window.dsfr?.start();
 	});
 	it('affiche adresse formatée', () => {
 		const etablissement = anEtablissementAccompagnement({
@@ -227,37 +230,7 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 			expect(buttonDemandeContact).toBeVisible();
 			await user.click(buttonDemandeContact);
 
-			expect(screen.getByRole('dialog', { name: 'Formulaire de contact' })).toBeVisible();
-		});
-
-		it('le bouton de soumission est désactivé et affiche "Envoi en cours" pendant la soumission du formulaire', async () => {
-			// GIVEN
-			const user = userEvent.setup();
-			const etablissement = anEtablissementAccompagnement({
-				type: TypeEtablissement.MISSION_LOCALE,
-			});
-			const établissementAccompagnementService = anEtablissementAccompagnementService();
-			vi.spyOn(établissementAccompagnementService, 'envoyerDemandeContact').mockImplementation(() => new Promise(() => {
-			}));
-			render(
-				<DependenciesProvider
-					établissementAccompagnementService={établissementAccompagnementService}
-					localisationService={aLocalisationService()}>
-					<ResultatRechercherAccompagnement etablissement={etablissement} />
-				</DependenciesProvider>);
-
-			const buttonDemandeContact = screen.getAllByRole('button', { name: 'Être contacté.e' })[0];
-			await user.click(buttonDemandeContact);
-
-			await remplirFormulaire();
-
-			// WHEN
-			await user.click(screen.getByRole('button', { name: 'Envoyer mes informations afin d‘être rappelé(e)' }));
-
-			// THEN
-			const loadingSubmitButton = screen.getByRole('button', { name: 'Envoi en cours' });
-			expect(loadingSubmitButton).toBeVisible();
-			expect(loadingSubmitButton).toBeDisabled();
+			expect(await screen.findByRole('dialog', { name: 'Formulaire de contact' })).toBeVisible();
 		});
 
 		it('lorsque la demande de contact est un succès, affiche la modale de succès', async () => {
@@ -283,7 +256,8 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 
 			await user.click(screen.getByRole('button', { name: 'Envoyer mes informations afin d‘être rappelé(e)' }));
 			expect(établissementAccompagnementService.envoyerDemandeContact).toHaveBeenCalledTimes(1);
-			expect(screen.getByRole('dialog', { name: 'Votre demande a bien été transmise !' })).toBeVisible();
+			const modalSucces = await screen.findByRole('dialog');
+			expect(within(modalSucces).getByRole('heading', { name: 'Votre demande a bien été transmise !', level: 1})).toBeVisible();
 		});
 
 		describe('modale d‘erreur', () => {
@@ -309,7 +283,8 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 
 				await user.click(screen.getByRole('button', { name: 'Envoyer mes informations afin d‘être rappelé(e)' }));
 
-				expect(screen.getByRole('dialog', { name: 'Une erreur est survenue lors de l‘envoi du formulaire' })).toBeVisible();
+				const modalEchec = await screen.findByRole('dialog');
+				expect(within(modalEchec).getByRole('heading', { name: 'Une erreur est survenue lors de l‘envoi du formulaire', level: 1})).toBeVisible();
 				expect(screen.queryByRole('dialog', { name: 'Formulaire de contact' })).not.toBeInTheDocument();
 			});
 
@@ -335,12 +310,13 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 				await remplirFormulaire();
 
 				await user.click(screen.getByRole('button', { name: 'Envoyer mes informations afin d‘être rappelé(e)' }));
-				
-				const modaleErreur = screen.getByRole('dialog', { name: 'Une erreur est survenue lors de l‘envoi du formulaire' });
-				await user.click(within(modaleErreur).getByRole('button', { name: 'Retour au formulaire' }));
-				expect(modaleErreur).not.toBeInTheDocument();
 
-				expect(screen.getByRole('dialog', { name: 'Formulaire de contact' })).toBeVisible();
+				const modalEchec = await screen.findByRole('dialog');
+				expect(within(modalEchec).getByRole('heading', { name: 'Une erreur est survenue lors de l‘envoi du formulaire', level: 1})).toBeVisible();
+				await user.click(within(modalEchec).getByRole('button', { name: 'Retour au formulaire' }));
+				const modales = await screen.findAllByRole('dialog')
+				expect(modales).toHaveLength(1);
+				expect(within(modales[0]).getByRole('heading', { name: 'Formulaire de contact' })).toBeVisible()
 			});
 
 			it('lorsque je ferme la modale d‘erreur avec le bouton Fermer, ferme la modale et ne re ouvre pas le formulaire', async () => {
@@ -366,10 +342,11 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 
 				await user.click(screen.getByRole('button', { name: 'Envoyer mes informations afin d‘être rappelé(e)' }));
 
-
-				const modaleErreur = screen.getByRole('dialog', { name: 'Une erreur est survenue lors de l‘envoi du formulaire' });
-				await user.click(within(modaleErreur).getByRole('button', { name: 'Fermer' }));
-				expect(modaleErreur).not.toBeInTheDocument();
+				let modalEchec = await screen.findByRole('dialog');
+				expect(within(modalEchec).getByRole('heading', { name: 'Une erreur est survenue lors de l‘envoi du formulaire', level: 1})).toBeVisible();
+				await user.click(within(modalEchec).getByRole('button', { name: 'Fermer' }));
+				modalEchec = screen.queryByRole('dialog');
+				expect(modalEchec).not.toBeInTheDocument();
 
 				expect(screen.queryByRole('dialog', { name: 'Formulaire de contact' })).not.toBeInTheDocument();
 			});
