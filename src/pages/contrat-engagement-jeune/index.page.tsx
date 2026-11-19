@@ -1,9 +1,8 @@
 import React from 'react';
 
+import { BandeauAccueilApplicationMobile } from "~/client/components/features/ApplicationMobile/BandeauAccueilApplicationMobile";
 import Accompagnement from '~/client/components/features/ContratEngagementJeune/Accompagnement/Accompagnement';
 import Actions from '~/client/components/features/ContratEngagementJeune/Actions/Actions';
-import Application from '~/client/components/features/ContratEngagementJeune/Application/Application';
-import DemandeContactCEJ from '~/client/components/features/ContratEngagementJeune/DemandeDeContactCEJ/DemandeContactCEJ';
 import PourquoiCEstFaitPourMoi from '~/client/components/features/ContratEngagementJeune/Pourquoi/PourquoiCEstFaitPourMoi';
 import QuEstCeQueCEst from '~/client/components/features/ContratEngagementJeune/QuEstCeQueCest/QuEstCeQueCEst';
 import QuEstCeQueJyGagne from '~/client/components/features/ContratEngagementJeune/QuEstCeQueJyGagne/QuEstCeQueJyGagne';
@@ -40,8 +39,10 @@ export default function ContratEngagementJeune() {
 				<QuEstCeQueJyGagne />
 				<Temoignages />
 				<Accompagnement />
-				<DemandeContactCEJ />
-				<Application />
+				<BandeauAccueilApplicationMobile
+					estLive={process.env.NEXT_PUBLIC_APP_MOBILE_1J1S_LIVE === "1"}
+					titre="L’application 1 jeune 1 solution pour suivre mon parcours CEJ"
+					titreAs="h2" />
 			</main>
 		</>
 	);

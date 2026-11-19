@@ -1,4 +1,5 @@
 import React from 'react';
+import { HtmlHeadingTag } from "~/client/components/props";
 import { Image } from "~/client/components/ui/Img";
 import { Link } from "~/client/components/ui/Link/Link";
 
@@ -6,12 +7,17 @@ interface HeroApplicationMobileProps {
 	estLive: boolean
 }
 
-export function BandeauAccueilApplicationMobile({ estLive }: HeroApplicationMobileProps) {
+interface BandeauAccueilApplicationMobileProps extends HeroApplicationMobileProps {
+	titre?: string
+	titreAs?: HtmlHeadingTag
+}
+
+export function BandeauAccueilApplicationMobile({ estLive, titre = "La nouvelle application 1jeune1solution", titreAs = "h1" }: BandeauAccueilApplicationMobileProps) {
 	return (
 		<section className="fr-container background--blue-light fr-p-0 fr-my-5v border-left border-left--large border-left--high-blue">
 			<div className="fr-grid-row">
 				<div className="fr-col-lg-7 fr-col-12 fr-py-md-6w fr-py-3w fr-pl-md-8w fr-pr-md-0 fr-px-4w">
-					<h1>La nouvelle application 1jeune1solution</h1>
+					{React.createElement(titreAs, { className: "fr-h1" }, titre)}
 					{ !estLive &&
 						<div className="fr-hidden fr-unhidden-lg">
 							<div className="fr-grid-row fr-grid-row--gutters fr-grid-row--bottom fr-mb-5v">
