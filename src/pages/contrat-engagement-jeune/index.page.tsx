@@ -2,7 +2,6 @@ import React from 'react';
 
 import Accompagnement from '~/client/components/features/ContratEngagementJeune/Accompagnement/Accompagnement';
 import Actions from '~/client/components/features/ContratEngagementJeune/Actions/Actions';
-import Allocations from '~/client/components/features/ContratEngagementJeune/Allocations/Allocations';
 import Application from '~/client/components/features/ContratEngagementJeune/Application/Application';
 import DemandeContactCEJ from '~/client/components/features/ContratEngagementJeune/DemandeDeContactCEJ/DemandeContactCEJ';
 import PourquoiCEstFaitPourMoi from '~/client/components/features/ContratEngagementJeune/Pourquoi/PourquoiCEstFaitPourMoi';
@@ -39,7 +38,6 @@ export default function ContratEngagementJeune() {
 				<PourquoiCEstFaitPourMoi />
 				<Actions />
 				<QuEstCeQueJyGagne />
-				<Allocations />
 				<Témoignages />
 				<Accompagnement />
 				<DemandeContactCEJ />
