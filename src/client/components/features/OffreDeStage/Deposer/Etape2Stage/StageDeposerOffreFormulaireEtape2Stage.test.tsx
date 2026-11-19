@@ -247,14 +247,16 @@ describe('<Stage />', () => {
 	});
 
 	describe('quand je saisis le lien ou l’adresse e-mail de candidature', () => {
+		const messageAttendu = 'Veuillez saisir une URL commençant par http:// ou https:// (par exemple https://monsite.fr) ou veuillez saisir une adresse e-mail contenant un @ et finissant par une extension (par exemple : bernard@email.com)';
+
 		it.each([
-			['www.exemple.fr', 'Veuillez saisir une URL commençant par http:// ou https://'],
-			['http//exemple.fr', 'Veuillez saisir une URL commençant par http:// ou https://'],
-			['candidature', 'Veuillez saisir une adresse e-mail contenant un @'],
-			['candidature@exemple', 'Veuillez saisir une adresse e-mail finissant par une extension. Par exemple : .com'],
-			['candidature@exemple.', 'Veuillez saisir une adresse e-mail finissant par une extension. Par exemple : .com'],
-			['@exemple.com', 'Veuillez saisir une adresse e-mail valide, au format bernard@email.fr'],
-		])('quand je saisis « %s », affiche le message « %s »', async (saisie, messageAttendu) => {
+			'www.exemple.fr',
+			'http//exemple.fr',
+			'candidature',
+			'candidature@exemple',
+			'candidature@exemple.',
+			'@exemple.com',
+		])('quand je saisis « %s », affiche le message d’erreur', async (saisie) => {
 			const user = userEvent.setup();
 			render(<DependenciesProvider
 				stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}
