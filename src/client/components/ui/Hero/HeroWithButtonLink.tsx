@@ -7,6 +7,7 @@ import { Link } from '../Link/Link';
 interface HeroWithButtonLinkProps {
   title: React.ReactNode
   content: React.ReactNode
+  description?: React.ReactNode
   buttonLabel: string
   buttonLabelSecondary?: string
   buttonHref: string
@@ -18,7 +19,7 @@ interface HeroWithButtonLinkProps {
 }
 
 export function HeroWithButtonLink(props: HeroWithButtonLinkProps) {
-	const { title, content, buttonLabel, buttonLabelSecondary, buttonHref, buttonHrefSecondary, imgSrc, imgAlt, imgContain = false, additionalInformation } = props;
+	const { title, content, description, buttonLabel, buttonLabelSecondary, buttonHref, buttonHrefSecondary, imgSrc, imgAlt, imgContain = false, additionalInformation } = props;
 
 	return (
 		<div className="fr-container">
@@ -31,6 +32,7 @@ export function HeroWithButtonLink(props: HeroWithButtonLinkProps) {
 						<p className="fr-text--lead fr-mb-4w">
 							{content}
 						</p>
+						{description && <p className="fr-text--lg fr-mb-4w whitespace--pre-line">{description}</p>}
 						{ (buttonLabelSecondary && buttonHrefSecondary) ?
 							(<ul className="fr-btns-group fr-btns-group--lg fr-btns-group--equisized">
 								<li>
