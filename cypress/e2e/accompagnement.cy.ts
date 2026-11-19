@@ -104,7 +104,7 @@ describe('Parcours Accompagnement', () => {
 
 				cy.findByRole('heading', { level: 1, name: 'Votre demande a bien été transmise !' })
 					.should('exist');
-				cy.findByRole('button', { description: 'Fermer' }).click();
+				cy.findByRole('button', { description: 'Fermer la modale' }).click();
 
 				cy.findByRole('dialog').should('not.exist');
 			});
