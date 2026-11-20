@@ -37,7 +37,6 @@ const decouvrirLesMetiers: BreadcrumbItem = { href: "/decouvrir-les-metiers", la
 const benevolat: BreadcrumbItem = { href: "/benevolat", label: "Bénévolat" };
 const serviceCivique: BreadcrumbItem = { href: "/service-civique", label: "Service civique" };
 const annoncesLogement: BreadcrumbItem = { href: "/logements/annonces", label: "Annonces de logement" };
-const immersions: BreadcrumbItem = { href: "/immersions", label: "Je propose des immersions" };
 const faq: BreadcrumbItem = { href: "/faq", label: "FAQ" };
 const actualites: BreadcrumbItem = { href: "/actualites", label: "Actualités" };
 
@@ -81,7 +80,7 @@ export const filDArianeConfig: Record<string, FilDArianeEntry> = {
 	"/formations/apprentissage": { label: "Formations en apprentissage", parents: [] },
 	"/formations/apprentissage/[id]": { label: fromProp("formation", "titre"), parents: [formationsApprentissage] },
 	"/immersions": { label: "Je propose des immersions", parents: [] },
-	"/immersions/referencer-mon-entreprise": { label: "Je référence mon entreprise", parents: [immersions] },
+	"/immersion-professionnelle": { label: "Immersion professionnelle", parents: [] },
 	"/je-deviens-mentor": { label: "Je deviens mentor", parents: [] },
 	"/je-recrute": { label: "Je recrute", parents: [] },
 	"/je-recrute-afpr-poei": { label: "Je forme les jeunes grâce à l'emploi", parents: [] },
