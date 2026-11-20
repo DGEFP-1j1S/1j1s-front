@@ -63,4 +63,35 @@ describe('FormulaireRechercheAnnonceLogement', () => {
 
 		expect(push).toHaveBeenCalledWith({ query: 'ville=Lyon&typesBien=appartement&prixMin=300&prixMax=800&page=1' }, undefined, { scroll: false });
 	});
+
+	it('à la réinitialisation, vide tous les champs sans lancer la recherche', async () => {
+		const user = userEvent.setup();
+		const push = vi.fn();
+		mockUseRouter({
+			push,
+			query: {
+				prixMax: '800',
+				prixMin: '300',
+				surfaceMax: '80',
+				surfaceMin: '20',
+				typesBien: 'appartement',
+				typesOffre: 'location',
+				ville: 'Lyon',
+			},
+		});
+		render(<FormulaireRechercheAnnonceLogement facettes={FACETTES} />);
+
+		await user.click(screen.getByRole('button', { name: 'Réinitialiser' }));
+
+		expect(screen.getByRole('textbox', { name: /Ville/ })).toHaveValue('');
+		expect(screen.getByRole('combobox', { name: 'Type d‘offre Exemple : Location' })).not.toHaveTextContent(/^Location/);
+		expect(screen.getByRole('combobox', { name: 'Type de bien Exemple : Appartement' })).not.toHaveTextContent(/^Appartement/);
+		expect(screen.getByRole('spinbutton', { name: 'Surface minimum (m²)' })).toHaveValue(null);
+		expect(screen.getByRole('spinbutton', { name: 'Surface maximum (m²)' })).toHaveValue(null);
+		expect(screen.getByRole('spinbutton', { name: 'Prix minimum (€)' })).toHaveValue(null);
+		expect(screen.getByRole('spinbutton', { name: 'Prix maximum (€)' })).toHaveValue(null);
+		const valeursRenseignees = Array.from(new FormData(screen.getByRole('search') as HTMLFormElement)).filter(([, valeur]) => valeur !== '');
+		expect(valeursRenseignees).toEqual([]);
+		expect(push).not.toHaveBeenCalled();
+	});
 });

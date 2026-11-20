@@ -95,4 +95,32 @@ describe('FormulaireRechercheAccompagnement', () => {
 		expect(selectTypeAccompagnement).toHaveTextContent('Missions locales');
 		expect(screen.getByDisplayValue('Missions locales')).toBeInTheDocument();
 	});
+
+	it('vide tous les champs sans relancer la recherche quand on réinitialise le formulaire', async () => {
+		// GIVEN
+		const routerPush = vi.fn();
+		const user = userEvent.setup();
+		mockUseRouter({ push: routerPush, query: {
+			typeAccompagnement: 'mission_locale',
+			...aCommuneQuery({
+				codePostal: '75001',
+				ville: 'Paris',
+			}),
+		} });
+		render(
+			<DependenciesProvider localisationService={aLocalisationService()}>
+				<FormulaireRechercheAccompagnement />
+			</DependenciesProvider>,
+		);
+
+		// WHEN
+		await user.click(screen.getByRole('button', { name: 'Réinitialiser' }));
+
+		// THEN
+		expect(screen.getByRole('combobox', { name: /Localisation/i })).toHaveValue('');
+		expect(screen.queryByDisplayValue('75001')).not.toBeInTheDocument();
+		expect(screen.getByRole('combobox', { name: 'Type d‘accompagnement Exemple : Missions locales' })).toHaveDisplayValue('Sélectionnez votre choix');
+		expect(screen.queryByDisplayValue('Missions locales')).not.toBeInTheDocument();
+		expect(routerPush).not.toHaveBeenCalled();
+	});
 });

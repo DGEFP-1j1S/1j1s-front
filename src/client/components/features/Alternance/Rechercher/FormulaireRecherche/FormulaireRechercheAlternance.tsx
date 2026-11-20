@@ -3,16 +3,16 @@ import React, { FormEvent } from 'react';
 
 import styles
 	from '~/client/components/features/Alternance/Rechercher/FormulaireRecherche/FormulaireRechercheAlternance.module.scss';
-import { ButtonComponent } from '~/client/components/ui/Button/ButtonComponent';
+import { BoutonsRecherche } from '~/client/components/ui/Form/BoutonsRecherche/BoutonsRecherche';
 import { ComboboxCommune } from '~/client/components/ui/Form/Combobox/ComboboxCommune/ComboboxCommune';
 import {
 	ComboboxMetiers,
 } from '~/client/components/ui/Form/Combobox/ComboboxMetiers';
-import { Icon } from '~/client/components/ui/Icon/Icon';
 import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { MetierDependenciesProvider } from '~/client/context/metier.context';
 import { useAlternanceQuery } from '~/client/hooks/useAlternanceQuery';
 import { mapToCommune } from '~/client/hooks/useCommuneQuery';
+import { useReinitialisationFormulaire } from '~/client/hooks/useReinitialisationFormulaire';
 import { MetierService } from '~/client/services/metiers/metier.service';
 import { getFormAsQuery } from '~/client/utils/form.util';
 
@@ -27,6 +27,7 @@ interface FormulaireRechercheAlternanceProps {
 export function FormulaireRechercheAlternance(props: FormulaireRechercheAlternanceProps) {
 	const onSubmit = props.onSubmit || doNothing;
 	const queryParams = useAlternanceQuery();
+	const { cle, reinitialiser, valeursInitiales } = useReinitialisationFormulaire(queryParams);
 	const {
 		libelleMetier,
 		codeRomes,
@@ -36,7 +37,7 @@ export function FormulaireRechercheAlternance(props: FormulaireRechercheAlternan
 		latitudeCommune,
 		ville,
 		codePostal,
-	} = queryParams;
+	} = valeursInitiales;
 
 	const metierService = useDependency<MetierService>('metierLbaService');
 
@@ -68,7 +69,7 @@ export function FormulaireRechercheAlternance(props: FormulaireRechercheAlternan
 				className={styles.rechercheOffreForm}
 				aria-label="Rechercher une alternance"
 				onSubmit={updateRechercherAlternanceQueryParams}>
-				<div className={styles.filtresRechercherOffre}>
+				<div className={styles.filtresRechercherOffre} key={cle}>
 					<MetierDependenciesProvider metierService={metierService}>
 						<ComboboxMetiers
 							defaultValue={domaineDefaultValue}
@@ -83,11 +84,7 @@ export function FormulaireRechercheAlternance(props: FormulaireRechercheAlternan
 						required />
 				</div>
 				<div className={styles.buttonRechercher}>
-					<ButtonComponent
-						label="Rechercher"
-						icon={<Icon name="magnifying-glass" />}
-						iconPosition="right"
-						type="submit" />
+					<BoutonsRecherche onReinitialiser={reinitialiser} />
 				</div>
 			</form>
 		</>

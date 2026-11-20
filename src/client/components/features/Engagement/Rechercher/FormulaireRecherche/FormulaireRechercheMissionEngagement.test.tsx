@@ -8,6 +8,7 @@ import {
 import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { mockScrollIntoView } from '~/client/components/window.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
+import { aCommuneQuery } from '~/client/hooks/useCommuneQuery';
 import { aLocalisationService } from '~/client/services/localisation/localisation.service.fixture';
 import { aMissionEngagementDomainList } from '~/server/engagement/domain/missionEngagement.fixture';
 
@@ -168,5 +169,34 @@ describe('FormulaireRechercheMissionEngagement', () => {
 				expect(routerPush).toHaveBeenCalledWith({ query: expect.stringContaining('distanceCommune=30') }, undefined, { shallow: true });
 			});
 		});
+	});
+
+	it('vide tous les champs sans relancer la recherche quand on réinitialise le formulaire', async () => {
+		// GIVEN
+		const routerPush = vi.fn();
+		const user = userEvent.setup();
+		mockUseRouter({ push: routerPush, query: {
+			...aCommuneQuery(),
+			distanceCommune: '30',
+			domain: 'education',
+			ouvertsAuxMineurs: 'true',
+		} });
+		render(
+			<DependenciesProvider localisationService={aLocalisationService()}>
+				<FormulaireRechercheMissionEngagement domainList={aMissionEngagementDomainList()} />
+			</DependenciesProvider>,
+		);
+
+		// WHEN
+		await user.click(screen.getByRole('button', { name: 'Réinitialiser' }));
+
+		// THEN
+		expect(screen.getByRole('combobox', { name: 'Domaine Exemple : Culture et loisirs' })).toHaveDisplayValue('Sélectionnez votre choix');
+		expect(screen.queryByDisplayValue('education')).not.toBeInTheDocument();
+		expect(screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' })).toHaveValue('');
+		expect(screen.queryByDisplayValue('75056')).not.toBeInTheDocument();
+		expect(screen.queryByRole('combobox', { name: 'Rayon Exemple : 30 km' })).not.toBeInTheDocument();
+		expect(screen.getByRole('checkbox', { name: 'Dès 16 ans' })).not.toBeChecked();
+		expect(routerPush).not.toHaveBeenCalled();
 	});
 });

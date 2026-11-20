@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { BoutonsRecherche } from '~/client/components/ui/Form/BoutonsRecherche/BoutonsRecherche';
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 import { ChampFacette } from '~/client/components/ui/Form/ChampFacette/ChampFacette';
 import { ChampSuggestionsMultiples } from '~/client/components/ui/Form/ChampSuggestionsMultiples/ChampSuggestionsMultiples';
@@ -7,7 +8,7 @@ import { Input } from '~/client/components/ui/Form/Input';
 import { useDependency } from '~/client/context/dependenciesContainer.context';
 import { useStageQuery } from '~/client/hooks/useStageQuery';
 import { StageService } from '~/client/services/stage/stage.service';
-import { Button } from '~/client/dsfr';
+import { useReinitialisationFormulaire } from '~/client/hooks/useReinitialisationFormulaire';
 import { useSoumissionRechercheIndexee } from '~/client/hooks/useSoumissionRechercheIndexee';
 import { Facette } from '~/server/services/meilisearch/rechercheIndexee';
 import { DomainesStage } from '~/server/stages/repository/domainesStage';
@@ -56,18 +57,19 @@ export function FormulaireRechercheOffreStage({ facettes }: FormulaireRechercheO
 	const stageService = useDependency<StageService>('stageService');
 
 	const rechercher = useSoumissionRechercheIndexee(queryParams);
+	const { cle, reinitialiser, valeursInitiales } = useReinitialisationFormulaire(queryParams);
 
 	return (
 		<form className="border--blue fr-p-5w" role="search" aria-label="Rechercher un stage" onSubmit={rechercher}>
 			<h2 className="fr-h4 fr-mb-3w">Trouvez un stage qui vous correspond</h2>
-			<div className="fr-grid-row fr-grid-row--gutters">
+			<div className="fr-grid-row fr-grid-row--gutters" key={cle}>
 				<div className="fr-col-12 fr-col-md-6">
 					<Champ className="fr-input-group">
 						<Champ.Label>
 							Métiers, mots clés, …
 							<Champ.Label.Complement>Exemples : designer, juriste…</Champ.Label.Complement>
 						</Champ.Label>
-						<Champ.Input render={Input} name="motCle" defaultValue={queryParams.motCle} />
+						<Champ.Input render={Input} name="motCle" defaultValue={valeursInitiales.motCle} />
 						<Champ.Error />
 					</Champ>
 				</div>
@@ -77,7 +79,7 @@ export function FormulaireRechercheOffreStage({ facettes }: FormulaireRechercheO
 						labelComplement="Exemples : Toulouse, Paris…"
 						name="localisations"
 						optionsAriaLabel="villes"
-						valeursInitiales={queryParams.localisations ?? []}
+						valeursInitiales={valeursInitiales.localisations ?? []}
 						rechercher={(saisie) => stageService.rechercherLocalisations(saisie)}
 						messagePasDeResultat={MESSAGE_PAS_DE_RESULTAT} />
 				</div>
@@ -86,7 +88,7 @@ export function FormulaireRechercheOffreStage({ facettes }: FormulaireRechercheO
 						label="Domaines"
 						name="domaines"
 						facettes={facettes.domaines}
-						valeursInitiales={queryParams.domaines ?? []}
+						valeursInitiales={valeursInitiales.domaines ?? []}
 						tri={sortWithNonRenseigneAtTheEnd} />
 				</div>
 				<div className="fr-col-12 fr-col-md-6">
@@ -94,12 +96,12 @@ export function FormulaireRechercheOffreStage({ facettes }: FormulaireRechercheO
 						label="Durée de stage"
 						name="durees"
 						facettes={facettes.durees}
-						valeursInitiales={queryParams.durees ?? []}
+						valeursInitiales={valeursInitiales.durees ?? []}
 						tri={sortByDurationAscending} />
 				</div>
 			</div>
 			<div className="fr-grid-row fr-grid-row--center fr-mt-4w">
-				<Button className="fr-btn--lg" label="Rechercher" type="submit" />
+				<BoutonsRecherche onReinitialiser={reinitialiser} />
 			</div>
 		</form>
 	);
