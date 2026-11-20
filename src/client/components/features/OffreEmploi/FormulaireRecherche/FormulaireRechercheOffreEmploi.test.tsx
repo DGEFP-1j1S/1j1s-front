@@ -275,5 +275,43 @@ describe('FormulaireRechercheOffreEmploi', () => {
 			expect(routerPush).toHaveBeenCalledWith({ query: 'motCle=boulangerie&page=1' }, undefined, { scroll: false });
 		});
 	});
+
+	describe('quand on réinitialise le formulaire', () => {
+		const query = {
+			codeLocalisation: '75110',
+			codePostalLocalisation: '75010',
+			experienceExigence: EXPÉRIENCE_DEBUTANT.valeur,
+			grandDomaine: referentielDomaineList[0].code,
+			motCle: 'Boulanger',
+			nomLocalisation: 'Paris',
+			tempsDeTravail: TEMPS_PLEIN.valeur,
+			typeDeContrats: 'CDD',
+			typeLocalisation: 'COMMUNE',
+		};
+
+		it('vide tous les champs sans relancer la recherche', async () => {
+			// GIVEN
+			const routerPush = vi.fn();
+			const user = userEvent.setup();
+			mockUseRouter({ push: routerPush, query });
+			render(
+				<DependenciesProvider localisationService={aLocalisationService()}>
+					<FormulaireRechercheOffreEmploi />
+				</DependenciesProvider>,
+			);
+
+			// WHEN
+			await user.click(screen.getByRole('button', { name: 'Réinitialiser' }));
+
+			// THEN
+			expect(screen.getByRole('textbox', { name: /Métier, mot-clé/i })).toHaveValue('');
+			expect(screen.getByRole('combobox', { name: /Localisation/i })).toHaveValue('');
+			expect(screen.getByRole('option', { hidden: true, name: CONTRAT_CDD.libelléCourt })).toHaveAttribute('aria-selected', 'false');
+			expect(screen.getByRole('option', { hidden: true, name: TEMPS_PLEIN.libellé })).toHaveProperty('selected', false);
+			expect(screen.getByRole('option', { hidden: true, name: EXPÉRIENCE_DEBUTANT.libellé })).toHaveProperty('selected', false);
+			expect(screen.getByRole('option', { hidden: true, name: referentielDomaineList[0].libelle })).toHaveAttribute('aria-selected', 'false');
+			expect(routerPush).not.toHaveBeenCalled();
+		});
+	});
 });
 

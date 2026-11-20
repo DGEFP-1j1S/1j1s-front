@@ -158,4 +158,41 @@ describe('FormulaireRechercheStages3eEt2de', () => {
 
 		expect(stage3eEt2deService.rechercherStage3eEt2de).not.toHaveBeenCalled();
 	});
+
+	it('quand on réinitialise le formulaire, vide tous les champs sans lancer la recherche', async () => {
+		const routerPush = vi.fn();
+		const user = userEvent.setup();
+		mockUseRouter({
+			push: routerPush, query: {
+				...aCommuneQuery({
+					codeCommune: '75056',
+					codePostal: '75006',
+					latitudeCommune: '48.859',
+					longitudeCommune: '2.347',
+					ville: 'Paris',
+				}),
+				codeMetier: 'codeMetier',
+				distanceCommune: '100',
+				libelleMetier: 'boulanger',
+			},
+		});
+		render(
+			<DependenciesProvider
+				localisationService={aLocalisationService()}
+				stage3eEt2deService={aStage3eEt2deService()}
+				metierStage3eEt2deService={aMetierService()}>
+				<FormulaireRechercheStages3eEt2de />
+			</DependenciesProvider>,
+		);
+		expect(screen.getByRole('combobox', { name: 'Métier (optionnel) Exemples : boulangerie, enseignement' })).toHaveValue('boulanger');
+
+		await user.click(screen.getByRole('button', { name: 'Réinitialiser' }));
+
+		expect(screen.getByRole('combobox', { name: 'Métier (optionnel) Exemples : boulangerie, enseignement' })).toHaveValue('');
+		expect(screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' })).toHaveValue('');
+		expect(screen.queryByRole('combobox', { name: 'Rayon Exemple : 30 km' })).not.toBeInTheDocument();
+		const valeursRenseignees = Array.from(new FormData(screen.getByRole('search') as HTMLFormElement)).filter(([, valeur]) => valeur !== '');
+		expect(valeursRenseignees).toEqual([]);
+		expect(routerPush).not.toHaveBeenCalled();
+	});
 });

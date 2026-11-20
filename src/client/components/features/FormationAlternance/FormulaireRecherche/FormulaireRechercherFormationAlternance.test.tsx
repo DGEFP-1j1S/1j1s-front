@@ -366,4 +366,41 @@ describe('FormulaireRechercherFormationAlternance', () => {
 			libelleMetier: expect.anything(),
 		});
 	});
+
+	describe('quand on réinitialise le formulaire', () => {
+		it('vide tous les champs sans lancer la recherche', async () => {
+			const routerPush = vi.fn();
+			mockUseRouter({
+				push: routerPush,
+				query: {
+					codeRomes: 'D1102,D1104',
+					distanceCommune: '30',
+					libelleMetier: 'Boulangerie, pâtisserie, chocolaterie',
+					niveauEtudes: '4',
+					...aCommuneQuery({
+						codeCommune: '75056',
+						codePostal: '75001',
+						latitudeCommune: '48.859',
+						longitudeCommune: '2.347',
+						ville: 'Paris',
+					}),
+				},
+			});
+			const user = userEvent.setup();
+			render(
+				<DependenciesProvider localisationService={aLocalisationService()} metierLbaService={aMetierService()}>
+					<FormulaireRechercherFormationAlternance />
+				</DependenciesProvider>,
+			);
+
+			await user.click(screen.getByRole('button', { name: 'Réinitialiser' }));
+
+			expect(screen.getByRole('combobox', { name: 'Domaine Exemples : boulangerie, enseignement' })).toHaveValue('');
+			expect(screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' })).toHaveValue('');
+			expect(screen.getByRole('combobox', { name: /Niveau d’études visé/i })).toHaveTextContent(/^Sélectionnez votre choix/);
+			const valeursRenseignees = Array.from(new FormData(screen.getByRole('form') as HTMLFormElement)).filter(([, valeur]) => valeur !== '');
+			expect(valeursRenseignees).toEqual([]);
+			expect(routerPush).not.toHaveBeenCalled();
+		});
+	});
 });
