@@ -10,6 +10,13 @@ function conversionsEnvoyees() {
 		.map((args) => args[2].send_to);
 }
 
+function comptesConfigures() {
+	return window.dataLayer
+		.map((args) => Array.from(args))
+		.filter((args) => args[0] === "config")
+		.map((args) => args[1]);
+}
+
 function lancerLeService() {
 	const cookiesService = aCookiesService();
 	new AmnetMarketingService(cookiesService);
@@ -35,6 +42,7 @@ describe("AmnetMarketingService", () => {
 		// THEN
 		expect(cookiesService.addService).toHaveBeenCalledWith("amnet", expect.objectContaining({ key: "amnet", needConsent: true, type: "ads" }));
 		expect(window.tarteaucitron.addScript).toHaveBeenCalledWith("https://www.googletagmanager.com/gtag/js?id=DC-3988071");
+		expect(comptesConfigures()).toEqual(["DC-3988071", "DC-18216702"]);
 		expect(conversionsEnvoyees()).toEqual([]);
 	});
 
@@ -47,7 +55,7 @@ describe("AmnetMarketingService", () => {
 			lancerLeService();
 
 			// THEN
-			expect(conversionsEnvoyees()).toEqual(["DC-3988071/invmedia/2026-0+standard"]);
+			expect(conversionsEnvoyees()).toEqual(["DC-3988071/invmedia/2026-0+standard", "DC-18216702/dicom0/dicom_mk+standard"]);
 		});
 	});
 });
