@@ -171,10 +171,10 @@ describe('RechercherAlternance', () => {
 			expect(messageResultats).toBeInTheDocument();
 
 
-			const resultatsUl = await screen.findAllByRole('list');
-			
+			const resultatsUl = await screen.findByRole('list', { name: 'Offres d\'alternances' });
+
 			// eslint-disable-next-line testing-library/no-node-access
-			const resultListOffre = resultatsUl[1].children;
+			const resultListOffre = resultatsUl.children;
 			expect(resultListOffre).toHaveLength(alternanceFixture.length);
 			expect(await screen.findByText(alternanceFixture[0].titre)).toBeInTheDocument();
 			expect(await screen.findByText(alternanceFixture[1].titre)).toBeInTheDocument();
@@ -336,8 +336,8 @@ describe('RechercherAlternance', () => {
 				const onglet = await screen.findByRole("tab", { name: "Entreprises" });
 				await user.click(onglet);
 
-				const tagsList = screen.getAllByRole('list')
-				const tags = within(tagsList[1]).getAllByRole('listitem');
+				const entreprises = screen.getByRole('list', { name: 'Entreprises' });
+				const tags = within(within(entreprises).getAllByRole('list')[0]).getAllByRole('listitem');
 
 				expect(tags[0]).toHaveTextContent('9 salariés');
 			});
@@ -361,8 +361,8 @@ describe('RechercherAlternance', () => {
 				const onglet = await screen.findByRole("tab", { name: "Entreprises" });
 				await user.click(onglet);
 
-				const tagsList = screen.getAllByRole('list')
-				const tags = within(tagsList[1]).getAllByRole('listitem');
+				const entreprises = screen.getByRole('list', { name: 'Entreprises' });
+				const tags = within(within(entreprises).getAllByRole('list')[0]).getAllByRole('listitem');
 
 				expect(tags[0]).toHaveTextContent('2 à 9 salariés');
 			});
@@ -388,10 +388,10 @@ describe('RechercherAlternance', () => {
 			const onglet = await screen.findByRole("tab", { name: "Entreprises" });
 			await user.click(onglet);
 
-			const tagsList = screen.getAllByRole('list')
-			const tags = within(tagsList[1]).getAllByRole('listitem');
+			const entreprises = screen.getByRole('list', { name: 'Entreprises' });
+			const tags = within(entreprises).getAllByRole('list')[0];
 
-			expect(tags[0]).toHaveTextContent('Candidature spontanée');	
+			expect(within(tags).getByText('Candidature spontanée')).toBeVisible();
 		});
 
 		it("lorsque la candidature est impossible, je vois les tags pour contacter en direct l‘entreprise", async () => {
@@ -503,8 +503,8 @@ describe('RechercherAlternance', () => {
 				</DependenciesProvider>,
 			);
 
-			const tagsList = screen.getAllByRole("list");
-			const tags = within(tagsList[2]).getAllByRole("listitem");
+			const offres = screen.getByRole("list", { name: "Offres d'alternances" });
+			const tags = within(within(offres).getAllByRole("list")[0]).getAllByRole("listitem");
 			expect(tags).toHaveLength(4);
 			expect(tags[0]).toHaveTextContent("Paris");
 			expect(tags[1]).toHaveTextContent("Apprentissage");
@@ -529,8 +529,8 @@ describe('RechercherAlternance', () => {
 				</DependenciesProvider>,
 			);
 
-			const tagsList = screen.getAllByRole("list");
-			const tags = within(tagsList[2]).getAllByRole("listitem");
+			const offres = screen.getByRole("list", { name: "Offres d'alternances" });
+			const tags = within(within(offres).getAllByRole("list")[0]).getAllByRole("listitem");
 			expect(tags).toHaveLength(3);
 			expect(tags[0]).toHaveTextContent("PARIS 4");
 			expect(tags[1]).toHaveTextContent(AlternanceContrat.ALTERNANCE);

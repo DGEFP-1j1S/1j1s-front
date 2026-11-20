@@ -288,4 +288,37 @@ describe('FormulaireRechercheAlternance', () => {
 			expect(onSubmit).toHaveBeenCalled();
 		});
 	});
+
+	it('vide tous les champs sans relancer la recherche quand on réinitialise le formulaire', async () => {
+		// GIVEN
+		const routerPush = vi.fn();
+		const onSubmit = vi.fn();
+		const user = userEvent.setup();
+		mockUseRouter({
+			push: routerPush,
+			query: {
+				codeRomes: 'D1102,D1104',
+				distanceCommune: '30',
+				libelleMetier: 'Boulangerie, pâtisserie, chocolaterie',
+				...aCommuneQuery({ codePostal: '75001', ville: 'Paris' }),
+			},
+		});
+		render(
+			<DependenciesProvider localisationService={aLocalisationService()} metierLbaService={aMetierService()}>
+				<FormulaireRechercheAlternance onSubmit={onSubmit} />
+			</DependenciesProvider>,
+		);
+
+		// WHEN
+		await user.click(screen.getByRole('button', { name: 'Réinitialiser' }));
+
+		// THEN
+		expect(screen.getByRole('combobox', { name: 'Domaine Exemples : boulangerie, enseignement' })).toHaveValue('');
+		expect(screen.queryByDisplayValue('D1102,D1104')).not.toBeInTheDocument();
+		expect(screen.getByRole('combobox', { name: 'Localisation Exemples : Paris, Béziers…' })).toHaveValue('');
+		expect(screen.queryByDisplayValue('75001')).not.toBeInTheDocument();
+		expect(screen.queryByRole('combobox', { name: 'Rayon Exemple : 30 km' })).not.toBeInTheDocument();
+		expect(routerPush).not.toHaveBeenCalled();
+		expect(onSubmit).not.toHaveBeenCalled();
+	});
 });

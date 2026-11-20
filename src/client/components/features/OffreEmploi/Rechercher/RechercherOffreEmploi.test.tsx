@@ -166,9 +166,9 @@ describe('RechercherOffreEmploi', () => {
 				);
 
 				// WHEN
-				const resultatsUl = await screen.findAllByRole('list');
+				const resultatsUl = await screen.findByRole('list', { name: 'Offres d’emplois' });
 				// eslint-disable-next-line testing-library/no-node-access
-				const resultatRechercheOffreEmploiList = resultatsUl[0].children;
+				const resultatRechercheOffreEmploiList = resultatsUl.children;
 				const rechercheOffreEmploiNombreRésultats = await screen.findByText('3 offres d‘emplois pour boulanger');
 
 				// THEN

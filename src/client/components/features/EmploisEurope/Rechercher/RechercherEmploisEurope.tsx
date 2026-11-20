@@ -134,7 +134,7 @@ function ListeResultatsEmploiEurope({ resultatList }: { resultatList: EmploiEuro
 	if (!resultatList.length) return null;
 
 	return (
-		<ul className="fr-grid-row fr-grid-row--gutters">
+		<ul className="fr-grid-row fr-grid-row--gutters" aria-label="Offres d’emplois en Europe">
 			{resultatList.map((emploiEurope) => (
 				<li key={emploiEurope.id} className="fr-col-lg-4 fr-col-md-6 fr-col-12">
 					<Carte

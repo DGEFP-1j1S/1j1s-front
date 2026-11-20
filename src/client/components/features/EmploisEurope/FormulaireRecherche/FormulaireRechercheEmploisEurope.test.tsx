@@ -265,4 +265,54 @@ describe('FormulaireRechercheEmploisEurope', () => {
 		const inputRechercheLocalisation = screen.getByRole('combobox', { name: 'Localisation (pays) Exemple : Belgique, Allemagne' });
 		expect(inputRechercheLocalisation).toHaveValue('');
 	});
+	describe('quand on réinitialise le formulaire', () => {
+		const query = {
+			codePays: 'ES',
+			libellePays: 'Espagne',
+			motCle: 'boulanger',
+			niveauEtude: NiveauDEtudeValue.MASTER,
+			secteurActivite: 'A',
+			tempsDeTravail: EURES_POSITION_SCHEDULE_TYPE.FullTime,
+			typeContrat: EURES_CONTRACT_TYPE.Apprenticeship,
+		};
+
+		beforeEach(() => {
+			mockLargeScreen();
+		});
+
+		it('vide tous les champs sans relancer la recherche', async () => {
+			// GIVEN
+			const routerPush = vi.fn();
+			const user = userEvent.setup();
+			mockUseRouter({ push: routerPush, query });
+			render(<FormulaireRechercheEmploisEurope />);
+
+			// WHEN
+			await user.click(screen.getByRole('button', { name: 'Réinitialiser' }));
+
+			// THEN
+			expect(screen.getByRole('textbox', { name: 'Métier, mot-clé ou entreprise Exemple : boulanger, marketing, Google' })).toHaveValue('');
+			expect(screen.getByRole('combobox', { name: 'Localisation (pays) Exemple : Belgique, Allemagne' })).toHaveValue('');
+			expect(screen.getByRole('option', { hidden: true, name: 'Apprentissage' })).toHaveAttribute('aria-selected', 'false');
+			expect(screen.getByRole('option', { hidden: true, name: 'Temps plein' })).toHaveAttribute('aria-selected', 'false');
+			expect(screen.getByRole('option', { hidden: true, name: 'Master (Bac+5)' })).toHaveAttribute('aria-selected', 'false');
+			expect(screen.getByRole('option', { hidden: true, name: 'Agriculture, sylviculture et pêche' })).toHaveAttribute('aria-selected', 'false');
+			expect(routerPush).not.toHaveBeenCalled();
+		});
+
+		it('soumet une recherche vide après réinitialisation', async () => {
+			// GIVEN
+			const routerPush = vi.fn();
+			const user = userEvent.setup();
+			mockUseRouter({ push: routerPush, query });
+			render(<FormulaireRechercheEmploisEurope />);
+
+			// WHEN
+			await user.click(screen.getByRole('button', { name: 'Réinitialiser' }));
+			await user.click(screen.getByRole('button', { name: 'Rechercher' }));
+
+			// THEN
+			expect(routerPush).toHaveBeenCalledWith({ query: 'page=1' }, undefined, { shallow: true });
+		});
+	});
 });
