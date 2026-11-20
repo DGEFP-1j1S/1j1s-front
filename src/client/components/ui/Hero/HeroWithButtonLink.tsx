@@ -11,15 +11,16 @@ interface HeroWithButtonLinkProps {
   buttonLabel: string
   buttonLabelSecondary?: string
   buttonHref: string
+  buttonIcon?: string
   buttonHrefSecondary?: string
   imgSrc: string
-	imgAlt?: string
-	imgContain?: boolean
+  imgAlt?: string
+  imgContain?: boolean
   additionalInformation?: React.ReactNode
 }
 
 export function HeroWithButtonLink(props: HeroWithButtonLinkProps) {
-	const { title, content, description, buttonLabel, buttonLabelSecondary, buttonHref, buttonHrefSecondary, imgSrc, imgAlt, imgContain = false, additionalInformation } = props;
+	const { title, content, description, buttonLabel, buttonLabelSecondary, buttonHref, buttonHrefSecondary, buttonIcon, imgSrc, imgAlt, imgContain = false, additionalInformation } = props;
 
 	return (
 		<div className="fr-container">
@@ -42,7 +43,7 @@ export function HeroWithButtonLink(props: HeroWithButtonLinkProps) {
 									<Link className="fr-btn fr-btn--lg fr-btn--secondary" href={buttonHrefSecondary}>{buttonLabelSecondary}</Link>	
 								</li>
 							</ul>) : (
-								<Link className="fr-btn fr-btn--lg" href={buttonHref}>{buttonLabel}</Link>
+								<Link className={buttonIcon ? `fr-btn fr-btn--lg fr-btn--icon-right ${buttonIcon}` : "fr-btn fr-btn--lg"} href={buttonHref}>{buttonLabel}</Link>
 							)
 						}
 						{additionalInformation}
