@@ -9,18 +9,22 @@ type AccentColor = "green-tilleul-verveine" | "green-bourgeon" | "green-emeraude
 interface CalloutProps {
 	accent?: AccentColor
 	title: string;
+	titleAs?: string;
 	text: string;
 	link?: { href: string; text: string };
+	isSmall?: boolean;
 	children?: React.ReactNode;
 }
 
-export function Callout({ accent, title, text, link, children, ...rest }: CalloutProps & React.ComponentPropsWithoutRef<'div'>) {
+export function Callout({ accent, title, titleAs = "h3", text, link, isSmall = false, children, ...rest }: CalloutProps & React.ComponentPropsWithoutRef<'div'>) {
 	const accentClassName = accent ? "fr-callout--" + accent : ""
+	const titleClassName = `fr-callout__title${isSmall ? " fr-text--lead" : ""}`
+	const textClassName = classNames("fr-callout__text", ((link || children) ? "fr-mb-4w" : ""), (isSmall && "fr-text--md"))
 
 	return (
 		<div className={classNames("fr-callout", accentClassName, rest.className)}>
-			<h3 className="fr-callout__title">{title}</h3>
-			<p className="fr-callout__text fr-mb-4w">{text}</p>
+			{React.createElement(titleAs, { className: titleClassName }, title)}
+			<p className={textClassName}>{text}</p>
 			{children && children}
 			{link && (<Link className="fr-link" href={link.href}>{link.text}</Link>)}
 		</div>

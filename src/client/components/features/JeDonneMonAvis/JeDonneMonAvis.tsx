@@ -9,6 +9,7 @@ export function JeDonneMonAvis() {
 		<Callout
 			accent="pink-macaron"
 			title="Je donne mon avis général sur 1jeune1solution"
+			titleAs="h2"
 			text="Aidez- nous à améliorer le service numérique 1J1S en répondant à quelques questions"
 			link={{ href: "https://jedonnemonavis.numerique.gouv.fr/Demarches/4085?preview=true&form=2090", text: "Je donne mon avis"}}
 			className="position--relative"
