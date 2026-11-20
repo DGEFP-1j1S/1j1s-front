@@ -36,7 +36,7 @@ describe("Pagination DSFR", () => {
 		it("marque la page courante avec aria-current", () => {
 			render(<Pagination {...aPaginationProps({ currentPage: 2 })} />);
 
-			expect(screen.getByRole("link", { current: true, name: "3" })).toBeInTheDocument();
+			expect(screen.getByRole("link", { current: "page", name: "3" })).toBeInTheDocument();
 		});
 	});
 
@@ -44,8 +44,8 @@ describe("Pagination DSFR", () => {
 		it("desactive les liens premiere page et page precedente", () => {
 			render(<Pagination {...aPaginationProps({ currentPage: 0, isFirstPage: true })} />);
 
-			expect(screen.getByText("Première page")).toHaveAttribute("aria-disabled", "true");
-			expect(screen.getByText("Page précédente")).toHaveAttribute("aria-disabled", "true");
+			expect(screen.getByRole("link", { name: "Revenir à la première page" })).toHaveAttribute("aria-disabled", "true");
+			expect(screen.getByRole("link", { name: "Revenir à la page précédente" })).toHaveAttribute("aria-disabled", "true");
 		});
 	});
 
@@ -53,8 +53,8 @@ describe("Pagination DSFR", () => {
 		it("desactive les liens page suivante et derniere page", () => {
 			render(<Pagination {...aPaginationProps({ currentPage: 4, isLastPage: true })} />);
 
-			expect(screen.getByText("Page suivante")).toHaveAttribute("aria-disabled", "true");
-			expect(screen.getByText("Dernière page")).toHaveAttribute("aria-disabled", "true");
+			expect(screen.getByRole("link", { name: "Aller à la page suivante" })).toHaveAttribute("aria-disabled", "true");
+			expect(screen.getByRole("link", { name: "Aller à la dernière page" })).toHaveAttribute("aria-disabled", "true");
 		});
 	});
 
@@ -64,7 +64,7 @@ describe("Pagination DSFR", () => {
 			const onPageClick = vi.fn();
 			render(<Pagination {...aPaginationProps({ currentPage: 2, onPageClick })} />);
 
-			await user.click(screen.getByRole("link", { current: true, name: "3" }));
+			await user.click(screen.getByRole("link", { current: "page", name: "3" }));
 
 			expect(onPageClick).not.toHaveBeenCalled();
 		});

@@ -28,6 +28,18 @@ import {
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 import {Banner} from "~/client/components/ui/Hero/Hero";
 
+const TITRE_PAR_DEFAUT = 'Trouver un accompagnement';
+const INTITULES_RESULTATS = {
+	aucun: 'Aucun établissement d’accompagnement',
+	pluriel: 'établissements d’accompagnement',
+	singulier: 'établissement d’accompagnement',
+};
+const STRUCTURES_PAR_TYPE_ACCOMPAGNEMENT: Record<string, string> = {
+	[TypeEtablissement.FRANCE_TRAVAIL]: 'les Agences France Travail',
+	[TypeEtablissement.INFO_JEUNE]: 'les structures Infos Jeunes',
+	[TypeEtablissement.MISSION_LOCALE]: 'les structures Missions Locales',
+};
+
 export function RechercherAccompagnement() {
 	const accompagnementQuery = useAccompagnementQuery();
 	const etablissementAccompagnementService = useDependency<EtablissementAccompagnementService>('établissementAccompagnementService');
@@ -35,7 +47,10 @@ export function RechercherAccompagnement() {
 	const [etablissementAccompagnementList, setEtablissementAccompagnementList] = useState<EtablissementAccompagnement[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [erreurRecherche, setErreurRecherche] = useState<Erreur | undefined>(undefined);
-	const [title, setTitle] = useState<string | undefined>();
+	const [title, setTitle] = useState<string>(formatRechercherSolutionDocumentTitle({
+		intitules: INTITULES_RESULTATS,
+		titreParDefaut: TITRE_PAR_DEFAUT,
+	}));
 
 	const rechercherEtablissementAccompagnement = useCallback(async () => {
 		setIsLoading(true);
@@ -43,10 +58,22 @@ export function RechercherAccompagnement() {
 		try {
 			const response = await etablissementAccompagnementService.rechercher(accompagnementQuery);
 			if (isSuccess(response)) {
-				setTitle(formatRechercherSolutionDocumentTitle(`Rechercher un établissement d‘accompagnement ${response.result.length === 0 ? ' - Aucun résultat' : ''}`));
+				setTitle(formatRechercherSolutionDocumentTitle({
+					criteres: [
+						accompagnementQuery.typeAccompagnement && STRUCTURES_PAR_TYPE_ACCOMPAGNEMENT[accompagnementQuery.typeAccompagnement],
+						accompagnementQuery.ville,
+					],
+					intitules: INTITULES_RESULTATS,
+					nombreResultats: response.result.length,
+					titreParDefaut: TITRE_PAR_DEFAUT,
+				}));
 				setEtablissementAccompagnementList(response.result);
 			} else {
-				setTitle(formatRechercherSolutionDocumentTitle('Rechercher un établissement d‘accompagnement', response.errorType));
+				setTitle(formatRechercherSolutionDocumentTitle({
+					erreur: response.errorType,
+					intitules: INTITULES_RESULTATS,
+					titreParDefaut: TITRE_PAR_DEFAUT,
+				}));
 				setErreurRecherche(response.errorType);
 			}
 		} finally {
@@ -95,7 +122,7 @@ export function RechercherAccompagnement() {
 	return (
 		<>
 			<Head
-				title={title || 'Trouver un accompagnement | 1jeune1solution'}
+				title={title}
 				description="Trouver un accompagnement"
 				robots="index,follow" />
 			<main id="contenu">

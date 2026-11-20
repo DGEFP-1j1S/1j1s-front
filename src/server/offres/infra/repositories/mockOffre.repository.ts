@@ -5,18 +5,20 @@ import { Offre, OffreFiltre, ResultatsRechercheOffre } from '../../domain/offre'
 import { anOffreEmploi, aRésultatEchantillonOffre, aRésultatsRechercheOffre } from '../../domain/offre.fixture';
 import { OffreRepository } from '../../domain/offre.repository';
 
+const NOMBRE_RESULTATS_ECHANTILLON = 150;
+
 export function searchOffreRepositoryMockResults(filtre: OffreFiltre): Either<ResultatsRechercheOffre> {
-	if (filtre.page === 1 && !filtre.motClé) {
-		return createSuccess(aRésultatEchantillonOffre());
+	if (filtre.page === 67) {
+		return createFailure(ErreurMetier.DEMANDE_INCORRECTE);
+	}
+	if (!filtre.motClé) {
+		return createSuccess({ ...aRésultatEchantillonOffre(), nombreRésultats: NOMBRE_RESULTATS_ECHANTILLON });
 	}
 	if (filtre.page === 1 && filtre.motClé === 'barman') {
 		return createSuccess(aRésultatsRechercheOffre({
 			nombreRésultats: 1,
 			résultats: [anOffreEmploi()],
 		}));
-	}
-	if (filtre.page === 67) {
-		return createFailure(ErreurMetier.DEMANDE_INCORRECTE);
 	}
 
 	return createSuccess(aRésultatsRechercheOffre());

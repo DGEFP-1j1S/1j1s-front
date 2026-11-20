@@ -10,7 +10,7 @@ import { mockLargeScreen, mockScrollIntoView } from '~/client/components/window.
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
 import { referentielDomaineList } from '~/client/domain/referentielDomaineList';
 import { aLocalisationService } from '~/client/services/localisation/localisation.service.fixture';
-import { CONTRAT_CDD, EXPÉRIENCE_DEBUTANT, TEMPS_PLEIN } from '~/server/offres/domain/offre';
+import { CONTRAT_CDD, CONTRAT_SAISONNIER, EXPÉRIENCE_DEBUTANT, TEMPS_PLEIN } from '~/server/offres/domain/offre';
 
 describe('FormulaireRechercheOffreEmploi', () => {
 	beforeEach(() => {
@@ -46,6 +46,27 @@ describe('FormulaireRechercheOffreEmploi', () => {
 				await user.click(buttonRechercher);
 
 				expect(routerPush).toHaveBeenCalledWith({ query: 'typeDeContrats=CDD&page=1' }, undefined, { scroll: false });
+			});
+
+			it('affiche les types de contrat choisis dans le bouton dès qu’ils sont modifiés', async () => {
+				const user = userEvent.setup();
+				mockUseRouter({});
+				render(
+					<DependenciesProvider localisationService={aLocalisationService()}>
+						<FormulaireRechercheOffreEmploi />
+					</DependenciesProvider>,
+				);
+				const selectTypeContrat = screen.getByRole('combobox', { name: 'Types de contrats Exemple : CDI, CDD…' });
+
+				await user.click(selectTypeContrat);
+				await user.click(screen.getByRole('option', { name: CONTRAT_SAISONNIER.libelléCourt }));
+				expect(selectTypeContrat).toHaveTextContent(new RegExp(`^${CONTRAT_SAISONNIER.libelléCourt}$`));
+
+				await user.click(screen.getByRole('option', { name: CONTRAT_CDD.libelléCourt }));
+				expect(selectTypeContrat).toHaveTextContent(new RegExp(`^${CONTRAT_CDD.libelléCourt}, ${CONTRAT_SAISONNIER.libelléCourt}$`));
+
+				await user.click(screen.getByRole('option', { name: CONTRAT_SAISONNIER.libelléCourt }));
+				expect(selectTypeContrat).toHaveTextContent(new RegExp(`^${CONTRAT_CDD.libelléCourt}$`));
 			});
 		});
 

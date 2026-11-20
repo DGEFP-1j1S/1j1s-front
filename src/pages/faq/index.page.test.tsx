@@ -78,7 +78,7 @@ describe('Page FAQ', () => {
 			</DependenciesProvider>);
 
 		const title = await screen.findByRole('heading', { level: 1 });
-		expect(title).toHaveTextContent('FAQ - QUESTIONS FRÉQUEMMENT POSÉES');
+		expect(title).toHaveTextContent("FAQ - questions fréquemment posées");
 	});
 
 	it('affiche le sous titre de la page', async () => {
@@ -87,7 +87,7 @@ describe('Page FAQ', () => {
 				<FaqPage listeDeQuestionRéponse={listeDeQuestionResultat} />
 			</DependenciesProvider>);
 
-		const sousTitre = await screen.findByRole('heading', { level: 2 });
+		const sousTitre = await screen.findByRole('heading', { level: 2, name: "Que pouvons-nous faire pour vous ?" });
 		expect(sousTitre).toHaveTextContent('Que pouvons-nous faire pour vous ?');
 
 	});

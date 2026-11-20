@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 
 import {
 	RechercherFormationInitiale,
@@ -11,7 +11,10 @@ import {
 	aFormationInitialeService,
 	aResultatFormationInitiale,
 } from '~/client/services/formationInitiale/formationInitiale.service.fixture';
-import { createSuccess } from '~/server/errors/either';
+import { createFailure, createSuccess } from '~/server/errors/either';
+import { ErreurMetier } from '~/server/errors/erreurMetier.types';
+
+vi.mock('next/head', async () => ({ default: (await import('~/client/components/head.mock')).HeadMock }));
 
 describe('RechercherFormationInitiale', () => {
 	beforeEach(() => {
@@ -323,6 +326,47 @@ describe('RechercherFormationInitiale', () => {
 				const monCompteFormationCard = within(servicesItems[4]).getByRole('link');
 				expect(monCompteFormationCard).toHaveAttribute('href', 'https://app.pix.fr/campagnes/NRABNT181/presentation');
 			});
+		});
+	});
+
+	describe('titre du document', () => {
+		it('reprend le nombre de résultats et le mot-clé', async () => {
+			mockUseRouter({ query: { motCle: 'boulanger', page: '1' } });
+			const aFormationService = aFormationInitialeService();
+			vi.spyOn(aFormationService, 'rechercherFormationInitiale').mockResolvedValue(createSuccess(aResultatFormationInitiale({ nombreDeResultat: 150 })));
+
+			render(<DependenciesProvider formationInitialeService={aFormationService}>
+				<RechercherFormationInitiale />
+			</DependenciesProvider>);
+
+			await waitFor(() => expect(document.title).toBe('150 formations initiales pour boulanger (page 1/10) | 1jeune1solution'));
+		});
+
+		it('indique qu’il n’y a aucun résultat', async () => {
+			mockUseRouter({ query: { motCle: 'boulanger', page: '1' } });
+			const aFormationService = aFormationInitialeService();
+			vi.spyOn(aFormationService, 'rechercherFormationInitiale').mockResolvedValue(createSuccess(aResultatFormationInitiale({
+				formationsInitiales: [],
+				nombreDeResultat: 0,
+			})));
+
+			render(<DependenciesProvider formationInitialeService={aFormationService}>
+				<RechercherFormationInitiale />
+			</DependenciesProvider>);
+
+			await waitFor(() => expect(document.title).toBe('Aucune formation initiale pour boulanger | 1jeune1solution'));
+		});
+
+		it('indique une erreur quand la demande est incorrecte', async () => {
+			mockUseRouter({ query: { motCle: 'boulanger', page: '1' } });
+			const aFormationService = aFormationInitialeService();
+			vi.spyOn(aFormationService, 'rechercherFormationInitiale').mockResolvedValue(createFailure(ErreurMetier.DEMANDE_INCORRECTE));
+
+			render(<DependenciesProvider formationInitialeService={aFormationService}>
+				<RechercherFormationInitiale />
+			</DependenciesProvider>);
+
+			await waitFor(() => expect(document.title).toBe('Erreur : Rechercher une formation initiale | 1jeune1solution'));
 		});
 	});
 });

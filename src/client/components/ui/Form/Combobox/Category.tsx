@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useId, useMemo } from 'react';
 
 import { useCombobox } from '~/client/components/ui/Form/Combobox/ComboboxContext';
 
@@ -27,6 +27,7 @@ export const Category = React.forwardRef<HTMLUListElement, CategoryProps>(functi
 	...ulProps
 }, outerRef) {
 	const { state: { value }, filter } = useCombobox();
+	const idNom = useId();
 
 	const hidden = useMemo(() => {
 		let hasMatchingOption = false;
@@ -42,8 +43,8 @@ export const Category = React.forwardRef<HTMLUListElement, CategoryProps>(functi
 
 	return (
 		<li role="none" hidden={hidden}>
-			<span className="fr-ml-1w fr-text--bold">{name}</span>
-			<ul role="group" className="list-style-none fr-pl-0" aria-label={name} {...ulProps} ref={outerRef}>
+			<ul role="group" className="list-style-none fr-pl-0" aria-labelledby={idNom} {...ulProps} ref={outerRef}>
+				<li role="presentation" id={idNom} className="fr-ml-1w fr-text--bold">{name}</li>
 				{children}
 			</ul>
 		</li>

@@ -27,6 +27,24 @@ import {
 import { isSuccess } from '~/server/errors/either';
 import { Erreur } from '~/server/errors/erreur.types';
 
+const TITRE_PAR_DEFAUT = {
+	[EngagementCategory.BENEVOLAT]: 'Rechercher une mission de bénévolat',
+	[EngagementCategory.SERVICE_CIVIQUE]: 'Rechercher une mission de service civique',
+};
+
+const INTITULES_RESULTATS = {
+	[EngagementCategory.BENEVOLAT]: {
+		aucun: 'Aucune mission de bénévolat',
+		pluriel: 'missions de bénévolat',
+		singulier: 'mission de bénévolat',
+	},
+	[EngagementCategory.SERVICE_CIVIQUE]: {
+		aucun: 'Aucune mission de service civique',
+		pluriel: 'missions de service civique',
+		singulier: 'mission de service civique',
+	},
+};
+
 interface RechercherMissionProps {
 	category: EngagementCategory.BENEVOLAT | EngagementCategory.SERVICE_CIVIQUE
 }
@@ -55,7 +73,13 @@ export function RechercherMission(props: RechercherMissionProps) {
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [erreurRecherche, setErreurRecherche] = useState<Erreur | undefined>(undefined);
-	const [title, setTitle] = useState<string>(`Rechercher une mission de ${isServiceCivique ? 'service civique' : 'bénévolat'} | 1jeune1solution'`);
+	const [title, setTitle] = useState<string>(formatRechercherSolutionDocumentTitle({
+		intitules: INTITULES_RESULTATS[category],
+		titreParDefaut: TITRE_PAR_DEFAUT[category],
+	}));
+
+	const domainQuery = missionEngagementQuery?.domain;
+	const domaine = domainQuery && recupererLibelleDepuisValeur(isServiceCivique ? serviceCiviqueDomaineList : bénévolatDomaineList, domainQuery);
 
 	const rechercherMission = useCallback(async () => {
 		setIsLoading(true);
@@ -63,17 +87,27 @@ export function RechercherMission(props: RechercherMissionProps) {
 		try {
 			const response = await missionEngagementService.rechercherMission(missionEngagementQuery, category);
 			if (isSuccess(response)) {
-				setTitle(formatRechercherSolutionDocumentTitle(`Rechercher une mission de  ${isServiceCivique ? 'service civique' : 'bénévolat'} ${response.result.résultats.length === 0 ? ' - Aucun résultat' : ''}`));
+				setTitle(formatRechercherSolutionDocumentTitle({
+					criteres: [domaine, missionEngagementQuery.ville],
+					intitules: INTITULES_RESULTATS[category],
+					nombreResultats: response.result.nombreRésultats,
+					pagination: { nombreResultatsParPage: NOMBRE_RÉSULTATS_MISSION_PAR_PAGE, pageCourante: missionEngagementQuery.page },
+					titreParDefaut: TITRE_PAR_DEFAUT[category],
+				}));
 				setMissionList(response.result.résultats);
 				setNombreResultats(response.result.nombreRésultats);
 			} else {
-				setTitle(formatRechercherSolutionDocumentTitle(`Rechercher une mission de ${isServiceCivique ? 'service civique' : 'bénévolat'}`, response.errorType));
+				setTitle(formatRechercherSolutionDocumentTitle({
+					erreur: response.errorType,
+					intitules: INTITULES_RESULTATS[category],
+					titreParDefaut: TITRE_PAR_DEFAUT[category],
+				}));
 				setErreurRecherche(response.errorType);
 			}
 		} finally {
 			setIsLoading(false);
 		}
-	}, [category, isServiceCivique, missionEngagementQuery, missionEngagementService]);
+	}, [category, domaine, missionEngagementQuery, missionEngagementService]);
 
 	useEffect(() => {
 		if (empty(missionEngagementQuery)) {
@@ -82,13 +116,10 @@ export function RechercherMission(props: RechercherMissionProps) {
 		rechercherMission();
 	}, [missionEngagementQuery, rechercherMission]);
 
-	const domainQuery = missionEngagementQuery?.domain;
-	const domaine = domainQuery && recupererLibelleDepuisValeur(isServiceCivique ? serviceCiviqueDomaineList : bénévolatDomaineList, domainQuery);
-
 	return (
 		<>
 			<Head
-				title={title || `Rechercher une mission de ${isServiceCivique ? 'service civique' : 'bénévolat'} | 1jeune1solution`}
+				title={title}
 				description="Se rendre utile tout en préparant son avenir grâce aux missions de service civique"
 				robots="index,follow" />
 			<main id="contenu">

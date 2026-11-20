@@ -1,21 +1,26 @@
 import { render, screen, within } from "@testing-library/react";
 import { userEvent } from '@testing-library/user-event';
 
+import { HeadMock } from '~/client/components/head.mock';
 import RechercherAlternance from '~/client/components/features/Alternance/Rechercher/RechercherAlternance';
 import { mockUseRouter } from '~/client/components/useRouter.mock';
 import { mockSmallScreen } from '~/client/components/window.mock';
 import { DependenciesProvider } from '~/client/context/dependenciesContainer.context';
+import { aCommuneQuery } from '~/client/hooks/useCommuneQuery';
 import { LocalisationService } from '~/client/services/localisation/localisation.service';
 import { aLocalisationService } from '~/client/services/localisation/localisation.service.fixture';
 import { aMetierService } from '~/client/services/metiers/metier.fixture';
 import { MetierService } from '~/client/services/metiers/metier.service';
 import { AlternanceContrat, AlternanceSource } from '~/server/alternances/domain/alternance';
+import { ErreurMetier } from '~/server/errors/erreurMetier.types';
 import {
 	aRechercheAlternance,
 	aRechercheEntrepriseAlternance,
 	aRechercheMatchaAlternance,
 	aRecherchePEJobAlternance,
 } from '~/server/alternances/domain/alternance.fixture';
+
+vi.mock('next/head', () => ({ default: HeadMock }));
 
 describe('RechercherAlternance', () => {
 	beforeEach(() => {
@@ -532,4 +537,41 @@ describe('RechercherAlternance', () => {
 			expect(tags[2]).toHaveTextContent("CDD");
 		});
 	})
+
+	describe('titre du document', () => {
+		it('reprend le nombre total de résultats et les critères de la recherche', () => {
+			mockUseRouter({ query: { ...aCommuneQuery({ ville: 'Paris' }), codeRomes: ['D1102'], libelleMetier: 'Boulangerie' } });
+			const resultats = aRechercheAlternance();
+			render(
+				<DependenciesProvider metierLbaService={aMetierService()} localisationService={aLocalisationService()}>
+					<RechercherAlternance resultats={resultats} />
+				</DependenciesProvider>,
+			);
+
+			const nombreResultats = resultats.entrepriseList.length + resultats.offreList.length;
+			expect(document.title).toBe(`${nombreResultats} résultats en alternance pour Boulangerie, Paris | 1jeune1solution`);
+		});
+
+		it('indique qu’il n’y a aucun résultat', () => {
+			mockUseRouter({ query: { ...aCommuneQuery({ ville: 'Paris' }), codeRomes: ['D1102'], libelleMetier: 'Boulangerie' } });
+			render(
+				<DependenciesProvider metierLbaService={aMetierService()} localisationService={aLocalisationService()}>
+					<RechercherAlternance resultats={aRechercheAlternance({ entrepriseList: [], offreList: [] })} />
+				</DependenciesProvider>,
+			);
+
+			expect(document.title).toBe('Aucun résultat en alternance pour Boulangerie, Paris | 1jeune1solution');
+		});
+
+		it('signale une erreur quand la demande est incorrecte', () => {
+			mockUseRouter({ query: { libelleMetier: 'Boulangerie' } });
+			render(
+				<DependenciesProvider metierLbaService={aMetierService()} localisationService={aLocalisationService()}>
+					<RechercherAlternance erreurRecherche={ErreurMetier.DEMANDE_INCORRECTE} />
+				</DependenciesProvider>,
+			);
+
+			expect(document.title).toBe('Erreur : Rechercher une alternance | 1jeune1solution');
+		});
+	});
 });

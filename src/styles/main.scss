@@ -181,6 +181,17 @@ hr {
   text-transform: uppercase;
 }
 
+.text--ellipsis {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.whitespace--pre-line {
+  white-space: pre-line;
+}
+
 .color--inherit {
   color: inherit;
 }

@@ -35,7 +35,7 @@ export function Pagination(props: PaginationProps) {
 				<a
 					href={createURL ? createURL(page) : "#"}
 					className="fr-pagination__link"
-					aria-current={isCurrent || undefined}
+					aria-current={isCurrent ? "page" : undefined}
 					title={`Page ${page + 1}`}
 					onClick={(event) => handleClick(event, page, isCurrent)}
 				>
@@ -50,6 +50,7 @@ export function Pagination(props: PaginationProps) {
 			<a
 				href={!isFirstPage ? createURL ? createURL(0) : '#' : undefined}
 				className="fr-pagination__link fr-pagination__link--first"
+				role={isFirstPage ? 'link' : undefined}
 				aria-disabled={isFirstPage}
 				aria-label="Revenir à la première page"
 				onClick={(event) => handleClick(event, 0, isFirstPage)}
@@ -64,6 +65,7 @@ export function Pagination(props: PaginationProps) {
 			<a
 				href={!isFirstPage ? createURL ? createURL(currentPage - 1) : '#' : undefined}
 				className="fr-pagination__link fr-pagination__link--prev fr-pagination__link--lg-label"
+				role={isFirstPage ? 'link' : undefined}
 				aria-disabled={isFirstPage}
 				aria-label="Revenir à la page précédente"
 				onClick={(event) => handleClick(event, currentPage - 1, isFirstPage)}
@@ -93,6 +95,7 @@ export function Pagination(props: PaginationProps) {
 			<a
 				href={!isLastPage ? createURL ? createURL(currentPage + 1) : '#' : undefined}
 				className="fr-pagination__link fr-pagination__link--next fr-pagination__link--lg-label"
+				role={isLastPage ? 'link' : undefined}
 				aria-disabled={isLastPage}
 				aria-label="Aller à la page suivante"
 				onClick={(event) => handleClick(event, currentPage + 1, isLastPage)}
@@ -107,6 +110,7 @@ export function Pagination(props: PaginationProps) {
 			<a
 				href={!isLastPage ? createURL ? createURL(computedLastPage) : '#' : undefined}
 				className="fr-pagination__link fr-pagination__link--last"
+				role={isLastPage ? 'link' : undefined}
 				aria-disabled={isLastPage}
 				aria-label="Aller à la dernière page"
 				onClick={(event) => handleClick(event, computedLastPage, isLastPage)}

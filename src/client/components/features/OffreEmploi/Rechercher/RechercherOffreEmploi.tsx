@@ -26,7 +26,12 @@ import {BannerWithIllustration} from '~/client/components/ui/Hero/Hero';
 // NOTE (BRUJ 06/05/2024): Pour éviter les hydratation mismatch lié au usebreakpoint on désactive le srr sur des composants spécifiques cf https://nextjs.org/docs/messages/react-hydration-error#solution-2-disabling-ssr-on-specific-components
 const FormulaireRechercheOffreEmploi = dynamic(() => import('../FormulaireRecherche/FormulaireRechercheOffreEmploi').then((mod) => mod.FormulaireRechercheOffreEmploi), { ssr: false });
 
-const PREFIX_TITRE_PAGE = 'Rechercher un emploi';
+const TITRE_PAR_DEFAUT = 'Rechercher un emploi';
+const INTITULES_RESULTATS = {
+	aucun: 'Aucune offre d’emploi',
+	pluriel: 'offres d’emploi',
+	singulier: 'offre d’emploi',
+};
 
 interface RechercherOffreEmploiProps {
 	erreurRecherche?: Erreur
@@ -36,10 +41,19 @@ interface RechercherOffreEmploiProps {
 export function RechercherOffreEmploi(props: RechercherOffreEmploiProps) {
 	const offreQuery = useOffreQuery();
 
-	const title = formatRechercherSolutionDocumentTitle(`${PREFIX_TITRE_PAGE}${props.resultats?.nombreRésultats === 0 ? ' - Aucun résultat' : ''}`);
 	const offreEmploiList = props.resultats?.résultats || [];
 	const nombreRésultats = props.resultats?.nombreRésultats || 0;
 	const erreurRecherche = props.erreurRecherche;
+	const isEtatInitial = empty(offreQuery);
+
+	const title = formatRechercherSolutionDocumentTitle({
+		criteres: [offreQuery.motCle, offreQuery.nomLocalisation],
+		erreur: erreurRecherche,
+		intitules: INTITULES_RESULTATS,
+		nombreResultats: isEtatInitial ? undefined : nombreRésultats,
+		pagination: { nombrePagesMax: MAX_PAGE_ALLOWED_BY_FRANCE_TRAVAIL, nombreResultatsParPage: NOMBRE_RÉSULTATS_OFFRE_PAR_PAGE, pageCourante: offreQuery.page },
+		titreParDefaut: TITRE_PAR_DEFAUT,
+	});
 
 	const messageRésultatRecherche: string = useMemo(() => {
 		const messageRésultatRechercheSplit: string[] = [`${nombreRésultats}`];
@@ -67,7 +81,7 @@ export function RechercherOffreEmploi(props: RechercherOffreEmploiProps) {
 					etiquettesRecherche={<EtiquettesFiltreOffreEmploi />}
 					formulaireRecherche={<FormulaireRechercheOffreEmploi enEtatErreur={erreurRecherche != null} />}
 					isChargement={false}
-					isEtatInitial={empty(offreQuery)}
+					isEtatInitial={isEtatInitial}
 					messageResultatRecherche={messageRésultatRecherche}
 					nombreTotalSolutions={nombreRésultats}
 					paginationOffset={NOMBRE_RÉSULTATS_OFFRE_PAR_PAGE}

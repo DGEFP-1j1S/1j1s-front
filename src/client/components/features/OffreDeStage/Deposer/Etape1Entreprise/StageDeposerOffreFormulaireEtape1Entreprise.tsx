@@ -18,12 +18,20 @@ import { URL_DEPOSER_OFFRE } from '~/pages/stages/deposer-offre/index.page';
 import { emailRegex } from '~/shared/emailRegex';
 
 const URL_REGEX = '(https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*))';
-const MESSAGE_ERREUR_EMAIL = "Veuillez saisir une adresse e-mail valide, au format camille@email.fr";
+const MESSAGE_ERREUR_EMAIL = "Veuillez saisir une adresse e-mail valide, au format bernard@email.fr";
 
 function validerEmail(value: string | number | readonly string[] | undefined): string {
 	const email = String(value ?? "").trim();
 	if (email === "" || new RegExp(emailRegex).test(email)) return "";
 	return MESSAGE_ERREUR_EMAIL;
+}
+
+const MESSAGE_ERREUR_URL = "Veuillez saisir une URL commençant par http:// ou https://";
+
+function validerUrl(value: string | number | readonly string[] | undefined): string {
+	const url = String(value ?? "").trim();
+	if (url === "" || new RegExp(`^${URL_REGEX}$`).test(url)) return "";
+	return MESSAGE_ERREUR_URL;
 }
 
 enum InputName {
@@ -43,7 +51,7 @@ export default function StageDeposerOffreFormulaireEtape1Entreprise() {
 	const informationsEntreprise = persistenceEntreprise.getInformationsEtape1();
 
 	const champsObligatoires = (
-		<>
+		<div className="fr-grid-row fr-grid-row--gutters">
 			<Champ className="fr-input-group fr-col-12 fr-col-lg-6 fr-col-offset-lg-6--right">
 				<Champ.Label>Nom de l’entreprise ou de l’employeur
 					<Champ.Label.Complement>255 caractères maximum</Champ.Label.Complement>
@@ -100,7 +108,7 @@ export default function StageDeposerOffreFormulaireEtape1Entreprise() {
 					maxLength={500} />
 				<Champ.Error />
 			</Champ>
-		</>
+		</div>
 	);
 
 	const champsoptionnels = (
@@ -114,7 +122,8 @@ export default function StageDeposerOffreFormulaireEtape1Entreprise() {
 					type="url"
 					name={InputName.LOGO}
 					defaultValue={informationsEntreprise?.logoEmployeur}
-					pattern={URL_REGEX} />
+					pattern={URL_REGEX}
+					validation={validerUrl} />
 				<Champ.Error />
 			</Champ>
 			<Champ className="fr-input-group fr-col-12 fr-col-lg-6">
@@ -125,7 +134,8 @@ export default function StageDeposerOffreFormulaireEtape1Entreprise() {
 					type="url"
 					name={InputName.SITE}
 					defaultValue={informationsEntreprise?.siteEmployeur}
-					pattern={URL_REGEX} />
+					pattern={URL_REGEX}
+					validation={validerUrl} />
 				<Champ.Error />
 			</Champ>
 		</>

@@ -16,7 +16,7 @@ import {
 const LABEL_OU_POSTULER = 'Lien sur lequel les candidats pourront postuler ou une adresse e-mail à laquelle envoyer sa candidature Exemples : https://candidat.francetravail.fr/offres/142Y OU candidature_PE_technicien@exemple.com';
 const LABEL_NOM_STAGE = 'Nom de l’offre de stage 200 caractères maximum Exemple : Assistant de recherche (6 mois) chez ABC.ENTREPRISE';
 const LABEL_DESCRIPTION_STAGE = 'Description de l’offre de stage 200 caractères minimum Informations sur le stage : les objectifs, les challenges, les missions…';
-const LABEL_REMUNERATION = 'Rémunération par mois en euros (optionnel) Exemple : 760';
+const LABEL_REMUNERATION = 'Rémunération par mois en euros (optionnel) Montant entier en euros sans centimes, exemple : 760';
 
 describe('<Stage />', () => {
 	beforeEach(() => {
@@ -58,7 +58,7 @@ describe('<Stage />', () => {
 					stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}
 					stageDeposerOffreEtape2PersistenceService={aStageDeposerOffreEtape2PersistenceService()}><Stage /></DependenciesProvider>);
 
-				expect(screen.getByLabelText('Date précise du début de stage')).toBeVisible();
+				expect(screen.getByLabelText(/Date précise du début de stage/)).toBeVisible();
 			});
 
 			it('le champ date de début de début de stage a par défaut la valeur "Je connais la date précise du début de stage"', async () => {
@@ -78,11 +78,11 @@ describe('<Stage />', () => {
 				render(<DependenciesProvider
 					stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}
 					stageDeposerOffreEtape2PersistenceService={aStageDeposerOffreEtape2PersistenceService()}><Stage /></DependenciesProvider>);
-				await user.type(screen.getByLabelText('Date précise du début de stage'), currentDate);
+				await user.type(screen.getByLabelText(/Date précise du début de stage/), currentDate);
 
 				// Then
-				expect(screen.getByLabelText('Date précise du début de stage')).toHaveValue(currentDate);
-				expect(screen.getByLabelText('Date précise du début de stage')).toBeValid();
+				expect(screen.getByLabelText(/Date précise du début de stage/)).toHaveValue(currentDate);
+				expect(screen.getByLabelText(/Date précise du début de stage/)).toBeValid();
 			});
 
 			it('l’utilisateur peut sélectionner une date de début max égale à la date de début min', async () => {
@@ -96,14 +96,14 @@ describe('<Stage />', () => {
 					stageDeposerOffreEtape2PersistenceService={aStageDeposerOffreEtape2PersistenceService()}><Stage /></DependenciesProvider>);
 				const radioDatePrecise = screen.getByRole('radio', { name: 'Je ne connais pas la date précise du début de stage' });
 				await user.click(radioDatePrecise);
-				await user.type(screen.getByLabelText('Date de début du stage au plus tôt'), dateDebutMin);
-				await user.type(screen.getByLabelText('Date de début du stage au plus tard'), dateDebutMin);
+				await user.type(screen.getByLabelText(/Date de début du stage au plus tôt/), dateDebutMin);
+				await user.type(screen.getByLabelText(/Date de début du stage au plus tard/), dateDebutMin);
 
 				// Then
-				expect(screen.getByLabelText('Date de début du stage au plus tôt')).toHaveValue(dateDebutMin);
-				expect(screen.getByLabelText('Date de début du stage au plus tard')).toHaveValue(dateDebutMin);
-				expect(screen.getByLabelText('Date de début du stage au plus tôt')).toBeValid();
-				expect(screen.getByLabelText('Date de début du stage au plus tard')).toBeValid();
+				expect(screen.getByLabelText(/Date de début du stage au plus tôt/)).toHaveValue(dateDebutMin);
+				expect(screen.getByLabelText(/Date de début du stage au plus tard/)).toHaveValue(dateDebutMin);
+				expect(screen.getByLabelText(/Date de début du stage au plus tôt/)).toBeValid();
+				expect(screen.getByLabelText(/Date de début du stage au plus tard/)).toBeValid();
 			});
 
 			it('l’utilisateur peut sélectionner une date de début max ultérieur à la date de début min', async () => {
@@ -118,14 +118,14 @@ describe('<Stage />', () => {
 					stageDeposerOffreEtape2PersistenceService={aStageDeposerOffreEtape2PersistenceService()}><Stage /></DependenciesProvider>);
 				const radioDatePrecise = screen.getByRole('radio', { name: 'Je ne connais pas la date précise du début de stage' });
 				await user.click(radioDatePrecise);
-				await user.type(screen.getByLabelText('Date de début du stage au plus tôt'), dateDebutMin);
-				await user.type(screen.getByLabelText('Date de début du stage au plus tard'), dateDebutMax);
+				await user.type(screen.getByLabelText(/Date de début du stage au plus tôt/), dateDebutMin);
+				await user.type(screen.getByLabelText(/Date de début du stage au plus tard/), dateDebutMax);
 
 				// Then
-				expect(screen.getByLabelText('Date de début du stage au plus tôt')).toHaveValue(dateDebutMin);
-				expect(screen.getByLabelText('Date de début du stage au plus tard')).toHaveValue(dateDebutMax);
-				expect(screen.getByLabelText('Date de début du stage au plus tôt')).toBeValid();
-				expect(screen.getByLabelText('Date de début du stage au plus tard')).toBeValid();
+				expect(screen.getByLabelText(/Date de début du stage au plus tôt/)).toHaveValue(dateDebutMin);
+				expect(screen.getByLabelText(/Date de début du stage au plus tard/)).toHaveValue(dateDebutMax);
+				expect(screen.getByLabelText(/Date de début du stage au plus tôt/)).toBeValid();
+				expect(screen.getByLabelText(/Date de début du stage au plus tard/)).toBeValid();
 			});
 
 			it('affiche les champs date minimum et maximum de début de stage lorsque l’option "Je ne connais pas la date précise du début de stage" est sélectionnée', () => {
@@ -137,8 +137,8 @@ describe('<Stage />', () => {
 
 				fireEvent.click(radioDatePrecise);
 
-				expect(screen.getByLabelText('Date de début du stage au plus tôt')).toBeVisible();
-				expect(screen.getByLabelText('Date de début du stage au plus tard')).toBeVisible();
+				expect(screen.getByLabelText(/Date de début du stage au plus tôt/)).toBeVisible();
+				expect(screen.getByLabelText(/Date de début du stage au plus tard/)).toBeVisible();
 			});
 
 			it('l’utilisateur ne peut pas sélectionner une date antérieure à la date du jour comme date de début de stage', async () => {
@@ -150,12 +150,12 @@ describe('<Stage />', () => {
 				render(<DependenciesProvider
 					stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}
 					stageDeposerOffreEtape2PersistenceService={aStageDeposerOffreEtape2PersistenceService()}><Stage /></DependenciesProvider>);
-				await user.type(screen.getByLabelText('Date précise du début de stage'), yesterday);
+				await user.type(screen.getByLabelText(/Date précise du début de stage/), yesterday);
 				await user.tab();
 
 				// Then
-				expect(screen.getByLabelText('Date précise du début de stage')).toHaveValue(yesterday);
-				expect(await screen.findByLabelText('Date précise du début de stage', undefined, { timeout: 100000 })).toBeInvalid();
+				expect(screen.getByLabelText(/Date précise du début de stage/)).toHaveValue(yesterday);
+				expect(await screen.findByLabelText(/Date précise du début de stage/, undefined, { timeout: 100000 })).toBeInvalid();
 			});
 
 			it('l’utilisateur ne peut pas sélectionner une date debut max antérieur à la date de debut min', async () => {
@@ -170,20 +170,20 @@ describe('<Stage />', () => {
 					stageDeposerOffreEtape2PersistenceService={aStageDeposerOffreEtape2PersistenceService()}><Stage /></DependenciesProvider>);
 				const radioDatePrecise = screen.getByRole('radio', { name: 'Je ne connais pas la date précise du début de stage' });
 				await user.click(radioDatePrecise);
-				await user.type(screen.getByLabelText('Date de début du stage au plus tôt'), dateDebutMin);
-				await user.type(screen.getByLabelText('Date de début du stage au plus tard'), dateDebutMax);
+				await user.type(screen.getByLabelText(/Date de début du stage au plus tôt/), dateDebutMin);
+				await user.type(screen.getByLabelText(/Date de début du stage au plus tard/), dateDebutMax);
 				await user.tab();
 
 				// Then
-				expect(screen.getByLabelText('Date de début du stage au plus tôt')).toHaveValue(dateDebutMin);
-				expect(screen.getByLabelText('Date de début du stage au plus tard')).toHaveValue(dateDebutMax);
-				expect(screen.getByLabelText('Date de début du stage au plus tard')).toBeInvalid();
+				expect(screen.getByLabelText(/Date de début du stage au plus tôt/)).toHaveValue(dateDebutMin);
+				expect(screen.getByLabelText(/Date de début du stage au plus tard/)).toHaveValue(dateDebutMax);
+				expect(screen.getByLabelText(/Date de début du stage au plus tard/)).toBeInvalid();
 			});
 		});
 
 		it('il voit afficher des champs optionnels', async () => {
 			const labelDomaineOffreStage = 'Domaine de l’offre de stage (optionnel)';
-			const télétravailPossible = 'Télétravail possible (optionnel)';
+			const teletravailPossible = 'Télétravail possible (optionnel)';
 			// Given
 			render(<DependenciesProvider
 				stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}
@@ -194,12 +194,12 @@ describe('<Stage />', () => {
 
 			await userEvent.type(screen.getByText(labelDomaineOffreStage), 's{backspace}');
 			await userEvent.type(inputRemuneration, 's{backspace}');
-			await userEvent.type(screen.getByText(télétravailPossible), 's{backspace}');
+			await userEvent.type(screen.getByText(teletravailPossible), 's{backspace}');
 
 			// Then
 			expect(screen.getByText(labelDomaineOffreStage)).toBeValid();
 			expect(inputRemuneration).toBeValid();
-			expect(screen.getByText(télétravailPossible)).toBeValid();
+			expect(screen.getByText(teletravailPossible)).toBeValid();
 		});
 
 		it('vérifie que le radio bouton de télétravail soit bien sélectionné', () => {
@@ -243,6 +243,47 @@ describe('<Stage />', () => {
 			expect(screen.getByRole('textbox', { name: LABEL_NOM_STAGE })).toBeValid();
 			expect(screen.getByRole('textbox', { name: LABEL_OU_POSTULER })).toBeInvalid();
 			expect(screen.getByRole('textbox', { name: LABEL_DESCRIPTION_STAGE })).toBeInvalid();
+		});
+	});
+
+	describe('quand je saisis le lien ou l’adresse e-mail de candidature', () => {
+		const messageAttendu = 'Veuillez saisir une URL commençant par http:// ou https:// (par exemple https://monsite.fr) ou veuillez saisir une adresse e-mail contenant un @ et finissant par une extension (par exemple : bernard@email.com)';
+
+		it.each([
+			'www.exemple.fr',
+			'http//exemple.fr',
+			'candidature',
+			'candidature@exemple',
+			'candidature@exemple.',
+			'@exemple.com',
+		])('quand je saisis « %s », affiche le message d’erreur', async (saisie) => {
+			const user = userEvent.setup();
+			render(<DependenciesProvider
+				stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}
+				stageDeposerOffreEtape2PersistenceService={aStageDeposerOffreEtape2PersistenceService()}><Stage /></DependenciesProvider>);
+			const lienCandidature = screen.getByRole('textbox', { name: LABEL_OU_POSTULER });
+
+			await user.type(lienCandidature, saisie);
+			await user.tab();
+
+			expect(lienCandidature).toBeInvalid();
+			expect(screen.getByText(messageAttendu)).toBeVisible();
+		});
+
+		it.each([
+			'https://candidat.francetravail.fr/offres/142Y',
+			'candidature_PE_technicien@exemple.com',
+		])('quand je saisis « %s », n’affiche pas de message d’erreur', async (saisie) => {
+			const user = userEvent.setup();
+			render(<DependenciesProvider
+				stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}
+				stageDeposerOffreEtape2PersistenceService={aStageDeposerOffreEtape2PersistenceService()}><Stage /></DependenciesProvider>);
+			const lienCandidature = screen.getByRole('textbox', { name: LABEL_OU_POSTULER });
+
+			await user.type(lienCandidature, saisie);
+			await user.tab();
+
+			expect(lienCandidature).toBeValid();
 		});
 	});
 
