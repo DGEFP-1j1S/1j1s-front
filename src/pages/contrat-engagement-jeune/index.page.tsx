@@ -12,7 +12,7 @@ import { HeroWithButtonLink } from "~/client/components/ui/Hero/HeroWithButtonLi
 import useAnalytics from '~/client/hooks/useAnalytics';
 import analytics from '~/pages/contrat-engagement-jeune/index.analytics';
 
-export default function ContratEngagementJeune() {
+export default function PageContratEngagementJeune() {
 	useAnalytics(analytics);
 
 	return (
