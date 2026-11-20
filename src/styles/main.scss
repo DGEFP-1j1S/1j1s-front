@@ -107,6 +107,14 @@ hr {
   align-self: start;
 }
 
+.position--relative {
+  position: relative;
+}
+
+.position--absolute {
+  position: absolute;
+}
+
 .img-contain {
   object-fit: contain !important;
   width: 100%;
@@ -194,6 +202,10 @@ hr {
 
 .color--inherit {
   color: inherit;
+}
+
+.line-height--small {
+  line-height: 1 !important;
 }
 
 #tarteaucitronRoot,
