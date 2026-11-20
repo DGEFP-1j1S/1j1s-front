@@ -1,15 +1,32 @@
-import styles from '~/client/components/features/JeDonneMonAvis/JeDonneMonAvis.module.scss';
-import { Container } from '~/client/components/layouts/Container/Container';
-import { Image } from '~/client/components/ui/Img';
-import { Link } from '~/client/components/ui/Link/Link';
+import { Image } from "~/client/components/ui/Img";
+import React from "react";
+import { Callout } from "~/client/dsfr/Callout";
+import useBreakpoint from "~/client/hooks/useBreakpoint";
+import classNames from "classnames";
 
-export default function JeDonneMonAvis() {
+export function JeDonneMonAvis() {
 	return (
-		<Container className={styles.jeDonneMonAvis}>
-			<p className={styles.text}>Aidez-nous à améliorer la recherche de stage ! Donnez-nous votre avis sur cette démarche, cela ne prend que 2 minutes</p>
-			<Link className={styles.lien} href="https://jedonnemonavis.numerique.gouv.fr/Demarches/3639?&view-mode=formulaire-avis&nd_source=button&key=8ff5d31556dab600903ec418c6079a86" title="Je donne mon avis - nouvelle fenêtre">
-				<Image className={styles.image} src="https://jedonnemonavis.numerique.gouv.fr/static/bouton-bleu.svg" alt="Je donne mon avis" width={200} height={85} />
-			</Link>
-		</Container>
+		<Callout
+			accent="pink-macaron"
+			title="Je donne mon avis général sur 1jeune1solution"
+			titleAs="h2"
+			text="Aidez- nous à améliorer le service numérique 1J1S en répondant à quelques questions"
+			link={{ href: "https://jedonnemonavis.numerique.gouv.fr/Demarches/4085?preview=true&form=2090", text: "Je donne mon avis"}}
+			className="position--relative"
+		>
+			<ServicesPublicsPlus/>
+		</Callout>
 	);
+}
+
+function ServicesPublicsPlus() {
+	const { isSmallScreen } = useBreakpoint();
+	const style = isSmallScreen ? {} : { bottom: '2rem', right: '3rem'}
+
+	return (
+		<div className={classNames("flex align-items--center", (isSmallScreen ? "fr-mb-1w" : "position--absolute"))} style={style}>
+			<p className="fr-h6 fr-mr-1w fr-mb-0 whitespace--pre-line line-height--small">{"SERVICES \nPUBLICS+"}</p>
+			<Image alt="" src={"/images/logos/services-publics-plus.svg"} width="38" height="38"/>
+		</div>
+	)
 }

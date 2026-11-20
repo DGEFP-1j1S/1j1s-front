@@ -26,6 +26,7 @@ import { LBA_CANDIDAT_URL } from '~/shared/lbaLandingUrls';
 import analytics from './index.analytics';
 import styles from './index.module.scss';
 import { BandeauAccueilApplicationMobile } from "~/client/components/features/ApplicationMobile/BandeauAccueilApplicationMobile";
+import { JeDonneMonAvis } from "~/client/components/features/JeDonneMonAvis/JeDonneMonAvis";
 
 
 interface CardContent {
@@ -393,6 +394,7 @@ export default function Accueil(accueilProps: AccueilPageProps) {
 							seeLessAriaLabel={'Voir moins de résultats sur les aides et outils'}
 						/>
 					</section>
+					<JeDonneMonAvis/>
 				</div>
 			</main>
 		</>

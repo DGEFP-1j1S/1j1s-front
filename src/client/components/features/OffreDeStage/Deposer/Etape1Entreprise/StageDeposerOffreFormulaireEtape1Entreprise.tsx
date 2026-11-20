@@ -16,6 +16,7 @@ import {
 } from '~/client/services/stageDeposerOffreEtape1Persistence/stageDeposerOffreEtape1Persistence.service';
 import { URL_DEPOSER_OFFRE } from '~/pages/stages/deposer-offre/index.page';
 import { emailRegex } from '~/shared/emailRegex';
+import { Callout } from "~/client/dsfr/Callout";
 
 const URL_REGEX = '(https?:\\/\\/(?:www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b(?:[-a-zA-Z0-9()@:%_\\+.~#?&\\/=]*))';
 const MESSAGE_ERREUR_EMAIL = "Veuillez saisir une adresse e-mail valide, au format bernard@email.fr";
@@ -67,13 +68,14 @@ export default function StageDeposerOffreFormulaireEtape1Entreprise() {
 					autoComplete="organization" />
 				<Champ.Error />
 			</Champ>
+			<Callout 
+				title={"Adresse mail de contact"}
+				titleAs="p"
+				text={"Cette adresse de contact sera utilisée dans le cas où il manquerait des informations pour valider votre demande, ou pour vous informer du statut de cette dernière. Cette adresse peut donc être différente de l’adresse sur laquelle il faudra candidater."}
+				isSmall
+			/>
 			<Champ className="fr-input-group fr-col-12 fr-col-lg-6 fr-col-offset-lg-6--right">
 				<Champ.Label>Adresse mail de contact
-					<Champ.Label.Complement>
-						Cette adresse de contact sera utilisée dans le cas où
-						il manquerait des informations pour valider votre demande, ou pour vous informer du statut de cette dernière.
-						Cette adresse peut donc être différente de l’adresse sur laquelle il faudra candidater.
-					</Champ.Label.Complement>
 					<Champ.Label.Complement>
 						Exemple : contactRH@example.com
 					</Champ.Label.Complement>
