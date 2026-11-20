@@ -8,6 +8,7 @@ import { createSuccess } from '~/server/errors/either';
 import {
 	anEtablissementAccompagnementList,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement.fixture';
+import { TypeEtablissement } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 
 describe('établissementAccompagnementService', () => {
 	describe('rechercher', () => {
@@ -16,7 +17,7 @@ describe('établissementAccompagnementService', () => {
 			vi.spyOn(httpClient, 'get').mockResolvedValue(createSuccess(anEtablissementAccompagnementList()));
 			const établissementAccompagnementService = new BffEtablissementAccompagnementService(httpClient);
 			const accompagnementQueryParams = {
-				typeAccompagnement: 'cij',
+				typeAccompagnement: TypeEtablissement.INFO_JEUNE,
 				...aCommuneQuery({
 					codeCommune: '41600',
 					codePostal: '41600',

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {
 	FormulaireRechercheAccompagnement,
@@ -26,7 +26,10 @@ import {
 	EtablissementAccompagnement,
 	TypeEtablissement,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
-import {Banner} from "~/client/components/ui/Hero/Hero";
+import { Banner } from "~/client/components/ui/Hero/Hero";
+import {
+	useAccompagnementLogo,
+} from '~/client/components/features/Accompagnement/Rechercher/Resultat/useAccompagnementLogo';
 
 const TITRE_PAR_DEFAUT = 'Trouver un accompagnement';
 const INTITULES_RESULTATS = {
@@ -111,36 +114,54 @@ export function RechercherAccompagnement() {
 		return messageResultatRechercheSplit.join(' ');
 	}, [accompagnementQuery.typeAccompagnement, etablissementAccompagnementList.length]);
 
+	const getTypeAccompagnementTag: string = useMemo(() => {
+		switch (accompagnementQuery.typeAccompagnement) {
+			case TypeEtablissement.FRANCE_TRAVAIL:
+				return "France Travail";
+			case TypeEtablissement.INFO_JEUNE:
+				return "Infos jeunes";
+			case TypeEtablissement.MISSION_LOCALE:
+				return "Missions locales";
+			default:
+				return "";
+		}
+	}, [accompagnementQuery.typeAccompagnement]);
+
 	const etiquettesRecherche = useMemo(() => {
 		if (accompagnementQuery.ville && accompagnementQuery.codePostal) {
-			return <TagList list={[`${accompagnementQuery.ville} (${accompagnementQuery.codePostal})`]} aria-label="Filtres de la recherche" />;
+			return <TagList
+				list={[`${accompagnementQuery.ville} (${accompagnementQuery.codePostal})`, getTypeAccompagnementTag]}
+				aria-label="Filtres de la recherche"/>;
 		} else {
 			return undefined;
 		}
-	}, [accompagnementQuery.ville, accompagnementQuery.codePostal]);
+	}, [accompagnementQuery.ville, accompagnementQuery.codePostal, getTypeAccompagnementTag]);
+
+	const logoÉtablissement = useAccompagnementLogo(accompagnementQuery.typeAccompagnement);
 
 	return (
 		<>
 			<Head
 				title={title}
 				description="Trouver un accompagnement"
-				robots="index,follow" />
+				robots="index,follow"/>
 			<main id="contenu">
 				<RechercherSolutionLayout
-					banniere={<BanniereAccompagnement />}
+					banniere={<BanniereAccompagnement/>}
 					erreurRecherche={erreurRecherche}
 					etiquettesRecherche={etiquettesRecherche}
-					formulaireRecherche={<FormulaireRechercheAccompagnement />}
+					formulaireRecherche={<FormulaireRechercheAccompagnement/>}
 					isChargement={isLoading}
 					isEtatInitial={empty(accompagnementQuery)}
 					messageResultatRecherche={messageResultatRecherche}
+					imageUrl={logoÉtablissement}
 					nombreTotalSolutions={etablissementAccompagnementList?.length || 0}
-					listeSolutionElement={<ListeEtablissementAccompagnement resultatList={etablissementAccompagnementList} />}
+					listeSolutionElement={<ListeEtablissementAccompagnement resultatList={etablissementAccompagnementList}/>}
 				/>
 				<ServiceCardList heading="Découvrez d’autres services faits pour vous">
-					<MissionsLocalesPartner />
-					<InfoJeunesPartner />
-					<FranceTravailPartner />
+					<MissionsLocalesPartner/>
+					<InfoJeunesPartner/>
+					<FranceTravailPartner/>
 				</ServiceCardList>
 			</main>
 		</>
@@ -158,20 +179,19 @@ function BanniereAccompagnement() {
 }
 
 interface ListeResultatProps {
-  resultatList: EtablissementAccompagnement[]
+	resultatList: EtablissementAccompagnement[]
 }
 
-function ListeEtablissementAccompagnement({ resultatList: resultatList }: ListeResultatProps) {
+function ListeEtablissementAccompagnement({resultatList: resultatList}: ListeResultatProps) {
 	if (!resultatList.length) return null;
 
 	return (
 		<ul className="fr-grid-row fr-grid-row--gutters" aria-label="Établissements d’accompagnement">
 			{resultatList.map((etablissementAccompagnement: EtablissementAccompagnement) => (
-				<li key={etablissementAccompagnement.id} className="fr-col-12">
-					<ResultatRechercherAccompagnement etablissement={etablissementAccompagnement} />
+				<li key={etablissementAccompagnement.id} className="fr-col-12 fr-col-lg-6">
+					<ResultatRechercherAccompagnement etablissement={etablissementAccompagnement}/>
 				</li>
 			))}
 		</ul>
 	);
 }
-

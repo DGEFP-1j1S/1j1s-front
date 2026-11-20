@@ -24,7 +24,7 @@ import {
 } from '~/client/utils/offreEmploi.mapper';
 import { estQueryIdentiqueAAsPath } from '~/client/utils/queryString.util';
 import { EXPÉRIENCE, TEMPS_DE_TRAVAIL_LIST, TYPE_DE_CONTRAT_LIST } from '~/server/offres/domain/offre';
-import {Button} from "~/client/dsfr";
+import { Button } from "~/client/dsfr";
 
 type FormulaireRechercheOffreEmploiProps = {
 	enEtatErreur?: boolean

@@ -7,7 +7,12 @@ import { Button } from '../Button';
 
 declare global {
 	interface Window {
-		dsfr?: ((element: Element) => { modal?: { disclose: () => void, conceal: () => void } }) & { start: () => void }
+		dsfr?: ((element: Element) => {
+			modal?: {
+				disclose: () => void,
+				conceal: () => void
+			}
+		} | null) & { start: () => void }
 	}
 }
 
@@ -35,7 +40,10 @@ export function PanneauConsentement({ estOuvert, finalites, onFermer, onConfirme
 	}
 
 	useEffect(function synchroniserModaleDsfr() {
-		const modale = modalRef.current && window.dsfr?.(modalRef.current).modal;
+		const modale = modalRef.current
+			? window.dsfr?.(modalRef.current)?.modal
+			: undefined;
+
 		if (estOuvert) {
 			modale?.disclose();
 		} else {
