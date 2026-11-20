@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.367.0](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.366.0...v3.367.0) (2026-11-20)
+
+
+### Features
+
+* ajout tag campagne jeune ([#3815](https://github.com/DGEFP-1j1S/1j1s-front/issues/3815)) ([fc4b34f](https://github.com/DGEFP-1j1S/1j1s-front/commit/fc4b34fe2bf0fe927db1b0c06400a749aba1d50f))
+* migration de la faq vers le DSFR ([#3810](https://github.com/DGEFP-1j1S/1j1s-front/issues/3810)) ([b0248ff](https://github.com/DGEFP-1j1S/1j1s-front/commit/b0248ffd3a6b19c8845734763d2cd3a6bad81c18))
+* migration dsfr iframe 1jeune1permis et myjobglasses ([#3806](https://github.com/DGEFP-1j1S/1j1s-front/issues/3806)) ([4393089](https://github.com/DGEFP-1j1S/1j1s-front/commit/4393089ece024c9703a77eed7fc5d2ee5285a153))
+
+
+### Bug Fixes
+
+* **rgaa:** correctifs partie 3 ([#3809](https://github.com/DGEFP-1j1S/1j1s-front/issues/3809)) ([309adee](https://github.com/DGEFP-1j1S/1j1s-front/commit/309adee8c269b195fae04bb0316e2ed79da4511a))
+* **rgaa:** partie 2 ([#3805](https://github.com/DGEFP-1j1S/1j1s-front/issues/3805)) ([adc618b](https://github.com/DGEFP-1j1S/1j1s-front/commit/adc618b08f074583c4db7c44e41a561045e5bd02))
+* **rgaa:** retour recette manuelle message d'erreur dépôt de stage (11.11) ([#3813](https://github.com/DGEFP-1j1S/1j1s-front/issues/3813)) ([7993c2c](https://github.com/DGEFP-1j1S/1j1s-front/commit/7993c2c05ca22bea217342ba601ffea3ca85746a))
+
 ## [3.366.0](https://github.com/DGEFP-1j1S/1j1s-front/compare/v3.365.0...v3.366.0) (2026-11-17)
 
 
