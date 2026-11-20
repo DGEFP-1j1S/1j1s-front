@@ -32,6 +32,7 @@ const offresNav = (): NavigationItemWithChildren => ({
 		}] : []),
 		{ label: 'Contrats d’alternance', link: LBA_CANDIDAT_URL },
 		...(process.env.NEXT_PUBLIC_JOB_ETE_FEATURE === '1' ? [{ label: 'Jobs d‘été ', link: '/jobs-ete' }] : []),
+		{ label: 'Immersion professionnelle', link: '/immersion-professionnelle'},
 		{ label: 'Jobs étudiants', link: '/jobs-etudiants' },
 		...(process.env.NEXT_PUBLIC_EMPLOIS_EUROPE_FEATURE === '1' ? [{
 			label: 'Emplois en Europe ',
