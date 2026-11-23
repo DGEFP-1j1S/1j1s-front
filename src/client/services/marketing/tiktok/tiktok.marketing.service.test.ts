@@ -26,7 +26,7 @@ describe("TiktokMarketingService", () => {
 			const cookiesService = lancerLeService();
 
 			// THEN
-			expect(cookiesService.addService).toHaveBeenCalledWith("tiktok", expect.objectContaining({ key: "tiktok", needConsent: true, type: "ads" }));
+			expect(cookiesService.addService).toHaveBeenCalledWith("tiktok1j1s", expect.objectContaining({ key: "tiktok1j1s", needConsent: true, type: "ads" }));
 			expect(window.tarteaucitron.addScript).toHaveBeenCalledTimes(1);
 			expect(window.tarteaucitron.addScript).toHaveBeenCalledWith("https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=C8JO5PDMP02EUPVMH92G&lib=ttq");
 			expect(Array.from(window.ttq)).toEqual([["page"]]);

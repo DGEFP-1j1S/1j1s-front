@@ -12,7 +12,7 @@ declare global {
 }
 
 export class LinkedinMarketingService {
-	static readonly SERVICE_NAME = "linkedin";
+	static readonly SERVICE_NAME = "linkedin1j1s";
 	static readonly SCRIPT_URL = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
 	static readonly PARTNER_ID = "1489890";
 
