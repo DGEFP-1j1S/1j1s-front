@@ -25,7 +25,7 @@ export default function ImmersionProfessionnellePage() {
 						</div>
 						<div className="fr-col-lg-5 fr-hidden fr-unhidden-lg fr-pt-6w">
 							<Image
-								src="/images/immersion-facilitee.png"
+								src="/images/immersion-facilitee.jpg"
 								alt="Immersion facilitée - Plateforme de l'inclusion"
 								width="400"
 								height="220"
