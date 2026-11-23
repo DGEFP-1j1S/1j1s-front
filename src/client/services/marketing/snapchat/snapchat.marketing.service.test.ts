@@ -26,7 +26,7 @@ describe("SnapchatMarketingService", () => {
 			const cookiesService = lancerLeService();
 
 			// THEN
-			expect(cookiesService.addService).toHaveBeenCalledWith("snapchat", expect.objectContaining({ key: "snapchat", needConsent: true, type: "ads" }));
+			expect(cookiesService.addService).toHaveBeenCalledWith("snapchat1j1s", expect.objectContaining({ key: "snapchat1j1s", needConsent: true, type: "ads" }));
 			expect(window.tarteaucitron.addScript).toHaveBeenCalledTimes(1);
 			expect(window.tarteaucitron.addScript).toHaveBeenCalledWith("https://sc-static.net/scevent.min.js");
 			expect(window.snaptr.queue).toEqual([["init", "d48efe29-caa9-4f0c-86e8-353fc35a8b3f", {}], ["track", "PAGE_VIEW"]]);

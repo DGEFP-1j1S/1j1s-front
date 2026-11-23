@@ -26,7 +26,7 @@ describe("LinkedinMarketingService", () => {
 			const cookiesService = lancerLeService();
 
 			// THEN
-			expect(cookiesService.addService).toHaveBeenCalledWith("linkedin", expect.objectContaining({ key: "linkedin", needConsent: true, type: "ads" }));
+			expect(cookiesService.addService).toHaveBeenCalledWith("linkedin1j1s", expect.objectContaining({ key: "linkedin1j1s", needConsent: true, type: "ads" }));
 			expect(window.tarteaucitron.addScript).toHaveBeenCalledTimes(1);
 			expect(window.tarteaucitron.addScript).toHaveBeenCalledWith("https://snap.licdn.com/li.lms-analytics/insight.min.js");
 			expect(window._linkedin_data_partner_ids).toContain("1489890");

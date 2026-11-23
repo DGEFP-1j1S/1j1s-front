@@ -14,7 +14,7 @@ export interface CampagnesAdform {
 }
 
 export class AdformMarketingService {
-	static readonly SERVICE_NAME = "adform";
+	static readonly SERVICE_NAME = "adform1j1s";
 	static readonly SCRIPT_URL = "https://s2.adform.net/banners/scripts/st/trackpoint-async.js";
 	static readonly CLIENT_ID_1J1S = 2867419;
 	static readonly PAGENAME = "2026-10-1jeune1solution.gouv.fr-PageArrivee-PageArrivee";
