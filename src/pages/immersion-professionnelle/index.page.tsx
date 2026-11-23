@@ -1,5 +1,5 @@
 import useAnalytics from '~/client/hooks/useAnalytics';
-import analytics from '~/pages/immersions/index.analytics';
+import analytics from '~/pages/immersion-professionnelle/index.analytics';
 import { Head } from '~/client/components/head/Head';
 import { Image } from "~/client/components/ui/Img";
 import { Link } from "~/client/components/ui/Link/Link";
@@ -10,7 +10,7 @@ export default function ImmersionProfessionnellePage() {
 	return (
 		<>
 			<Head
-				title="Immersion professionelle | 1jeune1solution"
+				title="Immersion professionnelle | 1jeune1solution"
 				robots="index,follow"/>
 			<main id="contenu">
 				<section className="fr-container fr-pb-6w">

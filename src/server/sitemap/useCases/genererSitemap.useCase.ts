@@ -29,7 +29,6 @@ const OTHER_STATIC_PATH_LIST = [
 	'/les-entreprises-s-engagent/inscription',
 	'/stages/deposer-offre',
 	'/emplois/deposer-offre',
-	'/immersions/referencer-mon-entreprise',
 	'/espace-jeune',
 ];
 
