@@ -3,11 +3,10 @@ import { ConsulterOffreLayout } from '~/client/components/layouts/ConsulterOffre
 import { Link } from '~/client/components/ui/Link/Link';
 import { Formation } from '~/server/formations/domain/formation';
 import { Statistique } from '~/server/formations/domain/statistique';
+import { StatistiquesFormationAlternance } from "./Statistiques/StatistiquesFormationAlternance";
 import { BadgeList } from "~/client/components/ui/Badge/BadgeList";
-
-import {
-	StatistiquesFormationAlternance,
-} from './Statistiques/StatistiquesFormationAlternance';
+import { Carte } from "~/client/dsfr";
+import { ServiceCardList } from "~/client/components/features/ServiceCard/Card/ServiceCard";
 
 export function ConsulterFormationAlternance({ formation, statistiques }: { formation: Formation, statistiques?: Statistique }) {
 	const displayInformationCentreFormation = !!formation.adresse.adresseComplete;
@@ -31,35 +30,31 @@ export function ConsulterFormationAlternance({ formation, statistiques }: { form
 				</header>
 
 				<section className="fr-mb-5w">
-					{formation.description && (
-						<>
-							<h2 className="fr-h5">Description de la formation :</h2>
-							<p>{formation.description}</p>
-						</>
-					)}
-					{formation.objectif && (
-						<>
-							<h2 className="fr-h5">Objectifs de la formation :</h2>
-							<p>{formation.objectif}</p>
-						</>
-					)}
-					{formation.dureeIndicative && (
-						<>
-							<h2 className="fr-h5">Durée de la formation :</h2>
-							<p>{formation.dureeIndicative}</p>
-						</>
-					)}
-					{displayInformationCentreFormation && (
-						<>
-							<h2 className="fr-h5">Informations sur le centre de formation :</h2>
-							{formation.adresse.adresseComplete &&
-								<p>Adresse : {formation.adresse.adresseComplete}</p>
-							}
-						</>
-					)}
+					{formationDetail("Description de la formation :", formation.description)}
+					{formationDetail("Objectifs de la formation :", formation.objectif)}
+					{formationDetail("Durée de la formation :", formation.dureeIndicative)}
+					{displayInformationCentreFormation && (formationDetail("Informations sur le centre de formation :", formation.adresse.adresseComplete))}
 				</section>
+				<StatistiquesFormationAlternance statistiques={statistiques} />
 			</ConsulterOffreLayout>
-			<StatistiquesFormationAlternance statistiques={statistiques} />
+			<ServiceCardList>
+				<Carte
+					horizontal
+					lien="/articles/inserjeunes"
+					imageSrc="/images/logos/inserjeunes.svg"
+					titre="Découvrez le dispositif InserJeunes">
+					Inserjeunes est un service d’aide à l’orientation des jeunes qui présente différents indicateurs pour toutes les formations professionnelles.
+				</Carte>
+			</ServiceCardList>
 		</>
 	);
+}
+
+function formationDetail(titre: string, detail?: string) {
+	return detail && (
+			<>
+				<h2 className="fr-h5">{titre}</h2>
+				<p>{detail}</p>
+			</>
+		)
 }
