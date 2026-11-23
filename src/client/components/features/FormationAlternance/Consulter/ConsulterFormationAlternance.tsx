@@ -1,9 +1,9 @@
-import commonStyles from '~/client/components/features/ConsulterOffre.module.scss';
+import React from "react";
 import { ConsulterOffreLayout } from '~/client/components/layouts/ConsulterOffre/ConsulterOffreLayout';
 import { Link } from '~/client/components/ui/Link/Link';
-import { TagList } from '~/client/components/ui/Tag/TagList';
 import { Formation } from '~/server/formations/domain/formation';
 import { Statistique } from '~/server/formations/domain/statistique';
+import { BadgeList } from "~/client/components/ui/Badge/BadgeList";
 
 import {
 	StatistiquesFormationAlternance,
@@ -14,41 +14,44 @@ export function ConsulterFormationAlternance({ formation, statistiques }: { form
 	return (
 		<>
 			<ConsulterOffreLayout>
-				<header className={commonStyles.titre}>
-					{formation.titre && <h1>{formation.titre}</h1>}
-					{formation.nomEntreprise && <h2>{formation.nomEntreprise}</h2>}
-					<TagList list={formation.tags} />
+				<header className="fr-my-5w">
+					<h1 className="fr-my-2w">{formation.titre}</h1>
+					{formation.nomEntreprise && <p className="fr-h4">{formation.nomEntreprise}</p>}
+					<BadgeList
+						list={formation.tags}
+						colorClass="fr-badge--blue-cumulus"
+						aria-label="Caractéristiques de la mission" />
 					{formation.lienDemandeRendezVous && (
-						<Link href={formation.lienDemandeRendezVous}
-							className={commonStyles.postuler}
-							appearance={'asPrimaryButton'}>
+						<Link
+							href={formation.lienDemandeRendezVous}
+							className="fr-btn fr-mt-2w">
 							Contacter l’établissement
-							<Link.Icon />
 						</Link>
 					)}
 				</header>
-				<section className={commonStyles.contenu}>
+
+				<section className="fr-mb-5w">
 					{formation.description && (
 						<>
-							<h3>Description de la formation :</h3>
+							<h2 className="fr-h5">Description de la formation :</h2>
 							<p>{formation.description}</p>
 						</>
 					)}
 					{formation.objectif && (
 						<>
-							<h3>Objectifs de la formation :</h3>
+							<h2 className="fr-h5">Objectifs de la formation :</h2>
 							<p>{formation.objectif}</p>
 						</>
 					)}
 					{formation.dureeIndicative && (
 						<>
-							<h3>Durée de la formation :</h3>
+							<h2 className="fr-h5">Durée de la formation :</h2>
 							<p>{formation.dureeIndicative}</p>
 						</>
 					)}
 					{displayInformationCentreFormation && (
 						<>
-							<h3>Informations sur le centre de formation :</h3>
+							<h2 className="fr-h5">Informations sur le centre de formation :</h2>
 							{formation.adresse.adresseComplete &&
 								<p>Adresse : {formation.adresse.adresseComplete}</p>
 							}
