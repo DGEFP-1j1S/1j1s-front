@@ -23,7 +23,7 @@ describe('<Entreprise />', () => {
 
 			expect(screen.getByRole("heading", { level: 2, name: "Votre entreprise Étape 1 sur 3" })).toBeInTheDocument();
 			expect(screen.getByRole('textbox', { name: "Nom de l’entreprise ou de l’employeur 255 caractères maximum Exemples : Crédit Agricole, SNCF…" })).toBeVisible();
-			expect(screen.getByRole('textbox', { name: 'Adresse mail de contact Cette adresse de contact sera utilisée dans le cas où il manquerait des informations pour valider votre demande, ou pour vous informer du statut de cette dernière. Cette adresse peut donc être différente de l’adresse sur laquelle il faudra candidater. Exemple : contactRH@example.com' })).toBeVisible();
+			expect(screen.getByRole('textbox', { name: 'Adresse mail de contact Exemple : contactRH@example.com' })).toBeVisible();
 			expect(screen.getByRole('textbox', { name: 'Courte description de l’entreprise 500 caractères maximum Informations sur votre entreprise : son histoire, des objectifs, des enjeux...' })).toBeVisible();
 			expect(screen.getByRole('textbox', { name: 'Logo de l’entreprise - lien/URL (optionnel) Exemple : https://www.1jeune1solution.gouv.fr/images/logos/r%C3…' })).toBeVisible();
 			expect(screen.getByRole('textbox', { name: 'Lien du site de l’entreprise - lien/URL (optionnel) Exemple : https://1jeune1solution.gouv.fr' })).toBeVisible();
@@ -54,7 +54,7 @@ describe('<Entreprise />', () => {
 			render(<DependenciesProvider stageDeposerOffreEtape1PersistenceService={aStageDeposerOffreEtape1PersistenceService()}><Entreprise /></DependenciesProvider>);
 
 			expect(screen.getByRole('textbox', { name: "Nom de l’entreprise ou de l’employeur 255 caractères maximum Exemples : Crédit Agricole, SNCF…" })).toHaveAttribute('autocomplete', 'organization');
-			expect(screen.getByRole('textbox', { name: 'Adresse mail de contact Cette adresse de contact sera utilisée dans le cas où il manquerait des informations pour valider votre demande, ou pour vous informer du statut de cette dernière. Cette adresse peut donc être différente de l’adresse sur laquelle il faudra candidater. Exemple : contactRH@example.com' })).toHaveAttribute('autocomplete', 'email');
+			expect(screen.getByRole('textbox', { name: 'Adresse mail de contact Exemple : contactRH@example.com' })).toHaveAttribute('autocomplete', 'email');
 		});
 
 		describe('champ adresse mail', () => {
@@ -128,7 +128,7 @@ describe('<Entreprise />', () => {
 			await BoutonSuivant();
 
 			expect(inputNomSociete).toBeValid();
-			expect(screen.getByRole('textbox', { name: "Adresse mail de contact Cette adresse de contact sera utilisée dans le cas où il manquerait des informations pour valider votre demande, ou pour vous informer du statut de cette dernière. Cette adresse peut donc être différente de l’adresse sur laquelle il faudra candidater. Exemple : contactRH@example.com" })).toBeInvalid();
+			expect(screen.getByRole('textbox', { name: "Adresse mail de contact Exemple : contactRH@example.com" })).toBeInvalid();
 		});
 	});
 

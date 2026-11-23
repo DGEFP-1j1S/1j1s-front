@@ -6,6 +6,7 @@ declare global {
 	interface Window {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		zemApi?: any
+		__$$OBGeoZone?: string
 	}
 }
 
@@ -36,6 +37,8 @@ export class TeadsMarketingService {
 					zemApi.marketerId = TeadsMarketingService.MARKETER_ID;
 					zemApi.queue = [];
 					window.zemApi = zemApi;
+					// zcpt.js ne reconnait pas tarteaucitron : sans CMP connue, la zone UE bloque le pixel. Le consentement est deja recueilli ici.
+					window.__$$OBGeoZone = "all";
 					window.tarteaucitron.addScript(TeadsMarketingService.SCRIPT_URL);
 				}
 				window.zemApi("track", "PAGE_VIEW");
