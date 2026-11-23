@@ -26,7 +26,7 @@ describe("AdformMarketingService", () => {
 		const cookiesService = lancerLeService({ campagne2026_10: true, campagne2026_11: false });
 
 		// THEN
-		expect(cookiesService.addService).toHaveBeenCalledWith("adform", expect.objectContaining({ key: "adform", needConsent: true, type: "ads" }));
+		expect(cookiesService.addService).toHaveBeenCalledWith("adform1j1s", expect.objectContaining({ key: "adform1j1s", needConsent: true, type: "ads" }));
 		expect(window.tarteaucitron.addScript).toHaveBeenCalledWith("https://s2.adform.net/banners/scripts/st/trackpoint-async.js");
 		expect(window._adftrack).toEqual([expect.objectContaining({ HttpHost: "server.adform.net", pm: 2867419 })]);
 	});

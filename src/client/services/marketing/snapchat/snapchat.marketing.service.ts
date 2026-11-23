@@ -10,7 +10,7 @@ declare global {
 }
 
 export class SnapchatMarketingService {
-	static readonly SERVICE_NAME = "snapchat";
+	static readonly SERVICE_NAME = "snapchat1j1s";
 	static readonly SCRIPT_URL = "https://sc-static.net/scevent.min.js";
 	static readonly PIXEL_ID = "d48efe29-caa9-4f0c-86e8-353fc35a8b3f";
 

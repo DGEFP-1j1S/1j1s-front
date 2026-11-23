@@ -20,7 +20,7 @@ function differer(cible: any, methode: string) {
 }
 
 export class TiktokMarketingService {
-	static readonly SERVICE_NAME = "tiktok";
+	static readonly SERVICE_NAME = "tiktok1j1s";
 	static readonly SCRIPT_URL = "https://analytics.tiktok.com/i18n/pixel/events.js";
 	static readonly PIXEL_ID = "C8JO5PDMP02EUPVMH92G";
 
