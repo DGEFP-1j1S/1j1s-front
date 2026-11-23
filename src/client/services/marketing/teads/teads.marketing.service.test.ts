@@ -14,6 +14,7 @@ function lancerLeService() {
 describe("TeadsMarketingService", () => {
 	beforeEach(() => {
 		window.zemApi = undefined;
+		window.__$$OBGeoZone = undefined;
 		window.tarteaucitron = aTarteAuCitron();
 	});
 
@@ -30,6 +31,7 @@ describe("TeadsMarketingService", () => {
 			expect(window.tarteaucitron.addScript).toHaveBeenCalledTimes(1);
 			expect(window.tarteaucitron.addScript).toHaveBeenCalledWith("https://js-tag.zemanta.com/zcpt.js");
 			expect(window.zemApi.queue).toEqual([["track", "PAGE_VIEW"]]);
+			expect(window.__$$OBGeoZone).toEqual("all");
 		});
 	});
 
@@ -44,6 +46,7 @@ describe("TeadsMarketingService", () => {
 			// THEN
 			expect(window.tarteaucitron.addScript).not.toHaveBeenCalled();
 			expect(window.zemApi).toBeUndefined();
+			expect(window.__$$OBGeoZone).toBeUndefined();
 		});
 	});
 });
