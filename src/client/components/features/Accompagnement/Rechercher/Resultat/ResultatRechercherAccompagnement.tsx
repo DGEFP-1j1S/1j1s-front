@@ -27,11 +27,20 @@ export function ResultatRechercherAccompagnement({etablissement}: RésultatReche
 
 	return (
 		<>
-			<Carte titre={etablissement.nom}
-						 className="carte-etablissement"
-						 descriptionAs="div">
-				<div className="contenu-etablissement">
-
+			<Carte
+				titre={etablissement.nom}
+				descriptionAs="div"
+				footer={
+					<div className="text-align--right">
+						{etablissement.telephone &&
+							<Link className="fr-btn fr-btn-primary fr-mr-2w" href={`tel:${etablissement.telephone}`}>Appeler</Link>}
+						{etablissement.email && (isMissionLocale ?
+							<Button className="fr-btn fr-btn--secondary" label="Être contacté.e" data-fr-opened="false"
+											aria-controls={modaleId} type="button"/>
+							: <Link className="fr-btn fr-btn--secondary" href={`mailto:${etablissement.email}`} title="Contacter par mail - adresse mail">Contacter par mail</Link>)}
+					</div>
+				}>
+				<div>
 					{adresse &&
 						<div className="fr-grid-row">
 							<span className="fr-icon-road-map-line fr-col-1"/><p className="fr-col-11"><span
@@ -58,15 +67,6 @@ export function ResultatRechercherAccompagnement({etablissement}: RésultatReche
 							{etablissement.horaires.map((horaire) => <span key={horaire.jour}><HorairesResultatRechercherAccompagnement horaire={horaire}/></span>)}
 						</p>
 						</div>)}
-				</div>
-
-				<div className="fr-grid-row fr-grid-row--right fr-mt-auto">
-					{etablissement.telephone &&
-						<Link className="fr-btn fr-btn-primary fr-mr-2w" href={`tel:${etablissement.telephone}`}>Appeler</Link>}
-					{etablissement.email && (isMissionLocale ?
-						<Button className="fr-btn fr-btn--secondary" label="Être contacté.e" data-fr-opened="false"
-						        aria-controls={modaleId} type="button"/>
-						: <Link className="fr-btn fr-btn--secondary" href={`mailto:${etablissement.email}`} title="Contacter par mail - adresse mail">Contacter par mail</Link>)}
 				</div>
 			</Carte>
 

@@ -26,6 +26,22 @@ interface FormulaireDemandeDeContactAccompagnementProps {
 	onFailure: () => void;
 }
 
+const MESSAGE_ERREUR_EMAIL = "Veuillez saisir une adresse e-mail valide, au format bernard@email.fr";
+
+function validerEmail(value: string | number | readonly string[] | undefined): string {
+	const email = String(value ?? "").trim();
+	if (email === "" || new RegExp(emailRegex).test(email)) return "";
+	return MESSAGE_ERREUR_EMAIL;
+}
+
+const MESSAGE_ERREUR_TELEPHONE = "Veuillez saisir un numéro de téléphone valide, au format 0606060606";
+
+function validerTelephone(value: string | number | readonly string[] | undefined): string {
+	const telephone = String(value ?? "").trim();
+	if (telephone === "" || new RegExp(telFrRegex).test(telephone)) return "";
+	return MESSAGE_ERREUR_TELEPHONE;
+}
+
 export function FormulaireDemandeDeContactAccompagnement({
 																													 contactEtablissementAccompagnement,
 																													 onSuccess,
@@ -91,6 +107,7 @@ export function FormulaireDemandeDeContactAccompagnement({
 						<Champ.Input
 							render={Input}
 							pattern={emailRegex}
+							validation={validerEmail}
 							name="mail"
 							type="email" />
 						<Champ.Error />
@@ -106,6 +123,7 @@ export function FormulaireDemandeDeContactAccompagnement({
 						<Champ.Input
 							render={Input}
 							pattern={telFrRegex}
+							validation={validerTelephone}
 							name="phone"
 							type="tel"
 							required />
