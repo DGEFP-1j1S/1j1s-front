@@ -38,37 +38,10 @@ jobs:
           name: docusaurus
           path: ./docs/build
 
-  build-storybook:
-    name: Compiler Storybook
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
-
-      - run: npm install -g npm@11
-
-      - name: Installer les dépendances
-        run: npm ci --legacy-peer-deps
-
-      - name: Compiler le storybook
-        run: |
-          cp .env.test .env
-          npm run storybook:build
-
-      - name: Téléverser les fichiers compilés Storybook
-        uses: actions/upload-artifact@v4
-        with:
-          name: storybook
-          path: ./storybook-static
-
   deploy:
     name: Déployer sur GitHub Pages
     runs-on: ubuntu-latest
-    needs: [ build-docusaurus, build-storybook ]
+    needs: [ build-docusaurus ]
 
     steps:
       - name: Télécharger les fichiers Docusaurus
@@ -76,12 +49,6 @@ jobs:
         with:
           name: docusaurus
           path: ./docs
-
-      - name: Télécharger les fichiers Storybook
-        uses: actions/download-artifact@v4
-        with:
-          name: storybook
-          path: ./docs/storybook
 
       # Popular action to deploy to GitHub Pages:
       # Docs: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-docusaurus
