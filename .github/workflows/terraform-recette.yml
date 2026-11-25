@@ -4,8 +4,8 @@ name: Déploiement en Recette
 # puis déclenche explicitement un déploiement Scalingo via l'API.
 #
 # Historiquement on s'appuyait sur l'intégration Github<=>Scalingo automatique,
-# mais cela bloquait silencieusement dès qu'un check ancillaire (Docusaurus,
-# Storybook) tournait au rouge : Scalingo attend tous les checks verts pour
+# mais cela bloquait silencieusement dès qu'un check ancillaire (Docusaurus)
+# tournait au rouge : Scalingo attend tous les checks verts pour
 # auto-deploy. On reproduit donc le pattern de mise-en-production.yml en recette
 # pour rendre le pipeline explicite et déterministe.
 on:
