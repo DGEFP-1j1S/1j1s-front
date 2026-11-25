@@ -1,8 +1,0 @@
-@use "@styles/utilities";
-
-$error-color-text: utilities.$color-error;
-
-.error{
-  @include utilities.text-small;
-  color: $error-color-text;
-}
