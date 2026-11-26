@@ -1,11 +1,12 @@
 import React from 'react';
 
+import { BoutonsRecherche } from '~/client/components/ui/Form/BoutonsRecherche/BoutonsRecherche';
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 import { ChampFacette } from '~/client/components/ui/Form/ChampFacette/ChampFacette';
 import { ChampIntervalle } from '~/client/components/ui/Form/ChampIntervalle/ChampIntervalle';
 import { Input } from '~/client/components/ui/Form/Input';
-import { Button } from '~/client/dsfr';
 import { useAnnonceDeLogementQuery } from '~/client/hooks/useAnnonceDeLogementQuery';
+import { useReinitialisationFormulaire } from '~/client/hooks/useReinitialisationFormulaire';
 import { useSoumissionRechercheIndexee } from '~/client/hooks/useSoumissionRechercheIndexee';
 import { Facette } from '~/server/services/meilisearch/rechercheIndexee';
 
@@ -31,6 +32,7 @@ export function FormulaireRechercheAnnonceLogement({ facettes }: FormulaireReche
 	const queryParams = useAnnonceDeLogementQuery();
 
 	const rechercher = useSoumissionRechercheIndexee(queryParams);
+	const { cle, reinitialiser, valeursInitiales } = useReinitialisationFormulaire(queryParams);
 
 	return (
 		<form
@@ -39,14 +41,14 @@ export function FormulaireRechercheAnnonceLogement({ facettes }: FormulaireReche
 			aria-label="Rechercher un logement"
 			onSubmit={rechercher}>
 			<h2 className="fr-h4 fr-mb-3w">Trouvez un logement qui vous correspond</h2>
-			<div className="fr-grid-row fr-grid-row--gutters">
+			<div className="fr-grid-row fr-grid-row--gutters" key={cle}>
 				<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
 					<Champ className="fr-input-group">
 						<Champ.Label>
 							Ville
 							<Champ.Label.Complement>Exemples : Paris, Toulouse</Champ.Label.Complement>
 						</Champ.Label>
-						<Champ.Input render={Input} name="ville" defaultValue={queryParams.ville} />
+						<Champ.Input render={Input} name="ville" defaultValue={valeursInitiales.ville} />
 						<Champ.Error />
 					</Champ>
 				</div>
@@ -56,7 +58,7 @@ export function FormulaireRechercheAnnonceLogement({ facettes }: FormulaireReche
 						labelComplement="Exemple : Location"
 						name="typesOffre"
 						facettes={facettes.typesOffre}
-						valeursInitiales={queryParams.typesOffre ?? []} />
+						valeursInitiales={valeursInitiales.typesOffre ?? []} />
 				</div>
 				<div className="fr-col-12 fr-col-md-6 fr-col-lg-4">
 					<ChampFacette
@@ -64,7 +66,7 @@ export function FormulaireRechercheAnnonceLogement({ facettes }: FormulaireReche
 						labelComplement="Exemple : Appartement"
 						name="typesBien"
 						facettes={facettes.typesBien}
-						valeursInitiales={queryParams.typesBien ?? []} />
+						valeursInitiales={valeursInitiales.typesBien ?? []} />
 				</div>
 				<div className="fr-col-12 fr-col-lg-6">
 					<ChampIntervalle
@@ -75,8 +77,8 @@ export function FormulaireRechercheAnnonceLogement({ facettes }: FormulaireReche
 						unite={UNITE_SURFACE}
 						min={SURFACE_MINIMUM}
 						max={SURFACE_MAXIMUM}
-						valeurMinInitiale={toNumber(queryParams.surfaceMin)}
-						valeurMaxInitiale={toNumber(queryParams.surfaceMax)} />
+						valeurMinInitiale={toNumber(valeursInitiales.surfaceMin)}
+						valeurMaxInitiale={toNumber(valeursInitiales.surfaceMax)} />
 				</div>
 				<div className="fr-col-12 fr-col-lg-6">
 					<ChampIntervalle
@@ -87,12 +89,12 @@ export function FormulaireRechercheAnnonceLogement({ facettes }: FormulaireReche
 						unite={DEVISE}
 						min={PRIX_MINIMUM}
 						max={PRIX_MAXIMUM}
-						valeurMinInitiale={toNumber(queryParams.prixMin)}
-						valeurMaxInitiale={toNumber(queryParams.prixMax)} />
+						valeurMinInitiale={toNumber(valeursInitiales.prixMin)}
+						valeurMaxInitiale={toNumber(valeursInitiales.prixMax)} />
 				</div>
 			</div>
 			<div className="fr-grid-row fr-grid-row--center fr-mt-4w">
-				<Button className="fr-btn--lg" label="Rechercher" type="submit" />
+				<BoutonsRecherche onReinitialiser={reinitialiser} />
 			</div>
 		</form>
 	);

@@ -150,4 +150,33 @@ describe('FormulaireRechercheJobEte', () => {
 		expect(screen.getByRole('combobox', { name: 'Domaines Exemple : Commerce, Immobilier…' })).toHaveTextContent('Achats / Comptabilité / Gestion');
 		expect(screen.getByDisplayValue(referentielDomaineList[0].code)).toBeInTheDocument();
 	});
+	it('vide tous les champs sans relancer la recherche quand on réinitialise le formulaire', async () => {
+		// GIVEN
+		const routerPush = vi.fn();
+		const user = userEvent.setup();
+		mockLargeScreen();
+		mockUseRouter({ push: routerPush, query: {
+			codeLocalisation: '75110',
+			codePostalLocalisation: '75010',
+			grandDomaine: referentielDomaineList[0].code,
+			motCle: 'Boulanger',
+			nomLocalisation: 'Paris',
+			typeLocalisation: 'COMMUNE',
+		} });
+		render(
+			<DependenciesProvider localisationService={aLocalisationService()}>
+				<FormulaireRechercheJobEte />
+			</DependenciesProvider>,
+		);
+
+		// WHEN
+		await user.click(screen.getByRole('button', { name: 'Réinitialiser' }));
+
+		// THEN
+		expect(screen.getByRole('textbox', { name: /Métier, mot-clé/i })).toHaveValue('');
+		expect(screen.getByRole('combobox', { name: /Localisation/i })).toHaveValue('');
+		expect(screen.getByRole('combobox', { name: 'Domaines Exemple : Commerce, Immobilier…' })).not.toHaveTextContent('Achats / Comptabilité / Gestion');
+		expect(screen.queryByDisplayValue(referentielDomaineList[0].code)).not.toBeInTheDocument();
+		expect(routerPush).not.toHaveBeenCalled();
+	});
 });
