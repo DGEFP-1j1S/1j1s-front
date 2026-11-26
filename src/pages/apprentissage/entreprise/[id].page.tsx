@@ -15,8 +15,8 @@ export type ConsulterAlternanceEntreprisePageProps = {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext<{ id: string }>): Promise<GetServerSidePropsResult<ConsulterAlternanceEntreprisePageProps>> {
-	const featureActivée = process.env.NEXT_PUBLIC_ALTERNANCE_LBA_FEATURE === '1';
-	if (!featureActivée) {
+	const featureActivee = process.env.NEXT_PUBLIC_ALTERNANCE_LBA_FEATURE === '1';
+	if (!featureActivee) {
 		return { notFound: true };
 	}
 
@@ -41,12 +41,14 @@ export default function AnnonceAlternanceEntreprisePage({ id }: ConsulterAlterna
 			<Head
 				title={'Candidature spontanée en alternance | 1jeune1solution'}
 				robots="noindex" />
-			<ConsulterOffreLayout>
-				<iframe
-					src={`http://labonnealternance.apprentissage.beta.gouv.fr/emploi/recruteurs_lba/${id}/job`}
-					className={styles.iframe}
-					title="Formulaire de candidature spontanée en alternance" />
-			</ConsulterOffreLayout>
+			<main id="contenu">
+				<ConsulterOffreLayout>
+					<iframe
+						src={`http://labonnealternance.apprentissage.beta.gouv.fr/emploi/recruteurs_lba/${id}/job`}
+						className={styles.iframe}
+						title="Formulaire de candidature spontanée en alternance" />
+				</ConsulterOffreLayout>
+			</main>
 		</>
 	);
 }
