@@ -12,6 +12,7 @@ interface CarteProps {
 	titre: string | React.ReactNode
 	lien?: string
 	tags?: React.ReactNode[]
+	badges?: React.ReactNode[]
 	imageSrc?: string
 	imageAlt?: string
 	pictogramme?: string
@@ -29,6 +30,7 @@ export function Carte({
 	titre,
 	lien,
 	tags,
+	badges,
 	imageSrc,
 	imageAlt = '',
 	pictogramme,
@@ -56,8 +58,15 @@ export function Carte({
 								: <a href={lien} target="_blank" rel="noreferrer" title={`${titre} - nouvelle fenêtre`}>{titre}</a>)
 							: titre
 					)}
-					{((tags && tags.length > 0) || pictogramme) && (
+					{((tags && tags.length > 0) || (badges && badges.length > 0) || pictogramme) && (
 						<div className="fr-card__start">
+							{badges && badges.length > 0 && (
+								<ul className="fr-badges-group">
+									{badges.map((badge, index) => (
+										<li key={index}>{badge}</li>
+									))}
+								</ul>
+							)}
 							{tags && tags.length > 0 && (
 								<ul className="fr-tags-group">
 									{tags.map((tag, index) => (
@@ -74,7 +83,7 @@ export function Carte({
 							)}
 						</div>
 					)}
-					{React.createElement(descriptionAs, { className: 'fr-card__desc' }, children)}
+					{children && React.createElement(descriptionAs, { className: 'fr-card__desc' }, children)}
 					{end && (
 						<div className="fr-card__end">{end}</div>
 					)}

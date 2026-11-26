@@ -1,48 +1,30 @@
-import React from 'react';
+import React from "react";
 
-import styles from '~/client/components/features/ContratEngagementJeune/QuEstCeQueJyGagne/QuEstCeQueJyGagne.module.scss';
-import SeeMoreMobileOnly from '~/client/components/ui/SeeMore/MobileOnly/SeeMoreMobileOnly';
+import { Carte } from "~/client/dsfr";
+
+const gains = [
+	{ pictogramme: "/images/dsfr/data-visualization.svg", titre: "Définir et bâtir un projet professionnel durable" },
+	{ pictogramme: "/images/dsfr/avatar.svg", titre: "Mettre en valeur mes talents et mes compétences" },
+	{ pictogramme: "/images/dsfr/companie.svg", titre: "Découvrir le monde professionnel et comprendre son fonctionnement et ses codes" },
+	{ pictogramme: "/images/dsfr/ecosystem.svg", titre: "Construire mon réseau pour trouver plus facilement et plus rapidement un emploi" },
+];
 
 export default function QuEstCeQueJyGagne() {
 	return (
-		<section className={styles.section}>
-			<div className={styles.container}>
-				<div className={styles.titre}>
-					<h2>Mais en vrai, qu‘est-ce que j‘y gagne à long terme ?</h2>
-					<div className={styles.sousTitre}>Le contrat d‘Engagement Jeune, c‘est tout bénéf‘ pour moi !</div>
-				</div>
-				<SeeMoreMobileOnly
-					numberOfVisibleItems={0}
-					itemList={[<GainsCEJ key={0} />]}
-					seeLessAriaLabel={'Voir moins de gains liés au contrat engagement jeune'}
-					seeMoreAriaLabel={'Voir plus de gains liés au contrat engagement jeune'}>
-					<GainsCEJ />
-				</SeeMoreMobileOnly>
+		<section className="background--blue-light fr-py-6w">
+			<div className="fr-container">
+				<h2 className="fr-mb-3w">Mais en vrai, qu’est-ce que j’y gagne à long terme ?</h2>
+				<p className="fr-text--lg fr-mb-5w">
+					Quand je m’engage, je prépare mon avenir et je mets toutes les chances de mon côté pour :
+				</p>
+				<ul className="fr-grid-row fr-grid-row--gutters">
+					{gains.map((gain) => (
+						<li key={gain.titre} className="fr-col-12 fr-col-md-6 fr-col-lg-3">
+							<Carte titre={gain.titre} pictogramme={gain.pictogramme} className="fr-card--sm" />
+						</li>
+					))}
+				</ul>
 			</div>
 		</section>
-	);
-}
-
-function GainsCEJ() {
-	return (
-		<div className={styles.contenu}>
-			<div id="gainsCEJ" className="bold">
-				Quand je m‘engage, je prépare mon avenir et je mets toutes les chances de mon côté pour :
-			</div>
-			<ul aria-labelledby="gainsCEJ">
-				<li>
-					Définir et bâtir un <b>projet professionnel durable</b>
-				</li>
-				<li>
-					Mettre en valeur <b>mes talents et mes compétences</b>
-				</li>
-				<li>
-					<b>Découvrir le monde professionnel</b> et comprendre son fonctionnement et ses codes
-				</li>
-				<li>
-					<b>Construire mon réseau</b> pour trouver plus facilement et plus rapidement un emploi
-				</li>
-			</ul>
-		</div>
 	);
 }
