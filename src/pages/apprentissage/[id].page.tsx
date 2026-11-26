@@ -18,8 +18,8 @@ type ConsulterAnnonceAlternancePageProps = {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext<{ id: string }>): Promise<GetServerSidePropsResult<ConsulterAnnonceAlternancePageProps>> {
-	const featureActivée = process.env.NEXT_PUBLIC_ALTERNANCE_LBA_FEATURE === '1';
-	if (!featureActivée) {
+	const featureActivee = process.env.NEXT_PUBLIC_ALTERNANCE_LBA_FEATURE === '1';
+	if (!featureActivee) {
 		return { notFound: true };
 	}
 
@@ -56,7 +56,9 @@ export default function AnnonceAlternancePage({ alternanceSerialized }: Consulte
 			<Head
 				title={`${alternanceSerialized.titre} | 1jeune1solution`}
 				robots="noindex" />
-			<DetailAlternance annonce={alternance} />
+			<main id="contenu">
+				<DetailAlternance annonce={alternance} />
+			</main>
 		</>
 	);
 }
