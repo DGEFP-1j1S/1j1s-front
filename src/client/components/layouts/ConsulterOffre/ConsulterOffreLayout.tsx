@@ -8,12 +8,10 @@ export function ConsulterOffreLayout(props: React.PropsWithChildren<ConsulterOff
 	const { children } = props;
 
 	return (
-		<main id="contenu">
-			<div className="fr-container">
-				<article>
-					{children}
-				</article>
-			</div>
-		</main>
+		<div className="fr-container">
+			<article>
+				{children}
+			</article>
+		</div>
 	);
 }

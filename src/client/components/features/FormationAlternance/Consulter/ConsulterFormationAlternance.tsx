@@ -5,8 +5,6 @@ import { Formation } from '~/server/formations/domain/formation';
 import { Statistique } from '~/server/formations/domain/statistique';
 import { StatistiquesFormationAlternance } from "./Statistiques/StatistiquesFormationAlternance";
 import { BadgeList } from "~/client/components/ui/Badge/BadgeList";
-import { Carte } from "~/client/dsfr";
-import { ServiceCardList } from "~/client/components/features/ServiceCard/Card/ServiceCard";
 
 export function ConsulterFormationAlternance({ formation, statistiques }: { formation: Formation, statistiques?: Statistique }) {
 	const displayInformationCentreFormation = !!formation.adresse.adresseComplete;
@@ -19,7 +17,7 @@ export function ConsulterFormationAlternance({ formation, statistiques }: { form
 					<BadgeList
 						list={formation.tags}
 						colorClass="fr-badge--blue-cumulus"
-						aria-label="Caractéristiques de la mission" />
+						aria-label="Caractéristiques de la formation" />
 					{formation.lienDemandeRendezVous && (
 						<Link
 							href={formation.lienDemandeRendezVous}
@@ -37,15 +35,6 @@ export function ConsulterFormationAlternance({ formation, statistiques }: { form
 				</section>
 				<StatistiquesFormationAlternance statistiques={statistiques} />
 			</ConsulterOffreLayout>
-			<ServiceCardList>
-				<Carte
-					horizontal
-					lien="/articles/inserjeunes"
-					imageSrc="/images/logos/inserjeunes.svg"
-					titre="Découvrez le dispositif InserJeunes">
-					Inserjeunes est un service d’aide à l’orientation des jeunes qui présente différents indicateurs pour toutes les formations professionnelles.
-				</Carte>
-			</ServiceCardList>
 		</>
 	);
 }

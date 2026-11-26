@@ -1,3 +1,4 @@
+import React from "react";
 import Joi from 'joi';
 import { GetServerSidePropsContext } from 'next';
 
@@ -14,6 +15,8 @@ import { Formation, FormationFiltreAvecCodeCertification } from '~/server/format
 import { Statistique } from '~/server/formations/domain/statistique';
 import { removeUndefinedKeys } from '~/server/removeUndefinedKeys.utils';
 import { dependencies } from '~/server/start';
+import { ServiceCardList } from "~/client/components/features/ServiceCard/Card/ServiceCard";
+import { Carte } from "~/client/dsfr";
 
 interface ConsulterFormationPageProps {
 	formation: Formation
@@ -29,7 +32,18 @@ export default function ConsulterFormationPage(props: ConsulterFormationPageProp
 			<Head
 				title={`${formation.titre} | 1jeune1solution`}
 				robots="noindex" />
-			<ConsulterFormationAlternance formation={formation} statistiques={statistiques} />
+			<main id="contenu">
+				<ConsulterFormationAlternance formation={formation} statistiques={statistiques} />
+				<ServiceCardList>
+					<Carte
+						horizontal
+						lien="/articles/inserjeunes"
+						imageSrc="/images/logos/inserjeunes.svg"
+						titre="Découvrez le dispositif InserJeunes">
+						Inserjeunes est un service d’aide à l’orientation des jeunes qui présente différents indicateurs pour toutes les formations professionnelles.
+					</Carte>
+				</ServiceCardList>
+			</main>
 		</>
 	);
 }
