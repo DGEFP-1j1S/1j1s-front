@@ -74,7 +74,7 @@ export function Carte({
 							)}
 						</div>
 					)}
-					{React.createElement(descriptionAs, { className: 'fr-card__desc flex--column' }, children)}
+					{React.createElement(descriptionAs, { className: 'fr-card__desc' }, children)}
 					{end && (
 						<div className="fr-card__end">{end}</div>
 					)}

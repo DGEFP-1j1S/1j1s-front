@@ -42,31 +42,34 @@ export function ResultatRechercherAccompagnement({etablissement}: RésultatReche
 				}>
 				<div>
 					{adresse &&
-						<div className="fr-grid-row">
-							<span className="fr-icon-road-map-line fr-col-1"/><p className="fr-col-11"><span
-							className="fr-text--bold">&nbsp;Adresse&nbsp;:&nbsp;</span>{`${adresse.numeroVoie}, ${adresse.codePostal} ${adresse.nomCommune}`}
+						<p className="fr-icon-road-map-line">
+							<span className="fr-text--bold">&nbsp;Adresse&nbsp;:&nbsp;</span>
+							{`${adresse.numeroVoie}, ${adresse.codePostal} ${adresse.nomCommune}`}
 						</p>
-						</div>}
+					}
 
 					{!isMissionLocale && etablissement.email &&
-						<div className="fr-grid-row">
-							<span className="fr-icon-mail-line fr-col-1"/><p className="fr-col-11"><span
-							className="fr-text--bold">&nbsp;E-Mail&nbsp;:&nbsp;</span>{`${etablissement.email}`}</p>
-						</div>}
+						<p className="fr-icon-mail-line">
+							<span className="fr-text--bold">&nbsp;E-Mail&nbsp;:&nbsp;</span>
+							{`${etablissement.email}`}
+						</p>
+					}
 
 					{etablissement.telephone &&
-						<div className="fr-grid-row">
-							<span className="fr-icon-phone-line fr-col-1"/><p className="fr-col-11"><span
-							className="fr-text--bold">&nbsp;Téléphone&nbsp;:&nbsp;</span><Link
-							href={`tel:${etablissement.telephone}`}>{`${etablissement.telephone}`}</Link></p>
-						</div>}
+						<p className="fr-icon-phone-line">
+							<span className="fr-text--bold">&nbsp;Téléphone&nbsp;:&nbsp;</span>
+							<Link href={`tel:${etablissement.telephone}`}>{`${etablissement.telephone}`}</Link>
+						</p>
+					}
 
 					{etablissement.horaires && etablissement.horaires.length > 0 && (
-						<div className="fr-grid-row">
-							<span className="fr-icon-time-line fr-col-1"/><p className="fr-col-11"><span className="fr-text--bold">Horaires d&apos;ouverture&nbsp;:&nbsp;</span>
-							{etablissement.horaires.map((horaire) => <span key={horaire.jour}><HorairesResultatRechercherAccompagnement horaire={horaire}/></span>)}
-						</p>
-						</div>)}
+						<>
+							<p className="fr-icon-time-line fr-mb-0"><span className="fr-text--bold">&nbsp;Horaires d&apos;ouverture&nbsp;:&nbsp;</span></p>
+							<ul className="fr-ml-7v fr-raw-list flex flex--wrap">
+								{etablissement.horaires.map((horaire) => <li key={horaire.jour}><HorairesResultatRechercherAccompagnement horaire={horaire}/></li>)}
+							</ul>
+						</>
+					)}
 				</div>
 			</Carte>
 
