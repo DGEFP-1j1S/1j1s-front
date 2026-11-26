@@ -78,7 +78,7 @@ describe('Parcours Accompagnement', () => {
 					.children('li')
 					.should('have.length', 1);
 
-				cy.findByRole('button', { name: 'Je souhaite être contacté(e)' }).click();
+				cy.findByRole('button', { name: 'Être contacté.e' }).click();
 
 				cy.findByRole('textbox', { name: 'Prénom Exemple : Jean' }).type('John', { force: true });
 				cy.findByRole('textbox', { name: 'Nom Exemple : Dupont' }).type('Doe', { force: true });
@@ -100,11 +100,11 @@ describe('Parcours Accompagnement', () => {
 				cy.findByRole('textbox', { name: /Commentaires/ }).type('Merci de me recontacter');
 
 				cy.intercept({ method: 'POST', pathname: '/api/etablissements-accompagnement/contact*' }, { statusCode: 201 });
-				cy.findByRole('button', { name: 'Envoyer mes informations' }).click();
+				cy.findByRole('button', { name: 'Envoyer mes informations afin d‘être rappelé(e)' }).click();
 
 				cy.findByRole('heading', { level: 1, name: 'Votre demande a bien été transmise !' })
 					.should('exist');
-				cy.findByRole('button', { description: 'Fermer, Revenir à la page' }).click();
+				cy.findByRole('button', { description: 'Fermer la modale' }).click();
 
 				cy.findByRole('dialog').should('not.exist');
 			});

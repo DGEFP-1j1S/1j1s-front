@@ -1,9 +1,6 @@
-import React, { FormEvent, useState } from 'react';
-import styles
-	from 'src/client/components/features/Accompagnement/DemandeDeContact/Formulaire/FormulaireDemandeDeContactAccompagnement.module.scss';
+import React, { FormEvent } from 'react';
 
-import { ButtonComponent } from '~/client/components/ui/Button/ButtonComponent';
-import { LoadingButton } from '~/client/components/ui/Button/LoadingButton';
+import { Button } from "~/client/dsfr";
 import { Champ } from '~/client/components/ui/Form/Champ/Champ';
 import { ComboboxCommune } from '~/client/components/ui/Form/Combobox/ComboboxCommune/ComboboxCommune';
 import { Input } from '~/client/components/ui/Form/Input';
@@ -29,22 +26,35 @@ interface FormulaireDemandeDeContactAccompagnementProps {
 	onFailure: () => void;
 }
 
+const MESSAGE_ERREUR_EMAIL = "Veuillez saisir une adresse e-mail valide, au format bernard@email.fr";
+
+function validerEmail(value: string | number | readonly string[] | undefined): string {
+	const email = String(value ?? "").trim();
+	if (email === "" || new RegExp(emailRegex).test(email)) return "";
+	return MESSAGE_ERREUR_EMAIL;
+}
+
+const MESSAGE_ERREUR_TELEPHONE = "Veuillez saisir un numéro de téléphone valide, au format 0606060606";
+
+function validerTelephone(value: string | number | readonly string[] | undefined): string {
+	const telephone = String(value ?? "").trim();
+	if (telephone === "" || new RegExp(telFrRegex).test(telephone)) return "";
+	return MESSAGE_ERREUR_TELEPHONE;
+}
+
 export function FormulaireDemandeDeContactAccompagnement({
 																													 contactEtablissementAccompagnement,
 																													 onSuccess,
 																													 onFailure,
 																												 }: FormulaireDemandeDeContactAccompagnementProps) {
 	const etablissementAccompagnementService = useDependency<EtablissementAccompagnementService>('établissementAccompagnementService');
-	const [isLoading, setIsLoading] = useState(false);
 
 	async function envoyerFormulaire(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
-		setIsLoading(true);
 		const form: HTMLFormElement = event.currentTarget;
 		const data = new FormData(form);
 		const demandeDeContactAccompagnement = mapDemandeDeContactAccompagnement(data, contactEtablissementAccompagnement);
 		const result = await etablissementAccompagnementService.envoyerDemandeContact(demandeDeContactAccompagnement);
-		setIsLoading(false);
 		if (isSuccess(result)) {
 			onSuccess();
 		} else {
@@ -54,96 +64,110 @@ export function FormulaireDemandeDeContactAccompagnement({
 
 	return (
 		<form
-			className={styles.formulaire}
 			onSubmit={envoyerFormulaire}>
-			<Champ className="fr-input-group">
-				<Champ.Label>
-					Prénom
-					<Champ.Label.Complement>Exemple : Jean</Champ.Label.Complement>
-				</Champ.Label>
-				<Champ.Input
-					render={Input}
-					name="firstname"
-					required />
-				<Champ.Error />
-			</Champ>
+			<div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
+				<div className="fr-col-12 fr-col-lg-6">
+					<Champ className="fr-input-group">
+						<Champ.Label>
+							Prénom
+							<Champ.Label.Complement>Exemple : Jean</Champ.Label.Complement>
+						</Champ.Label>
+						<Champ.Input
+							render={Input}
+							type="text"
+							name="firstname"
+							required />
+						<Champ.Error />
+					</Champ>
+				</div>
 
-			<Champ className="fr-input-group">
-				<Champ.Label>
-					Nom
-					<Champ.Label.Complement>Exemple : Dupont</Champ.Label.Complement>
-				</Champ.Label>
-				<Champ.Input
-					render={Input}
-					name="lastname"
-					required />
-				<Champ.Error />
-			</Champ>
+				<div className="fr-col-12 fr-col-lg-6">
+					<Champ className="fr-input-group">
+						<Champ.Label>
+							Nom
+							<Champ.Label.Complement>Exemple : Dupont</Champ.Label.Complement>
+						</Champ.Label>
+						<Champ.Input
+							render={Input}
+							type="text"
+							name="lastname"
+							required />
+						<Champ.Error />
+					</Champ>
+				</div>
+			</div>
 
-			<Champ className="fr-input-group">
-				<Champ.Label>
-					Adresse e-mail (optionnel)
-					<Champ.Label.Complement>Exemple : jean.dupont@gmail.com</Champ.Label.Complement>
-				</Champ.Label>
-				<Champ.Input
-					render={Input}
-					pattern={emailRegex}
-					name="mail"
-					type="email" />
-				<Champ.Error />
-			</Champ>
+			<div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
+				<div className="fr-col-12 fr-col-lg-6">
+					<Champ className="fr-input-group">
+						<Champ.Label>
+							Adresse e-mail (optionnel)
+							<Champ.Label.Complement>Exemple : jean.dupont@gmail.com</Champ.Label.Complement>
+						</Champ.Label>
+						<Champ.Input
+							render={Input}
+							pattern={emailRegex}
+							validation={validerEmail}
+							name="mail"
+							type="email" />
+						<Champ.Error />
+					</Champ>
+				</div>
 
-			<Champ className="fr-input-group">
-				<Champ.Label>
-					Téléphone
-					<Champ.Label.Complement>Exemple : 0606060606</Champ.Label.Complement>
-				</Champ.Label>
-				<Champ.Input
-					render={Input}
-					pattern={telFrRegex}
-					name="phone"
-					type="tel"
-					required />
-				<Champ.Error />
-			</Champ>
+				<div className="fr-col-12 fr-col-lg-6">
+					<Champ className="fr-input-group">
+						<Champ.Label>
+							Téléphone
+							<Champ.Label.Complement>Exemple : 0606060606</Champ.Label.Complement>
+						</Champ.Label>
+						<Champ.Input
+							render={Input}
+							pattern={telFrRegex}
+							validation={validerTelephone}
+							name="phone"
+							type="tel"
+							required />
+						<Champ.Error />
+					</Champ>
+				</div>
+			</div>
 
-			<Champ className="fr-input-group">
-				<Champ.Label>Age<Champ.Label.Complement>Exemple : 16 ans</Champ.Label.Complement></Champ.Label>
-				<Champ.Input
-					render={SelectSimple}
-					required
-					optionsList={ageOptions}
-					name="age" />
-				<Champ.Error />
-			</Champ>
+			<div className="fr-grid-row fr-grid-row--gutters fr-mb-4w">
+				<div className="fr-col-12 fr-col-lg-6">
+					<Champ className="fr-input-group">
+						<Champ.Label>Age<Champ.Label.Complement>Exemple : 16 ans</Champ.Label.Complement></Champ.Label>
+						<Champ.Input
+							render={SelectSimple}
+							required
+							optionsList={ageOptions}
+							name="age" />
+						<Champ.Error />
+					</Champ>
+				</div>
 
-			<ComboboxCommune required />
-			<Champ className={styles.commentaireDemandeDeContact}>
+				<div className="fr-col-12 fr-col-lg-6">
+					<ComboboxCommune required />
+				</div>
+			</div>
+
+			<Champ className="fr-mb-6w">
 				<Champ.Label>Commentaires ou autres informations utiles (optionnel)</Champ.Label>
 				<Champ.Input render={TextArea} name="commentaire" rows={5} />
 				<Champ.Error />
 			</Champ>
 
-			{isLoading
-				? <LoadingButton className={styles.formulaireValidateButton} />
-				: (
-					<>
-						<ButtonComponent
-							type="submit"
-							className={styles.formulaireValidateButton}
-							label={<>Envoyer mes informations <span className={styles.desktopOnly}>afin d‘être rappelé(e)</span></>} />
-					</>
-				)
-			}
-			<div className={styles.formulaireDécharge}>
-				<p>
-					Vous êtes informé que vos données à caractère personnel sont collectées et traitées par la DGEFP pour répondre
-					à votre demande. Pour en savoir plus vous pouvez consulter la <Link href="/confidentialite">politique de
-					confidentialité</Link> et les <Link href="/cgu">CGU</Link> de la DGEFP. En cliquant sur “Envoyer mes
-					informations“ vos données seront transmises à la mission locale de la zone géographique dans laquelle vous
-					résidez pour que celle-ci prenne contact avec vous.
-				</p>
-			</div>
+			<Button
+				type="submit"
+				className="fr-btn-lg fr-mb-4w	"
+				label="Envoyer mes informations afin d‘être rappelé(e)" />
+
+			<p className="background--blue-light fr-p-2w">
+				Vous êtes informé que vos données à caractère personnel sont collectées et traitées par la DGEFP pour répondre
+				à votre demande. Pour en savoir plus vous pouvez consulter la <Link href="/confidentialite">politique de
+				confidentialité</Link> et les <Link href="/cgu">CGU</Link> de la DGEFP. En cliquant sur “Envoyer mes
+				informations“ vos données seront transmises à la mission locale de la zone géographique dans laquelle vous
+				résidez pour que celle-ci prenne contact avec vous.
+			</p>
 		</form>
 	);
 

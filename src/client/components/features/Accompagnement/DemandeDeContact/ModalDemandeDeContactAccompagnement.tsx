@@ -1,67 +1,63 @@
-import React, { useState } from 'react';
+import React, { useId } from 'react';
 
 import {
 	FormulaireDemandeDeContactAccompagnement,
 } from '~/client/components/features/Accompagnement/DemandeDeContact/Formulaire/FormulaireDemandeDeContactAccompagnement';
-import styles
-	from '~/client/components/features/Accompagnement/DemandeDeContact/ModalDemandeDeContactAccompagnement.module.scss';
-import { ModalErrorSubmission } from '~/client/components/ui/Form/ModaleErrorSubmission/ModalErrorSubmission';
-import { ModaleSuccessSubmission } from '~/client/components/ui/Form/ModaleSuccessSubmission/ModaleSuccessSubmission';
-import { ModalComponent } from '~/client/components/ui/Modal/ModalComponent';
+import { Button, Modal } from "~/client/dsfr";
+import { Link } from '~/client/components/ui/Link/Link';
 import {
 	ContactEtablissementAccompagnement,
 } from '~/server/etablissement-accompagnement/domain/etablissementAccompagnement';
 
 interface ModalDemandeDeContactAccompagnementProps {
 	contactÉtablissementAccompagnement: ContactEtablissementAccompagnement
-	isOpen: boolean
-	setIsOpen: (value: boolean) => void
+	modaleId: string
 }
 
-type formulaireStatus = 'notSubmitted' | 'error' | 'success'
+export function ModalDemandeDeContactAccompagnement({ contactÉtablissementAccompagnement, modaleId }: ModalDemandeDeContactAccompagnementProps) {
 
-export function ModalDemandeDeContactAccompagnement({ contactÉtablissementAccompagnement, isOpen, setIsOpen }: ModalDemandeDeContactAccompagnementProps) {
-	const [statusForm, setStatusForm] = useState<formulaireStatus>('notSubmitted');
+	const modaleSuccesId = `modale-formulaire-succes-${useId().replace(/:/g, '')}`;
+	const modaleEchecId = `modale-formulaire-echec-${useId().replace(/:/g, '')}`;
 
+	const ouvrirModal = (modalId: string) => {
+		const modal = document.getElementById(modalId);
+
+		if (modal && window.dsfr) {
+			window.dsfr(modal)?.modal?.disclose();
+		}
+	};
+	
 	return (
 		<>
-			<ModalComponent
-				isOpen={isOpen}
-				close={() => setIsOpen(false)}
-				aria-labelledby={'dialog_label'}>
-				<ModalComponent.Title className={styles.modalTitle} id="dialog_label">
-						Je souhaite être contacté(e) par la Mission Locale
-				</ModalComponent.Title>
-				<ModalComponent.Content>
-					<small className={styles.modalSubTitle}>Tous les champs sont obligatoires sauf mention contraire</small>
-					<FormulaireDemandeDeContactAccompagnement
-						contactEtablissementAccompagnement={contactÉtablissementAccompagnement}
-						onSuccess={() => {
-							setIsOpen(false);
-							setStatusForm('success');
-						}}
-						onFailure={() => {
-							setIsOpen(false);
-							setStatusForm('error');
-						}} />
-				</ModalComponent.Content>
-			</ModalComponent>
+			<Modal
+				id={modaleId}
+				titre="Formulaire de contact"
+			>
+				<h1>Je souhaite être contacté(e) par la Mission Locale</h1>
+				<p className="fr-text--sm">Tous les champs sont obligatoires sauf mention contraire</p>
+				<FormulaireDemandeDeContactAccompagnement
+					contactEtablissementAccompagnement={contactÉtablissementAccompagnement}
+					onSuccess={() => ouvrirModal(modaleSuccesId)}
+					onFailure={() => ouvrirModal(modaleEchecId)}
+				/>
+			</Modal>
 
-			<ModaleSuccessSubmission isOpen={statusForm === 'success'}
-				onClose={() => {
-					setIsOpen(false);
-					setStatusForm('notSubmitted');
-				}} />
+			<Modal id={modaleSuccesId} titre="">
+				<div className="text-align--center">
+					<h1 className="fr-h2">Votre demande a bien été transmise !</h1>
+				</div>
+			</Modal>
 
-			<ModalErrorSubmission isOpen={statusForm === 'error'} 
-				onClose={() => {
-					setStatusForm('notSubmitted');
-				}}
-				onBackToForm={() => {
-					setIsOpen(true);
-					setStatusForm('notSubmitted');
-				}} />
+			<Modal id={modaleEchecId} titre="">
+				<div className="text-align--center">
+					<h1 className="fr-h2">Une erreur est survenue lors de l‘envoi du formulaire</h1>
+					<Button className="fr-btn fr-mr-2w" label="Retour au formulaire" data-fr-opened="false"
+									aria-controls={modaleId} type="button"/>
+					<Link className="fr-btn fr-btn--secondary" href="/">
+						Aller à l‘accueil
+					</Link>
+				</div>
+			</Modal>
 		</>
-
 	);
 }

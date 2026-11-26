@@ -29,8 +29,11 @@ const formulaireContact = {
 };
 
 describe('<RésultatRechercherAccompagnement/>', () => {
-	beforeAll(() => {
+	beforeAll(async () => {
 		mockScrollIntoView();
+		mockSmallScreen()
+		await import('@gouvfr/dsfr/dist/dsfr.module');
+		window.dsfr?.start();
 	});
 	it('affiche adresse formatée', () => {
 		const etablissement = anEtablissementAccompagnement({
@@ -41,7 +44,12 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 			}),
 		});
 
-		render(<DependenciesProvider>
+		const établissementAccompagnementService = anEtablissementAccompagnementService();
+		const localisationService = aLocalisationService();
+		vi.spyOn(établissementAccompagnementService, 'envoyerDemandeContact').mockResolvedValue(createFailure(ErreurMetier.SERVICE_INDISPONIBLE));
+
+		render(<DependenciesProvider établissementAccompagnementService={établissementAccompagnementService}
+																 localisationService={localisationService}>
 			<ResultatRechercherAccompagnement etablissement={etablissement} />
 		</DependenciesProvider>);
 
@@ -57,7 +65,12 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 			});
 
 			// WHEN
-			render(<DependenciesProvider>
+			const établissementAccompagnementService = anEtablissementAccompagnementService();
+			const localisationService = aLocalisationService();
+			vi.spyOn(établissementAccompagnementService, 'envoyerDemandeContact').mockResolvedValue(createFailure(ErreurMetier.SERVICE_INDISPONIBLE));
+
+			render(<DependenciesProvider établissementAccompagnementService={établissementAccompagnementService}
+																	 localisationService={localisationService}>
 				<ResultatRechercherAccompagnement etablissement={etablissement} />
 			</DependenciesProvider>);
 
@@ -65,20 +78,25 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 			expect(screen.queryByText(email)).not.toBeInTheDocument();
 		});
 
-		it('affiche le bouton "Je souhaite être contacté(e)"', () => {
+		it('affiche le bouton "Être contacté.e"', () => {
 			// GIVEN
 			const etablissement = anEtablissementAccompagnement({
 				type: TypeEtablissement.MISSION_LOCALE,
 			});
 
 			// WHEN
-			render(<DependenciesProvider>
+			const établissementAccompagnementService = anEtablissementAccompagnementService();
+			const localisationService = aLocalisationService();
+			vi.spyOn(établissementAccompagnementService, 'envoyerDemandeContact').mockResolvedValue(createFailure(ErreurMetier.SERVICE_INDISPONIBLE));
+
+			render(<DependenciesProvider établissementAccompagnementService={établissementAccompagnementService}
+																	 localisationService={localisationService}>
 				<ResultatRechercherAccompagnement etablissement={etablissement} />
 			</DependenciesProvider>);
 
 			// THEN
 			// NOTE (BRUJ 11/04/2024): Plusieurs boutons car une version desktop et une version mobile
-			const button = screen.getAllByRole('button', { name: 'Je souhaite être contacté(e)' })[0];
+			const button = screen.getAllByRole('button', { name: 'Être contacté.e' })[0];
 			expect(button).toBeVisible();
 		});
 	});
@@ -93,30 +111,40 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 			});
 
 			// WHEN
-			render(<DependenciesProvider>
+			const établissementAccompagnementService = anEtablissementAccompagnementService();
+			const localisationService = aLocalisationService();
+			vi.spyOn(établissementAccompagnementService, 'envoyerDemandeContact').mockResolvedValue(createFailure(ErreurMetier.SERVICE_INDISPONIBLE));
+
+			render(<DependenciesProvider établissementAccompagnementService={établissementAccompagnementService}
+																	 localisationService={localisationService}>
 				<ResultatRechercherAccompagnement etablissement={etablissement} />
 			</DependenciesProvider>);
 
 			// THEN
-			const link = screen.getAllByRole('link', { name: 'Contacter l‘agence - nouvelle fenêtre' })[0];
+			const link = screen.getAllByRole('link', { name: 'Contacter par mail - nouvelle fenêtre' })[0];
 			expect(link).toBeVisible();
 			expect(link).toHaveAttribute('href', `mailto:${email}`);
-			expect(link).toHaveAttribute('title', 'Contacter l‘agence - adresse mail');
+			expect(link).toHaveAttribute('title', 'Contacter par mail - adresse mail');
 		});
 
-		it('n‘affiche pas le bouton "Je souhaite être contacté(e)"', () => {
+		it('n‘affiche pas le bouton "Être contacté.e"', () => {
 			// GIVEN
 			const etablissement = anEtablissementAccompagnement({
 				type: TypeEtablissement.INFO_JEUNE,
 			});
 
 			// WHEN
-			render(<DependenciesProvider>
+			const établissementAccompagnementService = anEtablissementAccompagnementService();
+			const localisationService = aLocalisationService();
+			vi.spyOn(établissementAccompagnementService, 'envoyerDemandeContact').mockResolvedValue(createFailure(ErreurMetier.SERVICE_INDISPONIBLE));
+
+			render(<DependenciesProvider établissementAccompagnementService={établissementAccompagnementService}
+																	 localisationService={localisationService}>
 				<ResultatRechercherAccompagnement etablissement={etablissement} />
 			</DependenciesProvider>);
 
 			// THEN
-			expect(screen.queryByRole('button', { name: 'Je souhaite être contacté(e)' })).not.toBeInTheDocument();
+			expect(screen.queryByRole('button', { name: 'Être contacté.e' })).not.toBeInTheDocument();
 		});
 	});
 
@@ -129,7 +157,12 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 			});
 
 			// WHEN
-			render(<DependenciesProvider>
+			const établissementAccompagnementService = anEtablissementAccompagnementService();
+			const localisationService = aLocalisationService();
+			vi.spyOn(établissementAccompagnementService, 'envoyerDemandeContact').mockResolvedValue(createFailure(ErreurMetier.SERVICE_INDISPONIBLE));
+
+			render(<DependenciesProvider établissementAccompagnementService={établissementAccompagnementService}
+																	 localisationService={localisationService}>
 				<ResultatRechercherAccompagnement etablissement={etablissement} />
 			</DependenciesProvider>);
 
@@ -153,18 +186,21 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 						jour: JourSemaine.LUNDI,
 					},
 				],
-				type: TypeEtablissement.INFO_JEUNE,
+					type: TypeEtablissement.INFO_JEUNE,
 			});
 
 			// WHEN
-			render(<DependenciesProvider>
+			const établissementAccompagnementService = anEtablissementAccompagnementService();
+			const localisationService = aLocalisationService();
+			vi.spyOn(établissementAccompagnementService, 'envoyerDemandeContact').mockResolvedValue(createFailure(ErreurMetier.SERVICE_INDISPONIBLE));
+
+			render(<DependenciesProvider établissementAccompagnementService={établissementAccompagnementService}
+																	 localisationService={localisationService}>
 				<ResultatRechercherAccompagnement etablissement={etablissement} />
 			</DependenciesProvider>);
 
-			await userEvent.click(screen.getByText('Voir les horaires d‘ouverture'));
-
 			// THEN
-			expect(screen.getByText('Voir les horaires d‘ouverture')).toBeVisible();
+			expect(screen.getByText('Horaires d\'ouverture :')).toBeVisible();
 			expect(screen.getByText('Lundi')).toBeVisible();
 			expect(screen.getByText('09h')).toBeVisible();
 			expect(screen.getByText('12h')).toBeVisible();
@@ -178,58 +214,28 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 
 		it('je vois la modale de formulaire s‘afficher', async () => {
 			const user = userEvent.setup();
-			const établissement = anEtablissementAccompagnement({
+			const etablissement = anEtablissementAccompagnement({
 				type: TypeEtablissement.MISSION_LOCALE,
 			});
 			const établissementAccompagnementService = anEtablissementAccompagnementService();
 			const localisationService = aLocalisationService();
+			vi.spyOn(établissementAccompagnementService, 'envoyerDemandeContact').mockResolvedValue(createFailure(ErreurMetier.SERVICE_INDISPONIBLE));
 
 			render(<DependenciesProvider établissementAccompagnementService={établissementAccompagnementService}
 																	 localisationService={localisationService}>
-				<ResultatRechercherAccompagnement etablissement={établissement} />
+				<ResultatRechercherAccompagnement etablissement={etablissement} />
 			</DependenciesProvider>);
 
-			const buttonDemandeContact = screen.getAllByRole('button', { name: 'Je souhaite être contacté(e)' })[0];
+			const buttonDemandeContact = screen.getAllByRole('button', { name: 'Être contacté.e' })[0];
 			expect(buttonDemandeContact).toBeVisible();
 			await user.click(buttonDemandeContact);
 
-			expect(screen.getByRole('dialog', { name: 'Je souhaite être contacté(e) par la Mission Locale' })).toBeVisible();
-		});
-
-		it('le bouton de soumission est désactivé et affiche "Envoi en cours" pendant la soumission du formulaire', async () => {
-			// GIVEN
-			const user = userEvent.setup();
-			const établissement = anEtablissementAccompagnement({
-				type: TypeEtablissement.MISSION_LOCALE,
-			});
-			const établissementAccompagnementService = anEtablissementAccompagnementService();
-			vi.spyOn(établissementAccompagnementService, 'envoyerDemandeContact').mockImplementation(() => new Promise(() => {
-			}));
-			render(
-				<DependenciesProvider
-					établissementAccompagnementService={établissementAccompagnementService}
-					localisationService={aLocalisationService()}>
-					<ResultatRechercherAccompagnement etablissement={établissement} />
-				</DependenciesProvider>);
-
-			const buttonDemandeContact = screen.getAllByRole('button', { name: 'Je souhaite être contacté(e)' })[0];
-			await user.click(buttonDemandeContact);
-
-
-			await remplirFormulaire();
-
-			// WHEN
-			await user.click(screen.getByRole('button', { name: 'Envoyer mes informations afin d‘être rappelé(e)' }));
-
-			// THEN
-			const loadingSubmitButton = screen.getByRole('button', { name: 'Envoi en cours' });
-			expect(loadingSubmitButton).toBeVisible();
-			expect(loadingSubmitButton).toBeDisabled();
+			expect(await screen.findByRole('dialog', { name: 'Formulaire de contact' })).toBeVisible();
 		});
 
 		it('lorsque la demande de contact est un succès, affiche la modale de succès', async () => {
 			const user = userEvent.setup();
-			const établissement = anEtablissementAccompagnement({
+			const etablissement = anEtablissementAccompagnement({
 				type: TypeEtablissement.MISSION_LOCALE,
 			});
 			const établissementAccompagnementService = anEtablissementAccompagnementService();
@@ -238,11 +244,11 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 			render(<DependenciesProvider
 				établissementAccompagnementService={établissementAccompagnementService}
 				localisationService={aLocalisationService()}>
-				<ResultatRechercherAccompagnement etablissement={établissement} />
+				<ResultatRechercherAccompagnement etablissement={etablissement} />
 			</DependenciesProvider>);
 
 
-			const buttonDemandeContact = screen.getAllByRole('button', { name: 'Je souhaite être contacté(e)' })[0];
+			const buttonDemandeContact = screen.getAllByRole('button', { name: 'Être contacté.e' })[0];
 			expect(buttonDemandeContact).toBeVisible();
 			await user.click(buttonDemandeContact);
 
@@ -250,13 +256,14 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 
 			await user.click(screen.getByRole('button', { name: 'Envoyer mes informations afin d‘être rappelé(e)' }));
 			expect(établissementAccompagnementService.envoyerDemandeContact).toHaveBeenCalledTimes(1);
-			expect(screen.getByRole('dialog', { name: 'Votre demande a bien été transmise !' })).toBeVisible();
+			const modalSucces = await screen.findByRole('dialog');
+			expect(within(modalSucces).getByRole('heading', { name: 'Votre demande a bien été transmise !', level: 1})).toBeVisible();
 		});
 
 		describe('modale d‘erreur', () => {
 			it('lorsque l‘envoi de la demande de contact est en echec, affiche la modale d‘echec et ferme la modale de formulaire', async () => {
 				const user = userEvent.setup();
-				const établissement = anEtablissementAccompagnement({
+				const etablissement = anEtablissementAccompagnement({
 					type: TypeEtablissement.MISSION_LOCALE,
 				});
 				const établissementAccompagnementService = anEtablissementAccompagnementService();
@@ -265,10 +272,10 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 				render(<DependenciesProvider
 					établissementAccompagnementService={établissementAccompagnementService}
 					localisationService={aLocalisationService()}>
-					<ResultatRechercherAccompagnement etablissement={établissement} />
+					<ResultatRechercherAccompagnement etablissement={etablissement} />
 				</DependenciesProvider>);
 
-				const buttonDemandeContact = screen.getAllByRole('button', { name: 'Je souhaite être contacté(e)' })[0];
+				const buttonDemandeContact = screen.getAllByRole('button', { name: 'Être contacté.e' })[0];
 				expect(buttonDemandeContact).toBeVisible();
 				await user.click(buttonDemandeContact);
 
@@ -276,27 +283,27 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 
 				await user.click(screen.getByRole('button', { name: 'Envoyer mes informations afin d‘être rappelé(e)' }));
 
-				expect(screen.getByRole('dialog', { name: 'Une erreur est survenue lors de l‘envoi du formulaire' })).toBeVisible();
-				expect(screen.queryByRole('dialog', { name: 'Je souhaite être contacté(e) par la Mission Locale' })).not.toBeInTheDocument();
+				const modalEchec = await screen.findByRole('dialog');
+				expect(within(modalEchec).getByRole('heading', { name: 'Une erreur est survenue lors de l‘envoi du formulaire', level: 1})).toBeVisible();
+				expect(screen.queryByRole('dialog', { name: 'Formulaire de contact' })).not.toBeInTheDocument();
 			});
 
 			it('lorsque je ferme la modale d‘erreur avec le bouton Retour au formulaire, ouvre la modale de formulaire', async () => {
 				const user = userEvent.setup();
-				const établissement = anEtablissementAccompagnement({
+				const etablissement = anEtablissementAccompagnement({
 					type: TypeEtablissement.MISSION_LOCALE,
 				});
 				const établissementAccompagnementService = anEtablissementAccompagnementService();
 				const localisationService = aLocalisationService();
-
 				vi.spyOn(établissementAccompagnementService, 'envoyerDemandeContact').mockResolvedValue(createFailure(ErreurMetier.SERVICE_INDISPONIBLE));
 
 				render(<DependenciesProvider
 					établissementAccompagnementService={établissementAccompagnementService}
 					localisationService={localisationService}>
-					<ResultatRechercherAccompagnement etablissement={établissement} />
+					<ResultatRechercherAccompagnement etablissement={etablissement} />
 				</DependenciesProvider>);
 
-				const buttonDemandeContact = screen.getAllByRole('button', { name: 'Je souhaite être contacté(e)' })[0];
+				const buttonDemandeContact = screen.getAllByRole('button', { name: 'Être contacté.e' })[0];
 				expect(buttonDemandeContact).toBeVisible();
 				await user.click(buttonDemandeContact);
 
@@ -304,31 +311,30 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 
 				await user.click(screen.getByRole('button', { name: 'Envoyer mes informations afin d‘être rappelé(e)' }));
 
-
-				const modaleErreur = screen.getByRole('dialog', { name: 'Une erreur est survenue lors de l‘envoi du formulaire' });
-				await user.click(within(modaleErreur).getByRole('button', { name: 'Retour au formulaire' }));
-				expect(modaleErreur).not.toBeInTheDocument();
-
-				expect(screen.getByRole('dialog', { name: 'Je souhaite être contacté(e) par la Mission Locale' })).toBeVisible();
+				const modalEchec = await screen.findByRole('dialog');
+				expect(within(modalEchec).getByRole('heading', { name: 'Une erreur est survenue lors de l‘envoi du formulaire', level: 1})).toBeVisible();
+				await user.click(within(modalEchec).getByRole('button', { name: 'Retour au formulaire' }));
+				const modales = await screen.findAllByRole('dialog')
+				expect(modales).toHaveLength(1);
+				expect(within(modales[0]).getByRole('heading', { name: 'Formulaire de contact' })).toBeVisible()
 			});
 
 			it('lorsque je ferme la modale d‘erreur avec le bouton Fermer, ferme la modale et ne re ouvre pas le formulaire', async () => {
 				const user = userEvent.setup();
-				const établissement = anEtablissementAccompagnement({
+				const etablissement = anEtablissementAccompagnement({
 					type: TypeEtablissement.MISSION_LOCALE,
 				});
 				const établissementAccompagnementService = anEtablissementAccompagnementService();
 				const localisationService = aLocalisationService();
-
 				vi.spyOn(établissementAccompagnementService, 'envoyerDemandeContact').mockResolvedValue(createFailure(ErreurMetier.SERVICE_INDISPONIBLE));
 
 				render(<DependenciesProvider
 					établissementAccompagnementService={établissementAccompagnementService}
 					localisationService={localisationService}>
-					<ResultatRechercherAccompagnement etablissement={établissement} />
+					<ResultatRechercherAccompagnement etablissement={etablissement} />
 				</DependenciesProvider>);
 
-				const buttonDemandeContact = screen.getAllByRole('button', { name: 'Je souhaite être contacté(e)' })[0];
+				const buttonDemandeContact = screen.getAllByRole('button', { name: 'Être contacté.e' })[0];
 				expect(buttonDemandeContact).toBeVisible();
 				await user.click(buttonDemandeContact);
 
@@ -336,12 +342,12 @@ describe('<RésultatRechercherAccompagnement/>', () => {
 
 				await user.click(screen.getByRole('button', { name: 'Envoyer mes informations afin d‘être rappelé(e)' }));
 
+				const modalEchec = await screen.findByRole('dialog');
+				expect(within(modalEchec).getByRole('heading', { name: 'Une erreur est survenue lors de l‘envoi du formulaire', level: 1})).toBeVisible();
+				await user.click(within(modalEchec).getByRole('button', { name: 'Fermer' }));
+				expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 
-				const modaleErreur = screen.getByRole('dialog', { name: 'Une erreur est survenue lors de l‘envoi du formulaire' });
-				await user.click(within(modaleErreur).getByRole('button', { name: 'Fermer' }));
-				expect(modaleErreur).not.toBeInTheDocument();
-
-				expect(screen.queryByRole('dialog', { name: 'Je souhaite être contacté(e) par la Mission Locale' })).not.toBeInTheDocument();
+				expect(screen.queryByRole('dialog', { name: 'Formulaire de contact' })).not.toBeInTheDocument();
 			});
 		});
 	});
