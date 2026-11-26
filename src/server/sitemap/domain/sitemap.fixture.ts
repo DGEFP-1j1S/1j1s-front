@@ -177,6 +177,9 @@ export function aSitemap(baseUrl: string) {
 		<loc>${baseUrl}/jobs-ete</loc>
 	</url>
 	<url>
+		<loc>${baseUrl}/immersion-professionnelle</loc>
+	</url>
+	<url>
 		<loc>${baseUrl}/jobs-etudiants</loc>
 	</url>
 	<url>
@@ -217,9 +220,6 @@ export function aSitemap(baseUrl: string) {
 	</url>
 	<url>
 		<loc>${baseUrl}/emplois/deposer-offre</loc>
-	</url>
-	<url>
-		<loc>${baseUrl}/immersions/referencer-mon-entreprise</loc>
 	</url>
 	<url>
 		<loc>${baseUrl}/espace-jeune</loc>

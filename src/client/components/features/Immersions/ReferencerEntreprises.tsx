@@ -22,7 +22,7 @@ export function RéférencerEntreprises() {
 				</ul>
 				<Link
 					className="fr-btn fr-btn--lg fr-mt-2w"
-					href="/immersions/referencer-mon-entreprise">
+					href="https://immersion-facile.beta.gouv.fr/accueil-entreprises">
 					Référencer mon entreprise
 				</Link>
 			</div>
